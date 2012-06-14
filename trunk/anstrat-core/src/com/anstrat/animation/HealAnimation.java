@@ -35,6 +35,7 @@ public class HealAnimation extends Animation{
 		if(!started){
 			source.playCustom(Assets.getAnimation("shaman-magic"), false);
 			started = true;	
+			source.updateHealthbar();
 		}
 		
 		if(lifetimeLeft <= 0f){

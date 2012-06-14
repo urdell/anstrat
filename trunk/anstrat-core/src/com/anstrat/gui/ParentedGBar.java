@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+@Deprecated
 /**
  * A GBar that is attached to a {@link Sprite}, e.g a health bar.
  */
@@ -88,6 +89,7 @@ public class ParentedGBar extends GBar {
 			Assets.terrainMeshes[0].render(GL10.GL_TRIANGLES, 0, 12);
 			
 			gl.glPopMatrix();
+			
 		}
 	}
 	

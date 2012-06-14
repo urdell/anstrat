@@ -29,7 +29,8 @@ public class GUnit extends GObject {
 	private Sprite sprite;
 	private Vector2 centerPosition;
 	private float alpha = 1f;
-	public ParentedGBar healthBar;
+	public ParentedGBar oldHealthBar;
+	public HealthBar healthBar;
 	
 	public float animationSpeed = 1f;
 	
@@ -50,13 +51,16 @@ public class GUnit extends GObject {
 		sprite.setScale(0.85f);
 		sprite.flip(false, true);
 		
-		healthBar = new ParentedGBar(sprite);
-		healthBar.setColors(Player.primaryColor[unit.ownerId], Player.secondaryColor[unit.ownerId], Color.BLACK /*new Color(0f, 0.3f, 0f, 1f))*/);
-		healthBar.setValue(1f);
-		healthBar.text = String.valueOf(unit.currentAP);
+		healthBar = new HealthBar();
+		healthBar.setColors(Player.primaryColor[unit.ownerId], Player.secondaryColor[unit.ownerId], Color.BLACK);
+		
+		oldHealthBar = new ParentedGBar(sprite);
+		oldHealthBar.setColors(Player.primaryColor[unit.ownerId], Player.secondaryColor[unit.ownerId], Color.BLACK /*new Color(0f, 0.3f, 0f, 1f))*/);
+		oldHealthBar.setValue(1f);
+		oldHealthBar.text = String.valueOf(unit.currentAP);
 		
 		// Align bottom-center of bar to bottom-center of sprite
-		healthBar.setPositionRelativeOrigin(0f, sprite.getHeight() / 2f - healthBar.getHeight()*0.0f);
+		oldHealthBar.setPositionRelativeOrigin(0f, sprite.getHeight() / 2f - oldHealthBar.getHeight()*0.0f);
 		
 		Vector2 screenPos = GEngine.getInstance().map.getTile(unit.tileCoordinate).getCenter();
 		setPosition(screenPos);
@@ -89,7 +93,7 @@ public class GUnit extends GObject {
 	
 	public void setAlpha(float alpha){
 		this.alpha = alpha;
-		healthBar.setAlpha(alpha);
+		oldHealthBar.setAlpha(alpha);
 		Color c = sprite.getColor();
 		sprite.setColor(c.r, c.g, c.b, alpha);
 	}
@@ -136,15 +140,22 @@ public class GUnit extends GObject {
 		
 		healthBar.value = healthPercentage;
 		healthBar.text = String.valueOf(unit.currentAP);*/
-		healthBar.render(batch);
+		//oldHealthBar.render(batch);
+		healthBar.draw(batch, sprite.getColor().a);
 	}
 	
 	public void updateHealthbar(){
 		float healthPercentage = (float)unit.currentHP/(float)unit.getMaxHP();
 		if(healthPercentage < 0f) healthPercentage = 0f;
 		
-		healthBar.setValue(healthPercentage);
-		healthBar.text = String.valueOf(unit.currentAP);
+		oldHealthBar.setValue(healthPercentage);
+		oldHealthBar.text = String.valueOf(unit.currentAP);
+		
+		// new healthbar
+		healthBar.currentAP = unit.currentAP;
+		healthBar.APReg = unit.getAPReg();
+		healthBar.maxAP = unit.getMaxAP();
+		healthBar.setHealth(healthPercentage);
 	}
 	
 	/**
@@ -153,7 +164,8 @@ public class GUnit extends GObject {
 	public void setPosition(Vector2 position){
 		centerPosition = position;
 		sprite.setPosition(position.x - sprite.getWidth() / 2f, position.y - sprite.getHeight() / 2f-15);
-		healthBar.update();
+		healthBar.setPosition(centerPosition);
+		oldHealthBar.update();
 		boundingBoxOutdated = true;
 	}
 	
