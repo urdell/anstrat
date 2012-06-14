@@ -36,21 +36,11 @@ public enum UnitType {
 	// HP
 	public transient int maxHP;
 	public transient int HPReg;
-	
-	// Armor
-	public transient int rangeArmor;
-	public transient int bluntArmor;
-	public transient int cutArmor;
-		
+
 	// Attack
 	public int attack;
 	public int minAttackRange;
 	public int maxAttackRange;
-	
-	/**
-	 * See {@link UnitType}.ATTACK_TYPE_*
-	 */
-	public transient int attackType;
 	
 	// AP
 	public transient int maxAP;
@@ -76,11 +66,7 @@ public enum UnitType {
 		this.graphicsFolder = "swordsman";
 		this.maxHP = 20;
 		this.HPReg = 1;
-		this.rangeArmor = 0;
-		this.bluntArmor = 0;
-		this.cutArmor = 0;
 		this.attack = 6;
-		this.attackType = ATTACK_TYPE_CUT;
 		this.maxAP = 9;
 		this.minAttackRange = 1;
 		this.maxAttackRange = 1;
@@ -140,9 +126,6 @@ public enum UnitType {
 		type.graphicsFolder = element.get("imageFolder", type.graphicsFolder);
 		type.maxHP = element.getInt("maxHP", type.maxHP);
 		type.HPReg = element.getInt("HPReg", type.HPReg);
-		type.rangeArmor = element.getInt("rangeArmor", type.rangeArmor);
-		type.bluntArmor = element.getInt("bluntArmor", type.bluntArmor);
-		type.cutArmor = element.getInt("cutArmor", type.cutArmor);
 		type.attack = element.getInt("attack", type.attack);
 		type.minAttackRange = element.getInt("minAttackRange", type.minAttackRange);
 		type.maxAttackRange = element.getInt("maxAttackRange", type.maxAttackRange);
@@ -154,13 +137,6 @@ public enum UnitType {
 		type.ability2Id = element.getInt("ability2", type.ability2Id);
 		type.effect1Id = element.getInt("effect1", type.effect1Id);
 		type.effect2Id = element.getInt("effect2", type.effect2Id);
-		
-		
-		type.attackType = element.getInt("attackType", type.attackType);
-		
-		if(type.attackType != ATTACK_TYPE_BLUNT && type.attackType != ATTACK_TYPE_CUT &&type.attackType != ATTACK_TYPE_RANGED){
-			throw new GdxRuntimeException(String.format("'%d' is not a valid attack type.", type.attackType));
-		}
 		
 		type.cost = element.getInt("cost", type.cost);
 		type.description = element.get("description", type.description);
@@ -194,5 +170,42 @@ public enum UnitType {
 		}
 		
 		return null;
+	}
+	
+	public static double getAttackModifier(UnitType attacker, UnitType defender) {
+		double ret = 1;
+		if (attacker.equals(AXE_THROWER)) {
+			if (defender.equals(BERSERKER))
+				ret = 1.5;
+			else if (defender.equals(HEAL))
+				ret = 2.0;
+			else if (defender.equals(WOLF))
+				ret = 1.25;
+			else if (defender.equals(SWORD))
+				ret = 0.7;
+		}
+		
+		else if (attacker.equals(HAWK)) {
+			if (defender.equals(SWORD))
+				ret = 0.5;
+		}
+		else if (attacker.equals(HEAL)) {
+			if (defender.equals(SWORD))
+				ret = 2.0;
+		}
+		else if (attacker.equals(SWORD)) {
+			if (defender.equals(SWORD))
+				ret = 0.5;
+		}
+		else if (attacker.equals(WOLF)) {
+			if (defender.equals(SWORD))
+				ret = 0.7;
+			else if (defender.equals(AXE_THROWER))
+				ret = 1.5;
+			else if (defender.equals(HEAL))
+				ret = 1.7;
+		} 
+		
+		return ret;
 	}
 }

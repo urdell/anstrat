@@ -7,7 +7,6 @@ import java.util.List;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.AbilityFactory;
 import com.anstrat.gameCore.effects.AffectsAttack;
-import com.anstrat.gameCore.effects.AffectsDefense;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.EffectFactory;
 import com.anstrat.geography.TileCoordinate;
@@ -74,31 +73,6 @@ public class Unit implements Serializable {
 		}
 		
 		return this.type.attack + addedAttack;
-	}
-	
-	public int getAttackType(){
-		return this.type.attackType;
-	}
-	
-	public int getArmor(int attackType){
-		int addedRangeArmor = 0;
-		int addedBluntArmor = 0;
-		int addedCutArmor = 0;
-		for(Effect effectDefense : effects){
-			if(effectDefense instanceof AffectsDefense){
-				addedRangeArmor += ((AffectsDefense) effectDefense).rangedDefIncrease(this);
-				addedBluntArmor += ((AffectsDefense) effectDefense).bluntDefIncrease(this);
-				addedCutArmor += ((AffectsDefense) effectDefense).cutDefIncrease(this);
-			}
-		}
-		if (attackType == UnitType.ATTACK_TYPE_RANGED)
-			return this.type.rangeArmor + addedRangeArmor;
-		else if (attackType == UnitType.ATTACK_TYPE_BLUNT)
-			return this.type.bluntArmor + addedBluntArmor;
-		else if( attackType == UnitType.ATTACK_TYPE_CUT)
-			return this.type.cutArmor + addedCutArmor;
-		else
-			return 0;
 	}
 	
 	public int getMaxAP(){

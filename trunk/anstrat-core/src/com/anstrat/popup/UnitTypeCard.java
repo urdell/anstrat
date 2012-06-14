@@ -115,7 +115,6 @@ public class UnitTypeCard extends Table {
 		description.setText(type.description);
 		image.setRegion(GUnit.getTextureRegion(type));
 		attack.setText(String.valueOf("Attack: " + type.attack));
-		armor.setText(String.valueOf("Armor: " + type.rangeArmor));
 		hp.setText(String.valueOf("HP: " + type.maxHP));
 		ap.setText(String.valueOf("AP: " + type.maxAP + "(+" + type.APReg + ")"));
 	}

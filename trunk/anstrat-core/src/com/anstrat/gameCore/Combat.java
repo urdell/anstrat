@@ -31,7 +31,7 @@ public class Combat {
 		double random = 2*State.activeState.random.nextFloat()-1;
 		System.out.println("Randomed attack power is: "+random+"\nPlease doublecheck that it's consistent over all clients.");
 		
-		int damage = (int) (attacker.getAttack()+ Math.round(random*damageRange) - defender.getArmor(attacker.getAttackType())); //Basic subtracting armor handling
+		int damage = (int) (UnitType.getAttackModifier(attacker.getUnitType(), defender.getUnitType())*(attacker.getAttack()+ Math.round(random*damageRange))); 
 		
 		Gdx.app.log("Combat", "Damage is "+damage);
 		
