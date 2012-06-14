@@ -33,13 +33,13 @@ public class Building implements Serializable {
 			typeName = "Temple";
 			goldIncome = 2;
 			manaIncome = 5;
-			captureCost = 5;
+			captureCost = 4;
 			break;
 		case TYPE_VILLAGE:
 			typeName = "Village";
 			goldIncome = 5;
 			manaIncome = 2;
-			captureCost = 5;
+			captureCost = 4;
 			break;
 		case TYPE_CASTLE:
 			typeName = "Capital";
@@ -51,7 +51,7 @@ public class Building implements Serializable {
 			typeName = "Village";
 			goldIncome = 5;
 			manaIncome = 2;
-			captureCost = 5;
+			captureCost = 4;
 		}
 		captureCostRemaining = captureCost;
 		this.type = type;

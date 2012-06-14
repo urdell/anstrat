@@ -13,7 +13,6 @@ public class JoinGameMenu extends MenuScreen {
 	
 	private static JoinGameMenu me;
 	
-	//private TextButton loggedInButton;
 	private TextField name, password;
 
 	public JoinGameMenu() {
@@ -41,14 +40,7 @@ public class JoinGameMenu extends MenuScreen {
             	Main.getInstance().joinGame(name.getText(), password.getText());
             }
         } ));
-		/*loggedInButton = ComponentFactory.createMenuButton("Not logged in",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(AccountMenu.getInstance());
-            }
-        } );
-        layout.register( "login", loggedInButton );*/
-		contents.register( "login", ComponentFactory.createLoginLabel());
+		contents.register("login", ComponentFactory.createLoginLabel());
 		
 		contents.padTop((int) (3*Main.percentHeight));
 		contents.parse(
@@ -57,7 +49,7 @@ public class JoinGameMenu extends MenuScreen {
 				"---" +
 				"[join] fill:y expand:y height:"+BUTTON_HEIGHT+
 				"---" +
-				"{[login] align:center} height:"+BUTTON_HEIGHT);
+				"{[login] align:center}");
 	}
 	
 	public static synchronized JoinGameMenu getInstance() {

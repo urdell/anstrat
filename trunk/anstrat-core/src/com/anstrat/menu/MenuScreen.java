@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
  */
 public abstract class MenuScreen implements Screen {
 	
-	public static final int BUTTON_WIDTH  = (int) (90*Main.percentWidth);
+	public static final int BUTTON_WIDTH  = (int) (85*Main.percentWidth);
 	public static final int BUTTON_HEIGHT = (int) (10*Main.percentHeight);
 	
 	private OrthographicCamera uiCamera;
@@ -49,8 +49,8 @@ public abstract class MenuScreen implements Screen {
 			@Override
 			public void draw(SpriteBatch batch, float parentAlpha) {
 				batch.draw(flagAnimation.getKeyFrame(flagAnimationStateTime, true), 
-						Main.percentWidth*79, Main.percentHeight*17.5f, 0f, 0f, 
-								Main.percentWidth*10.5f, Main.percentHeight*7.5f, 1f, 1f, 0f);
+						Main.percentWidth*79.5f, Main.percentHeight*13.5f, 0f, 0f, 
+								Main.percentWidth*10.5f, Main.percentHeight*7.5f, 0.7f, 0.7f, 0f);
 				flagAnimationStateTime += Gdx.graphics.getDeltaTime();
 			}
 

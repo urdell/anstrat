@@ -176,6 +176,17 @@ public class Assets {
 		SKIN.addResource ("menu-font", Assets.MENU_FONT);
 		SKIN.addResource ("ui-font", Assets.UI_FONT);
 		SKIN.addResource ("single-border", new NinePatch(Assets.getTextureRegion("border-thin"),15,15,15,15));
+		NinePatch singleBorderWhite = new NinePatch(Assets.getTextureRegion("border-thin-white"),15,15,15,15);
+		SKIN.addResource ("single-border-white", singleBorderWhite);
+		TextureRegion line = Assets.getTextureRegion("white-line-hard");
+		SKIN.addResource ("line-border", new NinePatch(
+				null,line,null,
+				null,null,null,
+				null,line,null));
+		SKIN.addResource ("line-border-thin", new NinePatch(
+				null,null,null,
+				null,null,null,
+				null,singleBorderWhite.getPatches()[7],null));
 		SKIN.addResource ("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
 		SKIN.addResource ("double-border", new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20));
 		SKIN.addResource ("button-up", new NinePatch(Assets.getTextureRegion("button-available")));

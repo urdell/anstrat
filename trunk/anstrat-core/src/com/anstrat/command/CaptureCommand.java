@@ -63,7 +63,7 @@ public class CaptureCommand extends Command{
 		Building captureBuilding = State.activeState.map.buildingList.get(buildingID);
 		
 		return super.isAllowed() &&
-					unit.currentAP > 0 &&
+					unit.currentAP >= 4 && //Changed for only allowing cap at required AP
 					unit.getUnitType() != UnitType.HAWK &&
 					unit.getUnitType() != UnitType.WOLF &&
 					unit.tileCoordinate == captureBuilding.tileCoordinate &&
