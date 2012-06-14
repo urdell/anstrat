@@ -88,7 +88,6 @@ public class ValueDisplay extends Table {
 			case VALUE_UNIT_HP:      return unit.currentHP+"/"+unit.getMaxHP()+" (+"+unit.getHPReg()+")";
 			case VALUE_UNIT_AP:      return unit.currentAP+" / "+unit.getMaxAP();
 			case VALUE_UNIT_AP_REG:  return ""+unit.getAPReg();
-			case VALUE_UNIT_DEFENCE: return ""+unit.getArmor(UnitType.ATTACK_TYPE_BLUNT); //removing different armortypes
 			case VALUE_UNIT_ATTACK:  return String.valueOf(unit.getAttack());
 			case VALUE_UNIT_RANGE:   return String.valueOf(unit.getUnitType().maxAttackRange);
 			case VALUE_UNIT_COST:    return String.valueOf(unit.getUnitType().cost);
