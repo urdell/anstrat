@@ -1,7 +1,6 @@
 package com.anstrat.popup;
 
 import com.anstrat.core.Assets;
-import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.core.User;
@@ -10,13 +9,12 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Align;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class BuyUnitPopup extends Popup{
@@ -49,19 +47,15 @@ public class BuyUnitPopup extends Popup{
 			}
 		}, "");
 		this.types = types;
-		buy = new TextButton(BUY_TEXT,Assets.SKIN);
-		cancel = new TextButton(CANCEL_TEXT, Assets.SKIN);
+		buy    = ComponentFactory.createButton(BUY_TEXT, null, cl);
+		cancel = ComponentFactory.createButton(CANCEL_TEXT, null, cl);
 		units = new Button[6];
 		card = new UnitTypeCard(types[0]);
-		Image tempImage; // used to instantiate images for buttons.
 		
 		for(int i=0; i<units.length; i++){
 			final int b = i;
-			tempImage = new Image(GUnit.getTextureRegion(types[i]));
-			units[i] = new Button(tempImage, Assets.SKIN.getStyle("default", ButtonStyle.class));
-			tempImage.setFillParent(true);
-			tempImage.setAlign(Align.CENTER);
-			units[i].setClickListener(new ClickListener() {
+			units[i] = ComponentFactory.createButton(GUnit.getTextureRegion(types[i]), "default",
+					new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){
 			        selectButton(b);
@@ -69,9 +63,6 @@ public class BuyUnitPopup extends Popup{
 			});
 		}
 		selectButton(0);
-		
-		buy.setClickListener(cl);
-		cancel.setClickListener(cl);
 		
 		this.setBackground(Assets.SKIN.getPatch("empty"));
 		
@@ -82,7 +73,6 @@ public class BuyUnitPopup extends Popup{
 		this.addActor(buy);
 		this.addActor(cancel);
 		this.addActor(card);
-		
 	}
 	
 	/**

@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 public class NewGameMenu extends MenuScreen {
 
 	private static NewGameMenu me;
-	//private TextButton loggedInButton;
 
 	private NewGameMenu() {
 		super();
@@ -78,15 +77,6 @@ public class NewGameMenu extends MenuScreen {
             }
         } ));
         
-        /*loggedInButton = ComponentFactory.createMenuButton("Not logged in",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(AccountMenu.getInstance());
-            }
-        } );*/
-        //NetworkDependentTracker.registerNetworkButton(loggedInButton);
-        //layout.register("login", loggedInButton);
-        
         contents.register( "login", ComponentFactory.createLoginLabel());
         
         contents.padTop((int) (3*Main.percentHeight));
@@ -107,7 +97,7 @@ public class NewGameMenu extends MenuScreen {
     				  + "---"
     				  + "[ai] fill:y expand:y" + size
     				  + "---"
-    				  + "{[login] align:center}" + size);
+    				  + "{[login] align:center}");
 	}
 	
 	public static synchronized NewGameMenu getInstance() {

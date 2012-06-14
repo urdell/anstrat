@@ -4,6 +4,7 @@ package com.anstrat.mapEditor;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
+import com.anstrat.geography.Map;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GTile;
@@ -14,6 +15,7 @@ import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.PopupListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,7 +23,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
@@ -112,7 +117,7 @@ public class MapEditorUI extends UI {
 		tblClearMap.parse(
 				"'Clear map?'" +
 				"---" +
-				"{* min:1 height:"+size+" [ok][cancel]} fill:80,100 ");
+				"{* min:1 height:"+bsize+" [ok][cancel]} fill:80,100 ");
 		
 		
 		//Change owner table
@@ -131,7 +136,7 @@ public class MapEditorUI extends UI {
 		tblChangeOwner.parse(
 				"'Select new owner'" +
 				"---" +
-				"{* min:1 height:"+size+" [0][1][none][cancel]}");
+				"{* min:1 height:"+bsize+" [0][1][none][cancel]}");
 		
 		/**
 		 * PERMANENT BUTTONS
@@ -224,6 +229,17 @@ public class MapEditorUI extends UI {
 				ComponentFactory.createTextField("Map name","name",false),
 				new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
 		
+		Table table = new Table();
+		
+		FlickScrollPane scroll1 = new FlickScrollPane(table);
+		FlickScrollPane scroll2 = new FlickScrollPane(table);
+		
+		table.parse("pad:10 * expand:x space:4");
+		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
+		    table.row();
+		    table.add(new Label(new Integer(i).toString(), new LabelStyle(Assets.MENU_FONT, Color.RED))).expandX().fillX();
+		}
+		
 		popupNewMap = new Popup(new PopupListener() {
 		            @Override
 		            public void handle(String text){
@@ -238,8 +254,11 @@ public class MapEditorUI extends UI {
 		        		Popup.currentPopup.clearInputs();
 		            }
 		        }, "New map", 
-				new Row(ComponentFactory.createTextField("Map width","width",false), ComponentFactory.createTextField("Map height","height",false)),
-				new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
+				//new Row(ComponentFactory.createTextField("Map width","width",false), ComponentFactory.createTextField("Map height","height",false)),
+				new Row(new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)),
+						new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE))),
+		        new Row(scroll1, scroll2),
+		        new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
 	}
 	
 	public void showChangeOwner(){

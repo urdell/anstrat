@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class HostGameMenu extends MenuScreen  {
 	private static HostGameMenu me;
 	
-	//private TextButton loggedInButton;
 	private TextField name, password;//, timeLimit;
 	private MapList list;
 	
@@ -116,14 +115,7 @@ public class HostGameMenu extends MenuScreen  {
         
         contents.register("play", goButton);
         
-        /*loggedInButton = ComponentFactory.createMenuButton("Not logged in",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(AccountMenu.getInstance());
-            }
-        } );
-        layout.register( "login", loggedInButton );*/
-        contents.register( "login", ComponentFactory.createLoginLabel());
+        contents.register("login", ComponentFactory.createLoginLabel());
         
         list = new MapList(goButton);
         list.setMaps(true, Assets.getMapList(true, true));

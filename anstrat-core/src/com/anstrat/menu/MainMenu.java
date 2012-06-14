@@ -17,8 +17,11 @@ import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.network.GameRequest;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupHandler;
+import com.anstrat.popup.PopupListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -29,8 +32,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 /**
@@ -38,9 +41,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
  * @author Ekis
  *
  */
-public class MainMenu extends MenuScreen implements PopupHandler {
+public class MainMenu extends MenuScreen {
 	
-	private TextButton loggedInButton;
 	private static MainMenu me;
 	
 	public static TextField usernameInput = ComponentFactory.createTextField("Login",null,false);
@@ -86,17 +88,7 @@ public class MainMenu extends MenuScreen implements PopupHandler {
             }
         }));
         
-        loggedInButton = ComponentFactory.createMenuButton("Not logged in",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(AccountMenu.getInstance());
-            }
-        } );
-        NetworkDependentTracker.registerNetworkButton(loggedInButton);
-        //contents.register( "login", loggedInButton );
-        
-        contents.register( "login", ComponentFactory.createLoginLabel());
-        
+        contents.register("login", ComponentFactory.createLoginLabel());
         contents.register("version", new Label(" "+Main.version, new LabelStyle(Assets.UI_FONT,Color.WHITE)));
 
         gamesList = new Table(Assets.SKIN);
@@ -105,31 +97,51 @@ public class MainMenu extends MenuScreen implements PopupHandler {
 		scroll = new FlickScrollPane(gamesList);
 		scroll.setScrollingDisabled(true, false);
 		scrollTable = new Table();
-		scrollTable.setBackground(Assets.SKIN.getPatch("single-border"));
 		scrollTable.align("top");
 		scrollTable.add(scroll).fill().expand();
 		contents.register( "games", scrollTable );
 		
-		contents.register( "mute", muteButton );
+		contents.register("mute", muteButton );
 		contents.register("logo", new Image(Assets.getTextureRegion("logo")));
-		int logoWidth = (int)(Main.percentWidth*60);
+		Image empty = new Image(Assets.SKIN.getPatch("empty"));
+		contents.register("empty", empty);
+		
+		int logoWidth = (int)(Main.percentWidth*55);
 		
         int buttonWidth  = BUTTON_WIDTH;
         int buttonHeight = BUTTON_HEIGHT;
-        contents.parse( "debug * spacing:"+(int) Main.percentHeight+" align:top,center width:"+buttonWidth +
-        				"{" +
-        					"[version] uniform align:top,left" +
-        					"[logo] height:"+(int)(logoWidth/2.5)+" width:"+logoWidth+" align:center" +
-        					"[mute] uniform align:right width:"+(int)((Main.percentWidth*100-logoWidth)/2)  +
-        				"} align:top,left fill:x" +
-        				"---" +
-    					"[newGameButton] height:"+buttonHeight +
-    					"---\n"+
-    					"[mapEditorButton] height:"+buttonHeight +
-    					"---" +
-    					"[games] fill:y expand:y paddingBottom:"+(int) (buttonHeight*1.25) +
-    					"---" +
-    					"{[login] align:center} height:"+buttonHeight);
+        contents.addActor(scrollTable);
+
+        // Background with hole
+        Image transBack = new Image(Assets.getTextureRegion("MenuBackground-transparent"));
+        contents.addActor(transBack);
+        transBack.x = transBack.y = 0;
+        transBack.height = Gdx.graphics.getHeight();
+        transBack.width = Gdx.graphics.getWidth();
+        
+        contents.parse(
+        		"debug * spacing:"+(int) Main.percentHeight+" align:top,center" +
+        		"{" +
+        			"[version] uniform align:top,left" +
+        			"[logo] height:"+(int)(logoWidth/2.8f)+" width:"+logoWidth+" align:center paddingTop:"+(int)(Main.percentHeight*7) +
+        			"[mute] align:top,right uniform width:"+(int)((Main.percentWidth*100-logoWidth)/2)+" paddingTop:"+(int)(Main.percentHeight*3) +
+        		"} align:top,left fill:x " +
+        		"---" +
+    			"[newGameButton] height:"+buttonHeight+" width:"+buttonWidth +
+    			"---" +
+    			"[mapEditorButton] height:"+buttonHeight+" width:"+buttonWidth +
+    			"---" +
+    			"[empty] fill:90,100 expand:y paddingBottom:"+(int)(Main.percentHeight*10)+" paddingTop:"+(int)(Main.percentHeight*5) +
+    			"---" +
+    			"{[login] align:center}");
+        contents.layout();
+        Vector2 gameListPos = new Vector2();
+        Widget.toScreenCoordinates(empty, gameListPos);
+        scrollTable.x = gameListPos.x;
+        scrollTable.y = gameListPos.y;
+        scrollTable.width = empty.getImageWidth();
+        scrollTable.height = empty.getImageHeight();
+        
 	}
 	
 	public static synchronized MainMenu getInstance() {
@@ -197,12 +209,17 @@ public class MainMenu extends MenuScreen implements PopupHandler {
 		gamesList.align("top");
 		gamesList.setFillParent(true);
 		
+		String topLayout = "height:"+(int)(Main.percentHeight*4)+" paddingTop:"+(int)(Main.percentHeight*4) +
+				"---";
+		
 		Table current = new Table(Assets.SKIN);
-		current.parse("'Your turn:'---");
+		current.parse("'Your turn:'" + topLayout);
 		Table waiting = new Table(Assets.SKIN);
-		waiting.parse("'Waiting for other players:'---");
+		waiting.parse("'Waiting for other players:'" + topLayout);
 		Table requests = new Table(Assets.SKIN);
-		requests.parse("'Game requests:'---");
+		requests.parse("'Game requests:'" + topLayout);
+		
+		NinePatch gameTableBackground = Assets.SKIN.getPatch("line-border-thin");
 		
     	//Add GameInstances
         for(final GameInstance gi : GameInstance.getActiveGames()){
@@ -212,7 +229,7 @@ public class MainMenu extends MenuScreen implements PopupHandler {
             	Table t = new Table(Assets.SKIN);
             	Label timeleftLabel = null;
             	
-            	t.setBackground(Assets.SKIN.getPatch("single-border"));
+            	t.setBackground(gameTableBackground);
             	t.register("turn", new Label("Turn "+gi.getTurnNumber(),Assets.SKIN));
             	t.register("type", new Label("("+(gi.isAiGame() ? "AI" : 
             		(gi instanceof NetworkGameInstance ? "Network" : "Hotseat"))+")", Assets.SKIN));
@@ -276,7 +293,7 @@ public class MainMenu extends MenuScreen implements PopupHandler {
         for(GameRequest gr : Main.getInstance().gameRequests.values()){
         	
         	Table t = new Table(Assets.SKIN);
-        	t.setBackground(Assets.SKIN.getPatch("single-border"));
+        	t.setBackground(gameTableBackground);
         	
         	t.register("gameName", new Label(gr.gameName, Assets.SKIN));
         	t.register("limit", new Label("Limit: "+gr.timeLimit, Assets.SKIN));
@@ -335,6 +352,7 @@ public class MainMenu extends MenuScreen implements PopupHandler {
         if(requests.getActors().size() > 1){
         	gamesList.add(requests).fillX().expandX();
         }
+        gamesList.padBottom((int)(Main.percentHeight*5));
         
         updateTimeleftLabels();
 	}
@@ -343,7 +361,27 @@ public class MainMenu extends MenuScreen implements PopupHandler {
 		String[] mapNames = Assets.getMapList(true, true);
 		
 		if (mapNames.length > 0) {
-			mapsPopup = new MapsPopup(this, true, "Choose map", mapNames);
+			mapsPopup = new MapsPopup(new PopupListener() {
+	            @Override
+	            public void handle(String text){
+	            	Map map = null;
+					
+					if(text.equalsIgnoreCase("RANDOM")){
+						MapsPopup popup = (MapsPopup)Popup.currentPopup;
+						map = new Map(popup.randWidth,popup.randHeight,new Random());
+					}
+					else{
+						map = Assets.loadMap(text);
+					}
+					
+			        if(versusAI == true){
+			        	GameInstance.createAIGame(map, 1).showGame(true);
+			        }
+			        else{
+			        	GameInstance.createHotseatGame(map).showGame(true);
+			        }
+	            }
+	        }, true, "Choose map", mapNames);
 			return mapsPopup;
 		}
 		else 
@@ -382,34 +420,6 @@ public class MainMenu extends MenuScreen implements PopupHandler {
 		builder.append(seconds);
 		
 		return builder.toString();
-	}
-
-	@Override
-	public void handlePopupAction(String text) {
-		if(!"cancel".equalsIgnoreCase(text)){
-			
-			// If map is being chosen
-			if(Popup.currentPopup == mapsPopup){
-				Map map = null;
-				
-				if(text.equalsIgnoreCase("RANDOM")){
-					MapsPopup popup = (MapsPopup)Popup.currentPopup;
-					map = new Map(popup.randWidth,popup.randHeight,new Random());
-				}
-				else{
-					map = Assets.loadMap(text);
-				}
-				
-		        if(versusAI == true){
-		        	GameInstance.createAIGame(map, 1).showGame(true);
-		        }
-		        else{
-		        	GameInstance.createHotseatGame(map).showGame(true);
-		        }
-			}
-		}
-			
-		Popup.currentPopup.close();
 	}
 }
 

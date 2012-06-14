@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class NetworkDependentTracker {
 	
-	public static List<Button> networkButtons;
+	public static List<Button> networkButtons = new ArrayList<Button>();
 	public static List<Label> loginLabels;
 	public static boolean hasNetwork = true;
 	
@@ -25,7 +25,6 @@ public class NetworkDependentTracker {
 	}
 	
 	public static void registerNetworkButton(Button newButton){
-		if(networkButtons == null) networkButtons = new ArrayList<Button>();
 		networkButtons.add(newButton);
 		
 		if(!hasNetwork) Assets.SKIN.setEnabled(newButton, false);
