@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UnitTypes>
+	<UnitType>
+		<name>Sword Soldier</name>
+		<maxHP>20</maxHP>
+		<HPReg>5</HPReg>
+		<rangeArmor>1</rangeArmor>
+		<bluntArmor>5</bluntArmor>
+		<cutArmor>2</cutArmor>
+		<attack>6</attack>
+		<attackType>2</attackType><!-- Cut -->
+		<minAttackRange>2</minAttackRange>
+		<maxAttackRange>5</maxAttackRange>
+		<maxAP>7</maxAP>
+		<APReg>4</APReg>
+		<APCostAttacking>3</APCostAttacking>
+	</UnitType>
+</UnitTypes>
