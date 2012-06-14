@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UnitTypes>
+	<UnitType>
+		<name>Berserker</name>
+		<imageFolder>berserker</imageFolder>
+		<maxHP>15</maxHP>
+		<rangeArmor>1</rangeArmor>
+		<bluntArmor>1</bluntArmor>
+		<cutArmor>1</cutArmor>
+		<attack>9</attack>
+		<attackType>2</attackType><!-- Cut -->
+		<maxAP>7</maxAP>
+		<APReg>5</APReg>
+		<cost>25</cost>
+		<ability1>1</ability1><!-- berserk -->
+		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
+		<idleImage>berserker-idle-0001</idleImage>
+	</UnitType>
+	<UnitType>
+		<name>Shaman</name>
+		<imageFolder>shaman</imageFolder>
+		<maxHP>13</maxHP>
+		<rangeArmor>0</rangeArmor>
+		<bluntArmor>0</bluntArmor>
+		<cutArmor>0</cutArmor>
+		<attack>4</attack>
+		<attackType>1</attackType><!-- Cut -->
+		<maxAttackRange>2</maxAttackRange>
+		<maxAP>6</maxAP>
+		<APReg>4</APReg>
+		<cost>21</cost>
+		<ability1>2</ability1><!-- Heal -->
+		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
+		<idleImage>shaman-idle-0001</idleImage>
+	</UnitType>
+	<UnitType>
+		<name>Axe Thrower</name>
+		<imageFolder>axethrower</imageFolder>
+		<maxHP>15</maxHP>
+		<rangeArmor>1</rangeArmor>
+		<bluntArmor>1</bluntArmor>
+		<cutArmor>1</cutArmor>
+		<attack>6</attack>
+		<attackType>0</attackType><!-- Ranged -->
+		<maxAttackRange>2</maxAttackRange>
+		<maxAP>7</maxAP>
+		<APReg>4</APReg>
+		<cost>20</cost>
+		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
+		<idleImage>axethrower-idle-0001</idleImage>
+	</UnitType>
+	<UnitType>
+		<name>Wolf</name>
+		<imageFolder>wolf</imageFolder>
+		<maxHP>15</maxHP>
+		<rangeArmor>1</rangeArmor>
+		<bluntArmor>1</bluntArmor>
+		<cutArmor>1</cutArmor>
+		<attack>6</attack>
+		<attackType>2</attackType><!-- Cut -->
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>8</maxAP>
+		<APReg>5</APReg>
+		<cost>18</cost>
+		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
+		<idleImage>wolf-idle-0001</idleImage>
+	</UnitType>
+	<UnitType>
+		<name>Hawk</name>
+		<imageFolder>hawk</imageFolder>
+		<maxHP>12</maxHP>
+		<rangeArmor>0</rangeArmor>
+		<bluntArmor>0</bluntArmor>
+		<cutArmor>0</cutArmor>
+		<attack>4</attack>
+		<attackType>1</attackType><!-- Blunt -->
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>9</maxAP>
+		<APReg>5</APReg>
+		<cost>12</cost>
+		<description>Hawks are fast and cheap, and can fly over any terrain. Animals can not capture buildings.</description>
+		<idleImage>hawk-idle-0001</idleImage>
+		<terrainPenaltyMountain>1</terrainPenaltyMountain>
+		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
+		<terrainPenaltyHill>1</terrainPenaltyHill>
+		<terrainPenaltySnow>1</terrainPenaltySnow>
+		<terrainPenaltyForest>1</terrainPenaltyForest>
+		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
+	</UnitType>
+	<UnitType>
+		<name>Swordsman</name>
+		<imageFolder>sword</imageFolder>
+		<maxHP>25</maxHP>
+		<rangeArmor>2</rangeArmor>
+		<bluntArmor>2</bluntArmor>
+		<cutArmor>2</cutArmor>
+		<attack>6</attack>
+		<attackType>1</attackType><!-- Cut -->
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>5</maxAP>
+		<APReg>3</APReg>
+		<cost>22</cost>
+		<effect1>2</effect1><!-- Shield Wall -->
+		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
+		<idleImage>sword-idle-0001</idleImage>
+	</UnitType>
+</UnitTypes>

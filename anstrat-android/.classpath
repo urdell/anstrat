@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/anstrat-core"/>
+	<classpathentry excluding="**/.svn/*" kind="src" path="src"/>
+	<classpathentry excluding="**/.svn/*" kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="/anstrat-core/libs/gdx-freetype.jar" sourcepath="/anstrat-core/libs/gdx-freetype-sources.jar"/>
+	<classpathentry kind="lib" path="/anstrat-core/libs/gdx.jar" sourcepath="/anstrat-core/libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-android.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
