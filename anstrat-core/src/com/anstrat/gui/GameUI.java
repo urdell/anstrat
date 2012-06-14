@@ -60,7 +60,6 @@ public class GameUI extends UI {
 	
 	//Unit version
 	private Table unitTable;
-	private Label apLabel;
 	private ValueDisplay hpDisplay;
 	private ValueDisplay apDisplay;
 	private Button[] abilityButton = new Button[MAX_ABILITIES];
@@ -186,7 +185,6 @@ public class GameUI extends UI {
                 		Popup.unitInfoPopup.show(GEngine.getInstance().selectionHandler.selectedUnit);
                 }
             } );
-        apLabel = new Label("AP: XXXX", Assets.SKIN);
         
         addActor(bottomPanel);
         //Set sizes and positions initially so that others can access that info.
@@ -315,7 +313,7 @@ public class GameUI extends UI {
 			return;
 		}
 		unitTable.visible = true;
-		selectedImage.setRegion( GUnit.getTextureRegion(unit.getUnitType()));
+		selectedImage.setRegion( GUnit.getUnitPortrait(unit.getUnitType()));
 		if(State.activeState.currentPlayerId%2==0){
 			tempCaptureImage.setRegion(Assets.getTextureRegion("capture-button-blue"));
 		}
