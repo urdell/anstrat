@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PlayerAbilities>
+	<PlayerAbility>
+		<name>Smite</name>
+		<manacost>20</manacost>
+		<description>Smite your foes!11</description>
+	</PlayerAbility>
+</PlayerAbilities>
