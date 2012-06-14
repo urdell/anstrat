@@ -109,7 +109,8 @@ public class AttackAnimation extends Animation{
 			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
 			ge.animationHandler.runParalell(mAnimation);
 			
-			gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
+			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
+			gAttacker.healthBar.currentAP = cl.newAttackerAP;
 			
 			boolean facingRight = cl.attacker.tileCoordinate.x < cl.defender.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
@@ -136,7 +137,8 @@ public class AttackAnimation extends Animation{
 				healthPercentage = 0f;
 			}
 			
-			gDefender.healthBar.setValue(healthPercentage);
+			//gDefender.healthBar.setValue(healthPercentage);
+			gDefender.healthBar.setHealth(healthPercentage);
 			
 			if(cl.newDefenderHP <= 0){
 				ge.animationHandler.runParalell(new DeathAnimation(cl.defender));

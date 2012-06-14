@@ -11,11 +11,154 @@ lol
   offset: 0, 0
   index: -1
 
+buildings1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+village
+  rotate: false
+  xy: 0, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+castle
+  rotate: false
+  xy: 0, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+temple
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+flags1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flag-inplace-red-0004
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-red-0003
+  rotate: false
+  xy: 0, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-red-0002
+  rotate: false
+  xy: 64, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-red-0001
+  rotate: false
+  xy: 64, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-blue-0004
+  rotate: false
+  xy: 128, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-blue-0003
+  rotate: false
+  xy: 128, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-blue-0002
+  rotate: false
+  xy: 192, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-blue-0001
+  rotate: false
+  xy: 192, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingup-red-0002
+  rotate: false
+  xy: 256, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingup-red-0001
+  rotate: false
+  xy: 256, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingup-blue-0002
+  rotate: false
+  xy: 320, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingup-blue-0001
+  rotate: false
+  xy: 320, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingdown-red-0002
+  rotate: false
+  xy: 384, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingdown-red-0001
+  rotate: false
+  xy: 448, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingdown-blue-0002
+  rotate: false
+  xy: 384, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-goingdown-blue-0001
+  rotate: false
+  xy: 448, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
 effects1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-hammer-attack-effect-0001
+wolf-attack-effect-0005
   rotate: false
   xy: 0, 0
   size: 128, 128
@@ -29,1432 +172,460 @@ wolf-attack-effect-0004
   orig: 128, 128
   offset: 0, 0
   index: -1
-sword-attack-effect-0004
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hammer-attack-effect-0003
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-attack-effect-0002
-  rotate: false
-  xy: 512, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-effect-0002
-  rotate: false
-  xy: 640, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-attack-effect-0003
-  rotate: false
-  xy: 768, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0002
-  rotate: false
-  xy: 896, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0005
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hammer-attack-effect-0002
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0002
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-effect-0005
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-effect-0001
-  rotate: false
-  xy: 0, 640
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-attack-effect-0001
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0005
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0003
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0004
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0003
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-effect-0001
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axe-attack-effect-0001
-  rotate: false
-  xy: 512, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0001
-  rotate: false
-  xy: 640, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0006
-  rotate: false
-  xy: 640, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 wolf-attack-effect-0003
   rotate: false
-  xy: 768, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axe-attack-effect-0002
-  rotate: false
-  xy: 896, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0004
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axe-attack-effect-0003
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0001
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0002
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0001
-  rotate: false
-  xy: 128, 640
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hammer-attack-effect-0004
-  rotate: false
-  xy: 128, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-effect-0003
-  rotate: false
-  xy: 128, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0006
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-heal-0003
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-target-heal-0004
-  rotate: false
-  xy: 512, 256
+  xy: 256, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 wolf-attack-effect-0002
   rotate: false
-  xy: 640, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-fireball-0002
-  rotate: false
-  xy: 768, 256
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-fireball-0001
-  rotate: false
-  xy: 768, 320
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-attack-effect-0003
-  rotate: false
-  xy: 832, 256
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-attack-effect-0005
-  rotate: false
-  xy: 832, 320
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-axe-effect-0001
-  rotate: false
-  xy: 896, 256
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-attack-effect-0002
-  rotate: false
-  xy: 960, 256
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-attack-effect-0001
-  rotate: false
-  xy: 896, 320
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-fireball-0003
-  rotate: false
-  xy: 960, 320
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shaman-attack-effect-0004
-  rotate: false
-  xy: 256, 384
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-axe-effect-0003
-  rotate: false
-  xy: 256, 448
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-axe-effect-0002
-  rotate: false
-  xy: 256, 512
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-
-hawk1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-hawk-attack-0006
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-idle-0008
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-attack-0005
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-idle-0005
-  rotate: false
   xy: 384, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-walk-0001
+wolf-attack-effect-0001
   rotate: false
   xy: 0, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0001
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-idle-0007
+target-heal-0005
   rotate: false
   xy: 128, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0010
+target-heal-0004
   rotate: false
   xy: 256, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-attack-0004
+target-heal-0003
   rotate: false
   xy: 384, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-attack-0001
+target-heal-0002
   rotate: false
   xy: 0, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-walk-0004
+target-heal-0001
   rotate: false
   xy: 128, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0011
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-idle-0006
+sword-attack-effect-0004
   rotate: false
   xy: 256, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-walk-0003
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-death-0001
+sword-attack-effect-0003
   rotate: false
   xy: 384, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-attack-0003
+sword-attack-effect-0002
   rotate: false
   xy: 0, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-attack-0002
+sword-attack-effect-0001
   rotate: false
   xy: 128, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0002
+shaman-heal-0006
   rotate: false
   xy: 256, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0004
+shaman-heal-0005
   rotate: false
   xy: 384, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-walk-0002
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-hawk-idle-0009
+shaman-heal-0004
   rotate: false
   xy: 0, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-hawk-idle-0003
+shaman-heal-0003
   rotate: false
   xy: 128, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-
-berserk1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-berserker-idle-0008
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-attack-0003
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-death-0001
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-attack-0002
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-attack-0001
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0001
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0009
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0005
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-0004
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0010
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-walk-0001
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-walk-0003
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-walk-0004
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0011
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0006
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0007
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0003
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0002
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-walk-0002
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-attack-0004
+shaman-heal-0002
   rotate: false
   xy: 256, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-berserker-attack-0005
-  rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-idle-0004
+shaman-heal-0001
   rotate: false
   xy: 384, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-berserker-berserk-0006
+target-heal-0006
+  rotate: false
+  xy: 384, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-effect-0003
   rotate: false
   xy: 0, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-berserker-berserk-0005
-  rotate: false
-  xy: 0, 640
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-0002
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-0003
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-0001
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-
-axethrower1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-axethrower-idle-0004
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0003
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0002
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0007
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0008
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0001
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0006
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0002
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0007
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-death-0001
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0005
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0009
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0001
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0001
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0002
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0010
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0011
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0008
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0006
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0003
-  rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0004
-  rotate: false
-  xy: 384, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-idle-0003
-  rotate: false
-  xy: 0, 640
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-walk-0005
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0005
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0004
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-axethrower-attack-0006
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-
-wolf1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-wolf-attack-0003
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-0004
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0002
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-walk-0004
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0005
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-0005
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-walk-0003
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0003
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-0002
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-attack-0001
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0008
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0006
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0011
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-death-0001
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0009
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0010
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0007
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0004
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-idle-0001
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-walk-0002
-  rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-wolf-walk-0001
-  rotate: false
-  xy: 384, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-
-sword1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-sword-shield-0001
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0011
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-death-0001
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-walk-0004
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-walk-0003
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0002
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0006
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0003
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0005
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0004
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0003
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0002
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-walk-0002
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0005
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-walk-0001
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0004
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0007
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0012
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0001
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0006
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0008
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-attack-0001
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0009
-  rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-sword-idle-0010
-  rotate: false
-  xy: 384, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-
-shaman1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-shaman-magic-0004
-  rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0012
-  rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-walk-0004
-  rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0013
-  rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0011
-  rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0001
-  rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0010
-  rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-walk-0002
-  rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0002
-  rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0005
-  rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0011
-  rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-death-0001
-  rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0009
-  rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0006
-  rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-walk-0006
-  rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0003
-  rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0008
-  rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-walk-0005
-  rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0003
-  rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-attack-0003
-  rotate: false
-  xy: 384, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-attack-0001
-  rotate: false
-  xy: 0, 640
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-attack-0002
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-idle-0007
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-attack-0005
+hawk-attack-effect-0002
   rotate: false
   xy: 128, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-idle-0004
+hawk-attack-effect-0001
   rotate: false
   xy: 256, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-attack-0004
+hammer-attack-effect-0004
   rotate: false
   xy: 384, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-magic-0002
+hammer-attack-effect-0003
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hammer-attack-effect-0002
   rotate: false
   xy: 128, 768
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-walk-0003
-  rotate: false
-  xy: 128, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0008
+hammer-attack-effect-0001
   rotate: false
   xy: 256, 768
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-magic-0007
-  rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0006
-  rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0010
-  rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0005
-  rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-magic-0009
-  rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-shaman-walk-0001
+berserker-berserk-effect-0003
   rotate: false
   xy: 384, 768
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shaman-idle-0001
+berserker-berserk-effect-0004
+  rotate: false
+  xy: 384, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-effect-0001
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-effect-0002
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axe-attack-effect-0003
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axe-attack-effect-0002
   rotate: false
   xy: 256, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axe-attack-effect-0001
+  rotate: false
+  xy: 384, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-fireball-0003
+  rotate: false
+  xy: 0, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-fireball-0002
+  rotate: false
+  xy: 64, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-fireball-0001
+  rotate: false
+  xy: 128, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-attack-effect-0005
+  rotate: false
+  xy: 192, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-attack-effect-0004
+  rotate: false
+  xy: 256, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-attack-effect-0003
+  rotate: false
+  xy: 320, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-attack-effect-0002
+  rotate: false
+  xy: 384, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shaman-attack-effect-0001
+  rotate: false
+  xy: 448, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+axe-effect-0003
+  rotate: false
+  xy: 0, 1088
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+axe-effect-0002
+  rotate: false
+  xy: 64, 1088
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+axe-effect-0001
+  rotate: false
+  xy: 128, 1088
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
+icons1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+heal
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 64, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+speed
+  rotate: false
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 64, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+range
+  rotate: false
+  xy: 96, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mana
+  rotate: false
+  xy: 0, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hp
+  rotate: false
+  xy: 0, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+gold
+  rotate: false
+  xy: 32, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+bow
+  rotate: false
+  xy: 32, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap
+  rotate: false
+  xy: 64, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+
+terrain1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+water-shallow-0001
+  rotate: false
+  xy: 0, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+water-deep-0001
+  rotate: false
+  xy: 0, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+mountain
+  rotate: false
+  xy: 0, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 0, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 0, 1024
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+forest
+  rotate: false
+  xy: 0, 1280
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+volcano-0002
+  rotate: false
+  xy: 0, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+volcano-0001
+  rotate: false
+  xy: 128, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+snow
+  rotate: false
+  xy: 0, 1664
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hill
+  rotate: false
+  xy: 128, 1664
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -1467,6 +638,13 @@ repeat: none
 tutorialImage2
   rotate: false
   xy: 0, 0
+  size: 614, 1024
+  orig: 614, 1024
+  offset: 0, 0
+  index: -1
+tutorialImage1
+  rotate: false
+  xy: 0, 1024
   size: 614, 1024
   orig: 614, 1024
   offset: 0, 0
@@ -1492,35 +670,35 @@ border-window-white
   orig: 128, 139
   offset: 0, 0
   index: -1
-border-thin-white
+border-thin
   rotate: false
   xy: 870, 512
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
-border-thin
+border-thin-white
   rotate: false
   xy: 614, 651
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
-border-thick-white
+border-thick
   rotate: false
   xy: 754, 651
   size: 149, 113
   orig: 149, 113
   offset: 0, 0
   index: -1
-border-thick
+border-thick-white
   rotate: false
   xy: 754, 764
   size: 149, 113
   orig: 149, 113
   offset: 0, 0
   index: -1
-heal-button
+terrain-button
   rotate: false
   xy: 614, 773
   size: 128, 128
@@ -1541,6 +719,111 @@ open-button
   orig: 128, 128
   offset: 0, 0
   index: -1
+Ok-button
+  rotate: false
+  xy: 614, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+help-button
+  rotate: false
+  xy: 742, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+heal-button
+  rotate: false
+  xy: 870, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+heal-button-gray
+  rotate: false
+  xy: 614, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+heal-button-active
+  rotate: false
+  xy: 742, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+empty-button
+  rotate: false
+  xy: 870, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button
+  rotate: false
+  xy: 614, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button-red
+  rotate: false
+  xy: 742, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button-blue
+  rotate: false
+  xy: 870, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 614, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+buy
+  rotate: false
+  xy: 742, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building-button
+  rotate: false
+  xy: 870, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button
+  rotate: false
+  xy: 614, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button-gray
+  rotate: false
+  xy: 742, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button-active
+  rotate: false
+  xy: 870, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 flag-inplace-black-0004
   rotate: false
   xy: 956, 0
@@ -1548,7 +831,7 @@ flag-inplace-black-0004
   orig: 64, 64
   offset: 0, 0
   index: -1
-APPie-bg-8
+flag-inplace-black-0003
   rotate: false
   xy: 956, 64
   size: 64, 64
@@ -1562,14 +845,14 @@ flag-inplace-black-0002
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0003
+flag-inplace-black-0001
   rotate: false
   xy: 956, 192
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0001
+APPie-piece-8
   rotate: false
   xy: 956, 256
   size: 64, 64
@@ -1583,25 +866,32 @@ APPie-front-8
   orig: 64, 64
   offset: 0, 0
   index: -1
-APPie-piece-8
+APPie-bg-8
   rotate: false
   xy: 956, 384
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-sound-off
+sound-on
   rotate: false
   xy: 956, 448
   size: 36, 36
   orig: 36, 36
   offset: 0, 0
   index: -1
-sound-on
+sound-off
   rotate: false
   xy: 614, 901
   size: 36, 36
   orig: 36, 36
+  offset: 0, 0
+  index: -1
+white-line-hard
+  rotate: false
+  xy: 614, 1664
+  size: 240, 3
+  orig: 240, 3
   offset: 0, 0
   index: -1
 check-on
@@ -1623,142 +913,6 @@ ui2.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-MenuBackground-transparent
-  rotate: false
-  xy: 0, 0
-  size: 614, 1024
-  orig: 614, 1024
-  offset: 0, 0
-  index: -1
-heal-button-active
-  rotate: false
-  xy: 614, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-help-button
-  rotate: false
-  xy: 742, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserk-button-active
-  rotate: false
-  xy: 870, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserk-button-gray
-  rotate: false
-  xy: 614, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-terrain-button
-  rotate: false
-  xy: 742, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-empty-button
-  rotate: false
-  xy: 870, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button-red
-  rotate: false
-  xy: 614, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-buy
-  rotate: false
-  xy: 742, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building-button
-  rotate: false
-  xy: 870, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button
-  rotate: false
-  xy: 614, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-heal-button-gray
-  rotate: false
-  xy: 742, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserk-button
-  rotate: false
-  xy: 870, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-cancel
-  rotate: false
-  xy: 614, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-Ok-button
-  rotate: false
-  xy: 742, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button-blue
-  rotate: false
-  xy: 870, 512
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-white-line-hard
-  rotate: false
-  xy: 614, 640
-  size: 240, 3
-  orig: 240, 3
-  offset: 0, 0
-  index: -1
-
-ui3.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-tutorialImage1
-  rotate: false
-  xy: 0, 0
-  size: 614, 1024
-  orig: 614, 1024
-  offset: 0, 0
-  index: -1
-
-ui4.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 MenuBackground
   rotate: false
   xy: 0, 0
@@ -1766,41 +920,15 @@ MenuBackground
   orig: 614, 1024
   offset: 0, 0
   index: -1
-
-ui5.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-splashscreen
+MenuBackground-transparent
   rotate: false
-  xy: 0, 0
-  size: 575, 1024
-  orig: 575, 1024
-  offset: 0, 0
-  index: -1
-button-pressed
-  rotate: false
-  xy: 575, 0
-  size: 439, 111
-  orig: 439, 111
-  offset: 0, 0
-  index: -1
-button-available
-  rotate: false
-  xy: 575, 111
-  size: 439, 111
-  orig: 439, 111
-  offset: 0, 0
-  index: -1
-button-unavailable
-  rotate: false
-  xy: 575, 222
-  size: 439, 111
-  orig: 439, 111
+  xy: 0, 1024
+  size: 614, 1024
+  orig: 614, 1024
   offset: 0, 0
   index: -1
 
-ui6.png
+ui3.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -1832,25 +960,53 @@ white-line
   orig: 578, 5
   offset: 0, 0
   index: -1
-EndTurnGradient
+splashscreen
   rotate: false
   xy: 0, 511
+  size: 575, 1024
+  orig: 575, 1024
+  offset: 0, 0
+  index: -1
+EndTurnGradient
+  rotate: false
+  xy: 0, 1535
   size: 512, 256
   orig: 512, 256
   offset: 0, 0
   index: -1
 logo
   rotate: false
-  xy: 0, 767
+  xy: 0, 1791
   size: 503, 181
   orig: 503, 181
   offset: 0, 0
   index: -1
 BottomSmallPanel
   rotate: false
-  xy: 512, 511
+  xy: 512, 1535
   size: 480, 120
   orig: 480, 120
+  offset: 0, 0
+  index: -1
+button-unavailable
+  rotate: false
+  xy: 575, 511
+  size: 439, 111
+  orig: 439, 111
+  offset: 0, 0
+  index: -1
+button-pressed
+  rotate: false
+  xy: 575, 622
+  size: 439, 111
+  orig: 439, 111
+  offset: 0, 0
+  index: -1
+button-available
+  rotate: false
+  xy: 575, 733
+  size: 439, 111
+  orig: 439, 111
   offset: 0, 0
   index: -1
 
@@ -1858,429 +1014,1326 @@ numbers1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-hurt-6
+hurt-9
   rotate: false
   xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-3
-  rotate: false
-  xy: 0, 32
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-3
-  rotate: false
-  xy: 0, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-6
-  rotate: false
-  xy: 0, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hurt-8
   rotate: false
-  xy: 32, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-5
-  rotate: false
-  xy: 32, 32
+  xy: 0, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hurt-7
   rotate: false
-  xy: 32, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-1
-  rotate: false
-  xy: 32, 96
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-5
-  rotate: false
-  xy: 64, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-1
-  rotate: false
-  xy: 64, 32
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-7
-  rotate: false
-  xy: 64, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-9
-  rotate: false
-  xy: 64, 96
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-4
-  rotate: false
-  xy: 96, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-8
-  rotate: false
-  xy: 96, 32
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-2
-  rotate: false
-  xy: 96, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-2
-  rotate: false
-  xy: 96, 96
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-9
-  rotate: false
-  xy: 128, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ap-slash
-  rotate: false
-  xy: 160, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-hurt-4
-  rotate: false
-  xy: 192, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-
-terrain1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-water-shallow-0001
-  rotate: false
-  xy: 0, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-grid
-  rotate: false
-  xy: 256, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-mountain
-  rotate: false
-  xy: 0, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-grass
-  rotate: false
-  xy: 256, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-forest
-  rotate: false
-  xy: 0, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-water-deep-0001
-  rotate: false
-  xy: 256, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-hill
-  rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-volcano-0002
-  rotate: false
-  xy: 0, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-volcano-0001
-  rotate: false
-  xy: 128, 768
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-snow
-  rotate: false
-  xy: 128, 896
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-
-icons1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-heal
-  rotate: false
-  xy: 0, 0
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-speed
-  rotate: false
-  xy: 64, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-gold
-  rotate: false
-  xy: 96, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-sword
-  rotate: false
-  xy: 64, 32
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-mana
-  rotate: false
-  xy: 96, 32
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-bow
-  rotate: false
   xy: 0, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-range
+hurt-6
   rotate: false
   xy: 0, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-shield
+hurt-5
+  rotate: false
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hurt-4
+  rotate: false
+  xy: 32, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hurt-3
   rotate: false
   xy: 32, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-hp
+hurt-2
   rotate: false
   xy: 32, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-ap
+hurt-1
+  rotate: false
+  xy: 64, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-slash
+  rotate: false
+  xy: 64, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-9
   rotate: false
   xy: 64, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+ap-8
+  rotate: false
+  xy: 64, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-7
+  rotate: false
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-6
+  rotate: false
+  xy: 96, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-5
+  rotate: false
+  xy: 96, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-4
+  rotate: false
+  xy: 96, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-3
+  rotate: false
+  xy: 128, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-2
+  rotate: false
+  xy: 160, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ap-1
+  rotate: false
+  xy: 192, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 
-buildings1.png
+pie1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-castle
+APPie-bg
   rotate: false
   xy: 0, 0
-  size: 256, 256
-  orig: 256, 256
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
   index: -1
-village
+APPie-piece-9
+  rotate: false
+  xy: 0, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-piece-8
+  rotate: false
+  xy: 64, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-piece-7
+  rotate: false
+  xy: 128, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-piece-5
+  rotate: false
+  xy: 192, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-front-9
+  rotate: false
+  xy: 256, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-front-8
+  rotate: false
+  xy: 320, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-front-7
+  rotate: false
+  xy: 384, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-front-5
+  rotate: false
+  xy: 448, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
+axethrower1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+axethrower-walk-0008
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0007
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0006
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0005
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0004
   rotate: false
   xy: 0, 256
-  size: 256, 256
-  orig: 256, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-temple
+axethrower-walk-0003
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0002
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-walk-0001
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0011
   rotate: false
   xy: 0, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+axethrower-idle-0010
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0009
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0008
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0007
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0006
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0005
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0004
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0003
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0002
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-idle-0001
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-death-0001
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0004
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0005
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0006
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0003
+  rotate: false
+  xy: 128, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0001
+  rotate: false
+  xy: 0, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+axethrower-attack-0002
+  rotate: false
+  xy: 0, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 
-flags1.png
+berserk1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-flag-inplace-blue-0001
+berserker-walk-0004
   rotate: false
   xy: 0, 0
-  size: 64, 64
-  orig: 64, 64
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingup-blue-0002
-  rotate: false
-  xy: 0, 64
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-inplace-blue-0002
-  rotate: false
-  xy: 64, 0
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-inplace-red-0002
-  rotate: false
-  xy: 64, 64
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-goingdown-blue-0002
+berserker-walk-0003
   rotate: false
   xy: 128, 0
-  size: 64, 64
-  orig: 64, 64
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-blue-0003
+berserker-walk-0002
   rotate: false
-  xy: 128, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingdown-red-0002
+berserker-walk-0001
   rotate: false
-  xy: 192, 0
-  size: 64, 64
-  orig: 64, 64
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-red-0003
+berserker-idle-0011
   rotate: false
-  xy: 192, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-red-0001
+berserker-idle-0010
   rotate: false
-  xy: 256, 0
-  size: 64, 64
-  orig: 64, 64
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingup-blue-0001
+berserker-idle-0009
   rotate: false
-  xy: 256, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-red-0004
+berserker-idle-0008
   rotate: false
-  xy: 320, 0
-  size: 64, 64
-  orig: 64, 64
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingdown-red-0001
+berserker-idle-0007
   rotate: false
-  xy: 320, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingup-red-0001
+berserker-idle-0006
   rotate: false
-  xy: 384, 0
-  size: 64, 64
-  orig: 64, 64
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingup-red-0002
+berserker-idle-0005
   rotate: false
-  xy: 448, 0
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-blue-0004
+berserker-idle-0004
   rotate: false
-  xy: 384, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-flag-goingdown-blue-0001
+berserker-idle-0003
   rotate: false
-  xy: 448, 64
-  size: 64, 64
-  orig: 64, 64
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-idle-0002
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-idle-0001
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-death-0001
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0005
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0006
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0004
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0001
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0002
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-berserk-0003
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-attack-0004
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-attack-0005
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-attack-0003
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-attack-0001
+  rotate: false
+  xy: 128, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserker-attack-0002
+  rotate: false
+  xy: 128, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+hawk1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hawk-idle-0011
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-walk-0004
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0010
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0009
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0008
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0007
+  rotate: false
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0006
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-walk-0003
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0005
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0004
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-walk-0002
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0003
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0002
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-idle-0001
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-walk-0001
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-death-0001
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0006
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0005
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0004
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0003
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0002
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hawk-attack-0001
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+shaman1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+shaman-walk-0006
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-walk-0005
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-walk-0004
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-walk-0003
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-walk-0002
+  rotate: false
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-walk-0001
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0013
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0012
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0011
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0005
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0006
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0007
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0008
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0009
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0010
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0004
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0003
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0002
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-magic-0001
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0011
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0010
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0009
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0008
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0007
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0006
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0005
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0004
+  rotate: false
+  xy: 128, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0003
+  rotate: false
+  xy: 0, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0002
+  rotate: false
+  xy: 128, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-idle-0001
+  rotate: false
+  xy: 0, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-death-0001
+  rotate: false
+  xy: 128, 1536
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-attack-0005
+  rotate: false
+  xy: 0, 1664
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-attack-0004
+  rotate: false
+  xy: 128, 1664
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-attack-0003
+  rotate: false
+  xy: 0, 1792
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-attack-0002
+  rotate: false
+  xy: 128, 1792
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shaman-attack-0001
+  rotate: false
+  xy: 0, 1920
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+sword1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sword-walk-0004
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-walk-0003
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-walk-0002
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-walk-0001
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-shield-0001
+  rotate: false
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0011
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0010
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0009
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0008
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0007
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0006
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0005
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0004
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0003
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0002
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0001
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-idle-0012
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-death-0001
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0003
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0004
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0005
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0006
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0002
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+sword-attack-0001
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+wolf1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wolf-walk-0004
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-walk-0003
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-walk-0002
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-walk-0001
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0011
+  rotate: false
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0010
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0009
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0008
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0007
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0006
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0005
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0004
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0003
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0002
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-idle-0001
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-death-0001
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0005
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0004
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0003
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0001
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0002
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
