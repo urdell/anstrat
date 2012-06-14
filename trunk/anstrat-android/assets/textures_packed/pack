@@ -1485,65 +1485,58 @@ border-window
   orig: 128, 139
   offset: 0, 0
   index: -1
-border-thin-white
+border-window-white
   rotate: false
   xy: 742, 512
+  size: 128, 139
+  orig: 128, 139
+  offset: 0, 0
+  index: -1
+border-thin-white
+  rotate: false
+  xy: 870, 512
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
 border-thin
   rotate: false
-  xy: 882, 512
+  xy: 614, 651
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
+border-thick-white
+  rotate: false
+  xy: 754, 651
+  size: 149, 113
+  orig: 149, 113
+  offset: 0, 0
+  index: -1
 border-thick
   rotate: false
-  xy: 614, 651
+  xy: 754, 764
   size: 149, 113
   orig: 149, 113
   offset: 0, 0
   index: -1
 heal-button
   rotate: false
-  xy: 614, 764
+  xy: 614, 773
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 save-button
   rotate: false
-  xy: 614, 892
+  xy: 754, 877
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 open-button
   rotate: false
-  xy: 763, 651
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-heal-button-active
-  rotate: false
-  xy: 891, 651
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-help-button
-  rotate: false
-  xy: 763, 779
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserk-button-active
-  rotate: false
-  xy: 891, 779
+  xy: 882, 877
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -1555,57 +1548,202 @@ flag-inplace-black-0004
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0002
+APPie-bg-8
   rotate: false
   xy: 956, 64
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0003
+flag-inplace-black-0002
   rotate: false
   xy: 956, 128
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0001
+flag-inplace-black-0003
   rotate: false
   xy: 956, 192
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-sound-off
+flag-inplace-black-0001
   rotate: false
   xy: 956, 256
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-front-8
+  rotate: false
+  xy: 956, 320
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+APPie-piece-8
+  rotate: false
+  xy: 956, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound-off
+  rotate: false
+  xy: 956, 448
   size: 36, 36
   orig: 36, 36
   offset: 0, 0
   index: -1
 sound-on
   rotate: false
-  xy: 956, 292
+  xy: 614, 901
   size: 36, 36
   orig: 36, 36
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 992, 256
+  xy: 956, 484
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 992, 292
+  xy: 992, 448
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
 
 ui2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+MenuBackground-transparent
+  rotate: false
+  xy: 0, 0
+  size: 614, 1024
+  orig: 614, 1024
+  offset: 0, 0
+  index: -1
+heal-button-active
+  rotate: false
+  xy: 614, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+help-button
+  rotate: false
+  xy: 742, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button-active
+  rotate: false
+  xy: 870, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button-gray
+  rotate: false
+  xy: 614, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+terrain-button
+  rotate: false
+  xy: 742, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+empty-button
+  rotate: false
+  xy: 870, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button-red
+  rotate: false
+  xy: 614, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+buy
+  rotate: false
+  xy: 742, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building-button
+  rotate: false
+  xy: 870, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button
+  rotate: false
+  xy: 614, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+heal-button-gray
+  rotate: false
+  xy: 742, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+berserk-button
+  rotate: false
+  xy: 870, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 614, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Ok-button
+  rotate: false
+  xy: 742, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+capture-button-blue
+  rotate: false
+  xy: 870, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+white-line-hard
+  rotate: false
+  xy: 614, 640
+  size: 240, 3
+  orig: 240, 3
+  offset: 0, 0
+  index: -1
+
+ui3.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -1616,99 +1754,8 @@ tutorialImage1
   orig: 614, 1024
   offset: 0, 0
   index: -1
-berserk-button-gray
-  rotate: false
-  xy: 614, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-terrain-button
-  rotate: false
-  xy: 742, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-empty-button
-  rotate: false
-  xy: 870, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button-red
-  rotate: false
-  xy: 614, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-buy
-  rotate: false
-  xy: 742, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building-button
-  rotate: false
-  xy: 870, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button
-  rotate: false
-  xy: 614, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-heal-button-gray
-  rotate: false
-  xy: 742, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserk-button
-  rotate: false
-  xy: 870, 256
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-cancel
-  rotate: false
-  xy: 614, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-Ok-button
-  rotate: false
-  xy: 742, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-capture-button-blue
-  rotate: false
-  xy: 870, 384
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-white-line-hard
-  rotate: false
-  xy: 614, 512
-  size: 240, 5
-  orig: 240, 5
-  offset: 0, 0
-  index: -1
 
-ui3.png
+ui4.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -1720,7 +1767,7 @@ MenuBackground
   offset: 0, 0
   index: -1
 
-ui4.png
+ui5.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -1753,7 +1800,7 @@ button-unavailable
   offset: 0, 0
   index: -1
 
-ui5.png
+ui6.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
