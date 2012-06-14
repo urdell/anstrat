@@ -1,0 +1,180 @@
+package com.anstrat.popup;
+
+import com.anstrat.core.Assets;
+import com.anstrat.core.Main;
+import com.anstrat.core.User;
+import com.anstrat.gameCore.State;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Align;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
+/**
+ * Skeleton class for ability popup.
+ * @author kalper
+ */
+public class AbilityPopup extends Popup {
+	
+	public static String CAST_TEXT = "Cast";
+	public static String CANCEL_TEXT = "Cancel";
+	
+	private TextButton cast, cancel;
+	private AbilityTypeCard card;
+	private Button[] abilities;
+	private PlayerAbilityType[] types;
+	private Button selectedButton;
+	
+	public AbilityPopup(PlayerAbilityType... types) {
+		super(new PopupHandler() {
+			@Override
+			public void handlePopupAction(String text) {
+				AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
+				if (text.equals(CAST_TEXT)) {
+					PlayerAbilityType type = popup.card.type;
+					Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
+					// TODO: cast spell
+					popup.close();
+				}
+				else if (text.equals(CANCEL_TEXT)) {
+					Popup.currentPopup.close();
+				}
+			}
+		}, "");
+		this.types = types;
+		cast = new TextButton(CAST_TEXT,Assets.SKIN);
+		cancel = new TextButton(CANCEL_TEXT, Assets.SKIN);
+		abilities = new Button[1];
+		card = new AbilityTypeCard(types[0]);
+		Image tempImage; // used to instantiate images for buttons.
+		
+		for(int i=0; i<abilities.length; i++){
+			final int b = i;
+			//TODO 
+			tempImage = new Image();
+			abilities[i] = new Button(tempImage, Assets.SKIN.getStyle("default", ButtonStyle.class));
+			tempImage.setFillParent(true);
+			tempImage.setAlign(Align.CENTER);
+			abilities[i].setClickListener(new ClickListener() {
+				@Override
+			    public void click(Actor actor,float x,float y ){
+			        selectButton(b);
+			    }
+			});
+		}
+		selectButton(0);
+		
+		cast.setClickListener(cl);
+		cancel.setClickListener(cl);
+		
+		this.setBackground(Assets.SKIN.getPatch("empty"));
+		
+		for(Button ib : abilities) {
+			this.addActor(ib);
+		}
+		
+		this.addActor(cast);
+		this.addActor(cancel);
+		this.addActor(card);
+		
+	}
+	
+	/**
+	 * Check if the unit is buyable before showing popup.
+	 */
+	@Override public void show(){
+		checkAbilityAffordable();
+		super.show();
+	}
+	
+	public void selectButton(int button) {
+		if (selectedButton != null)
+			selectedButton.setChecked(false);
+		selectedButton = abilities[button];
+		selectedButton.setChecked(true);
+		card.setType(types[button]);
+		card.setSize(card.width, card.height);
+		checkAbilityAffordable();
+	}
+	
+	/**
+	 * Disables buy button if unit is too expensive.
+	 * 
+	 * NOTE: Do other things, like graying the unit portrait of all units that can't be bought.
+	 */
+	public void checkAbilityAffordable(){
+		if(State.activeState==null)
+			return;
+		
+		int mana = State.activeState.getCurrentPlayer().mana;
+		boolean isPlayerTurn = State.activeState.getCurrentPlayer().userID == User.globalUserID;
+		
+		//Disable buy button if current unit is not affordable
+		boolean canBuy = mana>=card.type.manaCost;
+		Assets.SKIN.setEnabled(cast, canBuy && isPlayerTurn);
+		card.setDisabled(!canBuy);
+		
+		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
+		for(int i=0; i<types.length; i++){
+			if(mana<types[i].manaCost || !isPlayerTurn)
+				abilities[i].setStyle(Assets.SKIN.getStyle("default-disabled", ButtonStyle.class));
+			else
+				abilities[i].setStyle(Assets.SKIN.getStyle("default", ButtonStyle.class));
+		}
+	}
+	
+	public void resize(int width, int height){
+		overlay.setSize(width, height);
+		this.width = width;
+		this.height = height;
+		this.x = this.y = 0;
+		
+		float buttonHeight = height/8f;
+		float buttonWidth = buttonHeight;//width/4f;
+
+		float cardWidth = width-2*buttonWidth - 4*Main.percentWidth;//width/2f;
+		float cardHeight = 3*width/4f;
+		
+		cast.x = (float) (0.25*buttonWidth);
+		cast.y = (float) (buttonHeight);
+		cast.width = buttonWidth*1.5f;
+		cast.height = buttonHeight;
+		
+		cancel.x = (float) (width-1.75*buttonWidth);
+		cancel.y = (float) (buttonHeight);
+		cancel.width = buttonWidth*1.5f;
+		cancel.height = buttonHeight;
+		
+		card.x = (width-cardWidth)/2 - 2*Main.percentWidth;//width/4-2*Main.percentWidth;
+		card.y = (float) (2.25*buttonHeight)-Main.percentHeight;
+		card.setSize(cardWidth+4*Main.percentWidth, cardHeight+2*Main.percentHeight);
+		
+		abilities[0].x = 0;
+		abilities[0].y = (float) (3*buttonHeight);
+		
+		/*abilities[1].x = 0;
+		abilities[1].y = (float) (4.5*buttonHeight);
+		
+		abilities[2].x = (float) (0.6*buttonWidth);
+		abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
+		
+		abilities[3].x = (float) (width-1.6*buttonWidth);
+		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
+		
+		abilities[4].x = width-buttonWidth;
+		abilities[4].y = (float) (4.5*buttonHeight);
+		
+		abilities[5].x = width-buttonWidth;
+		abilities[5].y = (float) (3*buttonHeight);*/
+		
+		for(Button ability : abilities){
+			ability.width = buttonWidth;
+			ability.height = buttonHeight;
+		}
+		this.layout();
+	}
+}
