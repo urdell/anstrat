@@ -47,7 +47,7 @@ public class DesktopGame {
 		Settings settings = new Settings();
         settings.padding = 0;
         settings.maxWidth = 1024;
-        settings.maxHeight = 2048;
+        settings.maxHeight = 1024;
         settings.incremental = incremental;
         settings.defaultFilterMag = TextureFilter.Linear;
         settings.defaultFilterMin = TextureFilter.Linear;

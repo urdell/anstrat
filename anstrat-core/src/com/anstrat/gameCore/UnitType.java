@@ -32,6 +32,7 @@ public enum UnitType {
 	public transient String graphicsFolder;
 	
 	public String idleImage;
+	public String portrait;
 	
 	// HP
 	public transient int maxHP;
@@ -141,6 +142,7 @@ public enum UnitType {
 		type.cost = element.getInt("cost", type.cost);
 		type.description = element.get("description", type.description);
 		type.idleImage = element.get("idleImage", type.idleImage);
+		type.portrait = element.get("portrait", type.portrait);
 		
 		// Terrain type penalties, attributes/elements starting with 'terrainPenalty', e.g 'terrainPenaltySnow'
 		for(TerrainType t : TerrainType.values()){
