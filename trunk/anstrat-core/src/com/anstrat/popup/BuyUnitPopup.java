@@ -54,7 +54,7 @@ public class BuyUnitPopup extends Popup{
 		
 		for(int i=0; i<units.length; i++){
 			final int b = i;
-			units[i] = ComponentFactory.createButton(GUnit.getTextureRegion(types[i]), "default",
+			units[i] = ComponentFactory.createButton(GUnit.getUnitPortrait(types[i]), "default",
 					new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){

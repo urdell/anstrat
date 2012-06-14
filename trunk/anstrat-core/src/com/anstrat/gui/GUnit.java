@@ -91,6 +91,10 @@ public class GUnit extends GObject {
 		return Assets.getTextureRegion(type.idleImage);
 	}
 	
+	public static TextureRegion getUnitPortrait(UnitType type){
+		return Assets.getTextureRegion(type.portrait);
+	}
+	
 	public void setAlpha(float alpha){
 		this.alpha = alpha;
 		oldHealthBar.setAlpha(alpha);

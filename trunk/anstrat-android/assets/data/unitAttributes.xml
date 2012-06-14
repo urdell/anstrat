@@ -15,6 +15,7 @@
 		<ability1>1</ability1><!-- berserk -->
 		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
 		<idleImage>berserker-idle-0001</idleImage>
+		<portrait>berserker-idle-0001</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Shaman</name>
@@ -32,6 +33,7 @@
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
+		<portrait>shaman-idle-0001</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Axe Thrower</name>
@@ -48,6 +50,7 @@
 		<cost>20</cost>
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
+		<portrait>axethrowerportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Wolf</name>
@@ -64,6 +67,7 @@
 		<cost>18</cost>
 		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
 		<idleImage>wolf-idle-0001</idleImage>
+		<portrait>wolfportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Hawk</name>
@@ -86,6 +90,7 @@
 		<terrainPenaltySnow>1</terrainPenaltySnow>
 		<terrainPenaltyForest>1</terrainPenaltyForest>
 		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
+		<portrait>hawk-idle-0001</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Swordsman</name>
@@ -103,5 +108,6 @@
 		<effect1>2</effect1><!-- Shield Wall -->
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
 		<idleImage>sword-idle-0001</idleImage>
+		<portrait>sword-idle-0001</portrait>
 	</UnitType>
 </UnitTypes>
