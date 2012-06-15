@@ -1,5 +1,7 @@
 package com.anstrat.popup;
 
+import java.util.Arrays;
+
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
@@ -25,42 +27,32 @@ public class BuyUnitPopup extends Popup{
 	public static String BUY_TEXT = "Buy";
 	public static String CANCEL_TEXT = "Cancel";
 	
-	private TextButton buy, cancel;
+	private TextButton buy;
 	private UnitTypeCard card;
 	private Button[] units;
 	private UnitType[] types;
-	private Button selectedButton;
 	private Player opener;
 	
 	public BuyUnitPopup(UnitType... types) {
-		super(new PopupHandler() {
+		super(new PopupListener() {
 			@Override
-			public void handlePopupAction(String text) {
+			public void handle(String text) {
 				BuyUnitPopup popup = (BuyUnitPopup) Popup.currentPopup;
-				if (text.equals(BUY_TEXT)) {
-					UnitType type = popup.card.type;
-					Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
-					// TODO: Display somehow that buying unit failed
-					GEngine.getInstance().selectionHandler.selectSpawn(type);
-					popup.close();
-				}
-				else if (text.equals(CANCEL_TEXT)) {
-					Popup.currentPopup.close();
-				}
+				UnitType type = popup.card.type;
+				Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
+				GEngine.getInstance().selectionHandler.selectSpawn(type);
 			}
 		}, "");
 		this.types = types;
 		
-		buy    = ComponentFactory.createButton(BUY_TEXT, null, cl);
-		cancel = ComponentFactory.createButton(CANCEL_TEXT, null, cl);
+		buy   = ComponentFactory.createButton(BUY_TEXT, null, cl);
 		units = new Button[6];
 		card  = new UnitTypeCard(types[0]);
 		this.register("buy",buy);
-		this.register("cancel",cancel);
+		this.register("cancel",ComponentFactory.createButton(CANCEL_TEXT, null, cl));
 		this.register("card",card);
 		
 		for(int i=0; i<units.length; i++){
-			final int b = i;
 			Table tbl = new Table(Assets.SKIN);
 			tbl.register("im",new Image(GUnit.getUnitPortrait(types[i])));
 			tbl.setBackground(new NinePatch(Assets.getTextureRegion("empty-button")));
@@ -69,12 +61,12 @@ public class BuyUnitPopup extends Popup{
 			units[i].setClickListener(new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){
-			        selectButton(b);
+			        selectButton((Button)actor);
 			    }
 			});
 			this.register("unit"+i, units[i]);
 		}
-		selectButton(0);
+		selectButton(units[0]);
 		
 		this.setBackground(Assets.SKIN.getPatch("empty"));
 
@@ -97,7 +89,7 @@ public class BuyUnitPopup extends Popup{
 	}
 	
 	/**
-	 * Check if the ability is afforded before showing popup.
+	 * Check if the unit is afforded before showing popup.
 	 */
 	@Override public void show(){
 		State state = State.activeState;
@@ -111,12 +103,11 @@ public class BuyUnitPopup extends Popup{
 		super.show();
 	}
 	
-	public void selectButton(int button) {
-		if (selectedButton != null)
-			selectedButton.setChecked(false);
-		selectedButton = units[button];
-		selectedButton.setChecked(true);
-		card.setType(types[button]);
+	/**
+	 * Set specified button as selected. 
+	 */
+	public void selectButton(Button button) {
+		card.setType(types[Arrays.asList(units).indexOf(button)]);
 		card.setSize(card.width, card.height);
 		checkUnitAffordable();
 	}
@@ -139,12 +130,12 @@ public class BuyUnitPopup extends Popup{
 		card.setDisabled(!canBuy);
 		
 		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
-		for(int i=0; i<types.length; i++){
+		/*for(int i=0; i<types.length; i++){
 			if(gold<types[i].cost)
 				units[i].setStyle(Assets.SKIN.getStyle("image-disabled", ButtonStyle.class));
 			else
 				units[i].setStyle(Assets.SKIN.getStyle("image", ButtonStyle.class));
-		}
+		}*/
 	}
 	
 	public void resize(int width, int height){
