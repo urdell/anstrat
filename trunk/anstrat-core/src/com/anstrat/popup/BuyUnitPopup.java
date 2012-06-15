@@ -11,11 +11,14 @@ import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class BuyUnitPopup extends Popup{
 	
@@ -47,32 +50,50 @@ public class BuyUnitPopup extends Popup{
 			}
 		}, "");
 		this.types = types;
+		
 		buy    = ComponentFactory.createButton(BUY_TEXT, null, cl);
 		cancel = ComponentFactory.createButton(CANCEL_TEXT, null, cl);
 		units = new Button[6];
-		card = new UnitTypeCard(types[0]);
+		card  = new UnitTypeCard(types[0]);
+		this.register("buy",buy);
+		this.register("cancel",cancel);
+		this.register("card",card);
 		
 		for(int i=0; i<units.length; i++){
 			final int b = i;
-			units[i] = ComponentFactory.createButton(GUnit.getUnitPortrait(types[i]), "default",
-					new ClickListener() {
+			Table tbl = new Table(Assets.SKIN);
+			tbl.register("im",new Image(GUnit.getUnitPortrait(types[i])));
+			tbl.setBackground(new NinePatch(Assets.getTextureRegion("empty-button")));
+			tbl.parse("[im] center fill:60,60 paddingTop:"+(int)(-Main.percentHeight*0.5));
+			units[i] = new Button(tbl, Assets.SKIN.getStyle("image",ButtonStyle.class));
+			units[i].setClickListener(new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){
 			        selectButton(b);
 			    }
 			});
+			this.register("unit"+i, units[i]);
 		}
 		selectButton(0);
 		
 		this.setBackground(Assets.SKIN.getPatch("empty"));
+
+		int cardW = (int)(Main.percentWidth*60);
+		int cardH = (int)(Main.percentHeight*50);
+		int buttSize = (int)(((Main.percentWidth*100-cardW)/2));
+		String buttOptions = "*size:"+buttSize+" padding:"+(int)(-buttSize*0.1);
 		
-		for(Button ib : units) {
-			this.addActor(ib);
-		}
-		
-		this.addActor(buy);
-		this.addActor(cancel);
-		this.addActor(card);
+		this.parse("align:center *expand:x fill:x "+
+				"{"+buttOptions+" [unit2] [] [unit3] }" +
+				"---" +
+				"{" +
+					"{"+buttOptions+" [unit0] --- [] --- [unit1] }" +
+					"[card] height:"+cardH+" width:"+cardW +
+					"{"+buttOptions+" [unit4] --- [] --- [unit5] }" +
+				"}" +
+				"---" +
+				"{*min:1 height:"+(int)(Main.percentHeight*10)+" width:"+(int)(Main.percentHeight*10*2)+" [buy] paddingRight:"+(int)(Main.percentHeight*5)+" [cancel] }" +
+						"paddingTop:"+(int)(Main.percentHeight*5));
 	}
 	
 	/**
@@ -120,9 +141,9 @@ public class BuyUnitPopup extends Popup{
 		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
 		for(int i=0; i<types.length; i++){
 			if(gold<types[i].cost)
-				units[i].setStyle(Assets.SKIN.getStyle("default-disabled", ButtonStyle.class));
+				units[i].setStyle(Assets.SKIN.getStyle("image-disabled", ButtonStyle.class));
 			else
-				units[i].setStyle(Assets.SKIN.getStyle("default", ButtonStyle.class));
+				units[i].setStyle(Assets.SKIN.getStyle("image", ButtonStyle.class));
 		}
 	}
 	
@@ -131,49 +152,5 @@ public class BuyUnitPopup extends Popup{
 		this.width = width;
 		this.height = height;
 		this.x = this.y = 0;
-		
-		float buttonHeight = height/8f;
-		float buttonWidth = buttonHeight;//width/4f;
-
-		float cardWidth = width-2*buttonWidth - 4*Main.percentWidth;//width/2f;
-		float cardHeight = 3*width/4f;
-		
-		buy.x = (float) (0.25*buttonWidth);
-		buy.y = (float) (buttonHeight);
-		buy.width = buttonWidth*1.5f;
-		buy.height = buttonHeight;
-		
-		cancel.x = (float) (width-1.75*buttonWidth);
-		cancel.y = (float) (buttonHeight);
-		cancel.width = buttonWidth*1.5f;
-		cancel.height = buttonHeight;
-		
-		card.x = (width-cardWidth)/2 - 2*Main.percentWidth;//width/4-2*Main.percentWidth;
-		card.y = (float) (2.25*buttonHeight)-Main.percentHeight;
-		card.setSize(cardWidth+4*Main.percentWidth, cardHeight+2*Main.percentHeight);
-		
-		units[0].x = 0;
-		units[0].y = (float) (3*buttonHeight);
-		
-		units[1].x = 0;
-		units[1].y = (float) (4.5*buttonHeight);
-		
-		units[2].x = (float) (0.6*buttonWidth);
-		units[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		
-		units[3].x = (float) (width-1.6*buttonWidth);
-		units[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		
-		units[4].x = width-buttonWidth;
-		units[4].y = (float) (4.5*buttonHeight);
-		
-		units[5].x = width-buttonWidth;
-		units[5].y = (float) (3*buttonHeight);
-		
-		for(Button unit : units){
-			unit.width = buttonWidth;
-			unit.height = buttonHeight;
-		}
-		this.layout();
 	}
 }
