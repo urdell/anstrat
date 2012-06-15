@@ -33,7 +33,7 @@
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
-		<portrait>shaman-idle-0001</portrait>
+		<portrait>shamanportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Axe Thrower</name>

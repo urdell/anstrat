@@ -789,30 +789,16 @@ empty-button
   orig: 128, 128
   offset: 0, 0
   index: -1
+splashscreen-startgame
+  rotate: false
+  xy: 763, 261
+  size: 222, 72
+  orig: 222, 72
+  offset: 0, 0
+  index: -1
 flag-inplace-black-0002
   rotate: false
   xy: 903, 139
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-inplace-black-0003
-  rotate: false
-  xy: 763, 261
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-inplace-black-0001
-  rotate: false
-  xy: 827, 261
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-flag-inplace-black-0004
-  rotate: false
-  xy: 891, 261
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -829,6 +815,13 @@ sound-off
   xy: 903, 203
   size: 36, 36
   orig: 36, 36
+  offset: 0, 0
+  index: -1
+white-line-hard
+  rotate: false
+  xy: 763, 333
+  size: 240, 3
+  orig: 240, 3
   offset: 0, 0
   index: -1
 check-off
@@ -878,11 +871,25 @@ open-button
   orig: 128, 128
   offset: 0, 0
   index: -1
-white-line-hard
+flag-inplace-black-0003
   rotate: false
   xy: 614, 128
-  size: 240, 3
-  orig: 240, 3
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-black-0001
+  rotate: false
+  xy: 678, 128
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-black-0004
+  rotate: false
+  xy: 742, 128
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 
@@ -954,44 +961,37 @@ BottomLargePanel
   orig: 720, 240
   offset: 0, 0
   index: -1
-splashscreen-startgame
-  rotate: false
-  xy: 0, 240
-  size: 720, 138
-  orig: 720, 138
-  offset: 0, 0
-  index: -1
 TopPanel
   rotate: false
-  xy: 0, 378
+  xy: 0, 240
   size: 720, 128
   orig: 720, 128
   offset: 0, 0
   index: -1
 white-line
   rotate: false
-  xy: 0, 506
+  xy: 0, 368
   size: 578, 5
   orig: 578, 5
   offset: 0, 0
   index: -1
 EndTurnGradient
   rotate: false
-  xy: 0, 511
+  xy: 0, 373
   size: 512, 256
   orig: 512, 256
   offset: 0, 0
   index: -1
 logo
   rotate: false
-  xy: 0, 767
+  xy: 0, 629
   size: 503, 181
   orig: 503, 181
   offset: 0, 0
   index: -1
 BottomSmallPanel
   rotate: false
-  xy: 512, 511
+  xy: 0, 810
   size: 480, 120
   orig: 480, 120
   offset: 0, 0
@@ -1074,9 +1074,16 @@ portraits1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-wolfportrait
+shamanportrait
   rotate: false
   xy: 0, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+wolfportrait
+  rotate: false
+  xy: 512, 0
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
