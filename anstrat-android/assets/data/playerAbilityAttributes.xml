@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PlayerAbilities>
 	<PlayerAbility>
-		<name>Smite</name>
-		<manacost>20</manacost>
-		<description>Smite your foes!11</description>
+		<name>Thunderbolt</name>
+		<manacost>5</manacost>
+		<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at random location</description>
+	</PlayerAbility>
+	<PlayerAbility>
+		<name>Herp di Derp</name>
+		<manacost>10</manacost>
+		<description>Odin turns an enemy unit into a hawk</description>
 	</PlayerAbility>
 </PlayerAbilities>
