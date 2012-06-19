@@ -91,17 +91,7 @@ public class GameUI extends UI {
 		turnDisplay = new Label("",Assets.SKIN);
 		turntable = new ColorTable(Color.BLACK);
 		turntable.setBackground(Assets.SKIN.getPatch("single-border"));
-		//turntable.pad(-(int)(turntable.getBackgroundPatch().getPatches()[0].getRegionHeight()/2));
 		turntable.add(turnDisplay).align("center");
-		/*NinePatch npBack = new NinePatch(Assets.WHITE);
-		npBack.setColor(Color.LIGHT_GRAY);											// COLOR FOR NAME LABEL BACKGROUND
-		turntable.setBackground(npBack);
-		Table temp = new Table();
-		NinePatch np = Assets.SKIN.getPatch("single-border");
-		temp.setBackground(np);
-		temp.add(turnDisplay).align("center");
-		turntable.register("cont", temp);
-		turntable.parse("align:center padding:"+-(int)(np.getPatches()[0].getRegionHeight()/2)+" [cont] fill expand");*/
 		fpsLabel = new Label("",Assets.SKIN);
 		fpsLabel.setColor(Color.LIGHT_GRAY);
 		
@@ -336,14 +326,6 @@ public class GameUI extends UI {
 		for(Button b : abilityButton){
 			b.visible = false;
 		}
-		/*
-		nrShownEffects=0;
-		for(Effect e : unit.getEffects()){
-			effectImage[nrShownEffects].setRegion(Assets.getTextureRegion(e.iconName));
-			effectImage[nrShownEffects].visible = true;
-			nrShownEffects++;
-		}
-		*/
 		nrShownAbilities=0;
 		for(Ability a : unit.getAbilities()){
 			Actor actor = (abilityButton[nrShownAbilities].getActors().get(0));
