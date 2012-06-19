@@ -11,6 +11,7 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
@@ -42,7 +43,8 @@ public class GameUI extends UI {
 	private Unit lastShownUnit;
 	
 	//Top panel
-	public Table topPanel, turntable;
+	public Table topPanel;
+	private ColorTable turntable;
 	private Button endTurnButton;
 	private ValueDisplay goldDisplay, manaDisplay;
 	private Label turnDisplay;
@@ -87,8 +89,11 @@ public class GameUI extends UI {
         goldDisplay = new ValueDisplay(ValueDisplay.VALUE_GOLD);
 		manaDisplay = new ValueDisplay(ValueDisplay.VALUE_MANA);
 		turnDisplay = new Label("",Assets.SKIN);
-		turntable = new Table();
-		NinePatch npBack = new NinePatch(Assets.WHITE);
+		turntable = new ColorTable(Color.BLACK);
+		turntable.setBackground(Assets.SKIN.getPatch("single-border"));
+		//turntable.pad(-(int)(turntable.getBackgroundPatch().getPatches()[0].getRegionHeight()/2));
+		turntable.add(turnDisplay).align("center");
+		/*NinePatch npBack = new NinePatch(Assets.WHITE);
 		npBack.setColor(Color.LIGHT_GRAY);											// COLOR FOR NAME LABEL BACKGROUND
 		turntable.setBackground(npBack);
 		Table temp = new Table();
@@ -96,7 +101,7 @@ public class GameUI extends UI {
 		temp.setBackground(np);
 		temp.add(turnDisplay).align("center");
 		turntable.register("cont", temp);
-		turntable.parse("align:center padding:"+-(int)(np.getPatches()[0].getRegionHeight()/2)+" [cont] fill expand");
+		turntable.parse("align:center padding:"+-(int)(np.getPatches()[0].getRegionHeight()/2)+" [cont] fill expand");*/
 		fpsLabel = new Label("",Assets.SKIN);
 		fpsLabel.setColor(Color.LIGHT_GRAY);
 		
@@ -224,11 +229,12 @@ public class GameUI extends UI {
 		topPanel.register("mana", manaDisplay);
 		topPanel.register("name", turntable);	//TODO: make sure name gets cut off if too long.
 		topPanel.register("fps", fpsLabel);
-		int padd = (int)(tph*0.1);
+		int padh = (int)(tph*0.1);
+		int padv = -(int)(turntable.getBackgroundPatch().getPatches()[0].getRegionHeight()/2);
 		topPanel.parse("align:left padding:"+pad +
 				"* height:"+(int)(tph*0.8) +
 				"[end] width:"+(int)(tph*2) +
-				"[name] expand fill padb:"+padd*2+" padt:"+padd*2+" padl:"+padd+" padr:"+padd+
+				"[name] expand fill padb:"+padv+" padt:"+padv+" padl:"+padh+" padr:"+padh +
 				"{*align:left [gold]} maxwidth:"+(int)(tph*1.5));	//---[mana]
 		
 		fpsLabel.x = width - Assets.UI_FONT.getBounds("00").width;
@@ -395,7 +401,7 @@ public class GameUI extends UI {
 		}
 		Popup.buyUnitPopup.checkUnitAffordable();
 		turnDisplay.setText(text);
-		turnDisplay.setColor(player.getColor());
+		turntable.setColor(player.getColor());
 	}
 
 	/**
