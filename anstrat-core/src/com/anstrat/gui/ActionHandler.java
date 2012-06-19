@@ -20,6 +20,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.geography.Pathfinding;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 
@@ -30,11 +31,23 @@ import com.badlogic.gdx.Gdx;
  *
  */
 public class ActionHandler {
+	
+	public boolean showingConfirmDialog = false;
+	public GTile confirmTile;
+	public Command confirmCommand;
 
 	public void click(GTile gTile){
 		GEngine gEngine = GEngine.getInstance();
 		Unit unit = StateUtils.getUnitByTile(gTile.tile.coordinates);
 		Command command;
+		
+		if(showingConfirmDialog){	// if confirm needed, only confirm or cancel.
+			if(gTile == confirmTile)
+				confirmPress();
+			else
+				confirmCancelPress();
+			return;
+		}
 		
 		switch(gEngine.selectionHandler.selectionType){
 		case SelectionHandler.SELECTION_EMPTY:
@@ -59,7 +72,8 @@ public class ActionHandler {
 			if(unit == null){   //Empty tile clicked
 				if(gEngine.actionMap.getActionType(gTile.tile.coordinates) == ActionMap.ACTION_MOVE){
 					Command c = new MoveCommand(selectedUnit, gTile.tile.coordinates);
-					CommandHandler.execute(c);
+					requestConfirm(gTile, selectedUnit, c);
+					//CommandHandler.execute(c);
 					refreshHighlight(selectedUnit);
 				}else{
 					gEngine.selectionHandler.deselect();
@@ -170,6 +184,26 @@ public class ActionHandler {
 			}
 			GEngine.getInstance().updateUI();
 		}
+	}
+	
+	public void requestConfirm(GTile targetTile, Unit unit, Command command){
+		GEngine gEngine = GEngine.getInstance();
+		confirmTile = targetTile;
+		confirmCommand = command;
+		showingConfirmDialog = true;
+		if(command instanceof MoveCommand){
+			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getAPCost(), 0 );
+		}
+		
+	}
+	
+	public void confirmPress(){
+		CommandHandler.execute(confirmCommand);
+		showingConfirmDialog = false;
+		
+	}
+	public void confirmCancelPress(){
+		showingConfirmDialog = false;
 	}
 	
 }
