@@ -2,6 +2,7 @@ package com.anstrat.gui;
 
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateTargetedAbilityCommand;
+import com.anstrat.command.ActivateTargetedPlayerAbilityCommand;
 import com.anstrat.command.AttackCommand;
 import com.anstrat.command.CaptureCommand;
 import com.anstrat.command.Command;
@@ -116,6 +117,10 @@ public class ActionHandler {
 			command = new ActivateTargetedAbilityCommand(gEngine.selectionHandler.selectedUnit, 
 													gTile.tile.coordinates, 
 													gEngine.selectionHandler.selectedUnit.abilities.indexOf(gEngine.selectionHandler.selectedTargetedAbility));
+			CommandHandler.execute(command);
+			gEngine.selectionHandler.deselect();
+		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
+			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			CommandHandler.execute(command);
 			gEngine.selectionHandler.deselect();
 		default:

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.anstrat.gameCore.Player;
 
-public class PlayerAbility implements Serializable {
+public abstract class PlayerAbility implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public final String name;
@@ -12,13 +12,15 @@ public class PlayerAbility implements Serializable {
 	public final String description;
 	public final int manaCost;
 	public final Player player;
+	public final PlayerAbilityType type;
 	
-	public PlayerAbility(String name, String iconName, String description, int manaCost, Player player) {
+	public PlayerAbility(String name, String iconName, String description, int manaCost, Player player, PlayerAbilityType type) {
 		this.name = name;
 		this.iconName = iconName;
 		this.description = description;
 		this.manaCost = manaCost;
 		this.player = player;
+		this.type = type;
 	}
 	
 	public void activate(){
@@ -26,7 +28,7 @@ public class PlayerAbility implements Serializable {
 	}
 	
 	public boolean isAllowed(Player player){
-		return player.mana >= manaCost;	// Unit must have the required mana
+		return player.mana >= manaCost;	// Player must have the required mana
 	}
 	
 	public static PlayerAbility[] getAbilities() {

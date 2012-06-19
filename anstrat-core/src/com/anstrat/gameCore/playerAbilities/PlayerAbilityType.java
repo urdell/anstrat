@@ -9,11 +9,8 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public enum PlayerAbilityType {
-	SMITE("Smite");
-	
-	public static final int ATTACK_TYPE_RANGED = 0;
-	public static final int ATTACK_TYPE_BLUNT = 1;
-	public static final int ATTACK_TYPE_CUT = 2;
+	THUNDERBOLT("Thunderbolt"),
+	HERP_DI_DERP("Herp di Derp");
 	
 	public transient final String name;
 	public transient int manaCost;
@@ -50,7 +47,7 @@ public enum PlayerAbilityType {
 		
 		// Notify if we're trying to set attributes for a non-existing unit type
 		if(type == null){ 
-			Gdx.app.error("UnitType", String.format("Warning: Found attributes for non-existing unit type '%s'.", name));
+			Gdx.app.error("PlayerAbilityType", String.format("Warning: Found attributes for non-existing player ability type '%s'.", name));
 			return;
 		}
 		

@@ -15,6 +15,7 @@ import com.anstrat.gameCore.GameType;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.geography.Map;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.TransitionEffect;
@@ -118,6 +119,8 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		Assets.load();													// Textures, fonts
 		UnitType.loadAttributesFromFile(
 				Gdx.files.internal("data/unitAttributes.xml"));			// Attributes (name, stats etc) for all units
+		PlayerAbilityType.loadAttributesFromFile(
+				Gdx.files.internal("data/playerAbilityAttributes.xml"));
 		Options.loadPreferences();										// Settings, sound on/off etc
 		GameInstance.loadGameInstances(Gdx.files.local("games.bin"));	// Loads all saved game instances
 		
