@@ -44,6 +44,11 @@ public class ComponentFactory {
 	public static TextButton createButton(String caption, String name){
 		return new TextButton(caption, Assets.SKIN.getStyle(TextButtonStyle.class), name);
 	}
+	public static Button createButton(TextureRegion image, String name, String style){
+		Button temp = new Button(Assets.SKIN.getStyle(style, ButtonStyle.class),name);
+		//temp.set
+		return temp;
+	}
 	public static Button createButton(TextureRegion image, ClickListener cl){
 		Button temp = new Button(image);
 		temp.setClickListener(cl);

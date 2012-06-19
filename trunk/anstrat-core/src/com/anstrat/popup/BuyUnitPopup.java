@@ -11,15 +11,17 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
+import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class BuyUnitPopup extends Popup{
@@ -27,11 +29,19 @@ public class BuyUnitPopup extends Popup{
 	public static String BUY_TEXT = "Buy";
 	public static String CANCEL_TEXT = "Cancel";
 	
-	private TextButton buy;
+	private Button buy;
 	private UnitTypeCard card;
 	private Button[] units;
 	private UnitType[] types;
 	private Player opener;
+	private ColorTable unitTable;
+	
+	private ClickListener cl = new ClickListener() {
+        @Override
+        public void click(Actor actor,float x,float y ){
+        	handler.handlePopupAction(actor.equals(buy)?Popup.OK:Popup.CANCEL);
+        }
+    };
 	
 	public BuyUnitPopup(UnitType... types) {
 		super(new PopupListener() {
@@ -45,47 +55,68 @@ public class BuyUnitPopup extends Popup{
 		}, "");
 		this.types = types;
 		
-		buy   = ComponentFactory.createButton(BUY_TEXT, Popup.OK, cl);
+		buy   = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", cl);
 		units = new Button[6];
 		card  = new UnitTypeCard(types[0]);
-		this.register("buy",buy);
-		this.register("cancel",ComponentFactory.createButton(CANCEL_TEXT, Popup.CANCEL, cl));
 		this.register("card",card);
+		this.drawOverlay = false;
+		
+		unitTable = new ColorTable(Color.BLUE);
 		
 		for(int i=0; i<units.length; i++){
-			Table tbl = new Table(Assets.SKIN);
-			tbl.register("im",new Image(GUnit.getUnitPortrait(types[i])));
-			tbl.setBackground(new NinePatch(Assets.getTextureRegion("empty-button")));
-			tbl.parse("[im] center fill:60,60 paddingTop:"+(int)(-Main.percentHeight*0.5));
-			units[i] = new Button(tbl, Assets.SKIN.getStyle("image",ButtonStyle.class));
+			units[i] = new Button(new Image(GUnit.getTextureRegion(types[i])), Assets.SKIN.getStyle("image",ButtonStyle.class));
 			units[i].setClickListener(new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){
 			        selectButton((Button)actor);
 			    }
 			});
-			this.register("unit"+i, units[i]);
+			unitTable.register("unit"+i, units[i]);
 		}
-		selectButton(units[0]);
+		int unitWidth = (int)(Main.percentWidth*100/6*1.3);
+		int pad = (int)(-unitWidth*0.15);
+		unitTable.parse("align:center" +
+				"*size:"+unitWidth+" paddingLeft:"+pad+" paddingRight:"+pad +
+				"[unit0][unit3][unit1][unit2][unit5][unit4]");
+		unitTable.setBackground(Assets.SKIN.getPatch("border-thick-updown"));
+		this.register("units", unitTable);
 		
-		this.setBackground(Assets.SKIN.getPatch("empty"));
+		
+		Table buttonTable = new Table(Assets.SKIN);
+		buttonTable.register("buy", buy);
+		buttonTable.register("cancel",ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", cl));
+		int buttonHeight = (int)(Main.percentHeight*15);
+		buttonTable.parse("align:right" +
+				"*min:1 size:"+buttonHeight+" [cancel] [buy]");
+		buttonTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
+		this.register("buttons", buttonTable);
 
-		int cardW = (int)(Main.percentWidth*60);
-		int cardH = (int)(Main.percentHeight*50);
-		int buttSize = (int)(((Main.percentWidth*100-cardW)/2));
-		String buttOptions = "*size:"+buttSize+" padding:"+(int)(-buttSize*0.1);
-		
+
+		int cardW = (int)(Main.percentWidth*85);
+		int cardH = (int)(Main.percentHeight*60);
 		this.parse("align:center *expand:x fill:x "+
-				"{"+buttOptions+" [unit2] [] [unit3] }" +
-				"---" +
-				"{" +
-					"{"+buttOptions+" [unit0] --- [] --- [unit1] }" +
-					"[card] height:"+cardH+" width:"+cardW +
-					"{"+buttOptions+" [unit4] --- [] --- [unit5] }" +
-				"}" +
-				"---" +
-				"{*min:1 height:"+(int)(Main.percentHeight*10)+" width:"+(int)(Main.percentHeight*10*2)+" [buy] paddingRight:"+(int)(Main.percentHeight*5)+" [cancel] }" +
-						"paddingTop:"+(int)(Main.percentHeight*5));
+				"[units] expand:x fill:x paddingTop:"+(int)(-unitTable.getBackgroundPatch().getTopHeight()/3) +
+				"--- [] fill expand uniform ---" +
+				"[card] height:"+cardH+" width:"+cardW +
+				"--- [] fill expand uniform ---" +
+				"[buttons] expand:x fill:x height:"+buttonHeight);
+		
+		
+		selectButton(units[0]);
+		this.setBackground(Assets.SKIN.getPatch("empty"));
+	}
+	
+	public void resize(int width, int height){
+		overlay.setSize(width, height);
+		this.width = width;
+		this.height = height;
+		this.x = this.y = 0;
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		batch.setColor(1f, 1f, 1f, 0.5f * parentAlpha);
+		super.draw(batch, parentAlpha);
 	}
 	
 	/**
@@ -100,6 +131,10 @@ public class BuyUnitPopup extends Popup{
 		else
 			opener = State.activeState.getCurrentPlayer();
 		checkUnitAffordable();
+		
+		unitTable.setColor(opener.getColor());
+		card.setColor(opener.getColor());
+		
 		super.show();
 	}
 	
@@ -136,12 +171,5 @@ public class BuyUnitPopup extends Popup{
 			else
 				units[i].setStyle(Assets.SKIN.getStyle("image", ButtonStyle.class));
 		}*/
-	}
-	
-	public void resize(int width, int height){
-		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
-		this.x = this.y = 0;
 	}
 }
