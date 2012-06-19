@@ -8,6 +8,7 @@ import com.anstrat.geography.Map;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GTile;
+import com.anstrat.gui.SnapScrollPane;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
@@ -227,38 +228,49 @@ public class MapEditorUI extends UI {
 		            }
 		        }, "Save map", 
 				ComponentFactory.createTextField("Map name","name",false),
-				new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
+				new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
 		
 		Table table = new Table();
 		
-		FlickScrollPane scroll1 = new FlickScrollPane(table);
-		FlickScrollPane scroll2 = new FlickScrollPane(table);
+		final SnapScrollPane scroll1 = new SnapScrollPane(table);
+		final SnapScrollPane scroll2 = new SnapScrollPane(table);
 		
-		table.parse("pad:10 * expand:x space:4");
-		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
+		table.parse("* expand:x");
+		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE+5; i++) {
 		    table.row();
-		    table.add(new Label(new Integer(i).toString(), new LabelStyle(Assets.MENU_FONT, Color.RED))).expandX().fillX();
+		    Label label = new Label(new Integer(i).toString(), new LabelStyle(Assets.UI_FONT, Color.WHITE));
+		    table.add(label).center().padTop(5).padBottom(5);label.getStyle().fontColor = Color.BLUE;
+		    System.out.println(size);
 		}
+
+		Table flickTable1 = new Table();
+		flickTable1.add(scroll1).fill().expand();
+		flickTable1.setBackground(Assets.SKIN.getPatch("single-border"));
+		Table flickTable2 = new Table();
+		flickTable2.add(scroll2).fill().expand();
+		flickTable2.setBackground(Assets.SKIN.getPatch("single-border"));
+			
+		Table flickTable = new Table(Assets.SKIN);
+		flickTable.register("labelWidth", new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
+		flickTable.register("labelHeight", new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
+		flickTable.register("scrollW",flickTable1);
+		flickTable.register("scrollH",flickTable2);
+		flickTable.parse("* height:"+(int)(Main.percentHeight*12f)+
+				" [labelWidth][labelHeight] " +
+				" --- " +
+				" [scrollW] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f) +
+				" [scrollH] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f));
 		
 		popupNewMap = new Popup(new PopupListener() {
 		            @Override
 		            public void handle(String text){
-		        		try {
-		        			int width = Integer.parseInt(ComponentFactory.getTextFieldValue(MapEditor.getInstance().userInterface.popupNewMap,"width"));
-		        			int height = Integer.parseInt(ComponentFactory.getTextFieldValue(MapEditor.getInstance().userInterface.popupNewMap,"height"));
-		        			MapEditor.getInstance().actionHandler.createNewMap(width, height);
-		        		} catch(Exception e){
-		        			System.err.println("New map size is not an int.");
-		        			return;
-		        		}
-		        		Popup.currentPopup.clearInputs();
+		        			int mapWidth = Map.MIN_SIZE + (int)(scroll1.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
+		        			int mapHeight = Map.MIN_SIZE + (int)(scroll2.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
+		        			MapEditor.getInstance().actionHandler.createNewMap(mapWidth, mapHeight);
 		            }
-		        }, "New map", 
-				//new Row(ComponentFactory.createTextField("Map width","width",false), ComponentFactory.createTextField("Map height","height",false)),
-				new Row(new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)),
-						new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE))),
-		        new Row(scroll1, scroll2),
-		        new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
+		        }, "New map",
+				flickTable,
+		        new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
 	}
 	
 	public void showChangeOwner(){

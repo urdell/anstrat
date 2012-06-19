@@ -37,19 +37,28 @@ public class SplashScreen implements Screen {
 		if(animationTime > animationLength)
 			animationTime -= animationLength;
 		
+		Color color = batch.getColor();
+		// Fade between 0.0f-1.0f
+		float alpha = animationTime<animationLength/2f?animationTime/animationLength*2f:2.0f-animationTime/animationLength*2f;
+		// Fade between 0.5f-1.0f
+		// float alpha = animationTime<animationLength/2f?0.5f+animationTime/animationLength:1.5f-animationTime/animationLength;
+		
+		if(alpha>1.0f)
+			alpha = 1.0f;
+		else if(alpha<0.0f)
+			alpha = 0.0f;
+		
+		color.a = alpha;
+		batch.setColor(color);
+		
 		batch.begin();
 		batch.disableBlending();
 		batch.draw(splashscreen,0f,0f,0f,0f,
-				Main.percentWidth*100f,Main.percentHeight*100f,1f,1f,0f);
+				Main.percentWidth*100f,Main.percentWidth*175f,1f,1f,0f);
 		batch.enableBlending();
-		Color color = batch.getColor();
-		float alpha = animationTime<animationLength/2f?animationTime/animationLength*2f:1-animationTime/animationLength*2f;
-		if(alpha>1.0f)
-			alpha = 1.0f;
-		color.a = alpha;
-		batch.setColor(color);
-		batch.draw(splashtext,Main.percentWidth*10f, Main.percentHeight*5f,0f,0f,
-				Main.percentWidth*80f,Main.percentHeight*13f,1f,1f,0f);
+		
+		batch.draw(splashtext,Main.percentWidth*61.5f, -Main.percentWidth*1f,0f,0f,
+				Main.percentWidth*38.5f,Main.percentWidth*15f,1f,1f,0f);
 		batch.end();
 		
 		if(Gdx.input.justTouched())
