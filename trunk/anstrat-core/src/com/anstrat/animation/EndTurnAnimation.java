@@ -16,8 +16,8 @@ public class EndTurnAnimation extends Animation {
 	private Color tintColor = Color.WHITE.cpy();
 	
 	public EndTurnAnimation(){
-		length = 3;
-		lifetimeLeft = 3.5f;
+		length = 1.5f;
+		lifetimeLeft = 2f;
 		x=Gdx.graphics.getWidth();
 		y=60 * Main.percentHeight;
 	}
@@ -25,7 +25,7 @@ public class EndTurnAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		//y = y + deltaTime*150;
-		x = x-deltaTime*Gdx.graphics.getWidth()/2;
+		x = x-deltaTime*Gdx.graphics.getWidth()*1.0f;
 		
 		if(!started){
 			for(GUnit gUnit : GEngine.getInstance().gUnits.values()){
@@ -42,7 +42,7 @@ public class EndTurnAnimation extends Animation {
 		super.drawFixed(deltaTime, batch);
 		
 		TextureRegion background = Assets.getTextureRegion("EndTurnGradient");
-		tintColor.a = 1-Math.max(0, Math.max(lifetimeLeft-2.9f, 0.6f-lifetimeLeft))/0.6f; // Fades 0.6 seconds before end and after start
+		tintColor.a = 1-Math.max(0, Math.max(lifetimeLeft-1.6f, 0.4f-lifetimeLeft))/0.4f; // Fades 0.4 seconds before end and after start
 		batch.setColor(tintColor);
 		batch.draw(background, 0, y-16*Main.percentHeight, Gdx.graphics.getWidth(), 25*Main.percentHeight);
 		batch.setColor(Color.WHITE);

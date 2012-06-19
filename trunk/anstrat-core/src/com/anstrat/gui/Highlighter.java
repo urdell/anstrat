@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.anstrat.command.MoveCommand;
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -186,7 +187,7 @@ public class Highlighter {
 					Vector2 pos = gEngine.map.getTile(c).getPosition();
 					Assets.STANDARD_FONT.setScale(0.8f);
 					Assets.STANDARD_FONT.setColor(Color.WHITE);
-					Assets.STANDARD_FONT.draw(batch, ""+am.costMap.get(c), pos.x+GMap.TILE_WIDTH*0.6f, pos.y+GMap.TILE_HEIGHT*0.6f);
+					//Assets.STANDARD_FONT.draw(batch, ""+am.costMap.get(c), pos.x+GMap.TILE_WIDTH*0.6f, pos.y+GMap.TILE_HEIGHT*0.6f);
 				}
 			}
 		}
@@ -207,6 +208,7 @@ public class Highlighter {
 			gEngine.getMap().getTile(unit.tileCoordinate).renderOutline(Gdx.gl10, color, 3.5f);
 		}
 		
+		
 		if(outline != null){
 			outline.render();
 		}
@@ -214,6 +216,12 @@ public class Highlighter {
 			rangeOutline.render();
 		}
 		
+		if(gEngine.actionHandler.showingConfirmDialog){   // Render outline of target
+			Color targetColor = Color.WHITE;
+			if(gEngine.actionHandler.confirmCommand instanceof MoveCommand)
+				targetColor = Color.CYAN;
+			gEngine.actionHandler.confirmTile.renderOutline(Gdx.gl10, targetColor, 6f);
+		}
 	}
 	
 

@@ -20,7 +20,7 @@ public class ColorTable extends Table {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(1f, 1f, 1f, 0.8f *parentAlpha); //0.5f * 
+		batch.setColor(1f, 1f, 1f, 1f *parentAlpha); //0.5f * 
 		batch.draw(background, x+xOff, y+yOff, width-wOff, height-hOff);
 		super.draw(batch, parentAlpha);
 	}

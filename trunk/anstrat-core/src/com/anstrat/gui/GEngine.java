@@ -15,6 +15,7 @@ import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -45,6 +46,7 @@ public class GEngine implements Screen{
 	public ActionHandler actionHandler;
 	public Highlighter highlighter;
 	public GameUI userInterface;
+	public ConfirmDialog confirmDialog = new ConfirmDialog(0);
 	public AnimationHandler animationHandler = new AnimationHandler();
 	public SelectionHandler selectionHandler = new SelectionHandler();
 	private SpriteBatch batch;
@@ -229,6 +231,8 @@ public class GEngine implements Screen{
 			userInterface.fpsLabel.setText(Gdx.graphics.getFramesPerSecond()+"");
 		
 		userInterface.draw();
+		if(actionHandler.showingConfirmDialog)
+			confirmDialog.draw(batch);
 	}
 	
 	@Override

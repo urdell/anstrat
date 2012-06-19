@@ -60,7 +60,7 @@ public class HealthBar {
 		background.draw(batch, alpha * parentAlpha);
 		bar.draw(batch, alpha * parentAlpha);
 		
-		APPieDisplay.draw(x-BAR_WIDTH/2, y+AP_SIZE, AP_SIZE, currentAP, maxAP, APReg, 2, batch);
+		APPieDisplay.draw(x-BAR_WIDTH/2, y+AP_SIZE, AP_SIZE, currentAP, maxAP, APReg, 2, batch, false);
 	}
 	/**
 	 * 

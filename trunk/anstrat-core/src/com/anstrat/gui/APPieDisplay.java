@@ -16,20 +16,21 @@ public class APPieDisplay {
 	
 	
 	/**
+	 * 
 	 * Draws a pie-chart for displaying ap.
 	 * First version may only support drawing on the map (Y is downwards)
 	 * @param x top left corner
 	 * @param y top left corner
-	 * @param width
-	 * @param height
+	 * @param size
 	 * @param currentAP current ap of the display
 	 * @param maxAP maximum ap the display can show
 	 * @param apReg how much ap is regenerated next turn (use for displaying this to user)
 	 * @param attackCost used to display if the unit can attack with this amount of AP
 	 * @param batch
+	 * @param UI if the flipped ui is calling the method
 	 */
 	public static void draw(float x, float y, float size, 
-			int currentAP, int maxAP, int apReg, int nextAttackCost, SpriteBatch batch){
+			int currentAP, int maxAP, int apReg, int nextAttackCost, SpriteBatch batch, boolean UI){
 		
 		if(ONLY_USE_NUMBER_8)
 			maxAP = 8;
@@ -41,16 +42,19 @@ public class APPieDisplay {
 		int pieceNumber;
 		batch.setColor(Color.CYAN);
 		for(pieceNumber=0; pieceNumber < currentAP; pieceNumber++ ){
-			drawPiece(x, y, size, maxAP, pieceNumber, batch);
+			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
 		batch.setColor(Color.toFloatBits(0.0f, 0.3f, 0.3f, 1f));
-		for(pieceNumber=pieceNumber; pieceNumber < currentAP+apReg && pieceNumber < maxAP; pieceNumber++ ){
-			drawPiece(x, y, size, maxAP, pieceNumber, batch);
+		for(;pieceNumber < currentAP+apReg && pieceNumber < maxAP; pieceNumber++ ){
+			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
 		batch.setColor(Color.WHITE);
 		
 		TextureRegion foreground = Assets.getTextureRegion("APPie-front-"+maxAP);
-		batch.draw(foreground, x, y, size/2, size/2, size, size, 1f, 1f, 180f);
+		float frontRotation = 180f;
+		if(UI)
+			frontRotation = 0;
+		batch.draw(foreground, x, y, size/2, size/2, size, size, 1f, 1f, frontRotation);
 		
 		//batch.dr
 		/* pseudocode 
@@ -61,12 +65,19 @@ public class APPieDisplay {
 		 * drawAttackArrow(); // Small red arrow pointing at attack cost. Do not draw if 0
 		 * */
 	}
-	private static void drawPiece(float x, float y, float size, int maxAP, int pieceNumber, SpriteBatch batch){
+	private static void drawPiece(float x, float y, float size, int maxAP, int pieceNumber, SpriteBatch batch, boolean UI){
 		TextureRegion piece = Assets.getTextureRegion("APPie-piece-"+maxAP); // change to correct number later
 		float rotation = 360/maxAP;
-		float initialRotation = 180+rotation;
+		float initialRotation;
 		
-		batch.draw(piece, x, y, size/2, size/2, size, size, 1f, 1f, initialRotation + rotation*pieceNumber);
+		if(UI){
+			initialRotation = 0;
+			batch.draw(piece, x, y, size/2, size/2, size, size, 1f, 1f, initialRotation - rotation*pieceNumber);
+		}
+		else{
+			initialRotation = 180+rotation;
+			batch.draw(piece, x, y, size/2, size/2, size, size, 1f, 1f, initialRotation + rotation*pieceNumber);
+		}
 	}
 	
 

@@ -55,6 +55,16 @@ public class MoveCommand extends Command {
 		//GEngine.getInstance().actionMap.prepare(unit);
 		//GEngine.getInstance().syncToState();
 	}
+	
+	/**
+	 * Runs the pathfinding algorithm, might be optimized not to.
+	 * @return
+	 */
+	public int getAPCost(){
+		Unit unit = State.activeState.unitList.get(unitId);
+		Path path = Pathfinding.getUnitPath(unit, endTile);
+		return path.getPathCost(unit.getUnitType());
+	}
 
 	@Override
 	public boolean isAllowed() {
