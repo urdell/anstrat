@@ -45,11 +45,11 @@ public class BuyUnitPopup extends Popup{
 		}, "");
 		this.types = types;
 		
-		buy   = ComponentFactory.createButton(BUY_TEXT, null, cl);
+		buy   = ComponentFactory.createButton(BUY_TEXT, Popup.OK, cl);
 		units = new Button[6];
 		card  = new UnitTypeCard(types[0]);
 		this.register("buy",buy);
-		this.register("cancel",ComponentFactory.createButton(CANCEL_TEXT, null, cl));
+		this.register("cancel",ComponentFactory.createButton(CANCEL_TEXT, Popup.CANCEL, cl));
 		this.register("card",card);
 		
 		for(int i=0; i<units.length; i++){

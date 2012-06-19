@@ -11,10 +11,10 @@ public abstract class PopupListener implements PopupHandler {
 	
 	@Override
 	public void handlePopupAction(String text) {
-		if(!text.equalsIgnoreCase("Cancel"))
+		if(!text.equalsIgnoreCase(Popup.CANCEL))
 			handle(text);
 		
-		if(!manualClose || text.equalsIgnoreCase("Cancel"))
+		if(!manualClose || text.equalsIgnoreCase(Popup.CANCEL))
 			Popup.currentPopup.close();
 	}
 	

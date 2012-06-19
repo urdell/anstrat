@@ -5,6 +5,7 @@ import com.anstrat.core.Main;
 import com.anstrat.core.User;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Align;
@@ -30,24 +31,18 @@ public class AbilityPopup extends Popup {
 	private Button selectedButton;
 	
 	public AbilityPopup(PlayerAbilityType... types) {
-		super(new PopupHandler() {
+		super(new PopupListener() {
 			@Override
-			public void handlePopupAction(String text) {
+			public void handle(String text) {
 				AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
-				if (text.equals(CAST_TEXT)) {
-					PlayerAbilityType type = popup.card.type;
-					Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
-					// TODO: cast spell
-					popup.close();
-				}
-				else if (text.equals(CANCEL_TEXT)) {
-					Popup.currentPopup.close();
-				}
+				PlayerAbilityType type = popup.card.type;
+				Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
+				// TODO: cast spell
 			}
 		}, "");
 		this.types = types;
-		cast = new TextButton(CAST_TEXT,Assets.SKIN);
-		cancel = new TextButton(CANCEL_TEXT, Assets.SKIN);
+		cast = ComponentFactory.createButton(CAST_TEXT, Popup.OK);
+		cancel = ComponentFactory.createButton(CANCEL_TEXT, Popup.CANCEL);
 		abilities = new Button[1];
 		card = new AbilityTypeCard(types[0]);
 		Image tempImage; // used to instantiate images for buttons.

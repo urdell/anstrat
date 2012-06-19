@@ -2,6 +2,7 @@ package com.anstrat.popup;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.MapList;
 import com.anstrat.guiComponent.Row;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,13 +23,13 @@ public class MapsPopup extends Popup {
 	public MapsPopup(PopupHandler handler, boolean withRandom, String title, String... maps) {
 		super(handler, title);
 		
-		ok = new TextButton("Ok",Assets.SKIN);
+		ok = ComponentFactory.createButton("Ok",Popup.OK);
 		Assets.SKIN.setEnabled(ok, false);
 		
 		maplist = new MapList(ok);
 		maplist.setMaps(withRandom, maps);
 		
-		TextButton cancel = new TextButton("Cancel",Assets.SKIN);
+		TextButton cancel = ComponentFactory.createButton("Cancel",Popup.CANCEL);
 		
 		add(maplist).maxHeight((int)(50*Main.percentHeight));
 		add(new Row(ok, cancel));

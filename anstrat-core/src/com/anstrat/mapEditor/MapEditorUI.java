@@ -227,7 +227,7 @@ public class MapEditorUI extends UI {
 		            }
 		        }, "Save map", 
 				ComponentFactory.createTextField("Map name","name",false),
-				new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
+				new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
 		
 		Table table = new Table();
 		
@@ -258,7 +258,7 @@ public class MapEditorUI extends UI {
 				new Row(new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)),
 						new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE))),
 		        new Row(scroll1, scroll2),
-		        new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
+		        new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
 	}
 	
 	public void showChangeOwner(){

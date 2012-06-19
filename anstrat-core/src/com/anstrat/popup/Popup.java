@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.Player;
-import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.Row;
 import com.badlogic.gdx.Gdx;
@@ -31,6 +28,8 @@ import com.esotericsoftware.tablelayout.Cell;
 public class Popup extends Window {
 	
 	public static final int WIDTH = (int)(90*Main.percentWidth);
+	public static final String CANCEL = "cancel";
+	public static final String OK     = "ok";
 	
 	public  static Popup currentPopup = null;
 	private static ArrayList<Popup> popupQueue;
@@ -51,13 +50,7 @@ public class Popup extends Window {
 	protected ClickListener cl = new ClickListener() {
         @Override
         public void click(Actor actor,float x,float y ){
-            if(actor instanceof TextButton)
-            	handler.handlePopupAction(String.valueOf(((TextButton)actor).getText()));
-            else if(actor instanceof Button)
-            	if (((Button)actor).name != null)
-            		handler.handlePopupAction(((Button)actor).name);
-            else
-            	handler.handlePopupAction(actor.name);
+        	handler.handlePopupAction(actor.name);
         }
     };
     
