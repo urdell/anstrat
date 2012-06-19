@@ -11,6 +11,7 @@ import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.TargetedAbility;
+import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.geography.TileCoordinate;
 
 public class SelectionHandler {
@@ -20,12 +21,14 @@ public class SelectionHandler {
 	/** Used for targeted abilities */
 	public static final int SELECTION_TARGETED_ABILITY = 5;
 	public static final int SELECTION_BUILDING = 6;
+	public static final int SELECTION_TARGETED_PLAYER_ABILITY = 7;
 	
 	public GTile gTile;
 	public Unit selectedUnit = null;
 	public UnitType spawnUnitType = null;
 	public Building selectedBuilding = null;
 	public TargetedAbility selectedTargetedAbility = null;
+	public TargetedPlayerAbility selectedTargetedPlayerAbility = null;
 	public int selectionType = SELECTION_EMPTY;
 	
 	
@@ -51,10 +54,22 @@ public class SelectionHandler {
 			return;
 		}
 		GEngine.getInstance().highlighter.highlightTiles(highlights);
-		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
-		
-		
+		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);	
 	}
+	
+	public void selectPlayerAbility(TargetedPlayerAbility ability){
+		selectedTargetedPlayerAbility = ability;
+		selectionType = SELECTION_TARGETED_PLAYER_ABILITY;
+		
+		List<TileCoordinate> highlights = ability.getValidTiles(ability.player);
+		if(highlights.isEmpty()){
+			deselect();
+			return;
+		}
+		GEngine.getInstance().highlighter.highlightTiles(highlights);
+		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
+	}
+	
 	public void selectBuilding(Building building){
 		if(building != null){
 			selectedBuilding = building;

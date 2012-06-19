@@ -23,10 +23,6 @@ public enum UnitType {
 	WOLF("Wolf"),
 	HAWK("Hawk");
 	
-	public static final int ATTACK_TYPE_RANGED = 0;
-	public static final int ATTACK_TYPE_BLUNT = 1;
-	public static final int ATTACK_TYPE_CUT = 2;
-	
 	public transient final String name;
 	
 	public transient String graphicsFolder;

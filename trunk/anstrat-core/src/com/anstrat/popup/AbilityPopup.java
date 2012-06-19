@@ -1,10 +1,17 @@
 package com.anstrat.popup;
 
+import com.anstrat.command.ActivatePlayerAbilityCommand;
+import com.anstrat.command.Command;
+import com.anstrat.command.CommandHandler;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.core.User;
 import com.anstrat.gameCore.State;
+import com.anstrat.gameCore.playerAbilities.PlayerAbility;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
+import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -36,14 +43,22 @@ public class AbilityPopup extends Popup {
 			public void handle(String text) {
 				AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
 				PlayerAbilityType type = popup.card.type;
+				PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
 				Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
-				// TODO: cast spell
+				if (ability instanceof TargetedPlayerAbility) {
+					System.out.println("testing abilitypopup");
+					GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability);
+				}
+				else {
+					Command command = new ActivatePlayerAbilityCommand(ability.player, type);
+					CommandHandler.execute(command);
+				}
 			}
 		}, "");
 		this.types = types;
 		cast = ComponentFactory.createButton(CAST_TEXT, Popup.OK);
 		cancel = ComponentFactory.createButton(CANCEL_TEXT, Popup.CANCEL);
-		abilities = new Button[1];
+		abilities = new Button[types.length];
 		card = new AbilityTypeCard(types[0]);
 		Image tempImage; // used to instantiate images for buttons.
 		
@@ -151,9 +166,9 @@ public class AbilityPopup extends Popup {
 		abilities[0].x = 0;
 		abilities[0].y = (float) (3*buttonHeight);
 		
-		/*abilities[1].x = 0;
+		abilities[1].x = 0;
 		abilities[1].y = (float) (4.5*buttonHeight);
-		
+		/*
 		abilities[2].x = (float) (0.6*buttonWidth);
 		abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
 		

@@ -233,7 +233,7 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
-		abilityPopup = new AbilityPopup(PlayerAbilityType.SMITE);
+		abilityPopup = new AbilityPopup(PlayerAbilityType.THUNDERBOLT, PlayerAbilityType.HERP_DI_DERP);
 		buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.HEAL, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);
