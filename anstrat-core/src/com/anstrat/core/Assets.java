@@ -188,7 +188,12 @@ public class Assets {
 				null,null,null,
 				null,singleBorderWhite.getPatches()[7],null));
 		SKIN.addResource ("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
-		SKIN.addResource ("double-border", new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20));
+		NinePatch borderThick = new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20);
+		SKIN.addResource ("double-border", borderThick);
+		SKIN.addResource ("border-thick-updown", new NinePatch(
+				null,borderThick.getPatches()[1],null,
+				null,null,null,
+				null,borderThick.getPatches()[7],null));
 		SKIN.addResource ("button-up", new NinePatch(Assets.getTextureRegion("button-available")));
 		SKIN.addResource ("button-down", new NinePatch(Assets.getTextureRegion("button-pressed")));
 		SKIN.addResource ("button-disabled", new NinePatch(Assets.getTextureRegion("button-unavailable")));

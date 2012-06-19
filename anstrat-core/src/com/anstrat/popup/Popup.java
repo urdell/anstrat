@@ -46,6 +46,7 @@ public class Popup extends Window {
 	
 	protected PopupHandler handler;
 	public boolean handlesBackspace = false;
+	public boolean drawOverlay = true;
 
 	protected ClickListener cl = new ClickListener() {
         @Override
@@ -204,7 +205,8 @@ public class Popup extends Window {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		overlay.draw(batch);
+		if(drawOverlay)
+			overlay.draw(batch);
 		super.draw(batch, parentAlpha);
 	}
 	
