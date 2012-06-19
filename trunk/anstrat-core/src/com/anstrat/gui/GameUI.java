@@ -11,6 +11,7 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.Popup;
@@ -199,7 +200,7 @@ public class GameUI extends UI {
 				Popup.currentPopup.close();
 				return;
 			}
-		}, "Game over", new Label(player+" has won the game!",Assets.SKIN), new TextButton("Ok",Assets.SKIN))).show();
+		}, "Game over", new Label(player+" has won the game!",Assets.SKIN), ComponentFactory.createButton("Ok",Popup.OK))).show();
 	}
 	
 	public void resize(){

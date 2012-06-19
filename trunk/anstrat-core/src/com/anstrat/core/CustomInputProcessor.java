@@ -3,33 +3,30 @@ package com.anstrat.core;
 import com.anstrat.gameCore.State;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.UI;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.menu.MenuScreen;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupHandler;
+import com.anstrat.popup.PopupListener;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class CustomInputProcessor extends InputAdapter {
 
-	public static Popup resignPopup = new Popup(new PopupHandler() {
+	public static Popup resignPopup = new Popup(new PopupListener() {
 		@Override
-		public void handlePopupAction(String text) {
-			if("Yes".equals(text)){
-				State.activeState.gameInstance.resign();
-				Main.getInstance().setScreen(MainMenu.getInstance());
-			}
-			Popup.currentPopup.close();
+		public void handle(String text) {
+			State.activeState.gameInstance.resign();
+			Main.getInstance().setScreen(MainMenu.getInstance());
 		}
 	}, "Resign?", true,
 			new Label("Are you sure you want to resign?", Assets.SKIN),
-			new Row(new TextButton("No",Assets.SKIN), new TextButton("Yes",Assets.SKIN)));
+			new Row(ComponentFactory.createButton("No",Popup.CANCEL), ComponentFactory.createButton("Yes",Popup.OK)));
 	
 	@Override
 	public boolean keyDown(int keycode) {

@@ -10,13 +10,13 @@ public class AccountMenuPopupHandler implements PopupHandler {
 	{
 		AccountMenu am = AccountMenu.getInstance();
 		
-		if(text.equalsIgnoreCase("Cancel")){
+		if(text.equalsIgnoreCase(Popup.CANCEL)){
 			am.clearInputs();
 			Popup.currentPopup.close();
 			return;
 		}
 		
-		if(Popup.currentPopup == am.loginPopup && text.equals("Ok")){
+		if(Popup.currentPopup == am.loginPopup && text.equals(Popup.OK)){
 			String username = ComponentFactory.getTextFieldValue(am.loginPopup, "username");
 			String password = ComponentFactory.getTextFieldValue(am.loginPopup, "password");
 			
@@ -31,7 +31,7 @@ public class AccountMenuPopupHandler implements PopupHandler {
 			return;
 		}
 		
-		if(Popup.currentPopup==am.registerPopup && text.equals("Ok")){
+		if(Popup.currentPopup==am.registerPopup && text.equals(Popup.OK)){
 			String username = ComponentFactory.getTextFieldValue(am.registerPopup, "username");
 			String password = ComponentFactory.getTextFieldValue(am.registerPopup, "password");
 			String displayed = ComponentFactory.getTextFieldValue(am.registerPopup,"displayedInput");

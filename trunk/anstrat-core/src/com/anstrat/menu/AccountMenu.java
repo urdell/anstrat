@@ -21,20 +21,20 @@ public class AccountMenu extends MenuScreen {
 	
 	public Popup connectingPopup = new Popup(popupHandler, "Connecting",
 			new Label("Connecting...",Assets.SKIN),
-			new TextButton("Cancel",Assets.SKIN));
+			ComponentFactory.createButton("Cancel",Popup.CANCEL));
 	
 	public Popup loginPopup = new Popup(popupHandler, "Login", 
 			new Label("Please enter your username and password.", Assets.SKIN),
 			ComponentFactory.createTextField("Login","username",false),
 			ComponentFactory.createTextField("Password","password",true),
-			new Row(new TextButton("Cancel",Assets.SKIN), new TextButton("Ok",Assets.SKIN)));
+			new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
 	
 	public Popup registerPopup = new Popup(popupHandler, "Register",
 			new Label("Please enter your desired username, password and displayed name.", Assets.SKIN),
 			ComponentFactory.createTextField("Login","username",false),
 			ComponentFactory.createTextField("Password","password",true),
 			ComponentFactory.createTextField("Displayed name","displayedInput",false),
-			new Row(new TextButton("Cancel",Assets.SKIN), new TextButton("Ok",Assets.SKIN)));
+			new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
 	
 	private AccountMenu()
 	{
