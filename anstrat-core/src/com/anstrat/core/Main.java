@@ -107,7 +107,8 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		percentHeight = ((float)Gdx.graphics.getHeight())/100f;
 		
 		// Network
-		network = new Network(this, "vengefulvikings.servegame.com"/*"129.16.21.61"*/, 25406);
+		// TODO enable again when new server is obtained (preferably at Erik's)
+		// network = new Network(this, "vengefulvikings.servegame.com"/*"129.16.21.61"*/, 25406);
 		//network = new Network(this, "localhost", 25406);
 		
 		// Music
@@ -136,8 +137,9 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		Gdx.graphics.setTitle("Vengeful Vikings (Beta)");
 		setScreen(SplashScreen.getInstance());
 		
-		network.start();
-
+		// TODO enable again when new server is obtained (preferably at Erik's)
+		/* network.start();
+		
 		// Try to load saved login info
 		user = User.fromFile(Gdx.files.local("login.bin"));
 		if(user != null){
@@ -147,6 +149,7 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 			user = new User();
 			network.quickLogin();
 		}
+		*/
 		
 		// Set the desktop application icon
 		FileHandle iconFile = Gdx.files.internal("icon.png");
@@ -194,14 +197,16 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 	@Override
 	public void pause() {
 		Gdx.app.log("Main", "Paused");
-		network.pause();
+		if(network!=null)
+			network.pause();
 		Assets.onApplicationPause();
 	}
 
 	@Override
 	public void resume() {
 		Gdx.app.log("Main", "Resumed");
-		network.resume();
+		if(network!=null)
+			network.resume();
 		Assets.onApplicationResume();
 	}
 
@@ -209,7 +214,8 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 	public void dispose() {
 		Gdx.app.log("", "Main.dispose()");
 		
-		network.stop();
+		if(network!=null)
+			network.stop();
 		GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
 		Options.savePreferences();
 		
