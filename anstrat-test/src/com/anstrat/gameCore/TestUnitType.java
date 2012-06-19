@@ -15,11 +15,7 @@ public class TestUnitType {
 		
 		assertEquals(20, t.maxHP);
 		//assertEquals(5, t.HPReg);   //no definition of hp reg
-		assertEquals(1, t.rangeArmor);
-		assertEquals(1, t.bluntArmor);  
-		assertEquals(1, t.cutArmor);
 		assertEquals(6, t.attack);
-		assertEquals(UnitType.ATTACK_TYPE_CUT, t.attackType);
 		assertEquals(1, t.minAttackRange);
 		assertEquals(1, t.maxAttackRange);
 		assertEquals(7, t.maxAP);

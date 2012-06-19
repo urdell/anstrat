@@ -35,9 +35,6 @@ public class TestUnit {
 	private boolean isUnitEqual(Unit a, Unit b){
 		return a.getAPCostAttack() == b.getAPCostAttack() &&
 				a.getAPReg() == b.getAPReg() &&
-				a.getArmor(UnitType.ATTACK_TYPE_BLUNT) == b.getArmor(UnitType.ATTACK_TYPE_BLUNT) &&
-				a.getArmor(UnitType.ATTACK_TYPE_CUT) == b.getArmor(UnitType.ATTACK_TYPE_CUT) &&
-				a.getArmor(UnitType.ATTACK_TYPE_RANGED) == b.getArmor(UnitType.ATTACK_TYPE_RANGED) &&
 				a.getAttack() == b.getAttack() &&
 				a.getMaxAP() == b.getMaxAP() &&
 				a.getMaxAttackRange() == b.getMaxAttackRange() &&
