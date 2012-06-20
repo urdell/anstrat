@@ -1,6 +1,7 @@
 package com.anstrat.gameCore.playerAbilities;
 
 import com.anstrat.animation.Animation;
+import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.ThunderboltAnimation;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -23,12 +24,14 @@ public class Thunderbolt extends TargetedPlayerAbility {
 		super("Thunderbolt", "sword", "Deals damage to one target enemy unit", 5, player, PlayerAbilityType.THUNDERBOLT);
 	}
 	
-	public void activate(Unit target){
-		System.out.println("thunderbolt activate!");
+	@Override
+	public void activate(Player player, TileCoordinate tile){
 		super.activate();
+		System.out.println("thunderbolt activate!");
+		Unit target = StateUtils.getUnitByTile(tile);
 		target.currentHP -= damage;
 		if(target.currentHP <= 0){
-			// GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(defender));
+			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(target));
 			State.activeState.unitList.remove(target.id);
 		}
 		Gdx.app.log("PlayerAbility", "Thunderbolt was cast");
