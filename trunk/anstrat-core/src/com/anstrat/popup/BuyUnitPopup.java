@@ -87,7 +87,7 @@ public class BuyUnitPopup extends Popup{
 		buttonTable.register("cancel",ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", cl));
 		int buttonHeight = (int)(Main.percentHeight*15);
 		buttonTable.parse("align:right" +
-				"*min:1 size:"+buttonHeight+" [cancel] [buy]");
+				"*min:1 size:"+buttonHeight+" [buy] [cancel]");
 		buttonTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
 		this.register("buttons", buttonTable);
 
@@ -143,7 +143,6 @@ public class BuyUnitPopup extends Popup{
 	 */
 	public void selectButton(Button button) {
 		card.setType(types[Arrays.asList(units).indexOf(button)]);
-		card.setSize(card.width, card.height);
 		checkUnitAffordable();
 	}
 	
@@ -163,6 +162,7 @@ public class BuyUnitPopup extends Popup{
 		boolean canBuy = gold>=card.type.cost;
 		Assets.SKIN.setEnabled(buy, canBuy && isPlayerTurn);
 		card.setDisabled(!canBuy);
+		buy.visible = canBuy;
 		
 		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
 		/*for(int i=0; i<types.length; i++){
