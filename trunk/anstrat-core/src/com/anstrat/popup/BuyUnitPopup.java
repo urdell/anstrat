@@ -26,12 +26,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class BuyUnitPopup extends Popup{
 	
-	public static String BUY_TEXT = "Buy";
-	public static String CANCEL_TEXT = "Cancel";
+	public static final String BUY_TEXT = "Buy";
+	public static final String CANCEL_TEXT = "Cancel";
+	public static final Color  COLOR_UNAVAILABLE = Color.DARK_GRAY;
 	
 	private Button buy;
 	private UnitTypeCard card;
 	private Button[] units;
+	private NinePatch[] unitSilhouettes;
 	private UnitType[] types;
 	private Player opener;
 	private ColorTable unitTable;
@@ -57,6 +59,7 @@ public class BuyUnitPopup extends Popup{
 		
 		buy   = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", cl);
 		units = new Button[6];
+		unitSilhouettes = new NinePatch[6];
 		card  = new UnitTypeCard(types[0]);
 		this.register("card",card);
 		this.drawOverlay = false;
@@ -64,7 +67,8 @@ public class BuyUnitPopup extends Popup{
 		unitTable = new ColorTable(Color.BLUE);
 		
 		for(int i=0; i<units.length; i++){
-			units[i] = new Button(new Image(GUnit.getTextureRegion(types[i])), Assets.SKIN.getStyle("image",ButtonStyle.class));
+			unitSilhouettes[i] = new NinePatch(GUnit.getTextureRegion(types[i]));
+			units[i] = new Button(new Image(unitSilhouettes[i]), Assets.SKIN.getStyle("image",ButtonStyle.class));
 			units[i].setClickListener(new ClickListener() {
 				@Override
 			    public void click(Actor actor,float x,float y ){
@@ -90,13 +94,15 @@ public class BuyUnitPopup extends Popup{
 				"*min:1 size:"+buttonHeight+" [buy] [cancel]");
 		buttonTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
 		this.register("buttons", buttonTable);
+		
+		this.register("hack", new Image(Assets.SKIN.getPatch("empty")));	//Ugly fix so the card is not affected by the unit colors. 
 
 
 		int cardW = (int)(Main.percentWidth*85);
 		int cardH = (int)(Main.percentHeight*60);
 		this.parse("align:center *expand:x fill:x "+
 				"[units] expand:x fill:x paddingTop:"+(int)(-unitTable.getBackgroundPatch().getTopHeight()/3) +
-				"--- [] fill expand uniform ---" +
+				"--- [empty] fill expand uniform ---" +
 				"[card] height:"+cardH+" width:"+cardW +
 				"--- [] fill expand uniform ---" +
 				"[buttons] expand:x fill:x height:"+buttonHeight);
@@ -164,12 +170,12 @@ public class BuyUnitPopup extends Popup{
 		card.setDisabled(!canBuy);
 		buy.visible = canBuy;
 		
-		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
-		/*for(int i=0; i<types.length; i++){
+		//Mark units that are too expensive.
+		for(int i=0; i<types.length; i++){
 			if(gold<types[i].cost)
-				units[i].setStyle(Assets.SKIN.getStyle("image-disabled", ButtonStyle.class));
+				unitSilhouettes[i].setColor(COLOR_UNAVAILABLE);	//Not enough money
 			else
-				units[i].setStyle(Assets.SKIN.getStyle("image", ButtonStyle.class));
-		}*/
+				unitSilhouettes[i].setColor(Color.WHITE);			//Enough money
+		}
 	}
 }
