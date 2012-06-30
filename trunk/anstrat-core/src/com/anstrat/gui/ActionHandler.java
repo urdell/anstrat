@@ -93,7 +93,8 @@ public class ActionHandler {
 				}
 				else if(unit.ownerId != State.activeState.currentPlayerId && selectedUnit.ownerId==State.activeState.currentPlayerId){
 					Command c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
-					CommandHandler.execute(c);
+					requestConfirm(gTile, selectedUnit, c);
+					//CommandHandler.execute(c);
 					gEngine.actionMap.prepare(gEngine.selectionHandler.selectedUnit);
 					
 					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(selectedUnit));
@@ -163,6 +164,7 @@ public class ActionHandler {
 	}
 	
 	public void deselectPress() {
+		showingConfirmDialog = false;
 		GEngine.getInstance().selectionHandler.deselect();
 		
 	}
@@ -198,6 +200,9 @@ public class ActionHandler {
 		showingConfirmDialog = true;
 		if(command instanceof MoveCommand){
 			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getAPCost(), 0 );
+		}
+		if(command instanceof AttackCommand){
+			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, 0 );
 		}
 		
 	}

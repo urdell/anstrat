@@ -31,7 +31,10 @@ public class ConfirmDialog {
 	ColorTable colorTable;
 	public Rectangle okBounds, cancelBounds, dialogBounds;
 	
-	float x, y;
+	/**
+	 * Top left coordinates
+	 */
+	float x, y; 
 	
 	public ConfirmDialog(int position){
 		
@@ -50,6 +53,10 @@ public class ConfirmDialog {
 		refreshBounds();
 	}
 	
+	/**
+	 * Drawn from bottom left
+	 * @param batch
+	 */
 	public void draw(SpriteBatch batch){
 		
 		float width = ConfirmRow.ROW_WIDTH;
@@ -91,6 +98,17 @@ public class ConfirmDialog {
 		
 		confirmDialog.rows.add(new TextRow("Move"));
 		confirmDialog.rows.add(new APRow(unit, cost));
+		
+		confirmDialog.refreshBounds();
+		
+		return confirmDialog;
+	}
+	public static ConfirmDialog attackConfirm(Unit unit, int dialogPosition){
+		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
+		
+		confirmDialog.rows.add(new TextRow("Attack"));
+		confirmDialog.rows.add(new DamageRow(5, 15));
+		confirmDialog.rows.add(new APRow(unit, unit.getAPCostAttack()));
 		
 		confirmDialog.refreshBounds();
 		

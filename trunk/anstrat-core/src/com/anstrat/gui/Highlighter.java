@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.anstrat.command.AttackCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.State;
@@ -220,6 +221,8 @@ public class Highlighter {
 			Color targetColor = Color.WHITE;
 			if(gEngine.actionHandler.confirmCommand instanceof MoveCommand)
 				targetColor = Color.CYAN;
+			if(gEngine.actionHandler.confirmCommand instanceof AttackCommand)
+				targetColor = Color.RED;
 			gEngine.actionHandler.confirmTile.renderOutline(Gdx.gl10, targetColor, 6f);
 		}
 	}
