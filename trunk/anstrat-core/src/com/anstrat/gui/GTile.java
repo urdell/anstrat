@@ -178,40 +178,9 @@ public class GTile extends GObject {
 	public static TextureRegion[] getTextures(TerrainType terrainType) {
 		ArrayList<TextureRegion> result = new ArrayList<TextureRegion>();
 		
-		switch (terrainType) {
-			case DEEP_WATER:
-				result.add(Assets.getTextureRegion("water-deep-0001"));
-				break;
-			case FIELD:
-				result.add(Assets.getTextureRegion("grass"));
-				break;
-			case FOREST:
-				result.add(Assets.getTextureRegion("forest"));
-				break;
-			case MOUNTAIN: 
-				result.add(Assets.getTextureRegion("mountain"));
-				break;
-			/*case SNOW: 
-				result.add(Assets.getTextureRegion("snow"));
-				break;
-			case HILL: 
-				result.add(Assets.getTextureRegion("hill"));
-				break;
-			case VOLCANO: 
-				result.add(Assets.getTextureRegion("volcano-0001"));
-				result.add(Assets.getTextureRegion("volcano-0002"));
-				break;*/
-			case CASTLE:
-				result.add(Assets.getTextureRegion("castle"));
-				break;
-			case VILLAGE:
-				result.add(Assets.getTextureRegion("village"));
-				break;
-			case SHALLOW_WATER:
-				result.add(Assets.getTextureRegion("water-shallow-0001"));
-				break;
-		}
-		
+		for(String tex : terrainType.textures)
+			result.add(Assets.getTextureRegion(tex));
+				
 		return result.toArray(new TextureRegion[result.size()]);
 	}
 
