@@ -72,21 +72,9 @@ public enum UnitType {
 		this.description = "This should not be here";
 		
 		// Default terrain type penalties
-		// (if we forget to explicitly assign a penalty it will default to the 
-		// default value of an int, zero)
 		terrainTypePenalties = new int[TerrainType.values().length];
-		terrainTypePenalties[TerrainType.DEEP_WATER.ordinal()] = Integer.MAX_VALUE;
-		//terrainTypePenalties[TerrainType.SNOW.ordinal()] = 2;
-		terrainTypePenalties[TerrainType.FIELD.ordinal()] = 1;
-		terrainTypePenalties[TerrainType.MOUNTAIN.ordinal()] = Integer.MAX_VALUE;
-		//terrainTypePenalties[TerrainType.VOLCANO.ordinal()] = Integer.MAX_VALUE;
-		terrainTypePenalties[TerrainType.FOREST.ordinal()] = 2;
-		//terrainTypePenalties[TerrainType.HILL.ordinal()] = 3;
-		terrainTypePenalties[TerrainType.SHALLOW_WATER.ordinal()] = 2;
-		
-		terrainTypePenalties[TerrainType.VILLAGE.ordinal()] 
-				= terrainTypePenalties[TerrainType.CASTLE.ordinal()] 
-				= terrainTypePenalties[TerrainType.FIELD.ordinal()];
+		for(TerrainType t : TerrainType.values())
+			terrainTypePenalties[t.ordinal()] = t.penalty;
 	}	
 	
 	/**
