@@ -24,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -49,9 +48,9 @@ public class MapEditorUI extends UI {
 		 * COMMON STUFF
 		 */
 		TerrainType[] terrainTypes = TerrainType.values();
-		size = (int)(Gdx.graphics.getWidth() / (float)(terrainTypes.length-1));
+		updateSize(Gdx.graphics.getWidth());
 		int bsize = (int)(size/1.2);
-		int padding = (int)(Main.percentWidth*4);
+		int padding = (int)(size-bsize);
 		ClickListener clHidePanel = new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
@@ -87,7 +86,11 @@ public class MapEditorUI extends UI {
 		 * TERRAIN BUTTONS
 		 */
 		final Table terrainTable = new Table();
-		terrainTable.parse("center paddingTop:"+(int)((size-bsize)/2)+"* spacing:"+padding);
+		terrainTable.parse("align:center" +
+				" paddingTop:"+(int)((size-bsize)/2) +
+				" paddingBottom:"+(int)((size-bsize)/2) +
+				"* spacing:"+padding);
+		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
 			if(t==TerrainType.CASTLE || t==TerrainType.VILLAGE)
 				continue;
@@ -98,8 +101,10 @@ public class MapEditorUI extends UI {
 		        }
 		    });
 			terrainTable.add(button).size(bsize);
+			if(++cnt % 6 == 0)
+				terrainTable.row();
 		}
-		terrainTable.height(size);
+		//terrainTable.height(size);
 		
 		/**
 		 * Tables for bottom extra panel
@@ -190,13 +195,12 @@ public class MapEditorUI extends UI {
             	popupSaveMap.show();
             }
         } ));
-		TextButton newMap = ComponentFactory.createButton("NEW", null, new ClickListener() {
+		permanentTable.register("new", ComponentFactory.createButton("NEW", null, new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	popupNewMap.show();
             }
-        } );
-		permanentTable.register("new", newMap);
+        } ));
 
 		addActor(permanentTable);
 		
@@ -273,6 +277,10 @@ public class MapEditorUI extends UI {
 		        new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
 	}
 	
+	private void updateSize(float width) {
+		size = (int)(width / 6f);
+	}
+
 	public void showChangeOwner(){
 		showPanel(tblChangeOwner,true);
 	}
@@ -301,7 +309,7 @@ public class MapEditorUI extends UI {
  	@Override
 	public void resize(int width, int height){
 		super.resize(width, height);
-		this.size = (int)(width / (float)(TerrainType.values().length-1));
+		updateSize(width);
 		
 		permanentTable.parse("height:"+(int)(size*1.05)+" align:left,bottom * size:"+size+" [clear][terrain][buildings][load][save][new] height:"+(int)(size/1.2));
 		permanentTable.pack();
