@@ -7,7 +7,7 @@ public enum TerrainType {
 	HILL("Hill", 2, 2, "hill"),
 	MOUNTAIN("Mountain", Integer.MAX_VALUE, 1, "mountain"),
 	SHALLOW_WATER("Shallow Water", 2, 1, "shallow-0001","shallow-0002"),
-	DEEP_WATER("Deep Water", 1, Integer.MAX_VALUE, "water-0001","water-0002"),
+	DEEP_WATER("Deep Water", Integer.MAX_VALUE, 1, "water-0001","water-0002"),
 	
 	//Rocky terrain
 	ROCKYGROUND("Rocky Ground", 1, 1, "rockyground"),

@@ -90,6 +90,14 @@
 		<terrainPenaltySnow>1</terrainPenaltySnow>
 		<terrainPenaltyForest>1</terrainPenaltyForest>
 		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
+		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
+		<terrainPenaltyRockyhill>1</terrainPenaltyRockyhill>
+		<terrainPenaltyVolcano>1</terrainPenaltyVolcano>
+		<terrainPenaltyRockylava>1</terrainPenaltyRockylava>
+		<terrainPenaltyRockylavapool>1</terrainPenaltyRockylavapool>
+		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
+		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
+		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<portrait>hawkportrait</portrait>
 	</UnitType>
 	<UnitType>
