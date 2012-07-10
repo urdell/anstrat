@@ -1,5 +1,7 @@
 package com.anstrat.popup;
 
+import com.badlogic.gdx.Gdx;
+
 public abstract class PopupListener implements PopupHandler {
 
 	private boolean manualClose = false;
@@ -11,6 +13,11 @@ public abstract class PopupListener implements PopupHandler {
 	
 	@Override
 	public void handlePopupAction(String text) {
+		if(text==null){
+			Gdx.app.error("PopupListener", "Actor name is null, ignoring.");
+			return;
+		}
+		
 		if(!text.equalsIgnoreCase(Popup.CANCEL))
 			handle(text);
 		

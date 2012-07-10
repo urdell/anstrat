@@ -27,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class MapEditorUI extends UI {
@@ -232,7 +231,7 @@ public class MapEditorUI extends UI {
 		            }
 		        }, "Save map", 
 				ComponentFactory.createTextField("Map name","name",false),
-				new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
+				new Row(ComponentFactory.createButton("Ok", Popup.OK), ComponentFactory.createButton("Cancel", Popup.CANCEL)));
 		
 		Table table = new Table();
 		
@@ -274,7 +273,7 @@ public class MapEditorUI extends UI {
 		            }
 		        }, "New map",
 				flickTable,
-		        new Row(new TextButton("Ok", Assets.SKIN), new TextButton("Cancel", Assets.SKIN)));
+		        new Row(ComponentFactory.createButton("Ok", Popup.OK), ComponentFactory.createButton("Cancel", Popup.CANCEL)));
 	}
 	
 	private void updateSize(float width) {
