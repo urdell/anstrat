@@ -12,7 +12,6 @@
 		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
 		<idleImage>berserker-idle-0001</idleImage>
 		<portrait>berserkerportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Shaman</name>
@@ -27,7 +26,6 @@
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
 		<portrait>shamanportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Axe Thrower</name>
@@ -41,7 +39,6 @@
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Wolf</name>
@@ -55,7 +52,6 @@
 		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Hawk</name>
@@ -83,7 +79,6 @@
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<portrait>hawkportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Swordsman</name>
@@ -98,7 +93,6 @@
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
 		<idleImage>sword-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Valkyrie</name>
@@ -112,7 +106,6 @@
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 	<UnitType>
 		<name>Fallen Warrior</name>
@@ -126,7 +119,6 @@
 		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 	<UnitType>
 		<name>Dark Elf</name>
@@ -140,7 +132,6 @@
 		<description>The Dark Elf is a poweful and mobile unit. Has the longest attack range in the game.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 	<UnitType>
 		<name>Goblin Shaman</name>
@@ -154,7 +145,6 @@
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 	<UnitType>
 		<name>Jotun</name>
@@ -168,7 +158,6 @@
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 	<UnitType>
 		<name>Troll</name>
@@ -182,6 +171,5 @@
 		<description>The Troll is the only unit with a passive regeneration ability.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
-		<team>hateful</team>
 	</UnitType>
 </UnitTypes>
