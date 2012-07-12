@@ -117,7 +117,7 @@ public class GameUI extends UI {
         buyButton.setClickListener(new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Popup.buyUnitPopup.show();
+            	Popup.getBuyUnitPopup().show();
             }
         } );
         helpButton = new Button(new Image(Assets.getTextureRegion("help-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
@@ -378,7 +378,7 @@ public class GameUI extends UI {
 				Assets.SKIN.setEnabled(endTurnButton, false);
 			}
 		}
-		Popup.buyUnitPopup.checkUnitAffordable();
+		Popup.getBuyUnitPopup().checkUnitAffordable();
 		turnDisplay.setText(text);
 		turntable.setColor(player.getColor());
 	}

@@ -31,6 +31,7 @@ public class Player implements Serializable {
 	public static final Color[] secondaryColor = {new Color(0f, 0f, 0.2f, 1f), new Color(0.2f, 0f, 0f, 1f),
 													new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	
+	public final int team;
 	public long userID;
 	public String displayedName;
 	
@@ -40,10 +41,11 @@ public class Player implements Serializable {
 	
 	public int mana = 11;
 	
-	public Player(long userID, int playerID, String displayName){
+	public Player(long userID, int playerID, String displayName, int team){
 		this.userID = userID;
 		this.playerId = playerID;
 		this.displayedName = displayName;
+		this.team = team;
 	}
 	
 	public Color getColor(){

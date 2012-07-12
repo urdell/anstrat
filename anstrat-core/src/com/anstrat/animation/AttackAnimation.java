@@ -40,7 +40,8 @@ public class AttackAnimation extends Animation{
 				impactAnimationTime = impactTime; // start playing exactly when axe hits
 				break;
 			}
-			case HEAL: {
+			case GOBLIN_SHAMAN: // Fall through
+			case SHAMAN: {
 				rangedDelay = 0.3f;
 				attackSpeed = 1.2f;
 				impactTime = 1f;
@@ -59,8 +60,9 @@ public class AttackAnimation extends Animation{
 		
 		GEngine ge = GEngine.getInstance();
 		start = ge.getMap().getTile(cl.attacker.tileCoordinate).getCenter();
+		UnitType attackUnitType = cl.attacker.getUnitType();
 		
-		if(cl.attacker.getUnitType().equals(UnitType.HEAL)){
+		if(attackUnitType == UnitType.SHAMAN || attackUnitType == UnitType.GOBLIN_SHAMAN){
 			// Origin of fireball is slightly above center
 			start.add(0, -20);
 		}
@@ -83,7 +85,8 @@ public class AttackAnimation extends Animation{
 			case HAWK:
 				impactAnimationName = "hawk-attack-effect";
 				break;
-			case HEAL:
+			case GOBLIN_SHAMAN: // Fall through
+			case SHAMAN:
 				impactAnimationName = "shaman-attack-effect";
 				break;
 			case SWORD:
@@ -155,7 +158,8 @@ public class AttackAnimation extends Animation{
 				current.set(start.x + xoffset * amtOffset, start.y + yoffset * amtOffset);
 				break;
 			}
-			case HEAL: {
+			case GOBLIN_SHAMAN: // Fall through
+			case SHAMAN: {
 				// Fireball
 				float timeTaken = attackSpeed - lifetimeLeft;
 				float amtOffset = (timeTaken - rangedDelay) / (impactTime - rangedDelay);
@@ -179,7 +183,7 @@ public class AttackAnimation extends Animation{
 			if(type == UnitType.AXE_THROWER){
 				region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
 			}
-			else if(type == UnitType.HEAL && length - lifetimeLeft < impactTime){
+			else if((type == UnitType.SHAMAN || type == UnitType.GOBLIN_SHAMAN) && length - lifetimeLeft < impactTime){
 				region = Assets.getAnimation("shaman-fireball").getKeyFrame(animationTimePassed, true);
 			}
 			

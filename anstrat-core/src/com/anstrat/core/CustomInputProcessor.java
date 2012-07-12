@@ -72,7 +72,7 @@ public class CustomInputProcessor extends InputAdapter {
 				
 				// Only show menu when playing a game
 				if((Main.getInstance().getScreen() instanceof GEngine) && Popup.currentPopup == null){
-					Popup.buyUnitPopup.show();
+					Popup.getBuyUnitPopup().show();
 					return true;
 				}
 				return false;

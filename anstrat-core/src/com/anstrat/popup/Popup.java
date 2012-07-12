@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.Row;
@@ -31,7 +32,7 @@ public class Popup extends Window {
 	public static final String CANCEL = "cancel";
 	public static final String OK     = "ok";
 	
-	public  static Popup currentPopup = null;
+	public static Popup currentPopup = null;
 	private static ArrayList<Popup> popupQueue;
 	private static PopupGestureHandler gestureHandler;
 	private static PopupInputMultiplexer inputMultiplexer;
@@ -40,7 +41,8 @@ public class Popup extends Window {
 	
 	private static Label genericPopupLabel;
 	private static Popup genericPopup;
-	public static BuyUnitPopup buyUnitPopup;
+	
+	private static BuyUnitPopup[] buyUnitPopups;
 	public static UnitInfoPopup unitInfoPopup;
 	public static AbilityPopup abilityPopup; 
 	
@@ -234,7 +236,14 @@ public class Popup extends Window {
 		
 		unitInfoPopup = new UnitInfoPopup();
 		abilityPopup = new AbilityPopup(PlayerAbilityType.THUNDERBOLT, PlayerAbilityType.HERP_DI_DERP);
-		buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.HEAL, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
+		//buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.SHAMAN, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
+		
+		buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
+		for(int i = 0; i < buyUnitPopups.length; i++){
+			UnitType[] team = UnitType.TEAMS[i];
+			buyUnitPopups[i] = new BuyUnitPopup(team);
+		}
+		
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);
 		genericPopup = new Popup(new PopupHandler(){
@@ -243,6 +252,11 @@ public class Popup extends Window {
 				Popup.currentPopup.close();				
 			}
 		}, "", genericPopupLabel, new TextButton("Ok",Assets.SKIN));
+	}
+	
+	public static BuyUnitPopup getBuyUnitPopup(){
+		Player currentPlayer = com.anstrat.gameCore.State.activeState.players[com.anstrat.gameCore.State.activeState.currentPlayerId];
+		return buyUnitPopups[currentPlayer.team];
 	}
 	
 	/**
@@ -257,7 +271,8 @@ public class Popup extends Window {
 	}
 	
 	public static void disposePopups(){
-		buyUnitPopup = null;
+		
+		buyUnitPopups = null;
 		overlay = null;
 		gestureHandler = null;
 		currentPopup = null;

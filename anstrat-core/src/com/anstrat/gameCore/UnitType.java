@@ -17,11 +17,22 @@ import com.badlogic.gdx.utils.XmlReader.Element;
  */
 public enum UnitType {	
 	BERSERKER("Berserker"), 
-	HEAL("Shaman"), 
+	SHAMAN("Shaman"), 
 	AXE_THROWER("Axe Thrower"),
 	SWORD("Swordsman"),
 	WOLF("Wolf"),
-	HAWK("Hawk");
+	HAWK("Hawk"),
+	VALKYRIE("Valkyrie"),
+	FALLEN_WARRIOR("Fallen Warrior"),
+	DARK_ELF("Dark Elf"),
+	GOBLIN_SHAMAN("Goblin Shaman"),
+	JOTUN("Jotun"),
+	TROLL("Troll");
+	
+	public static UnitType[][] TEAMS = {
+		{BERSERKER, SHAMAN, AXE_THROWER, SWORD, WOLF, HAWK},
+		{VALKYRIE, FALLEN_WARRIOR, DARK_ELF, GOBLIN_SHAMAN, JOTUN, TROLL},
+	};
 	
 	public transient final String name;
 	
@@ -163,7 +174,7 @@ public enum UnitType {
 		if (attacker.equals(AXE_THROWER)) {
 			if (defender.equals(BERSERKER))
 				ret = 1.5;
-			else if (defender.equals(HEAL))
+			else if (defender.equals(SHAMAN))
 				ret = 2.0;
 			else if (defender.equals(WOLF))
 				ret = 1.25;
@@ -175,7 +186,7 @@ public enum UnitType {
 			if (defender.equals(SWORD))
 				ret = 0.5;
 		}
-		else if (attacker.equals(HEAL)) {
+		else if (attacker.equals(SHAMAN)) {
 			if (defender.equals(SWORD))
 				ret = 2.0;
 		}
@@ -188,7 +199,7 @@ public enum UnitType {
 				ret = 0.7;
 			else if (defender.equals(AXE_THROWER))
 				ret = 1.5;
-			else if (defender.equals(HEAL))
+			else if (defender.equals(SHAMAN))
 				ret = 1.7;
 		} 
 		
