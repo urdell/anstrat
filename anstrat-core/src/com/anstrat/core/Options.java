@@ -21,6 +21,10 @@ public class Options {
 			if(soundOn)
 				Main.getInstance().menuMusic.play();
 		}
+		if(prefs.contains("fps")){
+			System.out.println("\tShow fps: "+prefs.getBoolean("fps"));
+			showFps = prefs.getBoolean("fps");
+		}
 		prefs.clear();
 	}
 	
@@ -28,6 +32,7 @@ public class Options {
 		System.out.println("Saving preferences.");
 		
 		prefs.putBoolean("sound", soundOn);
+		prefs.putBoolean("fps", showFps);
 		prefs.flush();
 	}
 }

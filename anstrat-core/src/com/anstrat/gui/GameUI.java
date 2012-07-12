@@ -95,7 +95,7 @@ public class GameUI extends UI {
 		fpsLabel = new Label("",Assets.SKIN);
 		fpsLabel.setColor(Color.LIGHT_GRAY);
 		
-		topPanel.addActor(fpsLabel);
+		//topPanel.addActor(fpsLabel);
         
         addActor(topPanel);
         
@@ -225,10 +225,7 @@ public class GameUI extends UI {
 				"* height:"+(int)(tph*0.8) +
 				"[end] width:"+(int)(tph*2) +
 				"[name] expand fill padb:"+padv+" padt:"+padv+" padl:"+padh+" padr:"+padh +
-				"{*align:left [gold]} maxwidth:"+(int)(tph*1.5));	//---[mana]
-		
-		fpsLabel.x = width - Assets.UI_FONT.getBounds("00").width;
-		fpsLabel.y = goldDisplay.y;
+				"{*align:left [fps] ignore ---[gold]} maxwidth:"+(int)(tph*1.5));	//---[mana]
 		
 		// Permanent Panel
 		float pwidth = bph*1.8f;
