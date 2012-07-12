@@ -31,7 +31,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
@@ -89,7 +90,17 @@ public class MainMenu extends MenuScreen {
         }));
         
         contents.register("login", ComponentFactory.createLoginLabel());
-        contents.register("version", new Label(" "+Main.version, new LabelStyle(Assets.UI_FONT,Color.WHITE)));
+        
+        NinePatch emp = Assets.SKIN.getPatch("empty");
+        TextButton ver = new TextButton(" "+Main.version,
+        		new TextButtonStyle(emp,emp,emp,0f,0f,0f,0f,Assets.UI_FONT,Color.WHITE,Color.LIGHT_GRAY,Color.WHITE));
+        ver.setClickListener(new ClickListener() {
+            @Override
+            public void click(Actor actor,float x,float y ){
+            	Main.getInstance().setScreen(DebugMenu.getInstance());
+            }
+        });
+        contents.register("version", ver);
 
         gamesList = new Table(Assets.SKIN);
         updateGamesList();
