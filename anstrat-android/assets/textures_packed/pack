@@ -1194,28 +1194,35 @@ wolf-idle-0001
   orig: 128, 128
   offset: 0, 0
   index: -1
-wolf-attack-0005
+wolf-death-0001
   rotate: false
   xy: 0, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-wolf-death-0001
+wolf-idle-0006
   rotate: false
   xy: 128, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-wolf-idle-0006
+wolf-walk-0002
   rotate: false
   xy: 256, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-wolf-walk-0002
+wolf-attack-0006
+  rotate: false
+  xy: 384, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+wolf-attack-0005
   rotate: false
   xy: 384, 384
   size: 128, 128
