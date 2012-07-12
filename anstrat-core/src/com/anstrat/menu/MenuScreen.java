@@ -41,8 +41,10 @@ public abstract class MenuScreen implements Screen {
         contents.align("top center");
         contents.setBackground(new NinePatch(Assets.getTextureRegion("MenuBackground")));
         
+        stage.addActor(contents);
+        
         // Flag animation
-		contents.addActor(new Actor(){
+		stage.addActor(new Actor(){
 			private float flagAnimationStateTime;
 			private Animation flagAnimation = Assets.getAnimation("flag-inplace-black");
 			
@@ -60,7 +62,7 @@ public abstract class MenuScreen implements Screen {
 			}
 		});
 		
-		stage.addActor(contents);
+		
 	}
 	
 	public void setBounds(float x, float y, float width, float height){
