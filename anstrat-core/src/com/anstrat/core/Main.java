@@ -45,6 +45,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Main extends Game implements ApplicationListener, INetworkListener {
 	
 	public static final String version = "Beta 1";
+	public static final String NETWORK_HOST = "localhost";
+	public static final int NETWORK_PORT = 25406;
 	
 	public static float percentWidth;
 	public static float percentHeight;
@@ -108,9 +110,8 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		percentHeight = ((float)Gdx.graphics.getHeight())/100f;
 		
 		// Network
-		// TODO enable again when new server is obtained (preferably at Erik's)
 		// network = new Network(this, "vengefulvikings.servegame.com"/*"129.16.21.61"*/, 25406);
-		//network = new Network(this, "localhost", 25406);
+		network = new Network(this, NETWORK_HOST, NETWORK_PORT);
 		
 		// Music
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("music/vikingstitle.mp3"));
@@ -140,8 +141,7 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		Gdx.graphics.setTitle("Vengeful Vikings (Beta)");
 		setScreen(SplashScreen.getInstance());
 		
-		// TODO enable again when new server is obtained (preferably at Erik's)
-		/* network.start();
+		network.start();
 		
 		// Try to load saved login info
 		user = User.fromFile(Gdx.files.local("login.bin"));
@@ -152,7 +152,6 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 			user = new User();
 			network.quickLogin();
 		}
-		*/
 		
 		// Set the desktop application icon
 		FileHandle iconFile = Gdx.files.internal("icon.png");
