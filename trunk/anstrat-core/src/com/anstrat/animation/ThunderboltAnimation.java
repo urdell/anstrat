@@ -42,10 +42,10 @@ public class ThunderboltAnimation extends Animation {
 		super.draw(deltaTime, batch);
 		
 		Vector2 position = target.getPosition();
-		float width = GMap.TILE_WIDTH/2;
-		float height = GMap.TILE_HEIGHT;
+		float width = 3* GMap.TILE_WIDTH/2;
+		float height = 3 * GMap.TILE_HEIGHT;
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
-		batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
+		batch.draw(region, position.x-(width/2), position.y-(height+GMap.TILE_HEIGHT/2), width, height);
 	}
 	
 }
