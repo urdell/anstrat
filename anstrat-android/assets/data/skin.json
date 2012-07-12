@@ -4,8 +4,8 @@ resources: {
 		selection: { width: 1, height: 1, x: 0, y: 0 }
 	},
 	com.badlogic.gdx.graphics.g2d.NinePatch: {
-		empty: [ { width: 1, height: 1, x: 10, y: 0 } ],
-		black: [ { width: 1, height: 1, x: 35, y: 80 } ],
+		empty: [ { width: 1, height: 1, x: 3, y: 0 } ],
+		black: [ { width: 1, height: 1, x: 3, y: 1 } ],
 		cursor: [
 			{ width: 1, height: 1, x: 0, y: 1 },
 			{ width: 1, height: 1, x: 1, y: 1 },
