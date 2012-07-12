@@ -120,10 +120,10 @@
 		<maxHP>14</maxHP>
 		<attack>3</attack>
 		<maxAttackRange>1</maxAttackRange>
-		<maxAP>4</maxAP>
+		<maxAP>5</maxAP>
 		<APReg>2</APReg>
 		<cost>8</cost>
-		<description>A spammable unit that is only good in greater numbers.</description>
+		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<team>hateful</team>
@@ -137,7 +137,7 @@
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
 		<cost>30</cost>
-		<description>A poweful and mobile unit. Has the longest attack range in game.</description>
+		<description>The Dark Elf is a poweful and mobile unit. Has the longest attack range in the game.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<team>hateful</team>
@@ -151,7 +151,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
-		<description>Can regenerate AP for allies and has a ranged attack.</description>
+		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<team>hateful</team>
@@ -165,7 +165,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>55</cost>
-		<description>A very, very powerful unit.</description>
+		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<team>hateful</team>
@@ -179,7 +179,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
-		<description>A unit with a passive regeneration ability.</description>
+		<description>The Troll is the only unit with a passive regeneration ability.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<team>hateful</team>
