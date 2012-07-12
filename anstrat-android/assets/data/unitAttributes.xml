@@ -4,11 +4,7 @@
 		<name>Berserker</name>
 		<imageFolder>berserker</imageFolder>
 		<maxHP>15</maxHP>
-		<rangeArmor>1</rangeArmor>
-		<bluntArmor>1</bluntArmor>
-		<cutArmor>1</cutArmor>
 		<attack>9</attack>
-		<attackType>2</attackType><!-- Cut -->
 		<maxAP>7</maxAP>
 		<APReg>5</APReg>
 		<cost>25</cost>
@@ -16,16 +12,13 @@
 		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
 		<idleImage>berserker-idle-0001</idleImage>
 		<portrait>berserkerportrait</portrait>
+		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Shaman</name>
 		<imageFolder>shaman</imageFolder>
 		<maxHP>13</maxHP>
-		<rangeArmor>0</rangeArmor>
-		<bluntArmor>0</bluntArmor>
-		<cutArmor>0</cutArmor>
 		<attack>4</attack>
-		<attackType>1</attackType><!-- Cut -->
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>6</maxAP>
 		<APReg>4</APReg>
@@ -34,16 +27,13 @@
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
 		<portrait>shamanportrait</portrait>
+		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Axe Thrower</name>
 		<imageFolder>axethrower</imageFolder>
 		<maxHP>15</maxHP>
-		<rangeArmor>1</rangeArmor>
-		<bluntArmor>1</bluntArmor>
-		<cutArmor>1</cutArmor>
 		<attack>6</attack>
-		<attackType>0</attackType><!-- Ranged -->
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
@@ -51,16 +41,13 @@
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
+		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Wolf</name>
 		<imageFolder>wolf</imageFolder>
 		<maxHP>15</maxHP>
-		<rangeArmor>1</rangeArmor>
-		<bluntArmor>1</bluntArmor>
-		<cutArmor>1</cutArmor>
 		<attack>6</attack>
-		<attackType>2</attackType><!-- Cut -->
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
@@ -68,16 +55,13 @@
 		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
+		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Hawk</name>
 		<imageFolder>hawk</imageFolder>
 		<maxHP>12</maxHP>
-		<rangeArmor>0</rangeArmor>
-		<bluntArmor>0</bluntArmor>
-		<cutArmor>0</cutArmor>
 		<attack>4</attack>
-		<attackType>1</attackType><!-- Blunt -->
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
@@ -99,16 +83,13 @@
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<portrait>hawkportrait</portrait>
+		<team>viking</team>
 	</UnitType>
 	<UnitType>
 		<name>Swordsman</name>
 		<imageFolder>sword</imageFolder>
 		<maxHP>25</maxHP>
-		<rangeArmor>2</rangeArmor>
-		<bluntArmor>2</bluntArmor>
-		<cutArmor>2</cutArmor>
 		<attack>6</attack>
-		<attackType>1</attackType><!-- Cut -->
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
@@ -117,5 +98,90 @@
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
 		<idleImage>sword-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
+		<team>viking</team>
+	</UnitType>
+	<UnitType>
+		<name>Valkyrie</name>
+		<imageFolder>valkyrie</imageFolder>
+		<maxHP>30</maxHP>
+		<attack>7</attack>
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>8</maxAP>
+		<APReg>4</APReg>
+		<cost>40</cost>
+		<description>Can fly over mountains and is powerful in most aspects.</description>
+		<idleImage>valkyrie-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
+	</UnitType>
+	<UnitType>
+		<name>Fallen Warrior</name>
+		<imageFolder>fallen</imageFolder>
+		<maxHP>14</maxHP>
+		<attack>3</attack>
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>4</maxAP>
+		<APReg>2</APReg>
+		<cost>8</cost>
+		<description>A spammable unit that is only good in greater numbers.</description>
+		<idleImage>fallen-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
+	</UnitType>
+	<UnitType>
+		<name>Dark Elf</name>
+		<imageFolder>elf</imageFolder>
+		<maxHP>15</maxHP>
+		<attack>8</attack>
+		<maxAttackRange>3</maxAttackRange>
+		<maxAP>9</maxAP>
+		<APReg>5</APReg>
+		<cost>30</cost>
+		<description>A poweful and mobile unit. Has the longest attack range in game.</description>
+		<idleImage>elf-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
+	</UnitType>
+	<UnitType>
+		<name>Goblin Shaman</name>
+		<imageFolder>goblin</imageFolder>
+		<maxHP>12</maxHP>
+		<attack>5</attack>
+		<maxAttackRange>2</maxAttackRange>
+		<maxAP>6</maxAP>
+		<APReg>3</APReg>
+		<cost>30</cost>
+		<description>Can regenerate AP for allies and has a ranged attack.</description>
+		<idleImage>goblin-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
+	</UnitType>
+	<UnitType>
+		<name>Jotun</name>
+		<imageFolder>jotun</imageFolder>
+		<maxHP>50</maxHP>
+		<attack>10</attack>
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>6</maxAP>
+		<APReg>3</APReg>
+		<cost>55</cost>
+		<description>A very, very powerful unit.</description>
+		<idleImage>jotun-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
+	</UnitType>
+	<UnitType>
+		<name>Troll</name>
+		<imageFolder>troll</imageFolder>
+		<maxHP>30</maxHP>
+		<attack>7</attack>
+		<maxAttackRange>1</maxAttackRange>
+		<maxAP>6</maxAP>
+		<APReg>3</APReg>
+		<cost>30</cost>
+		<description>A unit with a passive regeneration ability.</description>
+		<idleImage>troll-idle-0001</idleImage>
+		<portrait>bigguyportrait</portrait>
+		<team>hateful</team>
 	</UnitType>
 </UnitTypes>
