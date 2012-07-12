@@ -123,12 +123,12 @@ public class AbilityPopup extends Popup {
 		int mana = State.activeState.getCurrentPlayer().mana;
 		boolean isPlayerTurn = State.activeState.getCurrentPlayer().userID == User.globalUserID;
 		
-		//Disable buy button if current unit is not affordable
-		boolean canBuy = mana>=card.type.manaCost;
-		Assets.SKIN.setEnabled(cast, canBuy && isPlayerTurn);
-		card.setDisabled(!canBuy);
+		//Disable cast button if current ability is not affordable
+		boolean canCast = mana>=card.type.manaCost;
+		Assets.SKIN.setEnabled(cast, canCast && isPlayerTurn);
+		card.setDisabled(!canCast);
 		
-		//Mark other units that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
+		//Mark other abilities that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
 		for(int i=0; i<types.length; i++){
 			if(mana<types[i].manaCost || !isPlayerTurn)
 				abilities[i].setStyle(Assets.SKIN.getStyle("default-disabled", ButtonStyle.class));
@@ -168,10 +168,10 @@ public class AbilityPopup extends Popup {
 		
 		abilities[1].x = 0;
 		abilities[1].y = (float) (4.5*buttonHeight);
-		/*
+		
 		abilities[2].x = (float) (0.6*buttonWidth);
 		abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		
+		/*
 		abilities[3].x = (float) (width-1.6*buttonWidth);
 		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
 		

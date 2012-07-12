@@ -10,7 +10,8 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public enum PlayerAbilityType {
 	THUNDERBOLT("Thunderbolt"),
-	HERP_DI_DERP("Herp di Derp");
+	SPEEDBOOST("Speedboost"),
+	COMETSTRIKE("Comet Strike");
 	
 	public transient final String name;
 	public transient int manaCost;

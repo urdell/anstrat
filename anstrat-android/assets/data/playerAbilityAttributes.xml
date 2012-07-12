@@ -2,12 +2,18 @@
 <PlayerAbilities>
 	<PlayerAbility>
 		<name>Thunderbolt</name>
-		<manacost>5</manacost>
-		<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at random location</description>
+		<manacost>10</manacost>
+		<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
 	</PlayerAbility>
 	<PlayerAbility>
-		<name>Herp di Derp</name>
-		<manacost>10</manacost>
-		<description>Odin turns an enemy unit into a hawk</description>
+		<name>Comet Strike</name>
+		<manacost>40</manacost>
+		<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 	</PlayerAbility>
+	<PlayerAbility>
+		<name>Speedboost</name>
+		<manacost>10</manacost>
+		<description>Odin boosts target unit's movement speed until end of turn</description>
+	</PlayerAbility>
+	
 </PlayerAbilities>

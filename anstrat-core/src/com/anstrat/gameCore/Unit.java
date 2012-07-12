@@ -28,7 +28,7 @@ public class Unit implements Serializable {
 	public List<Ability> abilities;
 	public List<Effect> effects;
 	
-	
+	public int freeMoves = 0;
 	public int currentHP;
 	public int currentAP;
 	public int attacksThisTurn = 0;
