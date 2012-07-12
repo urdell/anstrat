@@ -45,7 +45,7 @@ public class ThunderboltAnimation extends Animation {
 		float width = 3* GMap.TILE_WIDTH/2;
 		float height = 3 * GMap.TILE_HEIGHT;
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
-		batch.draw(region, position.x-(width/2), position.y-(height+GMap.TILE_HEIGHT/2), width, height);
+		batch.draw(region, position.x-(width/2), position.y-(height), width, height);
 	}
 	
 }
