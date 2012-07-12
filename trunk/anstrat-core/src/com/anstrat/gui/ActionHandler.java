@@ -64,7 +64,7 @@ public class ActionHandler {
 				if(!(game instanceof NetworkGameInstance || game.isAiGame()) ||
 						StateUtils.getCurrentPlayerCastle().controllerId==User.globalUserID ||
 						State.activeState.players[StateUtils.getCurrentPlayerCastle().controllerId].ai==null)
-					Popup.buyUnitPopup.show();
+					Popup.getBuyUnitPopup().show();
 			}
 			//TODO Might need some more verification than (unit!=null) for that tile contains a unit
 			break;
