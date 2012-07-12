@@ -30,7 +30,7 @@ public class PasswordUtil {
 		byte[] blob = new byte[encryptedPassword.length + salt.length];
 		
 		System.arraycopy(encryptedPassword, 0, blob, 0, encryptedPassword.length);
-		System.arraycopy(salt, encryptedPassword.length, blob, 0, salt.length);
+		System.arraycopy(salt, 0, blob, encryptedPassword.length, salt.length);
 		return blob;
 	}
 	
