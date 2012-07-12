@@ -1,0 +1,92 @@
+<project>
+    <property name="bin" value="build/classes"/>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <path id="dependencies">
+        <fileset dir="." includes="**/*.jar"/>
+        <pathelement path="${bin}"/>
+    </path>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        
+        <!-- Copy all assets -->
+        <mkdir dir="${bin}/assets"/>
+        <copy todir="${bin}">
+            <fileset dir="anstrat-android/assets"/>
+        </copy>
+        
+        <!-- Compile Core -->
+        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false">
+            <classpath refid="dependencies"/>
+        </javac>
+        
+        <!-- Compile Tests -->
+       <javac srcdir="anstrat-test/src" destdir="${bin}" includeantruntime="false">
+            <classpath refid="dependencies" />
+        </javac>
+        
+        <!-- Server -->
+        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false"/>
+        
+        <!-- Desktop -->
+        <javac srcdir="anstrat-desktop/src" destdir="${bin}" includeantruntime="false">
+            <classpath refid="dependencies"/>
+        </javac>
+    </target>
+    
+    <target name="test" depends="compile">
+        <junit haltonfailure="yes" dir="anstrat-test" fork="yes" timeout="10000" showoutput="yes">
+            <classpath refid="dependencies"/>
+            <formatter type="plain" usefile="false"/>
+            <test name="com.anstrat.RegressionTest"/>
+        </junit>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${bin}/anstrat.jar" basedir="${bin}" includes="**/*.class" defaultexcludes="yes">
+            <archives>
+                <zips>
+                    <fileset dir="anstrat-core/libs" includes="**/*.jar" />
+                    <fileset dir="anstrat-desktop/libs" includes="**/*.jar" />
+                </zips>
+            </archives>
+            <manifest>
+                <attribute name="Main-Class" value="com.anstrat.desktop.DesktopGame"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java fork="yes" classname="com.anstrat.desktop.DesktopGame">
+            <classpath refid="dependencies"/>
+        </java>
+    </target>
+
+    <target name="compile-server-only">
+        <mkdir dir="build/classes"/>
+
+        <!-- Compile Core -->
+        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false">
+            <classpath refid="dependencies"/>
+        </javac>
+
+        <!-- Server -->
+        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false"/>
+    </target>
+
+    <target name="run-server" depends="compile-server-only">
+        <java fork="yes" failonerror="yes" classname="com.anstrat.server.MainServer">
+            <classpath refid="dependencies"/>
+        </java>
+    </target>
+
+    <target name="run-db-init" depends="compile-server-only">
+        <java fork="yes" failonerror="yes" classname="com.anstrat.server.db.DatabaseHelper">
+            <classpath refid="dependencies"/>
+        </java>
+    </target>
+</project>
