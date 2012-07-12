@@ -3,7 +3,6 @@ package com.anstrat.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
@@ -11,25 +10,22 @@ import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class DebugMenu extends MenuScreen {
 
 	private DebugMenu() {
 		super();
 		
-		CheckBox fpsCheck = new CheckBox("Show fps", Assets.SKIN);
-		fpsCheck.setChecked(Options.showFps);
-		fpsCheck.setClickListener(new ClickListener() {
+		contents.register("fps", ComponentFactory.createMenuButton("Show FPS: "+(Options.showFps?"ON":"OFF"), new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {
 				Options.showFps = !Options.showFps;
 				GEngine.getInstance().userInterface.fpsLabel.setText("");
+				((TextButton)actor).setText("Show FPS: "+(Options.showFps?"ON":"OFF"));
 			}
-			
-		});
-		contents.register("fps", fpsCheck);
+		}));
         
 		contents.register("clearGames", ComponentFactory.createMenuButton("Clear games", new ClickListener(){
             @Override
