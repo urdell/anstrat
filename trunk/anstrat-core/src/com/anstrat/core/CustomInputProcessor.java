@@ -2,6 +2,7 @@ package com.anstrat.core;
 
 import com.anstrat.gameCore.State;
 import com.anstrat.gui.GEngine;
+import com.anstrat.gui.SelectionHandler;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
@@ -50,8 +51,14 @@ public class CustomInputProcessor extends InputAdapter {
 					return true;
 				}
 				else if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.BACKSPACE && Gdx.app.getType() == ApplicationType.Desktop)) {
-					if(screen instanceof GEngine)
+					if(screen instanceof GEngine){
+						if(GEngine.getInstance().selectionHandler.selectionType == SelectionHandler.SELECTION_SPAWN){
+							GEngine.getInstance().selectionHandler.deselect();
+							GEngine.getInstance().highlighter.clearHighlights();
+							return true;
+						}
 						GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
+					}
 					Main.getInstance().popScreen();
 					return true;
 				}
