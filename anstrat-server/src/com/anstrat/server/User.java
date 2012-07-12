@@ -8,6 +8,7 @@ package com.anstrat.server;
 public class User {
 	
 	private String username, displayedName;
+	private byte[] encryptedPassword; // the encrypted password with the salt appended
 	private long userId;
 
 	/**
@@ -16,10 +17,11 @@ public class User {
 	 * @param username The user's username.
 	 * @param displayedName The user's displayed name.
 	 */
-	public User(long userId, String username, String displayedName) {
+	public User(long userId, String username, String displayedName, byte[] encryptedPassword) {
 		this.userId = userId;
 		this.username = username;
 		this.displayedName = displayedName;
+		this.encryptedPassword = encryptedPassword;
 	}
 
 	public String getUsername() {
@@ -34,6 +36,11 @@ public class User {
 	public long getUserId()
 	{
 		return userId;
+	}
+	
+	public byte[] getEncryptedPassword()
+	{
+		return encryptedPassword;
 	}
 	
 	@Override

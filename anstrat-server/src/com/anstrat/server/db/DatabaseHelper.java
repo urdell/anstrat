@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.anstrat.server.HashUtil;
+import com.anstrat.server.PasswordUtil;
 import com.anstrat.server.User;
 
 /**
@@ -70,11 +70,11 @@ public abstract class DatabaseHelper {
 	/**
 	 * Attempts to create a user in the database.
 	 * @param username The username to be inserted.
-	 * @param password The password to be inserted (will be hashed).
+	 * @param password The password to be inserted (will be salted and hashed).
 	 * @param displayedName The displayedName to be inserted.
-	 * @return userId if successful, -1 if not.
+	 * @return the newly created user, or null if something went wrong.
 	 */
-	public static long createUser(String username, String password, String displayedName)
+	public static User createUser(String username, String password, String displayedName)
 	{
 		Connection conn = null;
 		PreparedStatement insertuser = null;
@@ -83,12 +83,14 @@ public abstract class DatabaseHelper {
 		
 		try
 		{
+			byte[] encryptedPassword = PasswordUtil.generateDatabaseBlob(password);
+			
 			conn = connect(DatabaseType.PostgreSQL);
 			conn.setAutoCommit(false);
 			
 			insertuser = conn.prepareStatement("INSERT INTO Users(username,password,displayedName) VALUES(?,?,?)");
 			insertuser.setString(1, username.toLowerCase(Locale.ENGLISH));
-			insertuser.setString(2, HashUtil.getHash("SHA-256", password));
+			insertuser.setBytes(2, encryptedPassword);
 			insertuser.setString(3, displayedName);
 			insertuser.executeUpdate();
 			
@@ -100,7 +102,7 @@ public abstract class DatabaseHelper {
 			
 			conn.commit();
 			
-			return idnr.getLong(1);
+			return new User(idnr.getLong(1), username, displayedName, encryptedPassword);
 		}
 		catch(Exception e)
 		{
@@ -118,7 +120,7 @@ public abstract class DatabaseHelper {
 			closeConn(conn);
 		}
 
-		return -1;
+		return null;
 	}
 	
 	/**
@@ -245,93 +247,6 @@ public abstract class DatabaseHelper {
 	}
 	
 	/**
-	 * (Re-)creates the tables and inserts some initial data.
-	 * @param c The database connection to be used.
-	 * @return Whether the initialization was successful.
-	 */
-	public static boolean initializeDB(Connection c){
-		
-		Statement s = null;
-		
-		try {
-			s = c.createStatement();
-			
-			// Drop tables
-			s.executeUpdate("DROP TABLE IF EXISTS PlaysIn");
-			s.executeUpdate("DROP TABLE IF EXISTS Turns");
-			s.executeUpdate("DROP TABLE IF EXISTS Games");
-			s.executeUpdate("DROP TABLE IF EXISTS Users");
-			s.executeUpdate("DROP TABLE IF EXISTS DefaultMaps");
-			
-			// Games
-			s.executeUpdate("CREATE TABLE Games(" +
-					"id BIGSERIAL PRIMARY KEY, " +
-					"initialState BYTEA, " +
-					"randomSeed BIGINT, " +
-					"turnLimit BIGINT, " +
-					"timestamp TIMESTAMP)");
-			
-			// Users
-			s.executeUpdate("CREATE TABLE Users(" +
-					"id BIGSERIAL PRIMARY KEY, " +
-					"username VARCHAR(20) UNIQUE, " +
-					"displayedName VARCHAR(20) UNIQUE, " +
-					"password CHAR(64))");	// 32 for MD5, 64 for SHA-256, 128 for SHA-512
-			
-			// PlaysIn
-			s.executeUpdate("CREATE TABLE PlaysIn(" +
-					"gameID BIGINT, " +
-					"userID BIGINT, " +
-					"playerId INT, " +
-					"PRIMARY KEY (gameID, userID), " +
-					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
-					"FOREIGN KEY(userID) REFERENCES Users(id))");
-			
-			// Turns
-			s.executeUpdate("CREATE TABLE Turns(" +
-					"gameID BIGINT, " +
-					"userID BIGINT, " +
-					"turnNo INT, " +
-					"timestamp TIMESTAMP, " +
-					"commands BYTEA, " +
-					"stateChecksum INT," +
-					"PRIMARY KEY (gameId, userId, turnNo), " +
-					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
-					"FOREIGN KEY(userID) REFERENCES Users(id))");
-			
-			// Default maps
-			s.executeUpdate("CREATE TABLE DefaultMaps(" +
-					"mapID BIGINT PRIMARY KEY, " +
-					"map BYTEA)");
-			
-			// User data
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('erik','"+
-					HashUtil.getHash("SHA-256", "Erik1")+"','VikingErik')");
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('johnny','"+
-					HashUtil.getHash("SHA-256", "Johnny1")+"','VikingJohnny')");
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('kalle','"+
-					HashUtil.getHash("SHA-256", "Kalle1")+"','VikingKalle')");
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('tomas','"+
-					HashUtil.getHash("SHA-256", "Tomas1")+"','VikingTomas')");
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('andreas','"+
-					HashUtil.getHash("SHA-256", "Andreas1")+"','VikingAndreas')");
-			s.executeUpdate("INSERT INTO USERS(username,password,displayedName) VALUES('anton','"+
-					HashUtil.getHash("SHA-256", "Anton1")+"','VikingAnton')");
-			
-			s.close();
-			
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-		finally{
-			closeStmt(s);
-			closeConn(c);
-		}
-	}
-	
-	/**
 	 * Checks whether an username is already taken.
 	 * @param username The username to be checked.
 	 * @return Whether the username was taken.
@@ -431,8 +346,9 @@ public abstract class DatabaseHelper {
 				long dbid = rs.getLong("id");
 				String dbusername = rs.getString("username");
 				String dbdisplayedName = rs.getString("displayedName");
+				byte[] encryptedPassword = rs.getBytes("password");
 				
-				return new User(dbid, dbusername, dbdisplayedName);
+				return new User(dbid, dbusername, dbdisplayedName, encryptedPassword);
 			}
 		}
 		catch(Exception e)
@@ -508,16 +424,14 @@ public abstract class DatabaseHelper {
 		}
 	}
 	
+	static Connection getConnection(){
+		return connect(DatabaseType.PostgreSQL);
+	}
+	
 	/**
 	 * Connects to the PostgreSQL db and initializes its tables and data.
-	 * @param args Unused.
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException{
-		//Connection c = connect(DatabaseType.SQLite);
-		Connection c = connect(DatabaseType.PostgreSQL);
-		
-		initializeDB(c);
+	public static void main(String[] args) throws ClassNotFoundException, SQLException{	
+		DatabaseSchema.initializeDB();
 	}
 }
