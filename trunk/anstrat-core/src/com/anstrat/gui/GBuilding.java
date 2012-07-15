@@ -65,7 +65,7 @@ public class GBuilding extends GObject {
 			
 		
 		// Make buildings take up 90% of a tile
-		float scale = (GMap.TILE_HEIGHT * 0.9f) / sprite.getHeight();
+		float scale = (GEngine.getInstance().map.TILE_HEIGHT * 0.9f) / sprite.getHeight();
 		sprite.setScale(scale);
 		sprite.flip(false, true);
 		

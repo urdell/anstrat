@@ -1,8 +1,10 @@
 package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
+import com.anstrat.geography.TerrainType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,8 +34,8 @@ public class ParentedGBar extends GBar {
 	public ParentedGBar(Sprite originParent){
 		// Adjust scale and size to tile size, keep the relative sizes regardless of pixel density
 		super(
-				(GMap.TILE_WIDTH * WIDTH) / originParent.getScaleX(),
-				(GMap.TILE_HEIGHT * HEIGHT) / originParent.getScaleY(),
+				(GEngine.getInstance().map.TILE_WIDTH * WIDTH) / originParent.getScaleX(),
+				(GEngine.getInstance().map.TILE_HEIGHT * HEIGHT) / originParent.getScaleY(),
 				originParent.getScaleX());
 		
 		this.originParent = originParent;
@@ -43,6 +45,8 @@ public class ParentedGBar extends GBar {
 	public void setDrawBarText(boolean flag){
 		this.drawBarText = flag;
 	}
+	
+	private Mesh mesh;
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
@@ -86,7 +90,8 @@ public class ParentedGBar extends GBar {
 			if(isVertical) gl.glRotatef(90, 0f, 0f, 1f);
 			
 			// Any terrain type hexagon will do, as we're not using a texture
-			Assets.terrainMeshes[0].render(GL10.GL_TRIANGLES, 0, 12);
+			if(mesh == null) mesh = Assets.getHexagonMesh(TerrainType.FIELD, true);
+			mesh.render(GL10.GL_TRIANGLES, 0, 12);
 			
 			gl.glPopMatrix();
 			

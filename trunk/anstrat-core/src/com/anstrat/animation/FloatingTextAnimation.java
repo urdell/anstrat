@@ -16,10 +16,12 @@ public class FloatingTextAnimation extends Animation{
 	float width = -1;
 	
 	public FloatingTextAnimation(TileCoordinate origin, String text, Color color){
+		GMap map = GEngine.getInstance().map;
+		
 		Vector2 pos = GEngine.getInstance().map.getTile(origin).getPosition();
-		x = pos.x+GMap.TILE_WIDTH/2;
-		y = pos.y+GMap.TILE_HEIGHT/2;
-		length = 0;
+		x = pos.x + map.TILE_WIDTH / 2f;
+		y = pos.y + map.TILE_HEIGHT / 2f;
+		length = 0f;
 		lifetimeLeft = 1.5f;
 		this.text = text;
 		this.color = color;
@@ -27,8 +29,7 @@ public class FloatingTextAnimation extends Animation{
 	
 	@Override
 	public void run(float deltaTime) {
-		y = y-40*deltaTime;
-		
+		y = y - 40f * deltaTime;
 	}
 	
 	@Override

@@ -12,6 +12,8 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
+import com.anstrat.geography.Map;
+import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 
 public class SelectionHandler {
@@ -80,14 +82,17 @@ public class SelectionHandler {
 		spawnUnitType = unitType;
 		selectionType = SELECTION_SPAWN;
 		
-		List<TileCoordinate> adjacent = (List<TileCoordinate>) StateUtils.getAdjacentTiles(StateUtils.getCurrentPlayerCastle().tileCoordinate);
-		adjacent.add(StateUtils.getCurrentPlayerCastle().tileCoordinate);
+		Map map = State.activeState.map;
+		
+		List<Tile> adjacent = map.getNeighbors(StateUtils.getCurrentPlayerCastle().tileCoordinate);
+		adjacent.add(map.getTile(StateUtils.getCurrentPlayerCastle().tileCoordinate));
+		
 		// Remove invalid tiles.
 		List<TileCoordinate> highlights = new ArrayList<TileCoordinate>();
-		for(TileCoordinate tc : adjacent){
-			if(unitType.getTerrainPenalty(GEngine.getInstance().map.getTile(tc).tile.terrain)!=Integer.MAX_VALUE
-					&& StateUtils.getUnitByTile(tc)==null)
-				highlights.add(tc);
+		for(Tile t : adjacent){
+			if(unitType.getTerrainPenalty(t.terrain)!=Integer.MAX_VALUE
+					&& StateUtils.getUnitByTile(t.coordinates)==null)
+				highlights.add(t.coordinates);
 		}
 		
 		GEngine.getInstance().highlighter.highlightTiles(highlights);

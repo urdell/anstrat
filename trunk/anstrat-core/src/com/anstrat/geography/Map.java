@@ -9,13 +9,14 @@ import java.util.Random;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gui.GTile;
 
-
 /**
  * The class that holds information about the map, including all the tiles and the size etc.
  * @author Ekis
  *
  */
 public class Map implements Serializable{
+	
+	public final boolean flat = false;
 	
 	public static final int MAX_SIZE = 50;
 	public static final int MIN_SIZE = 5;
@@ -65,7 +66,6 @@ public class Map implements Serializable{
 	 */
 	public Map(int xsize, int ysize, Random random)
 	{
-		
 		this.xsize = xsize;
 		this.ysize = ysize;
 		tiles = new Tile[xsize][ysize];
@@ -77,43 +77,32 @@ public class Map implements Serializable{
 	
 	/**
 	 * Checks whether two tiles are adjacent
-	 * @param tile1
-	 * @param tile2
-	 * @return True if the tiles are adjacent
 	 */
-	public static boolean isAdjacent(TileCoordinate tile1, TileCoordinate tile2)
-	{
-		int dx = tile1.x - tile2.x;
-		int dy = tile1.y - tile2.y;
-		for(int i=0;i<6;i++)
-			if(NEIGHBORS_DX[i]==dx && NEIGHBORS_DY[tile2.x%2][i]==dy)
-				return true;
+	public boolean isAdjacent(TileCoordinate c1, TileCoordinate c2){
+		for(Tile t : getNeighbors(c1)){
+			if(t.coordinates.equals(c2)) return true;
+		}
+		
 		return false;
 	}
 	
 	/**
 	 * Finds and returns a list of neighbor Tiles to the given Tile.
 	 * @param tile The tile for which neighbors are requested.
-	 * @param flat Whether the grid in question has a flat or pointy hex tile orientation.
 	 * @return The neighboring Tiles in an ArrayList.
 	 */
-	public List<Tile> getNeighbors(Tile tile, boolean flat)
+	public List<Tile> getNeighbors(Tile tile)
 	{
-		return getNeighbors(tile.coordinates, flat);
+		return getNeighbors(tile.coordinates);
 	}
 	
-	public List<Tile> getNeighbors(TileCoordinate coordinates)
-	{
-		return getNeighbors(coordinates, true);
-	}
 	/**
 	 * Finds and returns a list of neighbor Tiles to the Tile at the given array position (x,y).
 	 * @param x The tile's array x coordinate.
 	 * @param y The tile's array y coordinate.
-	 * @param flat Whether the grid in question has a flat or pointy hex tile orientation.
 	 * @return The neighboring Tiles in an ArrayList.
 	 */
-	public List<Tile> getNeighbors(TileCoordinate coordinates, boolean flat)
+	public List<Tile> getNeighbors(TileCoordinate coordinates)
 	{
 		List<Tile> neighbors = new ArrayList<Tile>();
 		for(int i=0;i<6;i++)
@@ -126,6 +115,7 @@ public class Map implements Serializable{
 			if(neighborx >= 0 && neighborx < (flat?xsize:ysize) && neighbory >= 0 && neighbory < (flat?ysize:xsize))
 				neighbors.add(tiles[flat?neighborx:neighbory][flat?neighbory:neighborx]);
 		}
+		
 		return neighbors;
 	}
 	

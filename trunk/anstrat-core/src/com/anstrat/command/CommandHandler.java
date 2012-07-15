@@ -9,8 +9,8 @@ import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.UnitType;
-import com.anstrat.geography.Map;
 import com.anstrat.geography.Pathfinding;
+import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -88,17 +88,16 @@ public abstract class CommandHandler {
 				return createUnit;
 		}
 		
-		for(TileCoordinate c : StateUtils.getAdjacentTiles(castleCoordinate)){
-			if(Map.isAdjacent(c,castleCoordinate))
-				System.out.println(c + " " + castleCoordinate);
+		for(Tile t : State.activeState.map.getNeighbors(castleCoordinate)){
+			if(State.activeState.map.isAdjacent(t.coordinates, castleCoordinate))
 				
 			// Check if something's in the way
 			// TODO: Check terrain and buildings too?
-			if(StateUtils.getUnitByTile(c) == null){
-				CreateUnitCommand createUnitC = new CreateUnitCommand(State.activeState.getCurrentPlayer(), c, type);
+			if(StateUtils.getUnitByTile(t.coordinates) == null){
+				CreateUnitCommand createUnitC = new CreateUnitCommand(State.activeState.getCurrentPlayer(), t.coordinates, type);
 				if(createUnitC.isAllowed()){
 					
-					System.out.println(c);
+					System.out.println(t.coordinates);
 					return createUnitC;
 				}
 			}

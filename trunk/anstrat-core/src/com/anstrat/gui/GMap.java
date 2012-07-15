@@ -10,16 +10,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GMap {
 
-	private int ySize, xSize;
-	public GTile tiles[][];
+	public final int ySize, xSize;
+	public final boolean flat;
+	public final GTile tiles[][];
 	
-	// Calculate the pixel side length, width and height. 
-	// As size is determined by camera zoom, pixel density must not be used.
-	// (see http://www.gamedev.net/index.php?app=core&module=attach&section=attach&attach_rel_module=ccs&attach_id=1961)
-	public static final float TILE_WIDTH = 128;
-	public static final float TILE_SIDE_LENGTH = TILE_WIDTH / 2;
-	public static final float TILE_HEIGHT = 2 * (float)Math.cos(Math.toRadians(30)) * TILE_SIDE_LENGTH;
-	
+	public final float TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT;
 	private OrthographicCamera camera;
 	
 	/**
@@ -29,47 +24,65 @@ public class GMap {
 	 */
 	public GMap(Map map, OrthographicCamera camera){
 		this.camera = camera;
-		
+		this.flat = map.flat;
 		this.xSize = map.getXSize();
 		this.ySize = map.getYSize();
 		
 		tiles = new GTile[xSize][ySize];
+		
+		TILE_WIDTH = 128f;
+		
+		if(flat){
+			TILE_SIDE_LENGTH = TILE_WIDTH / 2f;
+			TILE_HEIGHT = 2 * (float)Math.cos(Math.toRadians(30)) * TILE_SIDE_LENGTH;
+		}
+		else{
+			// Pointy
+			TILE_SIDE_LENGTH = (TILE_WIDTH / 2f) / (float)Math.cos(Math.toRadians(30));
+			TILE_HEIGHT = 2f * (float)Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH + TILE_SIDE_LENGTH;
+		}
 		
 		float h = (float) Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH;
 		float r =  (float) Math.cos(Math.toRadians(30)) * TILE_SIDE_LENGTH;
 		
 		for(int xIndex=0;xIndex<xSize;xIndex++){
 			for(int yIndex=0;yIndex<ySize;yIndex++){
-				float xPixel = xIndex * (h + TILE_SIDE_LENGTH);
-				float yPixel = yIndex * 2 * r;
+				float xPixel = xIndex * (flat ? (h + TILE_SIDE_LENGTH) : 2 * r);
+				float yPixel = yIndex * (flat ? 2 * r : (h + TILE_SIDE_LENGTH));
 				
 				// Offset r if this is an odd row
-				if(xIndex % 2 != 0){
+				if(flat && xIndex % 2 != 0){
 					yPixel += r;
 				}
 				
+				if(!flat && yIndex % 2 != 0){
+					xPixel += r;
+				}
+				
 				Vector2 position = new Vector2(xPixel, yPixel);
-				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT);
+				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT, flat);
 			}
 		}
 	}
 	
 	public float getWidth(){
-		int widths = xSize / 2;
-		return widths * TILE_WIDTH + (xSize - widths) * TILE_SIDE_LENGTH 
-				+ (xSize % 2 == 0 ? 1 : 2) * (float) (Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH); 
+		if(flat){
+			return (xSize / 2f) * TILE_WIDTH + (xSize / 2f) * TILE_SIDE_LENGTH 
+					+ (xSize % 2 == 0 ? 1 : 2) * (float) (Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH);
+		}
+		else{
+			return (xSize * TILE_WIDTH) + (TILE_WIDTH / 2f);
+		}
 	}
 	
 	public float getHeight(){
-		return ySize * TILE_HEIGHT + TILE_HEIGHT / 2f;
-	}
-	
-	public int getXSize(){
-		return xSize;
-	}
-	
-	public int getYSize(){
-		return ySize;
+		if(flat){
+			return ySize * TILE_HEIGHT + TILE_HEIGHT / 2f;
+		}
+		else{
+			return (ySize / 2) * TILE_HEIGHT + (ySize / 2f) * TILE_SIDE_LENGTH 
+				+ (ySize % 2 == 0 ? 1 : 2) * (float) (Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH);
+		}
 	}
 	
 	public void render(GL10 gl){
@@ -81,6 +94,7 @@ public class GMap {
 				}
 			}
 		}
+		
 		for(GTile[] tRow : tiles){
 			for(GTile tile : tRow){
 				if(camera.frustum.boundsInFrustum(tile.getBoundingBox())){
@@ -105,9 +119,8 @@ public class GMap {
 	 * @param useWindowCoordinates if true v is treated as window coordinates, otherwise as world coordinates
 	 * @return the {@link TileCoordinate} that contains the given coordinates.
 	 */
+	
 	public TileCoordinate coordinate(Vector2 v, boolean useWindowCoordinates){
-		TileCoordinate result = new TileCoordinate();
-		
 		// Convert to world coordinates
 		if(useWindowCoordinates){
 			CameraUtil.windowToCameraCoordinates(camera, v, temp);
@@ -117,6 +130,18 @@ public class GMap {
 			temp.y = v.y;
 			temp.z = 0f;
 		}
+		
+		if(flat){
+			return coordinateFlat(v);
+		}
+		else{
+			return coordinatePointy(v);
+		}
+	}
+	
+	// TODO: Simplify, a lot is repeated between coordinateFlat and coordinatePointy
+	private TileCoordinate coordinateFlat(Vector2 v){
+		TileCoordinate result = new TileCoordinate();
 		
 		// See http://www.gamedev.net/page/resources/_/technical/game-programming/coordinates-in-hexagon-based-tile-maps-r1800
 		// for the meaning of r and h
@@ -131,7 +156,7 @@ public class GMap {
 		// Get the coordinates local to the current section (where 0,0 = top-left corner of the current section)
 		float xLocal = temp.x - xSection * (h + sideLength);
 		float yLocal = temp.y - ySection * (2 * r);
-		
+
 		// There are two types of sections, type A for even columns, type B for odd columns
 		boolean isTypeA = xSection % 2 == 0;
 		float m = h / r; // gradient (slope) of the diagonal edges
@@ -178,6 +203,76 @@ public class GMap {
 					// Top-right
 					result.x = xSection;
 					result.y = ySection - 1;
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	private TileCoordinate coordinatePointy(Vector2 v){
+		TileCoordinate result = new TileCoordinate();
+		
+		// See http://www.gamedev.net/page/resources/_/technical/game-programming/coordinates-in-hexagon-based-tile-maps-r1800
+		// for the meaning of r and h
+		float sideLength = TILE_SIDE_LENGTH / camera.zoom;
+		float h = (float) (Math.sin(Math.toRadians(30)) * sideLength);
+		float r = (float) (Math.cos(Math.toRadians(30)) * sideLength);
+		
+		// Divide the map into equal sized rectangular sections
+		int xSection = (int)(temp.x / (2 * r));
+		int ySection = (int)(temp.y / (h + sideLength));
+		
+		// Get the coordinates local to the current section (where 0,0 = top-left corner of the current section)
+		float xLocal = temp.x - xSection * (2 * r);
+		float yLocal = temp.y - ySection * (h + sideLength);
+
+		// There are two types of sections, type A for even columns, type B for odd columns
+		boolean isTypeA = ySection % 2 == 0;
+		float m = h / r; // gradient (slope) of the diagonal edges
+		
+		// Type A
+		if(isTypeA){
+			// Middle
+			result.x = xSection;
+			result.y = ySection;
+			
+			if(yLocal < (h - xLocal * m)){
+				// Left edge
+				result.x = xSection - 1;
+				result.y = ySection - 1;
+			}
+			
+			if(yLocal < (- h + xLocal * m)){
+				// Right edge
+				result.x = xSection;
+				result.y = ySection - 1;
+			}
+		}
+		// Type B
+		else{
+			if(xLocal >= r){
+				if(yLocal < (2 * h -xLocal * m)){
+					// Bottom-left
+					result.x = xSection;
+					result.y = ySection - 1;
+				}
+				else{
+					// Bottom-right
+					result.x = xSection;
+					result.y = ySection;
+				}
+			}
+			else{
+				if(yLocal < (xLocal * m)){
+					// Top-left
+					result.x = xSection;
+					result.y = ySection - 1;
+				}
+				else{
+					// Top-right
+					result.x = xSection - 1;
+					result.y = ySection;
 				}
 			}
 		}
