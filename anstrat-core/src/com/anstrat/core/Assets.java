@@ -46,20 +46,13 @@ public class Assets {
 	public static Animation thrownAxeAnimation;
 	
 	/**
-	 * Hexagon mesh with side length one, with texture coordinates set for each terrain type
+	 * Hexagon meshes with side length one, with texture coordinates set for each terrain type
 	 * Has two sets of indices:
 	 * render(GL.TRIANGLES, 0, 12)	to render the hexagon
 	 * render(GL.LINES, 12, 12)		to render the outline
-	 * 
-	 * To render individual edges:
-	 * 		render(GL.LINES, 12, 2)	SW
-	 * 		render(GL.LINES, 14, 2)	S
-	 * 		render(GL.LINES, 16, 2)	SE
-	 * 		render(GL.LINES, 18, 2)	NE
-	 * 		render(GL.LINES, 20, 2)	N
-	 * 		render(GL.LINES, 22, 2)	NW
 	 */
-	public static HexagonMesh[] terrainMeshes;
+	// terrainMeshes[0] for flat hexagons, terrainMeshes[1] for pointy hexagons
+	private static HexagonMesh[][] terrainMeshes;
 	
 	public static BitmapFont STANDARD_FONT,MENU_FONT,UI_FONT, DESCRIPTION_FONT;
 	
@@ -75,7 +68,7 @@ public class Assets {
 		Gdx.app.log("Assets", "load()");
 		
 		atlas = new TextureAtlas("textures_packed/pack");
-		loadTilesMeshes();
+		terrainMeshes = new HexagonMesh[2][];
 		loadFonts();
 		loadUnmanagedTextures();
 		loadSkin();
@@ -95,8 +88,10 @@ public class Assets {
 		MENU_FONT.dispose();
 		UI_FONT.dispose();
 		
-		for(HexagonMesh m : terrainMeshes){
-			m.dispose();
+		for(HexagonMesh[] hexagonType : terrainMeshes){
+			for(HexagonMesh m : hexagonType){
+				if(m != null) m.dispose();
+			}
 		}
 		
 		SKIN.dispose();
@@ -158,16 +153,15 @@ public class Assets {
 		}
 	}
 	
-	private static void loadTilesMeshes(){
-	
-		// Create a separate mesh for each terrain type to avoid having to change
-		// the texture coordinates between terrain types
-		TerrainType[] values = TerrainType.values();
-		terrainMeshes = new HexagonMesh[TerrainType.values().length];
+	// Creates a separate mesh for each terrain type to avoid having to change
+	// the texture coordinates between terrain types
+	public static HexagonMesh getHexagonMesh(TerrainType type, boolean flat){
+		int flatOrPointy = flat ? 0 : 1;
 		
-		for(TerrainType t : values){
-			terrainMeshes[t.ordinal()] = new HexagonMesh(GTile.getTextures(t)[0]);
-		}
+		if(terrainMeshes[flatOrPointy] == null) terrainMeshes[flatOrPointy] = new HexagonMesh[TerrainType.values().length];
+		if(terrainMeshes[flatOrPointy][type.ordinal()] == null) terrainMeshes[flatOrPointy][type.ordinal()] = new HexagonMesh(GTile.getTextures(type)[0], flat);
+		
+		return terrainMeshes[flatOrPointy][type.ordinal()];
 	}
 
 	private static void loadSkin(){
@@ -459,7 +453,7 @@ public class Assets {
 	public static class HexagonMesh extends Mesh {
 		public final Texture texture;
 		
-		public HexagonMesh(TextureRegion region){
+		public HexagonMesh(TextureRegion region, boolean flat){
 			super(true, 6, 24, new VertexAttribute(Usage.Position, 2, "a_position"), new VertexAttribute(Usage.TextureCoordinates, 2, "a_texCoords"));
 			
 			this.texture = region.getTexture();
@@ -479,14 +473,64 @@ public class Assets {
 				1.0f, 0.5f,
 			};
 			
-			float[] vertices = new float[]{
-				-1/2f - h, 0f,	// 0. Left
-				-1/2f, r,		// 1. Bottom-left
-				-1/2f, -r,		// 2. Top-left
-				1/2f, r,		// 3. Bottom-right
-				1/2f, -r,		// 4. Top-right
-				1/2f + h, 0f,	// 5. Right
-			};
+			// TODO: Simplify, a lot is repeated below
+			float[] vertices;
+			short[] indices;
+			
+			// Flat
+			if(flat){
+				vertices = new float[]{
+					-1/2f - h, 0f,	// 0. Left
+					-1/2f, r,		// 1. Bottom-left
+					-1/2f, -r,		// 2. Top-left
+					1/2f, r,		// 3. Bottom-right
+					1/2f, -r,		// 4. Top-right
+					1/2f + h, 0f,	// 5. Right
+				};
+			
+				indices = new short[]{
+					// Represents the triangles of the hexagon
+					0, 1, 2,
+					1, 2, 3,
+					2, 3, 4,
+					3, 4, 5,
+						
+					// Represents the edges of the hexagon
+			   		0, 1,	// SW
+					1, 3,	// S
+					3, 5,	// SE
+					5, 4,	// NE
+					4, 2,	// N
+					2, 0,	// NW
+				};
+			}
+			else{
+				vertices = new float[]{
+					0f, 1/2f + h,	// 0. Top
+					-r, 1/2f,		// 1. Top-left
+					r, 1/2f,		// 2. Top-right
+					-r, -1/2f,		// 3. Bottom-left
+					r, -1/2f,		// 4. Bottom-right
+					0f, -1/2f - h,	// 5. Bottom
+				};
+				
+				indices = new short[]{
+					// Represents the triangles of the hexagon
+					0, 1, 2,
+					1, 2, 3,
+					2, 3, 4,
+					3, 4, 5,
+						
+					// Represents the edges of the hexagon
+			   		0, 1,	// SW
+					1, 3,	// S
+					3, 5,	// SE
+					5, 4,	// NE
+					4, 2,	// N
+					2, 0,	// NW
+					
+				};
+			}
 			
 			// Create the combined array
 			float u = region.getU(), v = region.getV();
@@ -508,22 +552,7 @@ public class Assets {
 			}
 			
 			setVertices(combined);
-			
-			setIndices(new short[]{
-					// Represents the triangles of the hexagon
-					0, 1, 2,
-					1, 2, 3,
-					2, 3, 4,
-					3, 4, 5,
-						
-					// Represents the edges of the hexagon
-			   		0, 1,	// SW
-					1, 3,	// S
-					3, 5,	// SE
-					5, 4,	// NE
-					4, 2,	// N
-					2, 0,	// NW
-			});
+			setIndices(indices);
 		}
 	}
 }

@@ -136,7 +136,7 @@ public abstract class Pathfinding {
 			visited.add(closest);
 			
 			//Add neighbors
-			for(Tile neighbor : map.getNeighbors(closest, true))
+			for(Tile neighbor : map.getNeighbors(closest))
 			{
 				Unit unitOnNeighbor = StateUtils.getUnitByTile(neighbor.coordinates);
 				int terrainPenalty = unit != null ? unit.getUnitType().getTerrainPenalty(neighbor.terrain) : Integer.MAX_VALUE;

@@ -57,7 +57,7 @@ public class OutlineHighlight {
 		}
 	}
 	
-	private class BorderHighlight{
+	private static class BorderHighlight{
 		private GTile gTile;
 		/** SW, S, SE, NE, N, NW */
 		public boolean[] sb = {true, true, true, true, true, true}; //shown borders. 

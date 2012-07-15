@@ -32,7 +32,7 @@ public class State implements Serializable{
 	
 	public static State activeState;
 	
-	public Map map;
+	public final Map map;
 	private Queue<Command> turnSoFar;
 	public HashMap<Integer,Unit> unitList;
 	public int nextUnitId;

@@ -52,7 +52,7 @@ public class MapEditor implements Screen {
 		actionHandler = new MapEditorActionHandler();
 		inputHandler  = new MapEditorInputHandler();
 		gBuildings = new HashMap<Integer, GBuilding>();
-		camera.zoom = (GMap.TILE_WIDTH * GEngine.DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
+		camera.zoom = (GEngine.getInstance().map.TILE_WIDTH * GEngine.DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
 
 		initMap(new Map(STANDARD_COLUMNS, STANDARD_ROWS));
 	}
@@ -73,7 +73,7 @@ public class MapEditor implements Screen {
 		gMap = new GMap(map, camera);
 		
 		cameraController.setBounds(gMap.getWidth(), gMap.getHeight());
-		cameraController.setZoomLimits(gMap.getWidth(), gMap.getHeight(), GMap.TILE_WIDTH * 2.5f, GMap.TILE_HEIGHT * 2.5f);
+		cameraController.setZoomLimits(gMap.getWidth(), gMap.getHeight(), GEngine.getInstance().map.TILE_WIDTH * 2.5f, GEngine.getInstance().map.TILE_HEIGHT * 2.5f);
 		
 		gBuildings.clear();
 		for(Building b: map.buildingList.values()) {

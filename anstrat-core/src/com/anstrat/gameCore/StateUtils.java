@@ -1,9 +1,5 @@
 package com.anstrat.gameCore;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 
 /**
@@ -79,42 +75,5 @@ public abstract class StateUtils {
 				return ADJECANT_NE;
 		}
 		return -1;  // no case fulfilled -> not adjecant.
-	}
-	
-	public static Collection<TileCoordinate> getAdjacentTiles(TileCoordinate c){
-		TileCoordinate[] tiles = null;
-		if(c.x%2==1){             // Bottom peak
-			tiles = new TileCoordinate[]{
-				new TileCoordinate(c.x - 1, c.y),
-				new TileCoordinate(c.x, c.y - 1),
-				new TileCoordinate(c.x + 1, c.y),
-				new TileCoordinate(c.x - 1, c.y + 1),
-				new TileCoordinate(c.x, c.y + 1),
-				new TileCoordinate(c.x + 1, c.y + 1),
-			};
-		
-		}
-		
-		else if(c.x%2==0){  		// top peak
-			tiles = new TileCoordinate[]{
-					new TileCoordinate(c.x-1,c.y-1),
-					new TileCoordinate(c.x,c.y-1),
-					new TileCoordinate(c.x+1,c.y-1),
-					new TileCoordinate(c.x-1,c.y),
-					new TileCoordinate(c.x,c.y+1),
-					new TileCoordinate(c.x+1,c.y),
-			};
-		}
-		
-		ArrayList<TileCoordinate> result = new ArrayList<TileCoordinate>(tiles.length);
-		Map map = State.activeState.map;
-		
-		for(TileCoordinate tile : tiles){
-			if(tile.x >= 0 && tile.x < map.getXSize() && tile.y >= 0 && tile.y < map.getYSize()){
-				result.add(tile);
-			}
-		}
-		
-		return result;
 	}
 }

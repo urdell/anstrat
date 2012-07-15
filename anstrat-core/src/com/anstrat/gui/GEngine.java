@@ -112,11 +112,11 @@ public class GEngine implements Screen{
 		
 		
 		cameraController.setBounds(map.getWidth(), map.getHeight());
-		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), GMap.TILE_WIDTH * 2.5f, GMap.TILE_HEIGHT * 2.5f);
+		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), map.TILE_WIDTH * 2.5f, map.TILE_HEIGHT * 2.5f);
 		cameraController.setOffsets(userInterface.topPanel.height, userInterface.bottomPanel.height, 0f, 0f);
 		
 		if (!startZoom)
-			camera.zoom = (GMap.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
+			camera.zoom = (map.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
 		else
 			camera.zoom = (Math.min(map.getWidth(), map.getHeight())) / Gdx.graphics.getWidth();
 		cameraController.checkBounds();
@@ -141,7 +141,7 @@ public class GEngine implements Screen{
 		
 		//TODO
 		if (startZoom) {
-			Animation zoom = new ZoomCameraAnimation((GMap.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth(), 2f);
+			Animation zoom = new ZoomCameraAnimation((map.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth(), 2f);
 			Animation move = new MoveCameraAnimation(map.getTile(StateUtils.getCurrentPlayerCastle().tileCoordinate).getCenter(), 2f);
 			
 			animationHandler.runParalell(zoom);
