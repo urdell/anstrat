@@ -16,7 +16,7 @@ import com.anstrat.gui.GTile;
  */
 public class Map implements Serializable{
 	
-	public final boolean flat = false;
+	public final boolean flat = true;
 	
 	public static final int MAX_SIZE = 50;
 	public static final int MIN_SIZE = 5;

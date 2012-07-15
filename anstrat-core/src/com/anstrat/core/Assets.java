@@ -89,6 +89,8 @@ public class Assets {
 		UI_FONT.dispose();
 		
 		for(HexagonMesh[] hexagonType : terrainMeshes){
+			if(hexagonType == null) continue;
+			
 			for(HexagonMesh m : hexagonType){
 				if(m != null) m.dispose();
 			}
