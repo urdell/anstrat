@@ -52,7 +52,8 @@ public class MapEditor implements Screen {
 		actionHandler = new MapEditorActionHandler();
 		inputHandler  = new MapEditorInputHandler();
 		gBuildings = new HashMap<Integer, GBuilding>();
-		camera.zoom = (GEngine.getInstance().map.TILE_WIDTH * GEngine.DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
+		GMap gmap = GEngine.getInstance().map;
+		camera.zoom = (gmap==null?1f:gmap.TILE_WIDTH * GEngine.DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
 
 		initMap(new Map(STANDARD_COLUMNS, STANDARD_ROWS));
 	}

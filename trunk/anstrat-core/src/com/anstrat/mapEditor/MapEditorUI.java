@@ -233,18 +233,30 @@ public class MapEditorUI extends UI {
 				ComponentFactory.createTextField("Map name","name",false),
 				new Row(ComponentFactory.createButton("Ok", Popup.OK), ComponentFactory.createButton("Cancel", Popup.CANCEL)));
 		
-		Table table = new Table();
+		Table table1 = new Table();
+		Table table2 = new Table();
 		
-		final SnapScrollPane scroll1 = new SnapScrollPane(table);
-		final SnapScrollPane scroll2 = new SnapScrollPane(table);
+		Label[] labels1 = new Label[Map.MAX_SIZE-Map.MIN_SIZE+1];
+		Label[] labels2 = new Label[Map.MAX_SIZE-Map.MIN_SIZE+1];
 		
-		table.parse("* expand:x");
-		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE+5; i++) {
-		    table.row();
+		table1.parse("* expand:x");
+		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
+		    table1.row();
 		    Label label = new Label(new Integer(i).toString(), new LabelStyle(Assets.UI_FONT, Color.WHITE));
-		    table.add(label).center().padTop(5).padBottom(5);label.getStyle().fontColor = Color.BLUE;
-		    System.out.println(size);
+		    table1.add(label).center().padTop(5).padBottom(5);
+		    labels1[i-Map.MIN_SIZE]= label; 
 		}
+		
+		table2.parse("* expand:x");
+		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
+		    table2.row();
+		    Label label = new Label(new Integer(i).toString(), new LabelStyle(Assets.UI_FONT, Color.WHITE));
+		    table2.add(label).center().padTop(5).padBottom(5);label.getStyle().fontColor = Color.BLUE;
+		    labels2[i-Map.MIN_SIZE]= label; 
+		}
+		
+		final SnapScrollPane scroll1 = new SnapScrollPane(table1, labels1);
+		final SnapScrollPane scroll2 = new SnapScrollPane(table2, labels2);
 
 		Table flickTable1 = new Table();
 		flickTable1.add(scroll1).fill().expand();
