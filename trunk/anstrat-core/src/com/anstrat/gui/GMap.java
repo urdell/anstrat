@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 public class GMap {
 
 	public final int ySize, xSize;
-	public final boolean flat;
 	public final GTile tiles[][];
+	public final Map map;
 	
 	public final float TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT;
 	private OrthographicCamera camera;
@@ -24,7 +24,7 @@ public class GMap {
 	 */
 	public GMap(Map map, OrthographicCamera camera){
 		this.camera = camera;
-		this.flat = map.flat;
+		this.map = map;
 		this.xSize = map.getXSize();
 		this.ySize = map.getYSize();
 		
@@ -32,7 +32,7 @@ public class GMap {
 		
 		TILE_WIDTH = 128f;
 		
-		if(flat){
+		if(map.flat){
 			TILE_SIDE_LENGTH = TILE_WIDTH / 2f;
 			TILE_HEIGHT = 2 * (float)Math.cos(Math.toRadians(30)) * TILE_SIDE_LENGTH;
 		}
@@ -47,26 +47,26 @@ public class GMap {
 		
 		for(int xIndex=0;xIndex<xSize;xIndex++){
 			for(int yIndex=0;yIndex<ySize;yIndex++){
-				float xPixel = xIndex * (flat ? (h + TILE_SIDE_LENGTH) : 2 * r);
-				float yPixel = yIndex * (flat ? 2 * r : (h + TILE_SIDE_LENGTH));
+				float xPixel = xIndex * (map.flat ? (h + TILE_SIDE_LENGTH) : 2 * r);
+				float yPixel = yIndex * (map.flat ? 2 * r : (h + TILE_SIDE_LENGTH));
 				
 				// Offset r if this is an odd row
-				if(flat && xIndex % 2 != 0){
+				if(map.flat && xIndex % 2 != 0){
 					yPixel += r;
 				}
 				
-				if(!flat && yIndex % 2 != 0){
+				if(!map.flat && yIndex % 2 != 0){
 					xPixel += r;
 				}
 				
 				Vector2 position = new Vector2(xPixel, yPixel);
-				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT, flat);
+				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT, map.flat);
 			}
 		}
 	}
 	
 	public float getWidth(){
-		if(flat){
+		if(map.flat){
 			return (xSize / 2f) * TILE_WIDTH + (xSize / 2f) * TILE_SIDE_LENGTH 
 					+ (xSize % 2 == 0 ? 1 : 2) * (float) (Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH);
 		}
@@ -76,7 +76,7 @@ public class GMap {
 	}
 	
 	public float getHeight(){
-		if(flat){
+		if(map.flat){
 			return ySize * TILE_HEIGHT + TILE_HEIGHT / 2f;
 		}
 		else{
@@ -131,7 +131,7 @@ public class GMap {
 			temp.z = 0f;
 		}
 		
-		if(flat){
+		if(map.flat){
 			return coordinateFlat(v);
 		}
 		else{

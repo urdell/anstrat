@@ -3,7 +3,7 @@ package com.anstrat.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anstrat.gameCore.StateUtils;
+import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -31,8 +31,8 @@ public class OutlineHighlight {
 			borderHighlights.add(bh);
 			
 			for(TileCoordinate other : coordinates){
-				int orientation = StateUtils.NearbyOrientation(coordinate, other);
-				if(orientation != StateUtils.NOT_ADJECANT){ // is adjecant
+				int orientation = map.map.getAdjacentOrientation(coordinate, other);
+				if(orientation != Map.NOT_ADJACENT){ // is adjacent
 					bh.sb[orientation] = false; // disable border between the tiles.
 				}
 			}

@@ -110,20 +110,16 @@ public class GTile extends GObject {
 			mesh.render(GL10.GL_LINES, 12, 12);
 			gl.glEnable(GL10.GL_TEXTURE_2D); 
 			gl.glPopMatrix();
-			
 		}
 	}
-	
-	public static final int EDGE_SW = 0;
-	public static final int EDGE_S = 2;
-	public static final int EDGE_SE = 4;
-	public static final int EDGE_NE = 6;
-	public static final int EDGE_N = 8;
-	public static final int EDGE_NW = 10;
 
 	/**
 	 * Renders an individual edge outline of the tile.
-	 * @param edge See {@link GTile}.EDGE_*
+	 * The edge param specifies the edge id (0-5).
+	 * The number 0-5 corresponds to the edge according to the following schema: <br>
+	 * Flat: SW, S, SE, NE, N, NW <br>
+	 * Pointy: SW, W, SE, NE, E, SW
+	 * @param edge
 	 * @param gl the OpenGL context
 	 * @param color
 	 * @param thickness
@@ -142,7 +138,7 @@ public class GTile extends GObject {
 		}
 		gl.glDisable(GL10.GL_TEXTURE_2D); 
 		//Assets.HEXAGON_MESH.render(GL10.GL_LINES, 12 + edge, 2);
-		mesh.render(GL10.GL_LINES, 12 + edge, 2);
+		mesh.render(GL10.GL_LINES, 12 + edge * 2, 2);
 		gl.glEnable(GL10.GL_TEXTURE_2D);
 		gl.glPopMatrix();
 	}
