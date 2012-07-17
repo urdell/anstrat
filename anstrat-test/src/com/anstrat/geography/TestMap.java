@@ -10,11 +10,12 @@ import org.junit.Test;
 
 public class TestMap {
 
-	private Map map;
+	private Map mapFlat, mapPointy;
 	
 	@Before
 	public void setUp() throws Exception {
-		map = new Map(3, 3);
+		mapFlat = new Map(3, 3, true);
+		mapPointy = new Map(3, 3, false);
 	}
 	
 	@Test
@@ -30,7 +31,7 @@ public class TestMap {
 	
 	@Test
 	public void testGetNeighborsFlatMapCenter(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(1, 1), true);
+		Collection<Tile> tiles = mapFlat.getNeighbors(new TileCoordinate(1, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 2)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
@@ -43,26 +44,26 @@ public class TestMap {
 	@Test
 	public void testGetNeighborsFlatMapCorners(){
 		// Top-left corner (0,0) should have neighbors: (1,0) and (0,1)
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(0, 0), true);
+		Collection<Tile> tiles = mapFlat.getNeighbors(new TileCoordinate(0, 0));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
 		assertEquals(2, tiles.size());
 		
 		// Bottom-left corner (0,2) should have neighbors: (0,1), (1,2) and (1,1)
-		tiles = map.getNeighbors(new TileCoordinate(0, 2), true);
+		tiles = mapFlat.getNeighbors(new TileCoordinate(0, 2));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 2)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
 		assertEquals(3, tiles.size());
 		
 		// Top-right corner (2,0) should have neighbors: (2,1) and (1,0)
-		tiles = map.getNeighbors(new TileCoordinate(2, 0), true);
+		tiles = mapFlat.getNeighbors(new TileCoordinate(2, 0));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertEquals(2, tiles.size());
 		
 		// Bottom-right corner (2,2) should have neighbors: (1,2), (2, 1) and (1,1)
-		tiles = map.getNeighbors(new TileCoordinate(2, 2), true);
+		tiles = mapFlat.getNeighbors(new TileCoordinate(2, 2));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 2)));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
@@ -71,7 +72,7 @@ public class TestMap {
 	
 	@Test
 	public void testGetNeighborsFlatMapLeftEdge(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(0, 1), true);
+		Collection<Tile> tiles = mapFlat.getNeighbors(new TileCoordinate(0, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
@@ -81,7 +82,7 @@ public class TestMap {
 	
 	@Test
 	public void testGetNeighborsFlatMapRightEdge(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(2, 1), true);
+		Collection<Tile> tiles = mapFlat.getNeighbors(new TileCoordinate(2, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
@@ -91,7 +92,7 @@ public class TestMap {
 	
 	@Test
 	public void testGetNeighborPointyMapCenter(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(1, 1), false);
+		Collection<Tile> tiles = mapPointy.getNeighbors(new TileCoordinate(1, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
@@ -103,7 +104,7 @@ public class TestMap {
 
 	@Test
 	public void testGetNeighborsPointyMapLeftEdge(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(0, 1), false);
+		Collection<Tile> tiles = mapPointy.getNeighbors(new TileCoordinate(0, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 2)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
@@ -114,7 +115,7 @@ public class TestMap {
 	
 	@Test
 	public void testGetNeighborsPointyMapRightEdge(){
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(2, 1), false);
+		Collection<Tile> tiles = mapPointy.getNeighbors(new TileCoordinate(2, 1));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 2)));
@@ -124,26 +125,26 @@ public class TestMap {
 	@Test
 	public void testGetNeighborsPointyMapCorner(){
 		// Top-left corner (0,0) should have neighbors: (1,0) and (0,1)
-		Collection<Tile> tiles = map.getNeighbors(new TileCoordinate(0, 0), false);
+		Collection<Tile> tiles = mapPointy.getNeighbors(new TileCoordinate(0, 0));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
 		assertEquals(2, tiles.size());
 		
 		// Bottom-left corner (0,2) should have neighbors: (0,1) and (1,2)
-		tiles = map.getNeighbors(new TileCoordinate(0, 2), false);
+		tiles = mapPointy.getNeighbors(new TileCoordinate(0, 2));
 		assertTrue(containsTile(tiles, new TileCoordinate(0, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 2)));
 		assertEquals(2, tiles.size());
 		
 		// Top-right corner (2,0) should have neighbors: (1,0), (1,1) and (2,1)
-		tiles = map.getNeighbors(new TileCoordinate(2, 0), false);
+		tiles = mapPointy.getNeighbors(new TileCoordinate(2, 0));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 0)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 1)));
 		assertEquals(3, tiles.size());
 		
 		// Bottom-right corner (2,2) should have neighbors: (1,2), (1,1) and (2,1)
-		tiles = map.getNeighbors(new TileCoordinate(2, 2), false);
+		tiles = mapPointy.getNeighbors(new TileCoordinate(2, 2));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 2)));
 		assertTrue(containsTile(tiles, new TileCoordinate(1, 1)));
 		assertTrue(containsTile(tiles, new TileCoordinate(2, 1)));

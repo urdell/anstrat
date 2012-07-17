@@ -20,7 +20,7 @@ public class TestTile {
 	}
 	
 	@Test
-	public void testSerialization() throws FileNotFoundException, IOException, ClassNotFoundException{
+	public void testSerializationNoError() throws FileNotFoundException, IOException, ClassNotFoundException{
 		TestUtil.writeObject(tile, "tile.bin");
 		Tile dTile = (Tile) TestUtil.readObject("tile.bin");
 		assertTrue(isTileEqual(tile, dTile));
