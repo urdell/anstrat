@@ -10,6 +10,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 
 public class Thunderbolt extends TargetedPlayerAbility {
 
@@ -30,7 +31,8 @@ public class Thunderbolt extends TargetedPlayerAbility {
 		Unit target = StateUtils.getUnitByTile(tile);
 		target.currentHP -= damage;
 		if(target.currentHP <= 0){
-			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(target));
+			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(target,
+					GEngine.getInstance().getUnit(target).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 			State.activeState.unitList.remove(target.id);
 		}
 		Gdx.app.log("PlayerAbility", "Thunderbolt was cast");

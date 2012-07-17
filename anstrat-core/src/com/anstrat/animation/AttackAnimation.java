@@ -117,6 +117,7 @@ public class AttackAnimation extends Animation{
 			
 			boolean facingRight = cl.attacker.tileCoordinate.x < cl.defender.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
+			gDefender.setFacingRight(!facingRight);
 			gAttacker.playAttack();
 			
 			ge.animationHandler.runParalell(new DefendAnimation(gAttacker, gDefender, impactAnimationTime));
@@ -144,9 +145,9 @@ public class AttackAnimation extends Animation{
 			gDefender.healthBar.setHealth(healthPercentage);
 			
 			if(cl.newDefenderHP <= 0){
-				ge.animationHandler.runParalell(new DeathAnimation(cl.defender));
+				ge.animationHandler.runParalell(new DeathAnimation(cl.defender, 
+						gDefender.isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 			}
-			
 			pastImpact = true;
 		}
 

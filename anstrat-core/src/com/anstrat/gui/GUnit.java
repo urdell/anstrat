@@ -236,4 +236,9 @@ public class GUnit extends GObject {
 	protected Rectangle getBoundingRectangle() {
 		return this.sprite.getBoundingRectangle();
 	}
+	
+	public boolean isFacingRight()
+	{
+		return animationFacingRight;
+	}
 }

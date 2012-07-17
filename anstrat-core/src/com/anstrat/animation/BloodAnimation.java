@@ -16,11 +16,11 @@ public class BloodAnimation extends Animation {
 	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
 	
-	public BloodAnimation(GUnit attacker, GUnit defender)
+	public BloodAnimation(GUnit defender, boolean directionLeft)
 	{
 		animation = Assets.getAnimation("blood-big");
 		position = defender.getPosition();
-		left = attacker.getPosition().x > position.x;
+		this.left = directionLeft;
 		length = animation.animationDuration;
 		lifetimeLeft = length;
 	}
@@ -39,10 +39,24 @@ public class BloodAnimation extends Animation {
 		
 		float width = map.TILE_WIDTH;
 		float height = map.TILE_HEIGHT;
-		
+
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
-		batch.draw(region, position.x-(width/2f), position.y-(height/2f), 0, 0, 
-				region.getRegionWidth(), region.getRegionHeight(), 1f, 1f, 0, false);
+		
+		float rw = Math.abs(region.getRegionWidth());
+		float rh = Math.abs(region.getRegionHeight());
+		
+		float scaleFactor = 1.5f;
+		
+		if(left)
+		{
+			batch.draw(region, position.x+rw*scaleFactor/2f+width/3f, position.y+rh*scaleFactor/2f, 
+					-rw*scaleFactor, -rh*scaleFactor);
+		}
+		else
+		{
+			batch.draw(region, position.x-rw*scaleFactor/2f-width/3f, position.y-rh*scaleFactor/2f, 
+					rw*scaleFactor, rh*scaleFactor);
+		}
 	}
 
 }

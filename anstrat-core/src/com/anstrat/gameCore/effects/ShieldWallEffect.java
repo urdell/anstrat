@@ -57,4 +57,14 @@ public class ShieldWallEffect extends Effect implements AffectsDefense, TriggerO
 	public boolean isActive(){
 		return isActive;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o instanceof ShieldWallEffect)
+		{
+			return ((ShieldWallEffect) o).name.equals(name);
+		}
+		return false;
+	}
 }
