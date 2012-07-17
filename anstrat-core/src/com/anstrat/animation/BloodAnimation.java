@@ -18,7 +18,6 @@ public class BloodAnimation extends Animation {
 	
 	public BloodAnimation(GUnit attacker, GUnit defender)
 	{
-		Gdx.app.log("Blood", "splatter ok");
 		animation = Assets.getAnimation("blood-big");
 		position = defender.getPosition();
 		left = attacker.getPosition().x > position.x;
@@ -34,7 +33,6 @@ public class BloodAnimation extends Animation {
 	@Override
 	public void draw(float deltaTime, SpriteBatch batch)
 	{
-		Gdx.app.log("Blood", "splatter ok2");
 		super.draw(deltaTime, batch);
 		
 		GMap map = GEngine.getInstance().map;
@@ -42,9 +40,9 @@ public class BloodAnimation extends Animation {
 		float width = map.TILE_WIDTH;
 		float height = map.TILE_HEIGHT;
 		
-		TextureRegion region = this.animation.getKeyFrame(deltaTime, false);
-		batch.draw(region, position.x-(width/2), position.y-(height/2), 0, 0, 
-				region.getRegionWidth(), region.getRegionHeight(), 100f, 100f, 0, false);
+		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
+		batch.draw(region, position.x-(width/2f), position.y-(height/2f), 0, 0, 
+				region.getRegionWidth(), region.getRegionHeight(), 1f, 1f, 0, false);
 	}
 
 }
