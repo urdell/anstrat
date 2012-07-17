@@ -71,7 +71,7 @@ public class TestAdjecantAndOrientation {
 		testNearbyTilesAreAdjacent(mapPointy);
 	}
 	
-	public void testNearbyTilesAreAdjacent(Map map){
+	private void testNearbyTilesAreAdjacent(Map map){
 		for(Tile tile : map.getNeighbors(origin)){
 			assertTrue(map.getAdjacentOrientation(origin, tile.coordinates) != Map.NOT_ADJACENT);
 		}

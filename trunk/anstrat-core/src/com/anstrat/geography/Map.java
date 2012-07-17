@@ -39,11 +39,6 @@ public class Map implements Serializable{
 		this.flat = flat;
 		tiles = new Tile[xsize][ysize];
 		buildingList = new HashMap<Integer,Building>();
-	}
-	
-	/** Creates an empty map of the given size filled with the standard terrain type. */
-	public Map(int xSize, int ySize){
-		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
 		
 		// Fill with field terrain
 		for(int i=0;i<xsize;i++){
@@ -53,6 +48,11 @@ public class Map implements Serializable{
 		}
 
 		name = "Unnamed";
+	}
+	
+	/** Creates an empty map of the given size filled with the standard terrain type. */
+	public Map(int xSize, int ySize){
+		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
 	}
 	
 	/**
