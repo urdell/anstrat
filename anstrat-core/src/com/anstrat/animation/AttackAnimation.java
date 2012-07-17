@@ -145,8 +145,9 @@ public class AttackAnimation extends Animation{
 			gDefender.healthBar.setHealth(healthPercentage);
 			
 			if(cl.newDefenderHP <= 0){
+				Vector2 temp = new Vector2(gDefender.getPosition());
 				ge.animationHandler.runParalell(new DeathAnimation(cl.defender, 
-						gDefender.isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
+						temp.sub(gAttacker.getPosition()).nor()));
 			}
 			pastImpact = true;
 		}
