@@ -3,6 +3,7 @@ package com.anstrat.animation;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class DeathAnimation extends Animation {
@@ -15,7 +16,7 @@ public class DeathAnimation extends Animation {
 	
 	public DeathAnimation(Unit unit, Vector2 direction){
 		this.unit = GEngine.getInstance().getUnit(unit);
-		timeElapsed = 0;
+		timeElapsed = 0f;
 		lifetimeLeft = 2f;
 		this.direction = direction;
 	}
@@ -26,10 +27,14 @@ public class DeathAnimation extends Animation {
 			started = true;
 			unit.playDeath();
 		}
-		
-		unit.setPosition(new Vector2(unit.getPosition().x+direction.x*timeElapsed*moveSpeed,
-				unit.getPosition().y+direction.y*timeElapsed*moveSpeed));
 		timeElapsed += deltaTime;
+		
+		unit.setPosition(new Vector2(unit.getPosition().x+direction.x*(5.37f*(float)Math.exp(-2d*timeElapsed))*moveSpeed,
+				unit.getPosition().y+direction.y*(5.37f*(float)Math.exp(-2d*timeElapsed))*moveSpeed));
+		float newAlpha = 2f-(float)Math.exp(timeElapsed/2.9f);
+		if(newAlpha<0f)
+			newAlpha = 0f;
+		unit.setAlpha(newAlpha);
 	}
 	
 	public void removeGUnit()
