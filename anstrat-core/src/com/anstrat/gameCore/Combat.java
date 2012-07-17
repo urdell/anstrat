@@ -35,9 +35,7 @@ public class Combat {
 		
 		Gdx.app.log("Combat", "Damage is "+damage);
 		
-		if(damage < 0) { damage = 0; }  //  Remove negative damage
-		
-		
+		if(damage < 0) { damage = 0; } // Remove negative damage
 		
 		defender.currentHP -= damage;
 		

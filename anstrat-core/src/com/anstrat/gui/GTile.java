@@ -120,7 +120,7 @@ public class GTile extends GObject {
 	public static final int EDGE_NE = 6;
 	public static final int EDGE_N = 8;
 	public static final int EDGE_NW = 10;
-	
+
 	/**
 	 * Renders an individual edge outline of the tile.
 	 * @param edge See {@link GTile}.EDGE_*
