@@ -28,17 +28,14 @@ public class Speedboost extends TargetedPlayerAbility {
 	public void activate(Player player, TileCoordinate tile){
 		super.activate();
 		Unit target = StateUtils.getUnitByTile(tile);
-		target.freeMoves += 2;
-		//TODO make freemoves usable.
 		target.currentAP = target.getMaxAP();
-		Animation animation = new SpeedBoostAnimation();
+		Animation animation = new SpeedBoostAnimation(target);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		Gdx.app.log("PlayerAbility", "Speedboost was cast");
 	}
 	
 	@Override
 	public boolean isAllowed(Player player, TileCoordinate target) {
-		System.out.println("speedboost isallowed!!");
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&

@@ -13,7 +13,7 @@
 	<PlayerAbility>
 		<name>Speedboost</name>
 		<manacost>10</manacost>
-		<description>Odin boosts target unit's movement speed until end of turn</description>
+		<description>Odin fully restores target unit's AP</description>
 	</PlayerAbility>
 	
 </PlayerAbilities>

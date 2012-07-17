@@ -35,7 +35,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Assets {
 
-	public static boolean USE_GENERATED_FONTS = true;
+	public static boolean USE_GENERATED_FONTS = false;
 
 	// TODO: Ugly way of storing two values, but a rewrite of the animation system is required to do this properly
 	private static HashMap<UnitType, Pair<Animation[], boolean[]>> unitAnimations;
@@ -264,6 +264,11 @@ public class Assets {
 			tex = new Texture(Gdx.files.internal("data/croman.png"));
 			tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);//*/
 			STANDARD_FONT = new BitmapFont(Gdx.files.internal("data/croman.fnt"), new TextureRegion(tex), true);
+			STANDARD_FONT.setScale(ingameSize/STANDARD_FONT.getCapHeight());
+			
+			tex = new Texture(Gdx.files.internal("data/croman.png"));
+			tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);//*/
+			DESCRIPTION_FONT = new BitmapFont(Gdx.files.internal("data/croman.fnt"), new TextureRegion(tex), true);
 			STANDARD_FONT.setScale(ingameSize/STANDARD_FONT.getCapHeight());
 		}
 	}
