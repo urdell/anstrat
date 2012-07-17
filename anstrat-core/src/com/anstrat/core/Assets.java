@@ -54,7 +54,7 @@ public class Assets {
 	// terrainMeshes[0] for flat hexagons, terrainMeshes[1] for pointy hexagons
 	private static HexagonMesh[][] terrainMeshes;
 	
-	public static BitmapFont STANDARD_FONT,MENU_FONT,UI_FONT, DESCRIPTION_FONT;
+	public static BitmapFont STANDARD_FONT,MENU_FONT,UI_FONT, DESCRIPTION_FONT, UI_FONT_BIG;
 	
 	public static Skin SKIN;
 	
@@ -87,6 +87,7 @@ public class Assets {
 		STANDARD_FONT.dispose();
 		MENU_FONT.dispose();
 		UI_FONT.dispose();
+		UI_FONT_BIG.dispose();
 		
 		for(HexagonMesh[] hexagonType : terrainMeshes){
 			if(hexagonType == null) continue;
@@ -207,6 +208,7 @@ public class Assets {
 	private static void loadFonts(){
 		int menuSize   = (int)(Main.percentHeight*4);	//Menu button text size
 		int uiSize     = (int)(Main.percentHeight*3);	//UI text size
+		int uiBigSize  = (int)(Main.percentHeight*6);  //Big UI text size
 		int descriptionSize = (int)(Main.percentHeight*2.7);	//Description text size
 		int ingameSize = 128/2;  // Half a tile in height. Text drawn on map needs same resolution no matter what resolution the device has.
 		
@@ -227,6 +229,10 @@ public class Assets {
 			UI_FONT   = generator.generateFont(uiSize, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|?-+=()*&.;:,{}´`’/", false);
 			generator.dispose();
 			
+			generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Crimson-Bold.otf"));//*/
+			UI_FONT_BIG   = generator.generateFont(uiBigSize, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|?-+=()*&.;:,{}´`’/", false);
+			generator.dispose();
+			
 			generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Crimson-Roman.otf"));//*/
 			STANDARD_FONT = generator.generateFont(ingameSize, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|?-+=()*&.;:,{}´`’/", true);
 			generator.dispose();
@@ -237,6 +243,7 @@ public class Assets {
 			//Need to make sizes a bit smaller to make them similar in size to the generated ones.
 			menuSize   *= 0.75;
 			uiSize     *= 0.75;
+			uiBigSize  *= 0.75;
 			ingameSize *= 1;
 			
 			Texture tex = new Texture(Gdx.files.internal("data/book.png"));
@@ -248,6 +255,11 @@ public class Assets {
 			tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);//*/
 			UI_FONT = new BitmapFont(Gdx.files.internal("data/cbold.fnt"), new TextureRegion(tex), false);
 			UI_FONT.setScale(uiSize/UI_FONT.getCapHeight());
+			
+			tex = new Texture(Gdx.files.internal("data/cbold.png"));
+			tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);//*/
+			UI_FONT_BIG = new BitmapFont(Gdx.files.internal("data/cbold.fnt"), new TextureRegion(tex), false);
+			UI_FONT_BIG.setScale(uiBigSize/UI_FONT_BIG.getCapHeight());
 			
 			tex = new Texture(Gdx.files.internal("data/croman.png"));
 			tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);//*/

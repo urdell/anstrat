@@ -1,6 +1,9 @@
 package com.anstrat.gui;
 
+import com.anstrat.core.Assets;
+import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -12,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Cullable;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Layout;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.utils.ScissorStack;
 
 public class SnapScrollPane extends WidgetGroup {
@@ -41,21 +46,24 @@ private Actor widget;
         private boolean disableX, disableY;
         private boolean clamp = true;
         private boolean hack = false;
+        private Label[] labels;
+        private int test = 0;
 
-        public SnapScrollPane () {
-                this(null, null);
+        public SnapScrollPane (Label[] labels) {
+                this(null, null, labels);
         }
 
         /** @param widget May be null. */
-        public SnapScrollPane (Actor widget) {
-                this(widget, null);
+        public SnapScrollPane (Actor widget, Label[] labels) {
+                this(widget, null, labels);
         }
 
         /** @param widget May be null. */
-        public SnapScrollPane (Actor widget, String name) {
+        public SnapScrollPane (Actor widget, String name, Label[] labels) {
                 super(name);
                 this.widget = widget;
                 if (widget != null) setWidget(widget);
+                this.labels = labels;
 
                 gestureDetector = new GestureDetector(new GestureListener() {
                         public boolean pan (int x, int y, int deltaX, int deltaY) {
@@ -119,14 +127,20 @@ private Actor widget;
 
         public void act (float delta) {
         	
-        		if(!hack)
-        		{
-        			maxY += 13;
-        			hack = true;
-        		}
-        	
                 super.act(delta);
-
+                
+                for(Label label : labels)
+                	label.setStyle(new LabelStyle(Assets.UI_FONT, Color.GRAY));
+                
+                int selectedIndex = Math.round(getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
+                
+                if(selectedIndex<0)
+                	selectedIndex = 0;
+                else if(selectedIndex > labels.length-1)
+                	selectedIndex = labels.length - 1;
+                
+                labels[selectedIndex].setStyle(new LabelStyle(Assets.UI_FONT_BIG, Color.WHITE));
+                
                 float singleChildHeight = 34.0f;
                 
                 if (flingTimer > 0) {
@@ -142,13 +156,6 @@ private Actor widget;
                         if (amountY >= maxY + overscrollDistance) velocityY = 0;
 
                         flingTimer -= delta;
-                }
-                else if(amountY > 0 && amountY < maxY)
-                {
-                	
-                	
-                	float positionOffset = amountY % singleChildHeight;
-                	System.out.println(positionOffset + "sh " + singleChildHeight);
                 }
 
                 if (overscroll && !gestureDetector.isPanning()) {
@@ -192,6 +199,14 @@ private Actor widget;
                 widget.height = disableY ? height : Math.max(height, widgetHeight);
 
                 maxX = widget.width - width;
+                
+                if(!hack)
+        		{
+        			maxY += Main.percentHeight*2f;
+        			hack = true;
+        			System.out.println("Hack successful.");
+        		}
+                
                 maxY = widget.height - height;
         }
 
