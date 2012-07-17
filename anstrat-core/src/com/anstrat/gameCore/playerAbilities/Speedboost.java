@@ -16,13 +16,12 @@ public class Speedboost extends TargetedPlayerAbility {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Speedboost(String name, String iconName, String description,
-			int manaCost, Player player) {
-		super(name, iconName, description, manaCost, player, PlayerAbilityType.SPEEDBOOST);
+	public Speedboost(String name,  Player player) {
+		super(name, player, PlayerAbilityType.SPEEDBOOST);
 	}
 
 	public Speedboost(Player player) {
-		this("speed","boost","description!!!h", 10, player);
+		this("speed", player);
 	}
 	
 	@Override

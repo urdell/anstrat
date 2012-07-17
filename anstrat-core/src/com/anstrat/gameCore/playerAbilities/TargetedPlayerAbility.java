@@ -10,9 +10,8 @@ import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 
 public abstract class TargetedPlayerAbility extends PlayerAbility {
-	public TargetedPlayerAbility(String name, String iconName,
-			String description, int manaCost, Player player, PlayerAbilityType type) {
-		super(name, iconName, description, manaCost, player, type);
+	public TargetedPlayerAbility(String name, Player player, PlayerAbilityType type) {
+		super(name, player, type);
 	}
 
 private static final long serialVersionUID = 1L;

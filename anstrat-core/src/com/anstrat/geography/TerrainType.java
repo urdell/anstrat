@@ -16,6 +16,7 @@ public enum TerrainType {
 	VOLCANO("Volcano", Integer.MAX_VALUE, 1, "volcano"),
 	ROCKYLAVA("Rocky Lava", 2, 1, "rockylava"),
 	ROCKYLAVAPOOL("Rocky Lava Pool", Integer.MAX_VALUE, 1, "rockylavapool"),
+	CRATER("Crater", 2, 1, "crater"),
 	
 	//Snowy terrain
 	SNOW("Snow", 1, 1, "snow"),
