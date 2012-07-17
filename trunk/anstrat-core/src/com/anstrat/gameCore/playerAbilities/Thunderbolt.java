@@ -21,7 +21,7 @@ public class Thunderbolt extends TargetedPlayerAbility {
 	private int damage = 5;
 	
 	public Thunderbolt(Player player) {
-		super("Thunderbolt", "sword", "Deals damage to one target enemy unit", 10, player, PlayerAbilityType.THUNDERBOLT);
+		super("Thunderbolt", player, PlayerAbilityType.THUNDERBOLT);
 	}
 	
 	@Override

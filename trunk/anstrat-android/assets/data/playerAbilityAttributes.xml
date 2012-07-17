@@ -7,7 +7,7 @@
 	</PlayerAbility>
 	<PlayerAbility>
 		<name>Comet Strike</name>
-		<manacost>40</manacost>
+		<manacost>5</manacost>
 		<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 	</PlayerAbility>
 	<PlayerAbility>
