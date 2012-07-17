@@ -62,9 +62,9 @@ public class OutlineHighlight {
 			this.gTile = gTile;
 		}
 		public void render(GL10 gl, Color c){
-			for(int edgeId = 0; edgeId <= 5; edgeId++){
+			for(int edgeId = 0; edgeId < 6; edgeId++){
 				if(sb[edgeId])
-					gTile.renderEdgeOutline(edgeId*2, gl, c, 4f);
+					gTile.renderEdgeOutline(edgeId, gl, c, 4f);
 			}
 		}
 	}

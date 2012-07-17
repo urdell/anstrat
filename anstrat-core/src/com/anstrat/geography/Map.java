@@ -127,16 +127,30 @@ public class Map implements Serializable{
 	public static final int ADJACENT_N = 4;
 	public static final int ADJACENT_NW = 5;
 	
+	private static final int[] FLAT_TO_POINTY = {
+		2, // SW -> SE
+		1, // S -> E
+		3, // SE -> NE
+		5, // NE - NW
+		4, // N -> W
+		0, // NW -> SW
+	};
+	
 	/**
 	 * Returns the edge that joins the two tiles from the origin tile's perspective. <br>
 	 * Remember that this method is not symmetric, getAdjacentOrientation(t1, t2) is not equal to <br>
 	 * getAdjacentOrientation(t2, t1).
 	 * @param origin 
 	 * @param target
-	 * @return the edge which
+	 * @return
 	 */
 	public int getAdjacentOrientation(TileCoordinate origin, TileCoordinate target){
 		int result = -1;
+		
+		if(!flat){
+			origin = flatToPointy(new TileCoordinate(origin));
+			target = flatToPointy(new TileCoordinate(target));
+		}
 		
 		if(origin.x % 2 == 1){		// bottom peak
 			if(origin.x - 1 == target.x && origin.y == target.y)   //left
@@ -167,7 +181,27 @@ public class Map implements Serializable{
 				result = ADJACENT_NE;
 		}
 		
+		if(result != -1 && !flat){
+			result = FLAT_TO_POINTY[result];
+		}
+		
 		return result;
+	}
+	
+	/*
+	private TileCoordinate pointyToFlat(TileCoordinate t){
+		int oldX = t.x;
+		t.x = t.y;
+		t.y = xsize - oldX - (xsize % 2 == 0 ? 0 : 1);
+		return t;
+	}
+	*/
+	
+	private TileCoordinate flatToPointy(TileCoordinate t){
+		int oldY = t.y;
+		t.y = t.x;
+		t.x = ysize - oldY - (ysize % 2 == 0 ? 0 : 1);
+		return t;
 	}
 	
 	public int getXSize(){
