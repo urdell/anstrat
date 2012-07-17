@@ -476,19 +476,8 @@ public class Assets {
 			float r = (float)Math.cos(Math.toRadians(30));
 		    float h = (float)Math.sin(Math.toRadians(30));
 			
-		    // The base texture coordinates not taking into account that we're using a TextureRegion and thus
-		    // only supposed to render a region of the texture
-			float[] textureCoords = new float[]{
-				0.0f, 0.5f,
-				0.25f, 1f,
-				0.25f, 0f,
-				0.75f, 1f,
-				0.75f, 0f,
-				1.0f, 0.5f,
-			};
-			
 			// TODO: Simplify, a lot is repeated below
-			float[] vertices;
+			float[] vertices, textureCoords;
 			short[] indices;
 			
 			// Flat
@@ -517,6 +506,15 @@ public class Assets {
 					4, 2,	// N
 					2, 0,	// NW
 				};
+				
+				textureCoords = new float[]{
+					0.0f, 0.5f,
+					0.25f, 1f,
+					0.25f, 0f,
+					0.75f, 1f,
+					0.75f, 0f,
+					1.0f, 0.5f,
+				};
 			}
 			else{
 				vertices = new float[]{
@@ -542,7 +540,16 @@ public class Assets {
 					5, 4,	// NE
 					4, 2,	// N
 					2, 0,	// NW
-					
+				};
+				
+				// 1-x to flip the texture
+				textureCoords = new float[]{
+					0.5f, 1f - 0.0f,	// Top
+					0.0f, 1f - 0.25f,	// Top left
+					1.0f, 1f - 0.25f,	// Top right
+					0.0f, 1f - 0.75f,	// Bottom-left
+					1.0f, 1f - 0.75f,	// Bottom right
+					0.5f, 1f - 1f,		// Bottom
 				};
 			}
 			
