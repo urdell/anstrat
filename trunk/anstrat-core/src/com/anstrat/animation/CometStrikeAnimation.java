@@ -52,7 +52,8 @@ public class CometStrikeAnimation extends Animation {
 		if(lifetimeLeft <= 0f){
 			Unit centerTarget = StateUtils.getUnitByTile(target.tile.coordinates);
 			if(centerTarget != null){
-				GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(centerTarget));
+				GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(centerTarget,
+						GEngine.getInstance().getUnit(centerTarget).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 				State.activeState.unitList.remove(centerTarget.id);
 			}
 			if (!target.tile.terrain.equals(TerrainType.DEEP_WATER)) {
@@ -65,7 +66,8 @@ public class CometStrikeAnimation extends Animation {
 				Unit unit = StateUtils.getUnitByTile(t.coordinates);
 				if (unit != null) {
 					if(unit.currentHP <= 0){
-						GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(unit));
+						GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(unit,
+								GEngine.getInstance().getUnit(unit).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 						State.activeState.unitList.remove(unit.id);
 					}
 					GEngine.getInstance().getUnit(unit).updateHealthbar();
