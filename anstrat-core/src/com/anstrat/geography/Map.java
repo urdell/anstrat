@@ -15,8 +15,9 @@ import com.anstrat.gui.GTile;
  *
  */
 public class Map implements Serializable{
+	public static final boolean DEFAULT_FLAT_ORIENTATION = false;
 	
-	public final boolean flat = false;
+	public final boolean flat;
 	
 	public static final int MAX_SIZE = 50;
 	public static final int MIN_SIZE = 5;
@@ -32,44 +33,36 @@ public class Map implements Serializable{
     public HashMap<Integer,Building> buildingList;
 	public int nextBuildingId;
 	
-	/**
-	 * Creates an empty map of the given size filled with the standard terrain type.
-	 * @param xsize
-	 * @param ysize
-	 */
-	public Map(int xsize, int ysize)
-	{
-		
-		this.xsize = xsize;
-		this.ysize = ysize;
+	public Map(int xSize, int ySize, boolean flat){
+		this.xsize = xSize;
+		this.ysize = ySize;
+		this.flat = flat;
 		tiles = new Tile[xsize][ysize];
+		buildingList = new HashMap<Integer,Building>();
+	}
+	
+	/** Creates an empty map of the given size filled with the standard terrain type. */
+	public Map(int xSize, int ySize){
+		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
 		
 		// Fill with field terrain
-		for(int i=0;i<xsize;i++)
-		{
-			for(int j=0;j<ysize;j++)
-			{
+		for(int i=0;i<xsize;i++){
+			for(int j=0;j<ysize;j++){
 				tiles[i][j] = new Tile(new TileCoordinate(i, j), TerrainType.FIELD);
-				
 			}
 		}
 
-		buildingList = new HashMap<Integer,Building>();
 		name = "Unnamed";
 	}
 	
 	/**
 	 * Creates a map of the given size, randomized with the given seed.
-	 * @param xsize Number of columns in the map.
-	 * @param ysize Number of rows in the map.
+	 * @param xSize Number of columns in the map.
+	 * @param ySize Number of rows in the map.
 	 * @param the random seed used to generate the map, a reference to is not saved.
 	 */
-	public Map(int xsize, int ysize, Random random)
-	{
-		this.xsize = xsize;
-		this.ysize = ysize;
-		tiles = new Tile[xsize][ysize];
-		buildingList = new HashMap<Integer,Building>();
+	public Map(int xSize, int ySize, Random random){
+		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
 		
 		randomizeMap(random);
 		name = "Random";
@@ -117,6 +110,64 @@ public class Map implements Serializable{
 		}
 		
 		return neighbors;
+	}
+	
+	public static final int NOT_ADJACENT = -1;
+	public static final int ADJACENT_SW = 0;
+	
+	/** Only applicable for flat tiles */
+	public static final int ADJACENT_S = 1;
+	/** Only applicable for pointy tiles */
+	public static final int ADJACENT_E = 1;
+	public static final int ADJACENT_SE = 2;
+	public static final int ADJACENT_NE = 3;
+	/** Only applicable for pointy tiles */
+	public static final int ADJACENT_W = 4;
+	/** Only applicable for flat tiles */
+	public static final int ADJACENT_N = 4;
+	public static final int ADJACENT_NW = 5;
+	
+	/**
+	 * Returns the edge that joins the two tiles from the origin tile's perspective. <br>
+	 * Remember that this method is not symmetric, getAdjacentOrientation(t1, t2) is not equal to <br>
+	 * getAdjacentOrientation(t2, t1).
+	 * @param origin 
+	 * @param target
+	 * @return the edge which
+	 */
+	public int getAdjacentOrientation(TileCoordinate origin, TileCoordinate target){
+		int result = -1;
+		
+		if(origin.x % 2 == 1){		// bottom peak
+			if(origin.x - 1 == target.x && origin.y == target.y)   //left
+				result =  ADJACENT_NW;
+			else if(origin.x == target.x && origin.y - 1 == target.y)   //up
+				result = ADJACENT_N;
+			else if(origin.x + 1 == target.x && origin.y == target.y)   //right
+				result = ADJACENT_NE;
+			else if(origin.x - 1 == target.x && origin.y + 1 == target.y)   //left+down
+				result = ADJACENT_SW;
+			else if(origin.x == target.x && origin.y + 1 == target.y)   //down
+				result = ADJACENT_S;
+			else if(origin.x + 1 == target.x && origin.y + 1 == target.y)   //right+down
+				result = ADJACENT_SE;
+		}
+		else if(origin.x%2==0){		// top peak
+			if(origin.x - 1 == target.x && origin.y == target.y)   //left
+				result = ADJACENT_SW;
+			else if(origin.x == target.x && origin.y - 1 == target.y)   //up
+				result = ADJACENT_N;
+			else if(origin.x + 1 == target.x && origin.y == target.y)   //right
+				result = ADJACENT_SE;
+			else if(origin.x - 1 == target.x && origin.y - 1 == target.y)   //left+up
+				result = ADJACENT_NW;
+			else if(origin.x == target.x && origin.y + 1 == target.y)   //down
+				result = ADJACENT_S;
+			else if(origin.x + 1 == target.x && origin.y - 1 == target.y)   //right+up
+				result = ADJACENT_NE;
+		}
+		
+		return result;
 	}
 	
 	public int getXSize(){

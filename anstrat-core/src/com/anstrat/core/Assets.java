@@ -476,9 +476,24 @@ public class Assets {
 			float r = (float)Math.cos(Math.toRadians(30));
 		    float h = (float)Math.sin(Math.toRadians(30));
 			
+		    short[] indices = new short[]{
+				// Represents the triangles of the hexagon
+				0, 1, 2,
+				1, 2, 3,
+				2, 3, 4,
+				3, 4, 5,
+				
+				// Represents the edges of the hexagon
+		   		0, 1,	// SW
+				1, 3,	// S (flat) or E (pointy)
+				3, 5,	// SE
+				5, 4,	// NE
+				4, 2,	// N (flat) or W (pointy)
+				2, 0,	// NW
+			};
+			
 			// TODO: Simplify, a lot is repeated below
 			float[] vertices, textureCoords;
-			short[] indices;
 			
 			// Flat
 			if(flat){
@@ -489,22 +504,6 @@ public class Assets {
 					1/2f, r,		// 3. Bottom-right
 					1/2f, -r,		// 4. Top-right
 					1/2f + h, 0f,	// 5. Right
-				};
-			
-				indices = new short[]{
-					// Represents the triangles of the hexagon
-					0, 1, 2,
-					1, 2, 3,
-					2, 3, 4,
-					3, 4, 5,
-						
-					// Represents the edges of the hexagon
-			   		0, 1,	// SW
-					1, 3,	// S
-					3, 5,	// SE
-					5, 4,	// NE
-					4, 2,	// N
-					2, 0,	// NW
 				};
 				
 				textureCoords = new float[]{
@@ -524,22 +523,6 @@ public class Assets {
 					-r, -1/2f,		// 3. Bottom-left
 					r, -1/2f,		// 4. Bottom-right
 					0f, -1/2f - h,	// 5. Bottom
-				};
-				
-				indices = new short[]{
-					// Represents the triangles of the hexagon
-					0, 1, 2,
-					1, 2, 3,
-					2, 3, 4,
-					3, 4, 5,
-						
-					// Represents the edges of the hexagon
-			   		0, 1,	// SW
-					1, 3,	// S
-					3, 5,	// SE
-					5, 4,	// NE
-					4, 2,	// N
-					2, 0,	// NW
 				};
 				
 				// 1-x to flip the texture
