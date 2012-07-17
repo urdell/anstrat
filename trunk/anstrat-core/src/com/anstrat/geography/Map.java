@@ -55,7 +55,7 @@ public class Map implements Serializable{
 		}
 
 		buildingList = new HashMap<Integer,Building>();
-		name = "noname";
+		name = "Unnamed";
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class Map implements Serializable{
 		buildingList = new HashMap<Integer,Building>();
 		
 		randomizeMap(random);
-		name = "random";
+		name = "Random";
 	}
 	
 	/**

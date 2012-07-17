@@ -36,10 +36,7 @@ public class OutlineHighlight {
 					bh.sb[orientation] = false; // disable border between the tiles.
 				}
 			}
-			
-
 		}
-		
 	}
 
 	public void render(){

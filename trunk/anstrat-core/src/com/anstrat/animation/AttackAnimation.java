@@ -119,7 +119,7 @@ public class AttackAnimation extends Animation{
 			gAttacker.setFacingRight(facingRight);
 			gAttacker.playAttack();
 			
-			ge.animationHandler.runParalell(new DefendAnimation(gDefender, impactAnimationTime));
+			ge.animationHandler.runParalell(new DefendAnimation(gAttacker, gDefender, impactAnimationTime));
 			
 			started = true;
 		}

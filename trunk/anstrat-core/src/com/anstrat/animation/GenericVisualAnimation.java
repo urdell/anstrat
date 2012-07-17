@@ -17,12 +17,10 @@ public class GenericVisualAnimation extends Animation{
 		
 		length = gdxAnimation.animationDuration;
 		lifetimeLeft = length;
-		
 	}
 	
 	@Override
 	public void run(float deltaTime) {
-		
 		
 	}
 
@@ -31,7 +29,5 @@ public class GenericVisualAnimation extends Animation{
 		super.draw(deltaTime, batch);
 		TextureRegion region = gdxAnimation.getKeyFrame(length - lifetimeLeft, false);
 		batch.draw(region, position.x-size/2, position.y-size/2, size, size);
-			
 	}
-	
 }

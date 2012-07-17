@@ -28,7 +28,7 @@ public class DesktopGame {
 	public static void main(String[] args){
 		// Pack textures windows
 		//packTextures("../../anstrat-android/assets", false);	// Windows
-		//packTextures("../anstrat-android/assets", false);		// Linux
+		// packTextures("../anstrat-android/assets", false);		// Linux
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title ="Vengeful Vikings";
