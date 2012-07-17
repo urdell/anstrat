@@ -100,8 +100,8 @@ public class CometStrikeAnimation extends Animation {
 		
 		GMap map = GEngine.getInstance().map;
 		Vector2 position = new Vector2();
-		position.x = end.x+xdiff*(float)Math.pow(var, 3); 
-		position.y = end.y-ydiff*(float)Math.pow(var, 3);
+		position.x = end.x+xdiff*(float)Math.pow(var+0.2, 3); 
+		position.y = end.y-ydiff*(float)Math.pow(var+0.2, 3);
 		
 		float width = map.TILE_WIDTH;
 		float height = map.TILE_HEIGHT;
