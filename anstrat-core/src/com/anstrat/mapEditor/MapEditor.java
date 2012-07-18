@@ -11,7 +11,6 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.gui.CameraUtil;
 import com.anstrat.gui.GBuilding;
-import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
@@ -52,8 +51,6 @@ public class MapEditor implements Screen {
 		actionHandler = new MapEditorActionHandler();
 		inputHandler  = new MapEditorInputHandler();
 		gBuildings = new HashMap<Integer, GBuilding>();
-		GMap gmap = GEngine.getInstance().map;
-		camera.zoom = (gmap==null?1f:gmap.TILE_WIDTH * GEngine.DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
 
 		initMap(new Map(STANDARD_COLUMNS, STANDARD_ROWS));
 	}
@@ -74,7 +71,7 @@ public class MapEditor implements Screen {
 		gMap = new GMap(map, camera);
 		
 		cameraController.setBounds(gMap.getWidth(), gMap.getHeight());
-		cameraController.setZoomLimits(gMap.getWidth(), gMap.getHeight(), GEngine.getInstance().map.TILE_WIDTH * 2.5f, GEngine.getInstance().map.TILE_HEIGHT * 2.5f);
+		cameraController.setZoomLimits(gMap.getWidth(), gMap.getHeight(), gMap.TILE_WIDTH * 2.5f, gMap.TILE_HEIGHT * 2.5f);
 		
 		gBuildings.clear();
 		for(Building b: map.buildingList.values()) {
