@@ -40,6 +40,9 @@ public class GEngine implements Screen{
 	public static final float DEFAULT_ZOOM_LEVEL = 4f;
 	public boolean USE_SMOOTH_LINES = true;
 	
+	/** Whether to render the hexagon tiles in a flat or pointy orientation */
+	public static boolean FLAT_TILE_ORIENTATION = false;
+	
 	private static GEngine me;
 	public GestureMultiplexer multiplexer;
 	private InputHandler inputHandler;
