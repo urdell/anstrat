@@ -28,19 +28,17 @@ public class GTile extends GObject {
 	
 	public Color highlightColor;
 	public final Tile tile;
-	public final boolean flat;
 	private HexagonMesh mesh;
 	
 	private final Rectangle bounds;
 	private final float sideLength;
 	
-	public GTile(Vector2 screenPos, Tile tile, float sideLength, float width, float height, boolean flat){
+	public GTile(Vector2 screenPos, Tile tile, float sideLength, float width, float height){
 		this.bounds = new Rectangle();
 		this.sideLength = sideLength;
 		this.tile = tile;
 		this.bounds.width = width;
 		this.bounds.height = height;
-		this.flat = flat;
 		setPosition(screenPos);
 		highlightColor = COLOR_OFF;
 		
@@ -51,7 +49,7 @@ public class GTile extends GObject {
 	 * Changes GTile texture. Note: Does not change the tile itself.
 	 */
 	public void setTexture(TerrainType terrainType){
-		mesh = Assets.getHexagonMesh(terrainType, flat);
+		mesh = Assets.getHexagonMesh(terrainType, GEngine.FLAT_TILE_ORIENTATION);
 	}
 		
 	public void render(GL10 gl){

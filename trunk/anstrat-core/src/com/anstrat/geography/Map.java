@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.anstrat.gameCore.Building;
+import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GTile;
 
 /**
@@ -15,9 +16,6 @@ import com.anstrat.gui.GTile;
  *
  */
 public class Map implements Serializable{
-	public static final boolean DEFAULT_FLAT_ORIENTATION = false;
-	
-	public final boolean flat;
 	
 	public static final int MAX_SIZE = 50;
 	public static final int MIN_SIZE = 5;
@@ -32,11 +30,11 @@ public class Map implements Serializable{
     
     public HashMap<Integer,Building> buildingList;
 	public int nextBuildingId;
-	
-	public Map(int xSize, int ySize, boolean flat){
+
+	/** Creates an empty map of the given size filled with the standard terrain type. */
+	public Map(int xSize, int ySize){
 		this.xsize = xSize;
 		this.ysize = ySize;
-		this.flat = flat;
 		tiles = new Tile[xsize][ysize];
 		buildingList = new HashMap<Integer,Building>();
 		
@@ -50,11 +48,6 @@ public class Map implements Serializable{
 		name = "Unnamed";
 	}
 	
-	/** Creates an empty map of the given size filled with the standard terrain type. */
-	public Map(int xSize, int ySize){
-		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
-	}
-	
 	/**
 	 * Creates a map of the given size, randomized with the given seed.
 	 * @param xSize Number of columns in the map.
@@ -62,7 +55,7 @@ public class Map implements Serializable{
 	 * @param the random seed used to generate the map, a reference to is not saved.
 	 */
 	public Map(int xSize, int ySize, Random random){
-		this(xSize, ySize, DEFAULT_FLAT_ORIENTATION);
+		this(xSize, ySize);
 		
 		randomizeMap(random);
 		name = "Random";
@@ -97,6 +90,8 @@ public class Map implements Serializable{
 	 */
 	public List<Tile> getNeighbors(TileCoordinate coordinates)
 	{
+		boolean flat = GEngine.FLAT_TILE_ORIENTATION;
+		
 		List<Tile> neighbors = new ArrayList<Tile>();
 		for(int i=0;i<6;i++)
 		{
@@ -147,7 +142,7 @@ public class Map implements Serializable{
 	public int getAdjacentOrientation(TileCoordinate origin, TileCoordinate target){
 		int result = -1;
 		
-		if(!flat){
+		if(!GEngine.FLAT_TILE_ORIENTATION){
 			origin = flatToPointy(new TileCoordinate(origin));
 			target = flatToPointy(new TileCoordinate(target));
 		}
@@ -181,7 +176,7 @@ public class Map implements Serializable{
 				result = ADJACENT_NE;
 		}
 		
-		if(result != -1 && !flat){
+		if(result != -1 && !GEngine.FLAT_TILE_ORIENTATION){
 			result = FLAT_TO_POINTY[result];
 		}
 		

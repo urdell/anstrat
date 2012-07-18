@@ -32,7 +32,7 @@ public class GMap {
 		
 		TILE_WIDTH = 128f;
 		
-		if(map.flat){
+		if(GEngine.FLAT_TILE_ORIENTATION){
 			TILE_SIDE_LENGTH = TILE_WIDTH / 2f;
 			TILE_HEIGHT = 2 * (float)Math.cos(Math.toRadians(30)) * TILE_SIDE_LENGTH;
 		}
@@ -47,26 +47,26 @@ public class GMap {
 		
 		for(int xIndex=0;xIndex<xSize;xIndex++){
 			for(int yIndex=0;yIndex<ySize;yIndex++){
-				float xPixel = xIndex * (map.flat ? (h + TILE_SIDE_LENGTH) : 2 * r);
-				float yPixel = yIndex * (map.flat ? 2 * r : (h + TILE_SIDE_LENGTH));
+				float xPixel = xIndex * (GEngine.FLAT_TILE_ORIENTATION ? (h + TILE_SIDE_LENGTH) : 2 * r);
+				float yPixel = yIndex * (GEngine.FLAT_TILE_ORIENTATION ? 2 * r : (h + TILE_SIDE_LENGTH));
 				
 				// Offset r if this is an odd row
-				if(map.flat && xIndex % 2 != 0){
+				if(GEngine.FLAT_TILE_ORIENTATION && xIndex % 2 != 0){
 					yPixel += r;
 				}
 				
-				if(!map.flat && yIndex % 2 != 0){
+				if(!GEngine.FLAT_TILE_ORIENTATION && yIndex % 2 != 0){
 					xPixel += r;
 				}
 				
 				Vector2 position = new Vector2(xPixel, yPixel);
-				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT, map.flat);
+				tiles[xIndex][yIndex] = new GTile(position, map.tiles[xIndex][yIndex], TILE_SIDE_LENGTH, TILE_WIDTH, TILE_HEIGHT);
 			}
 		}
 	}
 	
 	public float getWidth(){
-		if(map.flat){
+		if(GEngine.FLAT_TILE_ORIENTATION){
 			return (xSize / 2f) * TILE_WIDTH + (xSize / 2f) * TILE_SIDE_LENGTH 
 					+ (xSize % 2 == 0 ? 1 : 2) * (float) (Math.sin(Math.toRadians(30)) * TILE_SIDE_LENGTH);
 		}
@@ -76,7 +76,7 @@ public class GMap {
 	}
 	
 	public float getHeight(){
-		if(map.flat){
+		if(GEngine.FLAT_TILE_ORIENTATION){
 			return ySize * TILE_HEIGHT + TILE_HEIGHT / 2f;
 		}
 		else{
@@ -131,7 +131,7 @@ public class GMap {
 			temp.z = 0f;
 		}
 		
-		if(map.flat){
+		if(GEngine.FLAT_TILE_ORIENTATION){
 			return coordinateFlat(v);
 		}
 		else{
