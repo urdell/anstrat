@@ -11,6 +11,7 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.ActionMap;
+import com.anstrat.gui.GEngine;
 
 public abstract class Pathfinding {
 	
@@ -26,7 +27,27 @@ public abstract class Pathfinding {
 	 * @return
 	 */
 	public static int getDistance(TileCoordinate startPos, TileCoordinate endPos){
+		boolean flat = GEngine.FLAT_TILE_ORIENTATION;
 		
+		// Adapted from the version below to support both flat and pointy map hexagon orientation
+		int startPosX = flat ? startPos.x : startPos.y;
+		int startPosY = flat ? startPos.y : startPos.x;
+		int endPosX = flat ? endPos.x : endPos.y;
+		int endPosY = flat ? endPos.y : endPos.x;
+		
+		int start = startPosX % 2 == 0 ? startPosY - startPosX / 2 : startPosY - (startPosX - 1) / 2;
+		int end = endPosX % 2 == 0 ? endPosY - endPosX / 2 : endPosY - (endPosX - 1) / 2;
+		
+		int zStart = 0 - startPosX - start;
+		int zEnd   = 0 - endPosX - end;
+		
+		int dx = Math.abs(flat ? (startPos.x - endPos.x) : start - end);
+		int dy = Math.abs(flat ? start - end : startPos.y - endPos.y);
+		int dz = Math.abs(zStart-zEnd);
+		
+		return Math.max(dz, Math.max(dx, dy));
+		
+		/*
 		//Convert y-coordinates to "diagonal y" coordinates, by shifting them down based on x coordinates 
 		int yStart = startPos.x%2==0 ? startPos.y-startPos.x/2 : startPos.y-(startPos.x-1)/2;
 		int yEnd   = endPos.x%2==0 ? endPos.y-endPos.x/2 : endPos.y-(endPos.x-1)/2;
@@ -38,8 +59,9 @@ public abstract class Pathfinding {
 		int dx = Math.abs(startPos.x-endPos.x);
 		int dy = Math.abs(yStart-yEnd);
 		int dz = Math.abs(zStart-zEnd);
-				
+		
 		return Math.max(dz, Math.max(dx, dy));
+		*/
 	}
 	
 	/**
