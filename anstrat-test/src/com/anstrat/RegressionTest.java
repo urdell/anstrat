@@ -5,14 +5,18 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import com.anstrat.core.TestGameInstance;
-import com.anstrat.gameCore.TestAdjecantAndOrientation;
+import com.anstrat.gameCore.TestAdjacentTileFlat;
+import com.anstrat.gameCore.TestAdjacentTilePointy;
 import com.anstrat.gameCore.TestUnit;
-import com.anstrat.geography.TestMap;
+import com.anstrat.geography.TestMapFlat;
+import com.anstrat.geography.TestMapPointy;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-	TestAdjecantAndOrientation.class,
-	TestMap.class, 
+	TestAdjacentTileFlat.class,
+	TestAdjacentTilePointy.class,
+	TestMapFlat.class, 
+	TestMapPointy.class,
 	TestUnit.class,
 	TestGameInstance.class
 })
