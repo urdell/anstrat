@@ -114,5 +114,16 @@ public class ConfirmDialog {
 		
 		return confirmDialog;
 	}
+	public static ConfirmDialog captureConfirm(Unit unit, int dialogPosition){
+		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
+		
+		confirmDialog.rows.add(new TextRow("Capture"));
+		confirmDialog.rows.add(new APRow(unit, 4));
+		confirmDialog.rows.add(new FlagRow());
+		
+		confirmDialog.refreshBounds();
+		
+		return confirmDialog;
+	}
 	
 }

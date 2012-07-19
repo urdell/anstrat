@@ -16,7 +16,7 @@ public class TextRow extends ConfirmRow{
 	public void draw(float x, float y, SpriteBatch batch) {
 		
 		float scale =Assets.MENU_FONT.getScaleX();
-		Assets.MENU_FONT.setScale(1.5f);
+		Assets.MENU_FONT.setScale(1.4f);
 		Assets.MENU_FONT.setColor(Color.WHITE);
 		Assets.MENU_FONT.draw(batch, text, x, y+ROW_HEIGHT);
 		Assets.MENU_FONT.setScale(scale);

@@ -120,6 +120,7 @@ public class ActionHandler {
 													gEngine.selectionHandler.selectedUnit.abilities.indexOf(gEngine.selectionHandler.selectedTargetedAbility));
 			CommandHandler.execute(command);
 			gEngine.selectionHandler.deselect();
+			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			CommandHandler.execute(command);
@@ -156,8 +157,11 @@ public class ActionHandler {
 				}
 			}
 			
-			if (c != null)
-			CommandHandler.execute(c);
+			if (c != null){
+				requestConfirm(GEngine.getInstance().getMap().getTile(selectedUnit.tileCoordinate), selectedUnit, c);
+			}
+				
+			//CommandHandler.execute(c);
 			
 			refreshHighlight(selectedUnit);
 		}
@@ -193,6 +197,12 @@ public class ActionHandler {
 		}
 	}
 	
+	/**
+	 * Shows the confirmdialog for a given command.
+	 * @param targetTile
+	 * @param unit
+	 * @param command
+	 */
 	public void requestConfirm(GTile targetTile, Unit unit, Command command){
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
@@ -204,6 +214,10 @@ public class ActionHandler {
 		if(command instanceof AttackCommand){
 			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, 0 );
 		}
+		if(command instanceof CaptureCommand){
+			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, 0 );
+		}
+		
 		
 	}
 	
