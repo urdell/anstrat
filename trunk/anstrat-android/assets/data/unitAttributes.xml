@@ -49,6 +49,7 @@
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
 		<cost>18</cost>
+		<ability1>3</ability1><!-- LifeSteal -->
 		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
