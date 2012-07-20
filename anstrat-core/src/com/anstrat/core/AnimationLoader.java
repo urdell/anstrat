@@ -67,11 +67,9 @@ public class AnimationLoader {
 			// Create new region so that it can flipped etc without affecting the texture region in the atlas
 			TextureRegion frameImage = new TextureRegion(atlasRegion);
 			frameImage.flip(false, true);
-
-			keyFrames.add(frameImage);
 			
-			// Add repeating frames (if any)
-			for(int j = 0; j < frame.getInt("repeat", 0); j++){
+			// Add frames
+			for(int j = 0; j < frame.getInt("count", 1); j++){
 				keyFrames.add(frameImage);
 			}
 		}
