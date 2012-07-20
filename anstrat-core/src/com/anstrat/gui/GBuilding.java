@@ -43,11 +43,9 @@ public class GBuilding extends GObject {
 		this.building = building;
 		this.lastOwner = building.controllerId;
 		
-		//sprite = new Sprite();
 		sprite = new Sprite(getTextureRegion(building.type));
-		if (building.type == Building.TYPE_TEMPLE) {
-		}
-		else if(building.type == Building.TYPE_CASTLE) {
+		
+		if(building.type == Building.TYPE_CASTLE) {
 			sprite.setColor(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 0);
 			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.CASTLE;
 			map.getTile(building.tileCoordinate).setTexture(TerrainType.CASTLE);
@@ -127,13 +125,14 @@ public class GBuilding extends GObject {
 		
 		this.boundingBoxOutdated = true;
 		
+		// The offsets depends on where the flag pole is positioned in relation to the center of the building texture
 		if(building.type == Building.TYPE_CASTLE){
-			this.flagX = sprite.getOriginX() + sprite.getX() + 25f; 
-			this.flagY = sprite.getOriginY() + sprite.getY() + 8;
+			this.flagX = sprite.getOriginX() + sprite.getX() + 27f; 
+			this.flagY = sprite.getOriginY() + sprite.getY() - 5f;
 		}
 		else if(building.type == Building.TYPE_VILLAGE){
-			this.flagX = sprite.getOriginX() + sprite.getX() + 32f;
-			this.flagY = sprite.getOriginY() + sprite.getY() + 14f;
+			this.flagX = sprite.getOriginX() + sprite.getX() + 33f;
+			this.flagY = sprite.getOriginY() + sprite.getY() + 3f;
 		}
 	}
 
