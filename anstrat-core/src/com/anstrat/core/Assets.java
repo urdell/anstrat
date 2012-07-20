@@ -27,7 +27,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -40,9 +39,6 @@ public class Assets {
 	// TODO: Ugly way of storing two values, but a rewrite of the animation system is required to do this properly
 	private static HashMap<UnitType, Pair<Animation[], boolean[]>> unitAnimations;
 	
-	// TODO: Need some sort of animation loader / manager, that loads and properly disposes animations
-	// Could be combined with the animation configuration file
-	private static HashMap<String, Animation> namedAnimations;
 	public static Animation thrownAxeAnimation;
 	
 	/**
@@ -63,11 +59,13 @@ public class Assets {
 	
 	public static Texture[] unitTeamIndicators;
 	private static TextureAtlas atlas;
+	private static AnimationLoader animationLoader;
 	
 	public static void load(){
 		Gdx.app.log("Assets", "load()");
 		
 		atlas = new TextureAtlas("textures_packed/pack");
+		animationLoader = new AnimationLoader(Gdx.files.internal("data/animations.xml"), atlas);
 		terrainMeshes = new HexagonMesh[2][];
 		loadFonts();
 		loadUnmanagedTextures();
@@ -80,7 +78,6 @@ public class Assets {
 				getTextureRegion("axe-effect-0003"));
 		
 		unitAnimations = new HashMap<UnitType, Pair<Animation[],boolean[]>>();
-		namedAnimations = new HashMap<String, Animation>();
 	}
 	
 	public static void dispose(){
@@ -104,7 +101,7 @@ public class Assets {
 		unitTeamIndicators = null;
 		atlas = null;
 		unitAnimations = null;
-		namedAnimations = null;
+		animationLoader = null;
 		thrownAxeAnimation = null;
 		STANDARD_FONT = null;
 		MENU_FONT = null;
@@ -288,13 +285,40 @@ public class Assets {
 		if(!unitAnimations.containsKey(type)){
 			int numStates = AnimationState.values().length;
 			Animation[] animationsOut = new Animation[numStates];
+			
+			// Load animations
+			for(AnimationState state : AnimationState.values()){
+				String animationName = String.format("%s-%s", type.graphicsFolder, state.toString().toLowerCase());
+				if(!animationLoader.animationExists(animationName)) continue;
+				
+				animationsOut[state.ordinal()] = getAnimation(animationName);
+			}
+			
+			boolean[] isLoopingOut = new boolean[numStates];
+			
+			// Set which animation types should loop
+			isLoopingOut[AnimationState.IDLE.ordinal()] = true;
+			isLoopingOut[AnimationState.WALK.ordinal()] = true;
+			isLoopingOut[AnimationState.ATTACK.ordinal()] = false;
+			isLoopingOut[AnimationState.DEATH.ordinal()] = false;
+			isLoopingOut[AnimationState.ABILITY.ordinal()] = false;
+			
+			unitAnimations.put(type, new Pair<Animation[], boolean[]>(animationsOut, isLoopingOut));
+		}
+		
+		return unitAnimations.get(type);
+				
+		// If not already loaded, load
+		/*if(!unitAnimations.containsKey(type)){
+			int numStates = AnimationState.values().length;
+			Animation[] animationsOut = new Animation[numStates];
 			boolean[] isLoopingOut = new boolean[numStates];
 			
 			loadUnitAnimations(type, animationsOut, isLoopingOut);
 			unitAnimations.put(type, new Pair<Animation[], boolean[]>(animationsOut, isLoopingOut));
 		}
 		
-		return unitAnimations.get(type);
+		return unitAnimations.get(type);*/
 	}
 	
 	/**
@@ -305,6 +329,7 @@ public class Assets {
 	 * @param unit
 	 * @return
 	 */
+	/*
 	private static void loadUnitAnimations(UnitType type, Animation[] animationsOut, boolean[] isLoopingOut){
 		
 		// Set which animation types should loop
@@ -346,6 +371,7 @@ public class Assets {
 			Gdx.app.log("Assets", String.format("Loaded %s animation for %s consisting of %d frames.", state, type, regions.size()));
 		}
 	}
+	*/
 	
 	/**
 	 * Returns a single named animation
@@ -354,13 +380,15 @@ public class Assets {
 	 */
 	public static synchronized Animation getAnimation(String animationName){	
 		// If not already loaded, load
-		if(!namedAnimations.containsKey(animationName)){
+		/*if(!namedAnimations.containsKey(animationName)){
 			namedAnimations.put(animationName, loadAnimation(animationName));
 		}
 		
-		return namedAnimations.get(animationName);
+		return namedAnimations.get(animationName);*/
+		return animationLoader.getAnimation(animationName);
 	}
 	
+	/*
 	private static Animation loadAnimation(String animationName){
 		ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
 		for(int i = 1;;i++){
@@ -384,6 +412,7 @@ public class Assets {
 		
 		return new Animation(1f/6f, regions);
 	}
+	*/
 	
 	private static String assetsDirectoryRootPath;
 	public static String getAssetsDirectoryPath(String path){
