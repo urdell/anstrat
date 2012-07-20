@@ -17,7 +17,6 @@ public class GBuilding extends GObject {
 
 	public Building building;
 	private Sprite sprite;
-	private ParentedGBar captureBar;
 	private Vector2 screenPos;
 	private float flagAnimationStateTime;
 	
@@ -68,23 +67,6 @@ public class GBuilding extends GObject {
 		float scale = (GEngine.getInstance().map.TILE_HEIGHT * 0.9f) / sprite.getHeight();
 		sprite.setScale(scale);
 		sprite.flip(false, true);
-		
-		captureBar = new ParentedGBar(sprite);
-		captureBar.setDrawBarText(false);
-		captureBar.setIsVertical(true);
-		
-		if(lastOwner == -1){
-			captureBar.setColors(Player.neutralColor, Player.neutralSecondaryColor, Color.BLACK /*Player.neutralSecondaryColor*/);
-		}else{
-			captureBar.setColors(Player.primaryColor[lastOwner], Player.secondaryColor[lastOwner], Color.BLACK /*Player.secondaryColor[lastOwner]*/);
-		}
-		/*switch(lastOwner){
-			case Player.PLAYER_1_ID: captureBar.setColors(Color.RED, new Color(0.3f, 0f, 0f, 1f), new Color(0.3f, 0f, 0f, 1f)); break;
-			case Player.PLAYER_2_ID: captureBar.setColors(Color.CYAN, new Color(0f, 0.55f, 0.55f, 1f), new Color(0f, 0.55f, 0.55f, 1f)); break;
-		}*/
-		
-		// Align right-center of bar to left-center of sprite
-		captureBar.setPositionRelativeOrigin(-sprite.getWidth() / 2f - captureBar.getHeight() / 2f, 0f);
 				
 		screenPos = map.getTile(building.tileCoordinate).getCenter();
 		setPosition(screenPos);
@@ -110,17 +92,7 @@ public class GBuilding extends GObject {
 		// Check if building has changed owner
 		if(lastOwner != building.controllerId){
 			lastOwner = building.controllerId;
-		
-			if(lastOwner == -1){
-				captureBar.setColors(Player.neutralColor, Player.neutralSecondaryColor, Player.neutralSecondaryColor);
-			}else{
-				captureBar.setColors(Player.primaryColor[lastOwner], Player.secondaryColor[lastOwner], Player.secondaryColor[lastOwner]);
-			}
 		}
-		
-		captureBar.setValue((float)building.captureCostRemaining/(float)building.captureCost);
-		captureBar.text = String.valueOf(building.captureCostRemaining);
-		captureBar.render(batch);
 		
 		// Render flag (if the village is owned by a player)
 		if(lastOwner != -1){
@@ -152,7 +124,7 @@ public class GBuilding extends GObject {
 	 */
 	public void setPosition(Vector2 position){
 		sprite.setPosition(position.x-sprite.getWidth()/2f, position.y-sprite.getHeight()/2f);
-		captureBar.update();
+		
 		this.boundingBoxOutdated = true;
 		
 		if(building.type == Building.TYPE_CASTLE){
