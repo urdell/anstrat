@@ -10,13 +10,13 @@ import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
 
-public class LifeSteal extends TargetedAbility {
+public class ShadowImage extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
 	private static final int RANGE = 1;
 	
-	public LifeSteal(){
-		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);
+	public ShadowImage(){
+		super("ShadowImage","Creates an shadow image that makes a lifesteal attack",AP_COST, RANGE);
 	}
 	
 	
@@ -53,5 +53,3 @@ public class LifeSteal extends TargetedAbility {
 		return "heal-button";
 	}
 }
-
-	
