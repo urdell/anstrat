@@ -142,7 +142,7 @@ public class AttackAnimation extends Animation{
 			}
 			
 			//gDefender.healthBar.setValue(healthPercentage);
-			gDefender.healthBar.setHealth(healthPercentage);
+			gDefender.healthBar.setHealth(healthPercentage, cl.newDefenderHP);
 			
 			if(cl.newDefenderHP <= 0){
 				Vector2 temp = new Vector2(gDefender.getPosition());

@@ -109,6 +109,8 @@ public class GUnit extends GObject {
 	
 	public void render(SpriteBatch batch, float delta){
 		
+		healthBar.drawHealthBar(batch, sprite.getColor().a);
+		
 		Animation currentAnimation = animations[animationState.ordinal()];
 		
 		if(currentAnimation != null){
@@ -134,10 +136,13 @@ public class GUnit extends GObject {
 		
 		sprite.draw(batch);
 
-		Color c = batch.getColor();
+		healthBar.drawAPPie(batch, sprite.getColor().a);
+		healthBar.drawHealth(batch, sprite.getColor().a);
+		
+		//Color c = batch.getColor();
 		//batch.setColor(c.r, c.g, c.b, alpha);
 		//batch.draw(Assets.unitTeamIndicators[unit.ownerId], sprite.getX() + sprite.getWidth() / 2f - 16f, sprite.getY() - 16f);
-		batch.setColor(c);
+		//batch.setColor(c);
 		
 		// Render health bar  information update handled by animations
 		/*float healthPercentage = (float)unit.currentHP/(float)unit.getMaxHP();
@@ -146,7 +151,6 @@ public class GUnit extends GObject {
 		healthBar.value = healthPercentage;
 		healthBar.text = String.valueOf(unit.currentAP);*/
 		//oldHealthBar.render(batch);
-		healthBar.draw(batch, sprite.getColor().a);
 	}
 	
 	public void updateHealthbar(){
@@ -160,7 +164,7 @@ public class GUnit extends GObject {
 		healthBar.currentAP = unit.currentAP;
 		healthBar.APReg = unit.getAPReg();
 		healthBar.maxAP = unit.getMaxAP();
-		healthBar.setHealth(healthPercentage);
+		healthBar.setHealth(healthPercentage, unit.currentHP);
 	}
 	
 	/**
