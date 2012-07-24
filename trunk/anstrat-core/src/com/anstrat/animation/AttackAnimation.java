@@ -143,6 +143,8 @@ public class AttackAnimation extends Animation{
 			
 			//gDefender.healthBar.setValue(healthPercentage);
 			gDefender.healthBar.setHealth(healthPercentage, cl.newDefenderHP);
+			boolean directionLeft = start.x > target.x;
+			GEngine.getInstance().animationHandler.runParalell(new BloodAnimation(gDefender,directionLeft));
 			
 			if(cl.newDefenderHP <= 0){
 				Vector2 temp = new Vector2(gDefender.getPosition());

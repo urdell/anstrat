@@ -117,5 +117,15 @@ public class Unit implements Serializable {
 	public List<Ability> getAbilities() {
 		return abilities;
 	}
+	
+	/**
+	 * Removes dead units
+	 * @return true if unit is dead
+	 */
+	public boolean resolveDeath(){
+		if(this.currentHP<=0)
+			State.activeState.unitList.remove(this.id);
+		return currentHP<=0;
+	}
 
 }

@@ -17,8 +17,9 @@ public class DefendAnimation extends Animation {
 		switch(gUnit.unit.getUnitType()){
 			case SWORD: length = timeTillImpact + SHIELD_END_DELAY;
 			default:
-				boolean directionLeft = attacker.getPosition().x > defender.getPosition().x;
-				GEngine.getInstance().animationHandler.runParalell(new BloodAnimation(defender,directionLeft));
+				//Blood moved to AttackAnimaiton for proper timing
+				//boolean directionLeft = attacker.getPosition().x > defender.getPosition().x;
+				//GEngine.getInstance().animationHandler.runParalell(new BloodAnimation(defender,directionLeft));
 		}
 		
 		lifetimeLeft = length;
