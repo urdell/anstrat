@@ -22,14 +22,14 @@ public class AbilityFactory {
 			case HEAL: return new Heal();
 			case SHADOWIMAGE: return new ShadowImage();
 			case MAGIC_SPEAR: return new MagicSpear();
-			/*case LEAP_ATTACK: return new LeapAttack();
+			case LEAP_ATTACK: return new LeapAttack();
 			case SHIELD_WALL: return new ShieldWall();
 			case CHAINING_AXE: return new ChainingAxe();
 			case AP_HEAL: 		return new APHeal();
 			case THROW_ICE: return new ThrowIce();
 			case HP_REG: return new HPReg();
 			case SUICIDE: return new Suicide();
-			case POISON: return new Poison();*/
+			case POISON: return new Poison();
 			default: return null;
 		}
 	}
