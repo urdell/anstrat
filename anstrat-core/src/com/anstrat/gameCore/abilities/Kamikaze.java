@@ -1,4 +1,3 @@
-
 package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
@@ -9,7 +8,7 @@ import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
 
-public class MagicSpear extends TargetedAbility {
+public class Kamikaze extends TargetedAbility {
 
 	/**
 	 * 
@@ -19,10 +18,9 @@ public class MagicSpear extends TargetedAbility {
 	private static final int RANGE = 2;
 
 	
-	public MagicSpear(){
-		super("Magic Spear","Uses a magic spear to attack from range",AP_COST, RANGE);
+	public Kamikaze(){
+		super("Kamikaze","Making a suicideÁttack dealing additional damage",AP_COST, RANGE);
 	}
-	
 	
 
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
