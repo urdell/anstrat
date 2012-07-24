@@ -30,25 +30,33 @@ public class APPieDisplay {
 	 * @param UI if the flipped ui is calling the method
 	 */
 	public static void draw(float x, float y, float size, 
-			int currentAP, int maxAP, int apReg, int nextAttackCost, SpriteBatch batch, boolean UI){
+			int currentAP, int maxAP, int apReg, int nextAttackCost, SpriteBatch batch, boolean UI, float alpha){
 		
 		if(ONLY_USE_NUMBER_8)
 			maxAP = 8;
 		
 		batch.setColor(Color.toFloatBits(1f, 1f, 1f, 1f));
+		Color c = batch.getColor();
+		batch.setColor(c.r, c.g, c.b, alpha);
 		TextureRegion background = Assets.getTextureRegion("APPie-bg");
 		batch.draw(background, x, y, size/2, size/2, size, size, 1f, 1f, 0f);
 		
 		int pieceNumber;
 		batch.setColor(Color.CYAN);
+		c = batch.getColor();
+		batch.setColor(c.r, c.g, c.b, alpha);
 		for(pieceNumber=0; pieceNumber < currentAP; pieceNumber++ ){
 			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
 		batch.setColor(Color.toFloatBits(0.0f, 0.3f, 0.3f, 1f));
+		c = batch.getColor();
+		batch.setColor(c.r, c.g, c.b, alpha);
 		for(;pieceNumber < currentAP+apReg && pieceNumber < maxAP; pieceNumber++ ){
 			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
 		batch.setColor(Color.WHITE);
+		c = batch.getColor();
+		batch.setColor(c.r, c.g, c.b, alpha);
 		
 		TextureRegion foreground = Assets.getTextureRegion("APPie-front-"+maxAP);
 		float frontRotation = 180f;
