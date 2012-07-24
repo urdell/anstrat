@@ -209,7 +209,7 @@ public class ActionHandler {
 		confirmCommand = command;
 		showingConfirmDialog = true;
 		if(command instanceof MoveCommand){
-			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getAPCost(), 0 );
+			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), 0 );
 		}
 		if(command instanceof AttackCommand){
 			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, 0 );

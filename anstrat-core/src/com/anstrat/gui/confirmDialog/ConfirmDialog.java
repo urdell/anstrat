@@ -6,6 +6,7 @@ import java.util.List;
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.geography.Path;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ColorTable;
 import com.badlogic.gdx.Gdx;
@@ -93,13 +94,15 @@ public class ConfirmDialog {
 		colorTable.height = getHeight()+2*backgroundMargin;
 	}
 	
-	public static ConfirmDialog moveConfirm(Unit unit, int cost, int dialogPosition){
+	public static ConfirmDialog moveConfirm(Unit unit, Path path, int dialogPosition){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		
 		confirmDialog.rows.add(new TextRow("Move"));
-		confirmDialog.rows.add(new APRow(unit, cost));
+		confirmDialog.rows.add(new APRow(unit, path.getPathCost(unit.getUnitType())));
 		
 		confirmDialog.refreshBounds();
+		
+		GEngine.getInstance().confirmOverlay.showMove(unit.tileCoordinate, path);
 		
 		return confirmDialog;
 	}

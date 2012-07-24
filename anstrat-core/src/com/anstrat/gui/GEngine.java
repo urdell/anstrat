@@ -16,6 +16,7 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmOverlay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -50,6 +51,7 @@ public class GEngine implements Screen{
 	public Highlighter highlighter;
 	public GameUI userInterface;
 	public ConfirmDialog confirmDialog = new ConfirmDialog(0);
+	public ConfirmOverlay confirmOverlay = new ConfirmOverlay();
 	public AnimationHandler animationHandler = new AnimationHandler();
 	public SelectionHandler selectionHandler = new SelectionHandler();
 	private SpriteBatch batch;
@@ -216,6 +218,8 @@ public class GEngine implements Screen{
 			}
 		}
 
+		
+		
 		for(GUnit u : gUnits.values()){			
 			// Only render unit if visible
 			if(camera.frustum.boundsInFrustum(u.getBoundingBox())){
@@ -224,6 +228,7 @@ public class GEngine implements Screen{
 		}
 		
 		highlighter.render(batch);
+		confirmOverlay.drawBottomLayer(batch);
 		//drawCoordinates();
 		batch.end();
 		
