@@ -36,7 +36,7 @@
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
 		<cost>20</cost>
-		<ability1>7</ability1><!-- Chaining Axe -->
+		<!-- <ability1>7</ability1>--><!-- Chaining Axe --> 
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
@@ -92,7 +92,7 @@
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
 		<cost>22</cost>
-		<ability1>6</ability1><!-- Shield Wall -->
+		<!-- <ability1>6</ability1>--><!-- Shield Wall -->
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
 		<idleImage>swordsman-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -120,7 +120,7 @@
 		<maxAP>5</maxAP>
 		<APReg>2</APReg>
 		<cost>8</cost>
-		<ability1>11</ability1><!-- Suicide -->
+		<!-- <ability1>11</ability1>--><!-- Suicide -->
 		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -134,7 +134,7 @@
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
 		<cost>30</cost>
-		<ability1>12</ability1><!-- Poison -->
+		<!-- <ability1>12</ability1>--><!-- Poison -->
 		<description>The Dark Elf is a poweful and mobile unit. Has the longest attack range in the game.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -148,7 +148,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
-		<ability1>8</ability1><!-- AP Heal -->
+		<!-- <ability1>8</ability1>--><!-- AP Heal -->
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -162,7 +162,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>55</cost>
-		<ability1>9</ability1><!-- Throwing IceSpear -->
+		<!-- <ability1>9</ability1>--><!-- Throwing IceSpear -->
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -176,7 +176,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
-		<ability1>10</ability1><!-- HP Regeneration -->
+		<!-- <ability1>10</ability1>--><!-- HP Regeneration -->
 		<description>The Troll is the only unit with a passive regeneration ability.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
