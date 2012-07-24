@@ -28,7 +28,7 @@ public class Player implements Serializable {
 	//TODO Proper colors for players 3-4 as well, this is only for 2 players
 	public static final Color[] primaryColor = {new Color(0.1f, 0.1f, 1f, 1f), new Color(1f, 0.15f, 0.15f, 1f), 
 												new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
-	public static final Color[] secondaryColor = {new Color(0f, 0f, 0.2f, 1f), new Color(0.2f, 0f, 0f, 1f),
+	public static final Color[] secondaryColor = {new Color(0f, 0f, 0.25f, 1f), new Color(0.4f, 0f, 0f, 1f),
 													new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	
 	public final int team;
@@ -37,7 +37,7 @@ public class Player implements Serializable {
 	
 	public int playerId;
 	
-	public int gold = 50; 
+	public int gold = 50;
 	
 	public int mana = 11;
 	

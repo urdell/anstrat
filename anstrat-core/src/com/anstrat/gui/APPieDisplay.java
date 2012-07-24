@@ -79,6 +79,4 @@ public class APPieDisplay {
 			batch.draw(piece, x, y, size/2, size/2, size, size, 1f, 1f, initialRotation + rotation*pieceNumber);
 		}
 	}
-	
-
 }
