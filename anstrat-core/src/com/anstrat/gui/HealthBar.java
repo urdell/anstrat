@@ -93,7 +93,7 @@ public class HealthBar {
 	
 	public void drawAPPie(SpriteBatch batch, float parentAlpha)
 	{
-		APPieDisplay.draw(x-BAR_WIDTH/2, y+AP_SIZE, AP_SIZE, currentAP, maxAP, APReg, 2, batch, false);
+		APPieDisplay.draw(x-BAR_WIDTH/2, y+AP_SIZE, AP_SIZE, currentAP, maxAP, APReg, 2, batch, false, parentAlpha);
 	}
 	
 	public void drawHealth(SpriteBatch batch, float parentAlpha)
