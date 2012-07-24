@@ -1,6 +1,7 @@
 package com.anstrat.animation;
 
 import com.anstrat.gameCore.Unit;
+import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.Gdx;
@@ -14,11 +15,20 @@ public class DeathAnimation extends Animation {
 	private final static float moveSpeed = 0.5f;
 	private Vector2 direction;
 	
+	
 	public DeathAnimation(Unit unit, Vector2 direction){
 		this.unit = GEngine.getInstance().getUnit(unit);
 		timeElapsed = 0f;
 		lifetimeLeft = 2f;
 		this.direction = direction;
+	}
+	
+	public DeathAnimation(Unit unit, TileCoordinate coordinate){
+		this.unit = GEngine.getInstance().getUnit(unit);
+		timeElapsed = 0f;
+		lifetimeLeft = 2f;
+		Vector2 temp = GEngine.getInstance().getMap().getTile(unit.tileCoordinate).getCenter();
+		this.direction = temp.sub(GEngine.getInstance().getMap().getTile(coordinate).getCenter()).nor();
 	}
 	
 	@Override
