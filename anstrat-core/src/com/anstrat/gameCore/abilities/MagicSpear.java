@@ -1,22 +1,25 @@
 package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.HealAnimation;
-import com.anstrat.animation.LifeStealAnimation;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
 
-public class LifeSteal extends TargetedAbility {
+public class MagicSpear extends TargetedAbility {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	private static final int AP_COST = 4;
-	private static final int RANGE = 1;
+	private static final int AP_COST = 3;
+	private static final int RANGE = 2;
+
 	
-	public LifeSteal(){
-		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);
+	public MagicSpear(){
+		super("Magic Spear","Uses a magic spear to attack from range",AP_COST, RANGE);
 	}
 	
 	
@@ -35,15 +38,12 @@ public class LifeSteal extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		targetUnit.currentHP -= source.getAttack()-1;
-		source.currentHP += source.getAttack()-1;
+		targetUnit.currentHP -= source.getAttack();
 		
-		if(source.currentHP > source.getMaxHP()) source.currentHP = source.getMaxHP();
-		
-		Animation animation = new LifeStealAnimation(source,targetUnit);
+		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(source.tileCoordinate));
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
-
+	
 	@Override
 	public String getIconName(Unit source) {
 		if(!isAllowed(source)) return "heal-button-gray";
@@ -52,6 +52,5 @@ public class LifeSteal extends TargetedAbility {
 		}
 		return "heal-button";
 	}
-}
 
-	
+}

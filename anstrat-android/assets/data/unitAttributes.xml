@@ -49,7 +49,7 @@
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
 		<cost>18</cost>
-		<ability1>3</ability1><!-- LifeSteal -->
+		<ability1>3</ability1><!-- Shadow image -->
 		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
@@ -104,6 +104,7 @@
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
 		<cost>40</cost>
+		<ability1>4</ability1><!-- Magic Spear -->
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
