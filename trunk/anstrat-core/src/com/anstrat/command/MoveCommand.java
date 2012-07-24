@@ -65,6 +65,12 @@ public class MoveCommand extends Command {
 		Path path = Pathfinding.getUnitPath(unit, endTile);
 		return path.getPathCost(unit.getUnitType());
 	}
+	
+	public Path getPath(){
+		Unit unit = State.activeState.unitList.get(unitId);
+		
+		return Pathfinding.getUnitPath(unit, endTile);
+	}
 
 	@Override
 	public boolean isAllowed() {
