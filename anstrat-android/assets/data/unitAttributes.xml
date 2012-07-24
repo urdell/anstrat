@@ -85,7 +85,7 @@
 	</UnitType>
 	<UnitType>
 		<name>Swordsman</name>
-		<imageFolder>sword</imageFolder>
+		<imageFolder>swordsman</imageFolder>
 		<maxHP>25</maxHP>
 		<attack>6</attack>
 		<maxAttackRange>1</maxAttackRange>
@@ -94,7 +94,7 @@
 		<cost>22</cost>
 		<ability1>6</ability1><!-- Shield Wall -->
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
-		<idleImage>sword-idle-0001</idleImage>
+		<idleImage>swordsman-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 	</UnitType>
 	<UnitType>

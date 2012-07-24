@@ -45,9 +45,9 @@ public class DesktopGame {
 	
 	private static void packTextures(String assetsFolder, boolean incremental){
 		Settings settings = new Settings();
-        settings.padding = 0;
-        settings.maxWidth = 1024;
-        settings.maxHeight = 1024;
+        settings.padding = 2;
+        settings.maxWidth = 2048;
+        settings.maxHeight = 2048;
         settings.incremental = incremental;
         settings.defaultFilterMag = TextureFilter.Linear;
         settings.defaultFilterMin = TextureFilter.Linear;
