@@ -13,7 +13,7 @@ public class AbilityFactory {
 	public static final int AP_HEAL = 8;
 	public static final int THROW_ICE = 9;
 	public static final int HP_REG = 10;
-	public static final int SUICIDE = 11;
+	public static final int DARK_RITUAL = 11;
 	public static final int POISON = 12;
 
 	public static Ability createAbility(int abilityId){
@@ -28,7 +28,7 @@ public class AbilityFactory {
 			case AP_HEAL: 		return new APHeal();
 			case THROW_ICE: return new ThrowIce();
 			case HP_REG: return new HPReg();
-			case SUICIDE: return new Suicide();
+			case DARK_RITUAL: return new DarkRitual();
 			case POISON: return new Poison();
 			default: return null;
 		}

@@ -119,6 +119,7 @@
 		<maxAP>5</maxAP>
 		<APReg>2</APReg>
 		<cost>8</cost>
+		<ability1>11</ability1><!-- Dark Ritual -->
 		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -146,6 +147,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
+		<ability1>8</ability1><!-- AP Heal -->
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
