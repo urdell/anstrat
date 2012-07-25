@@ -14,8 +14,8 @@ public class CannotCreateUnitAnimation extends Animation {
 	private float size = 2.0f;
 	
 	public CannotCreateUnitAnimation(String reason){
-		length = 1;
-		lifetimeLeft = 3;
+		length = 3;
+		lifetimeLeft = length;
 		x=Gdx.graphics.getWidth() / 2f;
 		y=Gdx.graphics.getHeight() / 2f;
 		this.reason = reason;
