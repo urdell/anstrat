@@ -14,30 +14,37 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MoveAnimation extends Animation {
 	
-	public static final float moveSpeed = 0.5f;
 	private Vector2 start, current, end;
-	GUnit gunit;
-	float xoffset, yoffset, amtOffset, tiltSelector;
-	private boolean isFirst, isLast, started, tiltEffect, shouldMoveCamera;
+	private GUnit gunit;
+	private float xoffset, yoffset, amtOffset;
+	private boolean isFirst, isLast, started, shouldMoveCamera;
 	
 	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile){
-		length = moveSpeed;
-		lifetimeLeft = length;
-		GEngine ge = GEngine.getInstance();
-		start = ge.getMap().getTile(startTile).getCenter();
-		end = ge.getMap().getTile(endTile).getCenter();
-		gunit = ge.getUnit(unit);
-		xoffset = end.x - start.x;
-		yoffset = end.y - start.y;
+		GEngine engine = GEngine.getInstance();
+		shouldMoveCamera = engine.state.getCurrentPlayer().userID != User.globalUserID;
+		
+		gunit = engine.getUnit(unit);
+		
+		start = engine.getMap().getTile(startTile).getCenter();
+		end = engine.getMap().getTile(endTile).getCenter();
 		current = new Vector2();
-		shouldMoveCamera = GEngine.getInstance().state.getCurrentPlayer().userID != User.globalUserID;
-		this.tiltEffect = false; //never use tilteffect
+		Vector2 distance = end.cpy().sub(start);
+		
+		xoffset = distance.x;
+		yoffset = distance.y;
+		
+		// Set animation length proportional to on the unit's movement speed
+		float distanceInTiles = distance.len() / engine.map.TILE_WIDTH;
+		length = distanceInTiles / unit.getUnitType().movementSpeed;
+		lifetimeLeft = length;
 	}
 	
+	// Whether or not this is the last MoveAnimation in a sequence
 	public void setIsLast(){
 		this.isLast = true;
 	}
 	
+	// Whether or not this is the first MoveAnimation in a sequence
 	public void setIsFirst(){
 		this.isFirst = true;
 	}
@@ -45,60 +52,41 @@ public class MoveAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		
+		// Run once
 		if(!started){
+			started = true;
 			gunit.updateHealthbar();
 			gunit.setFacingRight(xoffset >= 0);
 			GEngine.getInstance().updateUI();
 			moveCamera();
+			
+			// Only start the walk animation once, at the start of the animation sequence
 			if(isFirst){
 				gunit.playWalk();
 			}
-			
 		}
 		
-		if(lifetimeLeft <= 0)
-		{
+		if(lifetimeLeft <= 0){
 			gunit.setRotation(0);
 			gunit.setPosition(end);
 			
+			// Only stop the walk animation once, at the end of the animation sequence
 			if(isLast){
 				gunit.playIdle();
 				moveCamera();
 			}
 		}
-		else
-		{
-			if(tiltEffect){
-				float tiltSpeed = 2.0f;
-				float tiltAmt = 2.0f;
-				
-				tiltSelector = (moveSpeed-lifetimeLeft)%(1.0f/tiltSpeed);
-				
-				if(tiltSelector<0.25f/tiltSpeed)
-					gunit.setRotation(tiltSelector*30f);
-				else if(tiltSelector<0.5f/tiltSpeed)
-					gunit.setRotation((0.5f/tiltSpeed-tiltSelector)*tiltAmt*18f);
-				else if(tiltSelector<0.75f/tiltSpeed)
-					gunit.setRotation((0.5f/tiltSpeed-tiltSelector)*tiltAmt*18f);
-				else
-					gunit.setRotation(-(1.0f/tiltSpeed-tiltSelector)*tiltAmt*18f);
-			}
-			amtOffset = (moveSpeed-lifetimeLeft)/moveSpeed;
+		else{
+			amtOffset = (length-lifetimeLeft)/length;
 			current.set(start.x + xoffset*amtOffset, start.y + yoffset*amtOffset);
 			gunit.setPosition(current);
 		}
-		
-		started = true;
 	}
 	
 	private void moveCamera() {
-		if (shouldMoveCamera) {
+		if (shouldMoveCamera){
 			Animation animation = new MoveCameraAnimation(end);
 			GEngine.getInstance().animationHandler.runParalell(animation);
 		}
 	}
-	
-	//Implement after Unit and GUnit
-	
-	//public MoveAnimation()
 }

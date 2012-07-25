@@ -40,6 +40,7 @@ public enum UnitType {
 	
 	public String idleImage;
 	public String portrait;
+	public float movementSpeed;
 	
 	// HP
 	public transient int maxHP;
@@ -128,6 +129,7 @@ public enum UnitType {
 		type.maxAP = element.getInt("maxAP", type.maxAP);
 		type.APReg = element.getInt("APReg", type.APReg);
 		type.APCostAttacking = element.getInt("APCostAttacking", type.APCostAttacking);
+		type.movementSpeed = element.getFloat("movementSpeed", 2f);
 		
 		type.ability1Id = element.getInt("ability1", type.ability1Id);
 		type.ability2Id = element.getInt("ability2", type.ability2Id);
