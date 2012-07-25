@@ -112,7 +112,6 @@ public class ActionHandler {
 		case SelectionHandler.SELECTION_SPAWN:
 			command = new CreateUnitCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
 			CommandHandler.execute(command);
-			gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_TARGETED_ABILITY:
 			command = new ActivateTargetedAbilityCommand(gEngine.selectionHandler.selectedUnit, 
