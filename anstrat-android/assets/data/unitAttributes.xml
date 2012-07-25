@@ -39,6 +39,7 @@
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
+		<movementSpeed>2.3</movementSpeed>
 	</UnitType>
 	<UnitType>
 		<name>Wolf</name>
@@ -121,6 +122,7 @@
 		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
+		<movementSpeed>1</movementSpeed>
 	</UnitType>
 	<UnitType>
 		<name>Dark Elf</name>
