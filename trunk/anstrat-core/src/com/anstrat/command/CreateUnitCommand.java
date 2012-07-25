@@ -8,6 +8,7 @@ import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
+import com.anstrat.gui.GEngine;
 
 /**
  * The command that is used when a unit is created
@@ -36,6 +37,7 @@ public class CreateUnitCommand extends Command {
 	@Override
 	protected void execute() {
 		CreationHandler.createUnit(tileCoord, unitType, playerID);
+		GEngine.getInstance().selectionHandler.deselect();
 	}
 
 	@Override
