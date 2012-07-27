@@ -119,7 +119,7 @@ public class Unit implements Serializable {
 	}
 	
 	/**
-	 * Removes dead units
+	 * Removes units from the game if HP<=0
 	 * @return true if unit is dead
 	 */
 	public boolean resolveDeath(){
