@@ -15,5 +15,10 @@
 		<manacost>10</manacost>
 		<description>Odin fully restores target unit's AP</description>
 	</PlayerAbility>
+	<PlayerAbility>
+		<name>Teleport</name>
+		<manacost>5</manacost>
+		<description>Loke flips the position of 2 target units</description>
+	</PlayerAbility>
 	
 </PlayerAbilities>
