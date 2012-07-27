@@ -76,7 +76,7 @@ public class Highlighter {
 			}
 		}
 		//TODO work in progress
-		rangeOutline = new OutlineHighlight(coordinates, Color.RED, true);
+		rangeOutline = new OutlineHighlight(coordinates, new Color(1f, 0.2f, 0.2f, 1f), false);
 		
 	}
 	

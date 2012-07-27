@@ -233,10 +233,12 @@ public class ActionHandler {
 	public void confirmPress(){
 		CommandHandler.execute(confirmCommand);
 		showingConfirmDialog = false;
+		GEngine.getInstance().confirmOverlay.clear();
 		
 	}
 	public void confirmCancelPress(){
 		showingConfirmDialog = false;
+		GEngine.getInstance().confirmOverlay.clear();
 	}
 	
 }

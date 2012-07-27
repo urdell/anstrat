@@ -1,6 +1,9 @@
 package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
+import com.anstrat.gameCore.State;
+import com.anstrat.geography.Map;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,13 +16,38 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MapLine {
 	
-	float size = 128;
-	float lineWidth = 10;
+	float tileSize = 128;
+	float lineWidth = 12;
+	float lineSize = tileSize+lineWidth;
 	float centerX, centerY;
+	float rotation = 0;
 	
 	public MapLine(GTile startTile, GTile endTile, int lineType){
-		centerX = (startTile.getPosition().x + endTile.getPosition().x)/2;
-		centerY = (startTile.getPosition().y + endTile.getPosition().y)/2;
+		
+		centerX = (startTile.getCenter().x + endTile.getCenter().x)/2;
+		centerY = (startTile.getCenter().y + endTile.getCenter().y)/2;
+		
+		 // Works for pointy tiles, not flat
+		switch(State.activeState.map.getAdjacentOrientation(startTile.tile.coordinates, endTile.tile.coordinates)){
+		case Map.ADJACENT_E:
+			rotation = 90;
+			break;
+		case Map.ADJACENT_W:
+			rotation = -90;
+			break;
+		case Map.ADJACENT_NE:
+			rotation = 30;
+			break;
+		case Map.ADJACENT_NW:
+			rotation = -30;
+			break;
+		case Map.ADJACENT_SE:
+			rotation = 150;
+			break;
+		case Map.ADJACENT_SW:
+			rotation = -150;
+			break;
+		}
 		
 	}
 	
@@ -27,7 +55,9 @@ public class MapLine {
 	public void draw(SpriteBatch batch){
 		
 		TextureRegion line = Assets.getTextureRegion("movement-line");
-		batch.draw(line, centerX-size/2, centerY-size/2, size/2, size/2, size, size, 1f, 1f, 0);
+		batch.setColor(Color.YELLOW);
+		batch.draw(line, centerX-lineSize/2, centerY-lineSize/2, lineSize/2, lineSize/2, lineSize, lineSize, 1f, 1f, rotation);
+		batch.setColor(Color.WHITE);
 		
 	}
 
