@@ -12,7 +12,8 @@ public enum PlayerAbilityType {
 	THUNDERBOLT("Thunderbolt"),
 	SPEEDBOOST("Speedboost"),
 	COMETSTRIKE("Comet Strike"),
-	TELEPORT("Teleport");
+	TELEPORT("Teleport"),
+	ZOMBIFY("Zombify");
 	
 	public transient final String name;
 	public transient int manaCost;

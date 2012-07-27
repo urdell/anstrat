@@ -17,7 +17,7 @@ public class Teleport extends DoubleTargetedPlayerAbility {
 	private static final long serialVersionUID = 1L;
 	
 	public Teleport(Player player) {
-		super("comet", player, PlayerAbilityType.TELEPORT);
+		super( player, PlayerAbilityType.TELEPORT);
 	}
 	
 	@Override

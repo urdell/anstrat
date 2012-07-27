@@ -7,12 +7,11 @@ import com.anstrat.gameCore.Player;
 public abstract class PlayerAbility implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	public final String name;
 	public final Player player;
 	public final PlayerAbilityType type;
 	
-	public PlayerAbility(String name, Player player, PlayerAbilityType type) {
-		this.name = name;
+	public PlayerAbility(Player player, PlayerAbilityType type) {
+		
 		this.player = player;
 		this.type = type;
 	}
