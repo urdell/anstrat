@@ -13,7 +13,6 @@ public class TutorialPopup extends Popup{
 	int nrClicks = 0;
 	
 	public TutorialPopup(){
-		super(null, "");
 		
 		tutorialImage = Assets.getTextureRegion("tutorialImage1");
 		
@@ -35,7 +34,6 @@ public class TutorialPopup extends Popup{
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		//super.draw(batch, parentAlpha);
 		batch.draw(tutorialImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	

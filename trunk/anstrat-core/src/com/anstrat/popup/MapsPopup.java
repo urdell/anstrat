@@ -19,27 +19,28 @@ public class MapsPopup extends Popup {
 	private TextButton ok;
 	private MapList maplist;
 	public int randWidth, randHeight;
+	private MapsPopupHandler handler;
 	
-	public MapsPopup(PopupHandler handler, boolean withRandom, String title, String... maps) {
-		super(handler, title);
+	public MapsPopup(MapsPopupHandler handler, boolean withRandom, String title, String... maps) {
+		super(title);
+		this.handler = handler;
 		
-		ok = ComponentFactory.createButton("Ok",Popup.OK);
+		ok = ComponentFactory.createButton("Ok", new ClickListener() {
+	        @Override
+	        public void click(Actor actor,float x,float y ){
+	        	returnSelection();
+				Popup.currentPopup.close();
+	        }
+	    });
 		Assets.SKIN.setEnabled(ok, false);
 		
 		maplist = new MapList(ok);
 		maplist.setMaps(withRandom, maps);
 		
-		TextButton cancel = ComponentFactory.createButton("Cancel",Popup.CANCEL);
+		TextButton cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		add(maplist).maxHeight((int)(50*Main.percentHeight));
 		add(new Row(ok, cancel));
-		ok.setClickListener(new ClickListener() {
-	        @Override
-	        public void click(Actor actor,float x,float y ){
-	        	returnSelection();
-	        }
-	    });
-		cancel.setClickListener(cl);
 	}
 	
 	/**
@@ -66,6 +67,11 @@ public class MapsPopup extends Popup {
 				randHeight = 10;
 			}
 		}
-		handler.handlePopupAction(maplist.getSelected());
+		
+		handler.mapSelected(maplist.getSelected());
+	}
+	
+	public static interface MapsPopupHandler {
+		public void mapSelected(String map);
 	}
 }

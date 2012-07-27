@@ -141,42 +141,25 @@ public class MapEditorActionHandler {
 			return;
 		b.controllerId = newOwner=="none"?-1:Integer.parseInt(newOwner);
 	}
-
-	/**
-	 * Creates a new map of specified sizes.
-	 * @return Whether the size was valid or not. 
-	 */
-	public boolean createNewMap(int width, int height){
+	
+	public void createNewMap(int width, int height){
 		
-		int validCode = Map.isValidSize(width);
-		String errorMsg = "";
+		String widthErrorMsg = getErrorMessage(width, "width");
+		String heightErrorMsg = getErrorMessage(height, "height");
 		
-		switch(validCode)
-		{
-			case 0:
-				validCode = Map.isValidSize(height);
-				switch(validCode)
-				{
-					case 0:
-						return true;
-					case -1:
-						errorMsg = "Map height cannot be less than "+Map.MIN_SIZE+".";
-						break;
-					case 1:
-						errorMsg = "Map height cannot be larger than "+Map.MAX_SIZE+".";
-						break;
-				}
-				break;
-			case -1:
-				errorMsg = "Map width cannot be less than "+Map.MIN_SIZE+".";
-				break;
-			case 1:
-				errorMsg = "Map width cannot be larger than "+Map.MAX_SIZE+".";
-				break;
+		if(widthErrorMsg == null && heightErrorMsg == null){
+			// Create map
+	    	MapEditor.getInstance().initMap(new Map(width, height));
 		}
-		
-		Popup.showGenericPopup("Invalid size", errorMsg);
-		return false;
+		else{
+			Popup.showGenericPopup("Invalid size", widthErrorMsg != null ? widthErrorMsg : heightErrorMsg);
+		}
+	}
+	
+	private String getErrorMessage(int value, String name){
+		if(value < Map.MIN_SIZE) return String.format("Map %s cannot be less than %d.", name, Map.MIN_SIZE);
+		if(value > Map.MAX_SIZE) return String.format("Map %s cannot be larger than %d.", name, Map.MAX_SIZE);
+		return null;
 	}
 	
 	/**

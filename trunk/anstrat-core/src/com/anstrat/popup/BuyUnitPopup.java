@@ -30,7 +30,7 @@ public class BuyUnitPopup extends Popup{
 	public static final String CANCEL_TEXT = "Cancel";
 	public static final Color  COLOR_UNAVAILABLE = Color.DARK_GRAY;
 	
-	private Button buy;
+	private Button buyButton;
 	private UnitTypeCard card;
 	private Button[] units;
 	private NinePatch[] unitSilhouettes;
@@ -38,26 +38,35 @@ public class BuyUnitPopup extends Popup{
 	private Player opener;
 	private ColorTable unitTable;
 	
+	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
+		@Override
+		public void click(Actor actor, float x, float y) {
+			BuyUnitPopup popup = (BuyUnitPopup) Popup.currentPopup;
+			UnitType type = popup.card.type;
+			Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
+			GEngine.getInstance().selectionHandler.selectSpawn(type);
+			popup.close();
+		}
+	};
+	
+	/*
 	private ClickListener cl = new ClickListener() {
         @Override
         public void click(Actor actor,float x,float y ){
         	handler.handlePopupAction(actor.equals(buy)?Popup.OK:Popup.CANCEL);
         }
     };
+	*/
 	
 	public BuyUnitPopup(UnitType... types) {
-		super(new PopupListener() {
-			@Override
-			public void handle(String text) {
-				BuyUnitPopup popup = (BuyUnitPopup) Popup.currentPopup;
-				UnitType type = popup.card.type;
-				Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
-				GEngine.getInstance().selectionHandler.selectSpawn(type);
-			}
-		}, "");
+		super();
+		
 		this.types = types;
 		
-		buy   = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", cl);
+		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", BUY_BUTTON_LISTENER);
+		
+		Button buttonCancel = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		
 		units = new Button[6];
 		unitSilhouettes = new NinePatch[6];
 		card  = new UnitTypeCard(types[0]);
@@ -87,8 +96,8 @@ public class BuyUnitPopup extends Popup{
 		
 		
 		Table buttonTable = new Table(Assets.SKIN);
-		buttonTable.register("buy", buy);
-		buttonTable.register("cancel",ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", cl));
+		buttonTable.register("buy", buyButton);
+		buttonTable.register("cancel", buttonCancel);
 		int buttonHeight = (int)(Main.percentHeight*15);
 		buttonTable.parse("align:right" +
 				"*min:1 size:"+buttonHeight+" [buy] [cancel]");
@@ -166,9 +175,9 @@ public class BuyUnitPopup extends Popup{
 		
 		//Disable buy button if current unit is not affordable
 		boolean canBuy = gold>=card.type.cost;
-		Assets.SKIN.setEnabled(buy, canBuy && isPlayerTurn);
+		Assets.SKIN.setEnabled(buyButton, canBuy && isPlayerTurn);
 		card.setDisabled(!canBuy);
-		buy.visible = canBuy;
+		buyButton.visible = canBuy;
 		
 		//Mark units that are too expensive.
 		for(int i=0; i<types.length; i++){

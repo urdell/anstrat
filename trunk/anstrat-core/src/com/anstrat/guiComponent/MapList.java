@@ -87,9 +87,9 @@ public class MapList extends Table {
 					}
 				}
 			};
-			randX = ComponentFactory.createTextField("Width", "sizeX", false);
+			randX = ComponentFactory.createTextField("Width", false);
 			randX.setTextFieldListener(tl);
-			randY = ComponentFactory.createTextField("Height", "sizeY", false);
+			randY = ComponentFactory.createTextField("Height", false);
 			randY.setTextFieldListener(tl);
 
 			random.setClickListener(new ClickListener() {

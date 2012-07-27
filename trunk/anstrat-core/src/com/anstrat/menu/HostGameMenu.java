@@ -28,9 +28,9 @@ public class HostGameMenu extends MenuScreen  {
         
         Table settings = new Table(Assets.SKIN);
         settings.setBackground(Assets.SKIN.getPatch("single-border"));
-        name = ComponentFactory.createTextField("Game name",null,false);
+        name = ComponentFactory.createTextField("Game name", false);
         settings.register("name", name);
-        password = ComponentFactory.createTextField("Game password",null,true);
+        password = ComponentFactory.createTextField("Game password", true);
         settings.register("password", password);
         // TODO put back in when wR0Ks
         /*

@@ -16,7 +16,6 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupHandler;
 import com.anstrat.popup.TutorialPopup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -188,14 +187,15 @@ public class GameUI extends UI {
 	}
 	
 	public static void showVictoryPopup(String player){
-		(new Popup(new PopupHandler(){
+		(new Popup("Game over", 
+		new Label(player+" has won the game!",Assets.SKIN), 
+		ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
-			public void handlePopupAction(String popupButton)	{
+			public void click(Actor actor, float x, float y) {
 				Main.getInstance().setScreen(MainMenu.getInstance());
 				Popup.currentPopup.close();
-				return;
 			}
-		}, "Game over", new Label(player+" has won the game!",Assets.SKIN), ComponentFactory.createButton("Ok",Popup.OK))).show();
+		}))).show();
 	}
 	
 	public void resize(){

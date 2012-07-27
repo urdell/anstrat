@@ -6,9 +6,11 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 /**
  * Menu to handle login, upgrade, register and logout 
@@ -17,29 +19,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  */
 public class AccountMenu extends MenuScreen {
 	private static AccountMenu me;
-	private static AccountMenuPopupHandler popupHandler = new AccountMenuPopupHandler();
 	
-	public Popup connectingPopup = new Popup(popupHandler, "Connecting",
-			new Label("Connecting...",Assets.SKIN),
-			ComponentFactory.createButton("Cancel",Popup.CANCEL));
+	public Popup loginPopup, registerPopup, connectingPopup;
 	
-	public Popup loginPopup = new Popup(popupHandler, "Login", 
-			new Label("Please enter your username and password.", Assets.SKIN),
-			ComponentFactory.createTextField("Login","username",false),
-			ComponentFactory.createTextField("Password","password",true),
-			new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
-	
-	public Popup registerPopup = new Popup(popupHandler, "Register",
-			new Label("Please enter your desired username, password and displayed name.", Assets.SKIN),
-			ComponentFactory.createTextField("Login","username",false),
-			ComponentFactory.createTextField("Password","password",true),
-			ComponentFactory.createTextField("Displayed name","displayedInput",false),
-			new Row(ComponentFactory.createButton("Ok",Popup.OK),ComponentFactory.createButton("Cancel",Popup.CANCEL)));
-	
-	private AccountMenu()
-	{
+	private AccountMenu(){
 		super();
-
+		
+		loginPopup = createLoginPopup();
+		registerPopup = createRegisterPopup();
+		connectingPopup = createConnectingPopup();
+		
 		contents.register( "fastLoginButton",ComponentFactory.createMenuButton("Quick Login",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
@@ -114,5 +103,72 @@ public class AccountMenu extends MenuScreen {
 			Main.getInstance().network.quickLogin();
 		else
 			Popup.showGenericPopup("Quick login refused", "Already logged in.");
+	}
+	
+	private Popup createLoginPopup(){
+		Label message = new Label("Please enter your username and password.", Assets.SKIN);
+		
+		final TextField loginUserNameField = ComponentFactory.createTextField("Login", false);
+		final TextField loginPasswordField = ComponentFactory.createTextField("Password", true);
+		
+		Button cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		Button okButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				AccountMenu am = AccountMenu.getInstance();
+				String username = loginUserNameField.getText();
+				String password = loginPasswordField.getText();
+				
+				am.clearInputs();
+				
+				Main.getInstance().login(username, password);
+				
+				Popup.currentPopup.close();
+				am.clearInputs();
+				am.connectingPopup.show();
+			}
+		});
+		
+		return new Popup("Login", message, loginUserNameField, loginPasswordField, new Row(okButton, cancel));
+	}
+	
+	private Popup createRegisterPopup(){
+		final TextField usernameField = ComponentFactory.createTextField("Login", false);
+		final TextField passwordField = ComponentFactory.createTextField("Password", true);
+		final TextField displayNameField = ComponentFactory.createTextField("Displayed name", false);
+		
+		Button cancelButton = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		Button okButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				AccountMenu am = AccountMenu.getInstance();
+				String username = usernameField.getText();
+				String password = passwordField.getText();
+				String displayed = displayNameField.getText();
+				
+				am.clearInputs();
+				
+				System.out.println("Sending register request "+username+":"+password+":"+displayed);
+				Main.getInstance().network.register(username, password, displayed);
+				
+				Popup.currentPopup.close();
+				am.clearInputs();
+				am.connectingPopup.show();
+			}
+		});
+		
+		return new Popup("Register",
+				new Label("Please enter your desired username, password and displayed name.", Assets.SKIN),
+				usernameField,
+				passwordField,
+				displayNameField,
+				new Row(okButton, cancelButton));
+	}
+	
+	private Popup createConnectingPopup(){
+		Label message = new Label("Connecting...", Assets.SKIN);
+		Button cancelButton = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		
+		return new Popup("Connecting", message, cancelButton);
 	}
 }

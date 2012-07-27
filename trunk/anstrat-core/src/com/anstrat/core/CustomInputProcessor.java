@@ -9,25 +9,30 @@ import com.anstrat.guiComponent.Row;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.menu.MenuScreen;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupListener;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class CustomInputProcessor extends InputAdapter {
 
-	public static Popup resignPopup = new Popup(new PopupListener() {
-		@Override
-		public void handle(String text) {
-			State.activeState.gameInstance.resign();
-			Main.getInstance().setScreen(MainMenu.getInstance());
-		}
-	}, "Resign?", true,
+	public static Popup resignPopup = new Popup("Resign?", true,
 			new Label("Are you sure you want to resign?", Assets.SKIN),
-			new Row(ComponentFactory.createButton("No",Popup.CANCEL), ComponentFactory.createButton("Yes",Popup.OK)));
+			new Row(
+					ComponentFactory.createButton("No", Popup.POPUP_CLOSE_BUTTON_HANDLER), 
+					ComponentFactory.createButton("Yes", new ClickListener() {
+						@Override
+						public void click(Actor actor, float x, float y) {
+							State.activeState.gameInstance.resign();
+							Main.getInstance().setScreen(MainMenu.getInstance());
+							Popup.currentPopup.close();
+						}
+					})));
+	
 	
 	@Override
 	public boolean keyDown(int keycode) {
@@ -69,7 +74,6 @@ public class CustomInputProcessor extends InputAdapter {
 			
 			case Input.Keys.MENU: // Fall through
 			case Input.Keys.B: {
-				
 				// Only show menu when playing a game
 				if((Main.getInstance().getScreen() instanceof GEngine) && Popup.currentPopup == null){
 					Popup.getBuyUnitPopup().show();

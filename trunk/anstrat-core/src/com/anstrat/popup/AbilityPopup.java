@@ -37,26 +37,29 @@ public class AbilityPopup extends Popup {
 	private PlayerAbilityType[] types;
 	private Button selectedButton;
 	
-	public AbilityPopup(PlayerAbilityType... types) {
-		super(new PopupListener() {
-			@Override
-			public void handle(String text) {
-				AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
-				PlayerAbilityType type = popup.card.type;
-				PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
-				Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
-				if (ability instanceof TargetedPlayerAbility) {
-					GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability);
-				}
-				else {
-					Command command = new ActivatePlayerAbilityCommand(ability.player, type);
-					CommandHandler.execute(command);
-				}
+	private static final ClickListener CAST_BUTTON_LISTENER = new ClickListener() {
+		@Override
+		public void click(Actor actor, float x, float y) {
+			AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
+			PlayerAbilityType type = popup.card.type;
+			PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
+			Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
+			if (ability instanceof TargetedPlayerAbility) {
+				GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability);
 			}
-		}, "");
+			else {
+				Command command = new ActivatePlayerAbilityCommand(ability.player, type);
+				CommandHandler.execute(command);
+			}
+
+			Popup.currentPopup.close();
+		}
+	};
+	
+	public AbilityPopup(PlayerAbilityType... types) {
 		this.types = types;
-		cast = ComponentFactory.createButton(CAST_TEXT, Popup.OK);
-		cancel = ComponentFactory.createButton(CANCEL_TEXT, Popup.CANCEL);
+		cast = ComponentFactory.createButton(CAST_TEXT, CAST_BUTTON_LISTENER);
+		cancel = ComponentFactory.createButton(CANCEL_TEXT, Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		abilities = new Button[types.length];
 		card = new AbilityTypeCard(types[0]);
 		Image tempImage; // used to instantiate images for buttons.
@@ -76,9 +79,6 @@ public class AbilityPopup extends Popup {
 			});
 		}
 		selectButton(0);
-		
-		cast.setClickListener(cl);
-		cancel.setClickListener(cl);
 		
 		this.setBackground(Assets.SKIN.getPatch("empty"));
 		
