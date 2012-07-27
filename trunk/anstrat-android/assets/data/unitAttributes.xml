@@ -100,12 +100,12 @@
 	<UnitType>
 		<name>Valkyrie</name>
 		<imageFolder>valkyrie</imageFolder>
-		<maxHP>30</maxHP>
+		<maxHP>25</maxHP>
 		<attack>7</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
-		<cost>40</cost>
+		<cost>38</cost>
 		<ability1>4</ability1><!-- Magic Spear -->
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
@@ -143,7 +143,7 @@
 		<name>Goblin Shaman</name>
 		<imageFolder>goblin</imageFolder>
 		<maxHP>12</maxHP>
-		<attack>5</attack>
+		<attack>4</attack>
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
