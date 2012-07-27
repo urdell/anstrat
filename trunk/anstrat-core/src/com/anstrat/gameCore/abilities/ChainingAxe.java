@@ -59,7 +59,6 @@ public class ChainingAxe extends TargetedAbility {
 		boolean firstUnit = true;
 		targetUnit.resolveDeath();
 		alreadyHit.add(targetUnit);
-		System.out.println("first unit " + targetUnit.tileCoordinate + " : " + targetUnit.currentHP);
 		
 		Animation chainingAxeAttackAnimation = new ChainingAxeAnimation(source,targetUnit,source.getAttack(), firstUnit);
 		GEngine.getInstance().animationHandler.enqueue(chainingAxeAttackAnimation);
@@ -73,12 +72,9 @@ public class ChainingAxe extends TargetedAbility {
 				Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
 				if (unit != null){
 					if (unit.ownerId != source.ownerId && unit.currentHP > 0 && !alreadyHit.contains(unit)){
-						System.out.println(unit.tileCoordinate + " : " + unit.currentHP);
 						unit.currentHP -= (source.getAttack()-numberOfHits);
-						System.out.println(unit.tileCoordinate + " : " + unit.currentHP);
 						Animation chainingAxeAnimation = new ChainingAxeAnimation(lastHit, unit, (source.getAttack()-numberOfHits), firstUnit);
 						GEngine.getInstance().animationHandler.enqueue(chainingAxeAnimation);
-						// TODO Update healthbar, flyging axe, floating text animation & impactAnimation
 						lastHit = unit;
 						lastHitTile = unit.tileCoordinate;
 						unit.resolveDeath();
@@ -97,11 +93,6 @@ public class ChainingAxe extends TargetedAbility {
 			}
 		}
 		
-		/*for (Unit deadUnit : deadUnits){
-			System.out.println(deadUnit.tileCoordinate);
-			Animation Deathanimation = new DeathAnimation(deadUnit, deadUnit.tileCoordinate);
-			GEngine.getInstance().animationHandler.enqueue(Deathanimation);
-		}*/
 	}
 	
 	@Override
