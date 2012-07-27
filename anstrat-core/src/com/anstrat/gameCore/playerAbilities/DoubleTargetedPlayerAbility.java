@@ -18,9 +18,9 @@ public class DoubleTargetedPlayerAbility extends PlayerAbility {
 	public TileCoordinate coords;
 	public int state = 0;
 	
-	public DoubleTargetedPlayerAbility(String name, Player player,
+	public DoubleTargetedPlayerAbility(Player player,
 			PlayerAbilityType type) {
-		super(name, player, type);
+		super(player, type);
 	}
 	
 	public List<TileCoordinate> getValidTiles(Player player){

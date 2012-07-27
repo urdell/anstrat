@@ -25,7 +25,7 @@ public class CometStrike extends TargetedPlayerAbility {
 	public static int damage = 5;
 	
 	public CometStrike(Player player) {
-		super("comet", player, PlayerAbilityType.COMETSTRIKE);
+		super(player, PlayerAbilityType.COMETSTRIKE);
 	}
 	
 	@Override
