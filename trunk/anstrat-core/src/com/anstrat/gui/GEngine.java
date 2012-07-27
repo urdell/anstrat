@@ -217,8 +217,9 @@ public class GEngine implements Screen{
 				b.render(batch, delta);
 			}
 		}
-
 		
+		if(actionHandler.showingConfirmDialog)
+			confirmOverlay.drawBottomLayer(batch);
 		
 		for(GUnit u : gUnits.values()){			
 			// Only render unit if visible
@@ -228,7 +229,7 @@ public class GEngine implements Screen{
 		}
 		
 		highlighter.render(batch);
-		confirmOverlay.drawBottomLayer(batch);
+		
 		//drawCoordinates();
 		batch.end();
 		

@@ -23,7 +23,16 @@ public class ConfirmOverlay {
 		GMap gMap = GEngine.getInstance().map;
 		gMap.getTile(startPos);
 		lines.clear();
-		//lines.add(new MapLine(gMap.getTile(startPos), gMap.getTile(path.path.get(0)), 0));
+		TileCoordinate lastCoordinate = startPos;
+		for(TileCoordinate currentCoordinate : path.path){
+			lines.add(new MapLine(gMap.getTile(lastCoordinate), gMap.getTile(currentCoordinate), 0));
+			lastCoordinate = currentCoordinate;
+		}
+		
+	}
+	
+	public void clear(){
+		lines.clear();
 	}
 	
 	/**
