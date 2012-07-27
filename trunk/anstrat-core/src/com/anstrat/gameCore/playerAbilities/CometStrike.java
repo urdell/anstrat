@@ -1,19 +1,18 @@
 package com.anstrat.gameCore.playerAbilities;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.CometStrikeAnimation;
-import com.anstrat.animation.DeathAnimation;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
-import com.anstrat.gui.GTile;
 import com.badlogic.gdx.Gdx;
 
 public class CometStrike extends TargetedPlayerAbility {
@@ -32,9 +31,12 @@ public class CometStrike extends TargetedPlayerAbility {
 	@Override
 	public void activate(Player player, TileCoordinate tile){
 		super.activate();
+		Map<Unit, Integer> map = new HashMap<Unit, Integer>();
 		Unit centerTarget = StateUtils.getUnitByTile(tile);
 		if(centerTarget != null){
+			int damage = centerTarget.currentHP;
 			centerTarget.currentHP = 0;
+			map.put(centerTarget, damage);
 		}
 		
 		List<Tile> list = State.activeState.map.getNeighbors(tile);
@@ -42,15 +44,25 @@ public class CometStrike extends TargetedPlayerAbility {
 			Unit unit = StateUtils.getUnitByTile(t.coordinates);
 			if (unit != null) {
 				unit.currentHP -= damage;
+				map.put(unit, damage);
 			}
 		}
-		Animation animation = new CometStrikeAnimation(tile);
+		Animation animation = new CometStrikeAnimation(tile, map);
+		
 		
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
+		if (centerTarget != null) {
+			State.activeState.unitList.remove(centerTarget.id);
+		}
+		for (Tile t: list) {
+			Unit unit = StateUtils.getUnitByTile(t.coordinates);
+			if (unit != null && unit.currentHP <= 0) {
+				State.activeState.unitList.remove(unit.id);
+			}
+		}
+		
 		Gdx.app.log("PlayerAbility", "Comet Strike was cast");
-		//Animation animation = new ThunderboltAnimation(target);
-		//GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	
 	@Override
