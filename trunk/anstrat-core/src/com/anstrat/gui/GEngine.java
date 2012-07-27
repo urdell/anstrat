@@ -229,6 +229,8 @@ public class GEngine implements Screen{
 		}
 		
 		highlighter.render(batch);
+		if(actionHandler.showingConfirmDialog)
+			confirmOverlay.drawTopLayer(batch);
 		
 		//drawCoordinates();
 		batch.end();
