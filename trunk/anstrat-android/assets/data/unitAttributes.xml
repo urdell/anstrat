@@ -36,6 +36,7 @@
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
 		<cost>20</cost>
+		<ability1>7</ability1><!-- Chaining Axe -->
 		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
