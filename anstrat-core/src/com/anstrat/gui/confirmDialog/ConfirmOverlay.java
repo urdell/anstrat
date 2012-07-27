@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class ConfirmOverlay {
 
 	public List<MapLine> lines = new LinkedList<MapLine>();
+	public boolean showHelpfulText = true;
 	
 	public void showMove(TileCoordinate startPos, Path path){
 		GMap gMap = GEngine.getInstance().map;

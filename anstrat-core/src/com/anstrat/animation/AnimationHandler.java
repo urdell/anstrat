@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class AnimationHandler {
 	
 	private List<Animation> runningAnimations = new ArrayList<Animation>();
+	private List<Animation> plannedRemovals = new ArrayList<Animation>();
 	private Queue<Animation> pendingAnimations = new LinkedList<Animation>();
 	private Queue<Animation> paralellPendingAnimations = new LinkedList<Animation>();
 	
@@ -21,27 +22,26 @@ public class AnimationHandler {
 	
 	/**
 	 * Affects everything that is supposed to be affected, such as moving elements
-	 * Currently removes at most one Animation each frame.
 	 * @param deltaTime
 	 */
 	public void runAll(float deltaTime){
 		runningAnimations.addAll(paralellPendingAnimations);
 		paralellPendingAnimations.clear();
-		Animation plannedRemoval = null;
+		plannedRemovals.clear();
 		for(Animation a : runningAnimations){
 			a.lifetimeLeft -= deltaTime;
 			a.run(deltaTime);
 			
 			if(a.lifetimeLeft <=0){
-				plannedRemoval = a;
+				plannedRemovals.add(a);
 			}
 					
 		}
-		if(plannedRemoval != null){
-			runningAnimations.remove(plannedRemoval);
+		for(Animation removeMe : plannedRemovals){
+			runningAnimations.remove(removeMe);
 			//TODO Works but possibly needs tossing around later (can only be robust enough here atm)
-			if(plannedRemoval instanceof DeathAnimation)
-				((DeathAnimation) plannedRemoval).removeGUnit();
+			if(removeMe instanceof DeathAnimation)
+				((DeathAnimation) removeMe).removeGUnit();
 		}
 		timeToNext -= deltaTime;
 		tryAddNextPending();
