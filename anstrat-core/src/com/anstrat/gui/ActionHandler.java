@@ -127,6 +127,7 @@ public class ActionHandler {
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			CommandHandler.execute(command);
 			gEngine.selectionHandler.deselect();
+			break;
 		case SelectionHandler.SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY:
 			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
 			if (temp.state == 0) {

@@ -1,6 +1,8 @@
 package com.anstrat.animation;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.State;
@@ -12,6 +14,7 @@ import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.gui.GTile;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -27,12 +30,13 @@ public class CometStrikeAnimation extends Animation {
 	com.badlogic.gdx.graphics.g2d.Animation animation2 = null;
 	
 	Animation shake1 = null, shake2= null, move = null;
+	private Map<Unit, Integer> units;
 	
-	public CometStrikeAnimation(TileCoordinate target) {
+	public CometStrikeAnimation(TileCoordinate target, Map<Unit, Integer> units) {
 		animation1 = Assets.getAnimation("meteorstrike");
 		animation2 = Assets.getAnimation("meteorimpact");
 		
-		
+		this.units = units;
 				
 		this.target = GEngine.getInstance().getMap().getTile(target);
 		length = animation1.animationDuration*4+animation2.animationDuration;
@@ -44,8 +48,8 @@ public class CometStrikeAnimation extends Animation {
 		xdiff = 3*GEngine.getInstance().map.TILE_WIDTH;
 		ydiff = 3*GEngine.getInstance().map.TILE_HEIGHT;
 		
-		shake1 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/25, GEngine.getInstance().map.TILE_HEIGHT/25, length/6, 15);
-		shake2 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/15, GEngine.getInstance().map.TILE_HEIGHT/15, 1.7f*animation2.animationDuration, 25);
+		shake1 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/25, GEngine.getInstance().map.TILE_HEIGHT/25, length/8, 12);
+		shake2 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/15, GEngine.getInstance().map.TILE_HEIGHT/15, 1.1f*animation2.animationDuration, 20);
 		
 	}
 	
@@ -58,26 +62,20 @@ public class CometStrikeAnimation extends Animation {
 		}
 		
 		if(lifetimeLeft <= 0f){
-			Unit centerTarget = StateUtils.getUnitByTile(target.tile.coordinates);
-			if(centerTarget != null){
-				GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(centerTarget,
-						GEngine.getInstance().getUnit(centerTarget).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
-				State.activeState.unitList.remove(centerTarget.id);
-			}
 			if (!target.tile.terrain.equals(TerrainType.DEEP_WATER)) {
 				target.tile.terrain = TerrainType.CRATER;
 				target.tile.coordinates = target.tile.coordinates; 
 				target.setTexture(TerrainType.CRATER);
 			}
-			List<Tile> list = State.activeState.map.getNeighbors(target.tile);
-			for (Tile t: list) {
-				Unit unit = StateUtils.getUnitByTile(t.coordinates);
+			Set<Unit> list = units.keySet();
+			for (Unit unit: list) {
 				if (unit != null) {
 					if(unit.currentHP <= 0){
 						GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(unit,
 								GEngine.getInstance().getUnit(unit).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
-						State.activeState.unitList.remove(unit.id);
 					}
+					FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
+					GEngine.getInstance().animationHandler.runParalell(animation);
 					GEngine.getInstance().getUnit(unit).updateHealthbar();
 				}
 			}
