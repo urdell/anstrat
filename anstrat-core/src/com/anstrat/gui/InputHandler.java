@@ -40,13 +40,21 @@ public class InputHandler extends GestureAdapter {
 		GEngine gEngine = GEngine.getInstance();
 		Vector3 out = new Vector3();
 		CameraUtil.windowToCameraCoordinates(gEngine.uiCamera, new Vector2(x, y), out);
-		if(gEngine.confirmDialog.okBounds.contains(out.x, out.y)){
-			gEngine.actionHandler.confirmPress();
-			return true;
+		if(gEngine.confirmDialog.showingConfirmButtons){
+			if(gEngine.confirmDialog.okBounds.contains(out.x, out.y)){
+				gEngine.actionHandler.confirmPress();
+				return true;
+			}
+			if(gEngine.confirmDialog.cancelBounds.contains(out.x, out.y)){
+				gEngine.actionHandler.confirmCancelPress();
+				return true;
+			}
 		}
-		if(gEngine.confirmDialog.cancelBounds.contains(out.x, out.y)){
-			gEngine.actionHandler.confirmCancelPress();
-			return true;
+		else{	// If no button, then entire dialogBox confirms
+			if(gEngine.confirmDialog.dialogBounds.contains(out.x, out.y)){
+				gEngine.actionHandler.confirmPress();
+				return true;
+			}
 		}
 		return false;
 	}
