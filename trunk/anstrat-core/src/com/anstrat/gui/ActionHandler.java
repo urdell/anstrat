@@ -22,6 +22,7 @@ import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 
@@ -111,7 +112,8 @@ public class ActionHandler {
 			break;
 		case SelectionHandler.SELECTION_SPAWN:
 			command = new CreateUnitCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
-			CommandHandler.execute(command);
+			requestConfirm(gTile, null, command);
+			//CommandHandler.execute(command);
 			break;
 		case SelectionHandler.SELECTION_TARGETED_ABILITY:
 			command = new ActivateTargetedAbilityCommand(gEngine.selectionHandler.selectedUnit, 
@@ -203,19 +205,27 @@ public class ActionHandler {
 	 * @param command
 	 */
 	public void requestConfirm(GTile targetTile, Unit unit, Command command){
+		
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
 		confirmCommand = command;
 		showingConfirmDialog = true;
+		int position = ConfirmDialog.BOTTOM_RIGHT;
 		if(command instanceof MoveCommand){
+
 			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), 0 );
+
 		}
 		if(command instanceof AttackCommand){
-			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, 0 );
+			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, position );
 		}
 		if(command instanceof CaptureCommand){
-			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, 0 );
+			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, State.activeState.map.getBuildingByTile(targetTile.tile.coordinates), position );
 		}
+		if(command instanceof CreateUnitCommand){
+			gEngine.confirmDialog = ConfirmDialog.buyConfirm( ((CreateUnitCommand)command).getUnitType(), position );
+		}
+		
 		
 		
 	}

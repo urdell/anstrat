@@ -16,11 +16,11 @@ public class DamageRow extends ConfirmRow {
 	@Override
 	public void draw(float x, float y, SpriteBatch batch) {
 
-		float scale =Assets.MENU_FONT.getScaleX();
-		Assets.MENU_FONT.setScale(1.5f);
-		Assets.MENU_FONT.setColor(Color.RED);
-		Assets.MENU_FONT.draw(batch, min+"-"+max, x, y+ROW_HEIGHT);
-		Assets.MENU_FONT.setScale(scale);
+		float scale =Assets.DESCRIPTION_FONT.getScaleX();
+		Assets.UI_FONT.setScale(1.8f);
+		Assets.UI_FONT.setColor(Color.RED);
+		Assets.UI_FONT.draw(batch, min+"-"+max, x, y+ROW_HEIGHT);
+		Assets.UI_FONT.setScale(scale);
 		
 	}
 
