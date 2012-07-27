@@ -30,22 +30,22 @@ public class MapLine {
 		 // Works for pointy tiles, not flat
 		switch(State.activeState.map.getAdjacentOrientation(startTile.tile.coordinates, endTile.tile.coordinates)){
 		case Map.ADJACENT_E:
-			rotation = 90;
-			break;
-		case Map.ADJACENT_W:
 			rotation = -90;
 			break;
+		case Map.ADJACENT_W:
+			rotation = 90;
+			break;
 		case Map.ADJACENT_NE:
-			rotation = 30;
+			rotation = -150;
 			break;
 		case Map.ADJACENT_NW:
-			rotation = -30;
-			break;
-		case Map.ADJACENT_SE:
 			rotation = 150;
 			break;
+		case Map.ADJACENT_SE:
+			rotation = -30;
+			break;
 		case Map.ADJACENT_SW:
-			rotation = -150;
+			rotation = 30;
 			break;
 		}
 		

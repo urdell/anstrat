@@ -83,8 +83,8 @@ public class CameraController extends InputAdapter implements GestureListener {
 			// If true, (x,y) = 0,0 is top-left, otherwise bottom-left
 			boolean yDown = camera.up.y < 0;
 			
-			velX *= 0.99f;
-			velY *= 0.99f;
+			velX *= 0.97f;
+			velY *= 0.97f;
 			camera.position.add(-velX * delta, (yDown ? -1 : 1) * velY * delta, 0);
 			
 			if (Math.abs(velX) < 0.01f) velX = 0;
