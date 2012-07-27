@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.anstrat.core.CameraController;
 import com.anstrat.core.Main;
+import com.anstrat.core.Options;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
@@ -141,7 +142,7 @@ public class MapEditor implements Screen {
 		CameraUtil.resizeCamera(camera, width, height);
 		userInterface.resize(width, height);
 		cameraController.resize();
-		cameraController.setOffsets(0f, userInterface.getHeight(), 0f, 0f);
+		cameraController.setOffsets(Options.mapBorderOffset, userInterface.getHeight()+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 	}
 
 	@Override

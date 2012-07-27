@@ -54,6 +54,7 @@ public class GEngine implements Screen{
 	public ConfirmOverlay confirmOverlay = new ConfirmOverlay();
 	public AnimationHandler animationHandler = new AnimationHandler();
 	public SelectionHandler selectionHandler = new SelectionHandler();
+	public FloatingBackground floatingBackground;
 	private SpriteBatch batch;
 	
 	
@@ -118,7 +119,7 @@ public class GEngine implements Screen{
 		
 		cameraController.setBounds(map.getWidth(), map.getHeight());
 		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), map.TILE_WIDTH * 2.5f, map.TILE_HEIGHT * 2.5f);
-		cameraController.setOffsets(userInterface.topPanel.height, userInterface.bottomPanel.height, 0f, 0f);
+		cameraController.setOffsets(userInterface.topPanel.height+Options.mapBorderOffset, userInterface.bottomPanel.height+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 		
 		if (!startZoom)
 			camera.zoom = (map.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
@@ -127,6 +128,7 @@ public class GEngine implements Screen{
 		cameraController.checkBounds();
 		camera.position.x = map.getWidth()/2;
 		camera.position.y = map.getHeight()/2;
+		floatingBackground = new FloatingBackground(camera);
 		
 		gUnits.clear();
 		gBuildings.clear();
@@ -204,10 +206,15 @@ public class GEngine implements Screen{
 		cameraController.update(delta);
 		camera.update();
 		camera.apply(gl);
-		map.render(gl);
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		floatingBackground.draw(batch);
+		batch.flush();
+		
+		map.render(gl);
+
+		//batch.begin();
 		
 		highlighter.renderBackground(batch);
 		
@@ -254,7 +261,7 @@ public class GEngine implements Screen{
 		cameraController.resize();
 		
 		// Update offsets since ui has changed size
-		cameraController.setOffsets(userInterface.topPanel.height, userInterface.bottomPanel.height, 0f, 0f);
+		cameraController.setOffsets(userInterface.topPanel.height+Options.mapBorderOffset, userInterface.bottomPanel.height+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 	}
 	
 	@Override

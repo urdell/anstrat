@@ -6,6 +6,7 @@ import com.badlogic.gdx.Preferences;
 public class Options {
 
 	public static boolean DEBUG_SHOW_OWNER = false;
+	public static float mapBorderOffset = Gdx.graphics.getWidth()/8;
 	public static boolean soundOn = false;
 	public static Preferences prefs;
 	public static float speedFactor = 1f;
