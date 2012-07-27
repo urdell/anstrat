@@ -11,7 +11,7 @@ import com.badlogic.gdx.Gdx;
 
 public class Combat {
 	
-	private static double randomness = 0.3;
+	private static double randomness = 0.25;
 	/**
 	 * Calculates all AP, damage, dying etc.
 	 * @param attacker
@@ -27,15 +27,11 @@ public class Combat {
 			}
 		}
 		
-		double damageRange = attacker.getAttack()*randomness;
-		double random = 2*State.activeState.random.nextFloat()-1;
-		System.out.println("Randomed attack power is: "+random+"\nPlease doublecheck that it's consistent over all clients.");
-		
-		int damage = (int) (UnitType.getAttackModifier(attacker.getUnitType(), defender.getUnitType())*(attacker.getAttack()+ Math.round(random*damageRange))); 
+		int minDamage = minDamage(attacker, defender);
+		int maxDamage = maxDamage(attacker, defender);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 		
 		Gdx.app.log("Combat", "Damage is "+damage);
-		
-		if(damage < 0) { damage = 0; } // Remove negative damage
 		
 		defender.currentHP -= damage;
 		
@@ -80,5 +76,18 @@ public class Combat {
 		
 		// Check that attacker has enough AP
 		return attacker.currentAP >= attacker.getAPCostAttack();
+	}
+	
+	public static int minDamage(Unit attacker, Unit defender){
+		float typeModifier = (float) UnitType.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
+		int damage = (int) (attacker.getAttack()*typeModifier*(1-randomness));
+		if(damage < 0) { damage = 0; } // Remove negative damage
+		return damage;
+	}
+	public static int maxDamage(Unit attacker, Unit defender){		
+		float typeModifier = (float) UnitType.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
+		int damage = (int) (attacker.getAttack()*typeModifier*(1+randomness));
+		if(damage < 0) { damage = 0; } // Remove negative damage
+		return damage;
 	}
 }

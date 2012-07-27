@@ -38,7 +38,7 @@ public class ActionHandler {
 	public GTile confirmTile;
 	public Command confirmCommand;
 
-	public void click(GTile gTile){
+	public void click(GTile gTile, int clickedQuadrant){
 		GEngine gEngine = GEngine.getInstance();
 		Unit unit = StateUtils.getUnitByTile(gTile.tile.coordinates);
 		Command command;
@@ -74,7 +74,7 @@ public class ActionHandler {
 			if(unit == null){   //Empty tile clicked
 				if(gEngine.actionMap.getActionType(gTile.tile.coordinates) == ActionMap.ACTION_MOVE){
 					Command c = new MoveCommand(selectedUnit, gTile.tile.coordinates);
-					requestConfirm(gTile, selectedUnit, c);
+					requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					//CommandHandler.execute(c);
 					refreshHighlight(selectedUnit);
 				}else{
@@ -94,7 +94,7 @@ public class ActionHandler {
 				}
 				else if(unit.ownerId != State.activeState.currentPlayerId && selectedUnit.ownerId==State.activeState.currentPlayerId){
 					Command c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
-					requestConfirm(gTile, selectedUnit, c);
+					requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					//CommandHandler.execute(c);
 					gEngine.actionMap.prepare(gEngine.selectionHandler.selectedUnit);
 					
@@ -112,7 +112,7 @@ public class ActionHandler {
 			break;
 		case SelectionHandler.SELECTION_SPAWN:
 			command = new CreateUnitCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
-			requestConfirm(gTile, null, command);
+			requestConfirm(gTile, null, command, clickedQuadrant);
 			//CommandHandler.execute(command);
 			break;
 		case SelectionHandler.SELECTION_TARGETED_ABILITY:
@@ -159,7 +159,7 @@ public class ActionHandler {
 			}
 			
 			if (c != null){
-				requestConfirm(GEngine.getInstance().getMap().getTile(selectedUnit.tileCoordinate), selectedUnit, c);
+				requestConfirm(GEngine.getInstance().getMap().getTile(selectedUnit.tileCoordinate), selectedUnit, c, ConfirmDialog.BOTTOM_RIGHT);
 			}
 				
 			//CommandHandler.execute(c);
@@ -204,20 +204,20 @@ public class ActionHandler {
 	 * @param unit
 	 * @param command
 	 */
-	public void requestConfirm(GTile targetTile, Unit unit, Command command){
+	public void requestConfirm(GTile targetTile, Unit unit, Command command, int clickedQuadrant){
 		
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
 		confirmCommand = command;
 		showingConfirmDialog = true;
-		int position = ConfirmDialog.BOTTOM_RIGHT;
+		int position = ConfirmDialog.invertQuadrant(clickedQuadrant);
 		if(command instanceof MoveCommand){
 
-			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), 0 );
+			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), position );
 
 		}
 		if(command instanceof AttackCommand){
-			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, position );
+			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, StateUtils.getUnitByTile(targetTile.tile.coordinates), position );
 		}
 		if(command instanceof CaptureCommand){
 			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, State.activeState.map.getBuildingByTile(targetTile.tile.coordinates), position );

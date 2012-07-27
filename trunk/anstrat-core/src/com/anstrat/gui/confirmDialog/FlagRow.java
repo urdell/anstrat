@@ -26,8 +26,8 @@ public class FlagRow extends ConfirmRow {
 
 	@Override
 	public void draw(float x, float y, SpriteBatch batch) {
-		TextureRegion flag = Assets.getTextureRegion("flagIcon");
-		TextureRegion arrow = Assets.getTextureRegion("arrowFat");
+		TextureRegion flag = Assets.getTextureRegion("flag-inplace-black-0004");
+		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
 		batch.setColor(oldColor);
 		batch.draw(flag, x+ROW_HEIGHT*0.5f, y, ROW_HEIGHT, ROW_HEIGHT);
 		batch.setColor(Color.WHITE);
