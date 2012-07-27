@@ -35,26 +35,28 @@ public class APPieDisplay {
 		if(ONLY_USE_NUMBER_8)
 			maxAP = 8;
 		
-		batch.setColor(Color.toFloatBits(1f, 1f, 1f, 1f));
+		//batch.setColor(Color.toFloatBits(1f, 1f, 1f, 1f));
+		//float alpha = batch.getColor().a;
+		
 		Color c = batch.getColor();
 		batch.setColor(c.r, c.g, c.b, alpha);
 		TextureRegion background = Assets.getTextureRegion("APPie-bg");
 		batch.draw(background, x, y, size/2, size/2, size, size, 1f, 1f, 0f);
 		
 		int pieceNumber;
-		batch.setColor(Color.CYAN);
+		batch.setColor(0f, 1f, 1f, alpha);
 		c = batch.getColor();
 		batch.setColor(c.r, c.g, c.b, alpha);
 		for(pieceNumber=0; pieceNumber < currentAP; pieceNumber++ ){
 			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
-		batch.setColor(Color.toFloatBits(0.0f, 0.3f, 0.3f, 1f));
+		batch.setColor(Color.toFloatBits(0.0f, 0.3f, 0.3f, alpha));
 		c = batch.getColor();
 		batch.setColor(c.r, c.g, c.b, alpha);
 		for(;pieceNumber < currentAP+apReg && pieceNumber < maxAP; pieceNumber++ ){
 			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
-		batch.setColor(Color.WHITE);
+		batch.setColor(1f, 1f, 1f, alpha);
 		c = batch.getColor();
 		batch.setColor(c.r, c.g, c.b, alpha);
 		

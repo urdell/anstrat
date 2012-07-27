@@ -72,6 +72,9 @@ public class CreateUnitCommand extends Command {
 		
 		return "";
 	}
+	public UnitType getUnitType(){
+		return unitType;
+	}
 	
 	@Override
 	public int hashCode(){

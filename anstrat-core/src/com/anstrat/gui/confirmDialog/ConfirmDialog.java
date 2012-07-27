@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.core.Assets;
+import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Path;
@@ -23,10 +25,10 @@ public class ConfirmDialog {
 	public static final int BOTTOM_LEFT = 4;
 	
 	public static final int distanceToEdge = 10;
-	public static final int backgroundMargin = 10;
+	public static final int backgroundMargin = 23;  //10 for NinePatch
 	
 	public List<ConfirmRow> rows = new ArrayList<ConfirmRow>();
-	TextureRegion background = Assets.getTextureRegion("TopPanel");
+	TextureRegion background = Assets.getTextureRegion("confirm-bottom");
 	TextureRegion okButton = Assets.getTextureRegion("Ok-button");
 	TextureRegion cancelButton = Assets.getTextureRegion("cancel");
 	ColorTable colorTable;
@@ -43,6 +45,14 @@ public class ConfirmDialog {
 		case TOP_RIGHT:
 			x=Gdx.graphics.getWidth()-ConfirmRow.ROW_WIDTH-distanceToEdge;
 			y = Gdx.graphics.getHeight()*0.9f-distanceToEdge;
+			break;
+		case TOP_LEFT:
+			x=distanceToEdge;
+			y = Gdx.graphics.getHeight()*0.9f-distanceToEdge;
+			break;
+		case BOTTOM_RIGHT:
+			x=Gdx.graphics.getWidth()-ConfirmRow.ROW_WIDTH-distanceToEdge;
+			y = Gdx.graphics.getHeight()*0.4f-distanceToEdge+getHeight();
 			break;
 		default:
 			x=Gdx.graphics.getWidth()-ConfirmRow.ROW_WIDTH-distanceToEdge;
@@ -64,10 +74,10 @@ public class ConfirmDialog {
 		float incHeight = ConfirmRow.ROW_HEIGHT;
 		batch.begin();
 		
-		//batch.draw(background, x, y-getHeight(), getWidth(), getHeight());
+		batch.draw(background, x-backgroundMargin, y-getHeight()-backgroundMargin, getWidth()+backgroundMargin*2, getHeight()+backgroundMargin*2);
 		//Assets.SKIN.getPatch("double-border").draw(batch, x, y-getHeight(), getWidth(), getHeight());
 		
-		colorTable.draw(batch, 1f);
+		//colorTable.draw(batch, 1f);
 		
 		
 		for(int i=0; i<rows.size(); i++){
@@ -117,12 +127,23 @@ public class ConfirmDialog {
 		
 		return confirmDialog;
 	}
-	public static ConfirmDialog captureConfirm(Unit unit, int dialogPosition){
+	public static ConfirmDialog captureConfirm(Unit unit, Building building, int dialogPosition){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		
 		confirmDialog.rows.add(new TextRow("Capture"));
 		confirmDialog.rows.add(new APRow(unit, 4));
-		confirmDialog.rows.add(new FlagRow());
+		confirmDialog.rows.add(new FlagRow(building, unit));
+		
+		confirmDialog.refreshBounds();
+		
+		return confirmDialog;
+	}
+	public static ConfirmDialog buyConfirm(UnitType type, int dialogPosition){
+		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
+		
+		confirmDialog.rows.add(new TextRow("Buy"));
+		confirmDialog.rows.add(new TextRow(type.name));
+		confirmDialog.rows.add(new CostRow(State.activeState.getCurrentPlayer().gold, type.cost, true));
 		
 		confirmDialog.refreshBounds();
 		

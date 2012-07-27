@@ -106,8 +106,8 @@ public class CometStrikeAnimation extends Animation {
 		float width = map.TILE_WIDTH;
 		float height = map.TILE_HEIGHT;
 		
-		float cw = width*(0.75f+(10*(float)Math.pow(var, 4)));
-		float ch = height*(0.75f+(10*(float)Math.pow(var, 4)));
+		float cw = 4*width*(0.75f+(10*(float)Math.pow(var, 4)));
+		float ch = 4*height*(0.75f+(10*(float)Math.pow(var, 4)));
 		
 		if (lifetimeLeft > animation2.animationDuration){
 			TextureRegion region = this.animation1.getKeyFrame(timePassed, true);
