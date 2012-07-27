@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
@@ -47,14 +48,18 @@ public class ConfirmDialog {
 		switch(position){
 		case TOP_RIGHT:
 			x=Gdx.graphics.getWidth()-ConfirmRow.ROW_WIDTH-distanceToEdge;
-			y = Gdx.graphics.getHeight()*0.9f-distanceToEdge;
+			y = Gdx.graphics.getHeight()*0.85f-distanceToEdge;
 			break;
 		case TOP_LEFT:
 			x=distanceToEdge;
-			y = Gdx.graphics.getHeight()*0.9f-distanceToEdge;
+			y = Gdx.graphics.getHeight()*0.85f-distanceToEdge;
 			break;
 		case BOTTOM_RIGHT:
 			x=Gdx.graphics.getWidth()-ConfirmRow.ROW_WIDTH-distanceToEdge;
+			y = Gdx.graphics.getHeight()*0.4f-distanceToEdge+getHeight();
+			break;
+		case BOTTOM_LEFT:
+			x=distanceToEdge;
 			y = Gdx.graphics.getHeight()*0.4f-distanceToEdge+getHeight();
 			break;
 		default:
@@ -113,6 +118,25 @@ public class ConfirmDialog {
 		dialogBounds = new Rectangle(x, y-getHeight(), getWidth(), getHeight());
 	}
 	
+	/**
+	 * @param quadrant
+	 * @return valid output even for faulty input
+	 */
+	public static int invertQuadrant(int quadrant){
+		switch(quadrant){
+		case TOP_LEFT:
+			return BOTTOM_RIGHT;
+		case TOP_RIGHT:
+			return BOTTOM_LEFT;
+		case BOTTOM_LEFT:
+			return TOP_RIGHT;
+		case BOTTOM_RIGHT:
+			return TOP_LEFT;
+		default:
+			return TOP_RIGHT;
+		}
+	}
+	
 	public static ConfirmDialog moveConfirm(Unit unit, Path path, int dialogPosition){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		
@@ -126,13 +150,13 @@ public class ConfirmDialog {
 		
 		return confirmDialog;
 	}
-	public static ConfirmDialog attackConfirm(Unit unit, int dialogPosition){
+	public static ConfirmDialog attackConfirm(Unit attacker, Unit target, int dialogPosition){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		
 		confirmDialog.topLabel = Assets.getTextureRegion("confirm-attack");
 		confirmDialog.rows.add(new TextRow(""));//empty row to make room for top label
-		confirmDialog.rows.add(new DamageRow(5, 15));
-		confirmDialog.rows.add(new APRow(unit, unit.getAPCostAttack()));
+		confirmDialog.rows.add(new DamageRow(Combat.minDamage(attacker, target), Combat.maxDamage(attacker, target)));
+		confirmDialog.rows.add(new APRow(attacker, attacker.getAPCostAttack()));
 		
 		confirmDialog.refreshBounds();
 		

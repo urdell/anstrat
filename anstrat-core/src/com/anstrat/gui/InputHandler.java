@@ -1,5 +1,7 @@
 package com.anstrat.gui;
 
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -26,10 +28,34 @@ public class InputHandler extends GestureAdapter {
 			// If a tile is hit, delegate the tap as a tile click event
 			GMap map = gEngine.getMap();
 			GTile gTile = map.getTile(map.coordinate(new Vector2(x, y)));
-			if(gTile != null) gEngine.actionHandler.click(gTile);
+			if(gTile != null) gEngine.actionHandler.click(gTile, getQuadrant(x, y));
 		}
 				
 		return false;
+	}
+	
+	/**
+	 * returns the clicked quadrant by ConfirmDialog constants.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public int getQuadrant(int x, int y){
+		GEngine gEngine = GEngine.getInstance();
+		Vector3 out = new Vector3();
+		CameraUtil.windowToCameraCoordinates(gEngine.uiCamera, new Vector2(x, y), out);
+		if(out.x < Gdx.graphics.getWidth()/2){ // left
+			if(out.y > Gdx.graphics.getHeight()/2) // top
+				return ConfirmDialog.TOP_LEFT;
+			else //bottom
+				return ConfirmDialog.BOTTOM_LEFT;
+		}
+		else{ //right
+			if(out.y > Gdx.graphics.getHeight()/2) // top
+				return ConfirmDialog.TOP_RIGHT;
+			else //bottom
+				return ConfirmDialog.BOTTOM_RIGHT;
+		}
 	}
 	
 	/**
