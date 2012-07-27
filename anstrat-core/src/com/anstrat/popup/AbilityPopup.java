@@ -11,6 +11,7 @@ import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
+import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
@@ -36,7 +37,7 @@ public class AbilityPopup extends Popup {
 	private Button[] abilities;
 	private PlayerAbilityType[] types;
 	private Button selectedButton;
-	
+
 	private static final ClickListener CAST_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void click(Actor actor, float x, float y) {
@@ -46,6 +47,9 @@ public class AbilityPopup extends Popup {
 			Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
 			if (ability instanceof TargetedPlayerAbility) {
 				GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability);
+			}
+			else if (ability instanceof DoubleTargetedPlayerAbility) {
+				GEngine.getInstance().selectionHandler.selectPlayerAbility((DoubleTargetedPlayerAbility) ability);
 			}
 			else {
 				Command command = new ActivatePlayerAbilityCommand(ability.player, type);
@@ -170,10 +174,11 @@ public class AbilityPopup extends Popup {
 		
 		abilities[2].x = (float) (0.6*buttonWidth);
 		abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		/*
+		
 		abilities[3].x = (float) (width-1.6*buttonWidth);
 		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
 		
+		/*
 		abilities[4].x = width-buttonWidth;
 		abilities[4].y = (float) (4.5*buttonHeight);
 		

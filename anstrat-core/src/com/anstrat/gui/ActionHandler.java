@@ -1,6 +1,7 @@
 package com.anstrat.gui;
 
 import com.anstrat.command.ActivateAbilityCommand;
+import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
 import com.anstrat.command.ActivateTargetedAbilityCommand;
 import com.anstrat.command.ActivateTargetedPlayerAbilityCommand;
 import com.anstrat.command.AttackCommand;
@@ -20,9 +21,9 @@ import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.TargetedAbility;
+import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
-import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 
@@ -126,6 +127,18 @@ public class ActionHandler {
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			CommandHandler.execute(command);
 			gEngine.selectionHandler.deselect();
+		case SelectionHandler.SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY:
+			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
+			if (temp.state == 0) {
+				temp.activateFirst(State.activeState.getCurrentPlayer(), gTile.tile.coordinates);
+				GEngine.getInstance().selectionHandler.selectPlayerAbility(temp);
+			}
+			else {
+				command = new ActivateDoubleTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility.type, temp.coords, gTile.tile.coordinates);
+				CommandHandler.execute(command);
+				gEngine.selectionHandler.deselect();
+			}
+			break;
 		default:
 			break;
 		

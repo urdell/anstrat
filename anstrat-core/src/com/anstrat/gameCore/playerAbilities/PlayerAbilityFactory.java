@@ -11,6 +11,8 @@ public class PlayerAbilityFactory {
 			return new Speedboost(player);
 		else if (type.equals(PlayerAbilityType.COMETSTRIKE))
 			return new CometStrike(player);
+		else if (type.equals(PlayerAbilityType.TELEPORT))
+			return new Teleport(player);
 		else
 			return null;
 	}
