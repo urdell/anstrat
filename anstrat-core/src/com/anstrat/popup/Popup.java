@@ -7,19 +7,17 @@ import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
-import com.anstrat.guiComponent.Row;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.esotericsoftware.tablelayout.Cell;
 
@@ -29,8 +27,6 @@ import com.esotericsoftware.tablelayout.Cell;
 public class Popup extends Window {
 	
 	public static final int WIDTH = (int)(90*Main.percentWidth);
-	public static final String CANCEL = "cancel";
-	public static final String OK     = "ok";
 	
 	public static Popup currentPopup = null;
 	private static ArrayList<Popup> popupQueue;
@@ -46,10 +42,17 @@ public class Popup extends Window {
 	public static UnitInfoPopup unitInfoPopup;
 	public static AbilityPopup abilityPopup; 
 	
-	protected PopupHandler handler;
+	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
+		@Override
+		public void click(Actor actor, float x, float y) {
+			Popup.currentPopup.close();
+		}
+	};
+	
 	public boolean handlesBackspace = false;
 	public boolean drawOverlay = true;
 
+	/*
 	protected ClickListener cl = new ClickListener() {
         @Override
         public void click(Actor actor,float x,float y ){
@@ -66,7 +69,7 @@ public class Popup extends Window {
 				textField.next(false);
 		}
 	};
-	
+	*/
 	/**
 	 * 
 	 * @param handler
@@ -74,9 +77,13 @@ public class Popup extends Window {
 	 * @param handlesBackspace
 	 * @param actors
 	 */
-	public Popup(final PopupHandler handler, String title, boolean handlesBackspace, Actor... actors) {
-		this(handler, title, actors);
+	public Popup(String title, boolean handlesBackspace, Actor... actors) {
+		this(title, actors);
 		this.handlesBackspace = handlesBackspace;
+	}
+	
+	public Popup(Actor... actors){
+		this("", actors);
 	}
 	
 	/**
@@ -85,11 +92,10 @@ public class Popup extends Window {
 	 * @param title Popup window title.
 	 * @param actors Elements to put in the popup.
 	 */
-	public Popup(final PopupHandler handler, String title, Actor... actors) {
+	public Popup(String title, Actor... actors) {
 		super(Assets.SKIN);
 		this.setTitle(title);
-		this.handler = handler;
-		
+
 		align("top");
 		setComponents(actors);
 		this.layout();
@@ -115,7 +121,7 @@ public class Popup extends Window {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Cell add (Actor actor) {
-		setListeners(actor);
+		//setListeners(actor);
 		row();
 		Cell cell = super.add(actor).width(WIDTH).align("center");
 		if(actor instanceof TextButton)
@@ -139,6 +145,7 @@ public class Popup extends Window {
 	 * Sets an {@link Actor}'s listener depending on the {@link Actor} type
 	 * @param actor
 	 */
+	/*
 	private void setListeners(Actor actor){
 		if(actor instanceof TextField)
 			((TextField)actor).setTextFieldListener(tl);
@@ -147,7 +154,7 @@ public class Popup extends Window {
 		else if(actor instanceof Row)
 			((Row)actor).setListeners(cl, tl);
 	}
-	
+	*/
 	/**
 	 * Clears all text inputs in the popup
 	 */
@@ -246,12 +253,16 @@ public class Popup extends Window {
 		
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);
-		genericPopup = new Popup(new PopupHandler(){
+		
+		TextButton genericPopupOK = ComponentFactory.createButton("Ok", null);
+		genericPopupOK.setClickListener(new ClickListener() {
 			@Override
-			public void handlePopupAction(String text) {
-				Popup.currentPopup.close();				
+			public void click(Actor actor, float x, float y) {
+				Popup.currentPopup.close();
 			}
-		}, "", genericPopupLabel, new TextButton("Ok",Assets.SKIN));
+		});
+		
+		genericPopup = new Popup("", genericPopupLabel, genericPopupOK);
 	}
 	
 	public static BuyUnitPopup getBuyUnitPopup(){

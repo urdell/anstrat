@@ -10,17 +10,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 
 public class ComponentFactory {
+	
+    private static TextFieldListener tl = new TextFieldListener() {
+    	@Override
+		public void keyTyped (TextField textField, char key) {
+			if (key == '\n')
+				textField.getOnscreenKeyboard().show(false);
+			else if (key == '\t')
+				textField.next(false);
+		}
+	};
 	
 	public static TextButton createMenuButton(String caption){
 		return createMenuButton(caption, Assets.MENU_FONT, null);
@@ -36,16 +47,16 @@ public class ComponentFactory {
 			button.setClickListener(cl);
 		return button;
 	}
-	public static TextButton createButton(String caption, String name, ClickListener cl){
-		TextButton temp = createButton(caption, name);
+	public static TextButton createButton(String caption, ClickListener cl){
+		TextButton temp = createButton(caption);
 		temp.setClickListener(cl);
 		return temp;
 	}
-	public static TextButton createButton(String caption, String name){
-		return new TextButton(caption, Assets.SKIN.getStyle(TextButtonStyle.class), name);
+	public static TextButton createButton(String caption){
+		return new TextButton(caption, Assets.SKIN.getStyle(TextButtonStyle.class));
 	}
-	public static Button createButton(TextureRegion image, String name, String style){
-		Button temp = new Button(Assets.SKIN.getStyle(style, ButtonStyle.class),name);
+	public static Button createButton(TextureRegion image, String style){
+		Button temp = new Button(Assets.SKIN.getStyle(style, ButtonStyle.class));
 		//temp.set
 		return temp;
 	}
@@ -60,10 +71,11 @@ public class ComponentFactory {
 		return temp;
 	}
 	
-	public static TextField createTextField(String messageText, String name, boolean isPassword){
-		TextField tf = new TextField("", messageText, Assets.SKIN.getStyle(TextFieldStyle.class), name);
+	public static TextField createTextField(String messageText, boolean isPassword){
+		TextField tf = new TextField("", messageText, Assets.SKIN.getStyle(TextFieldStyle.class));
 		tf.setPasswordMode(isPassword);
 		tf.setPasswordCharacter('*');
+		tf.setTextFieldListener(tl);
 		return tf;
 	}
 	
@@ -73,30 +85,5 @@ public class ComponentFactory {
         				new LabelStyle(Assets.UI_FONT,Color.WHITE));
         NetworkDependentTracker.registerLabel(label);
         return label;
-	}
-	
-	/**
-	 * TOOLS
-	 */
-	public static String getTextFieldValue(Group g, String name){
-		Actor a = g.findActor(name);
-		if(a instanceof TextField)
-			return ((TextField)a).getText();
-		System.err.println("setText: TextField '"+name+"' not found.");
-		return null;
-	}
-	public static void setText(Group g, String name, String value){
-		if(value==null)
-			value = "";
-		Actor a = g.findActor(name);
-		if(a instanceof TextField)
-			((TextField)a).setText(value);
-		else if(a instanceof TextButton)
-			((TextButton)a).setText(value);
-		else if(a instanceof Label)
-			((Label)a).setText(value);
-		else
-			System.err.println("setText: '"+name+"' not found.");
-		return;
 	}
 }

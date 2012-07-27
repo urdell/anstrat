@@ -18,8 +18,8 @@ public class JoinGameMenu extends MenuScreen {
 	public JoinGameMenu() {
 		super();
 		
-		name     = ComponentFactory.createTextField("Game Name", null, false);
-		password = ComponentFactory.createTextField("Game Password", null, true);
+		name     = ComponentFactory.createTextField("Game Name", false);
+		password = ComponentFactory.createTextField("Game Password", true);
 		Table settings = new Table(Assets.SKIN);
         settings.setBackground(Assets.SKIN.getPatch("single-border"));
         settings.register("name",name);

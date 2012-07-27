@@ -13,8 +13,8 @@ import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
 import com.anstrat.popup.MapsPopup;
+import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class MapEditorUI extends UI {
@@ -117,8 +118,8 @@ public class MapEditorUI extends UI {
             	showPanel(null, false);
             }
         };
-		tblClearMap.register("ok",ComponentFactory.createButton("Ok", null, clClearMap));
-		tblClearMap.register("cancel",ComponentFactory.createButton("Cancel", null, clHidePanel));
+		tblClearMap.register("ok",ComponentFactory.createButton("Ok", clClearMap));
+		tblClearMap.register("cancel",ComponentFactory.createButton("Cancel", clHidePanel));
 		tblClearMap.parse(
 				"'Clear map?'" +
 				"---" +
@@ -134,10 +135,10 @@ public class MapEditorUI extends UI {
             	showPanel(null,false);
             }
         };
-		tblChangeOwner.register("none",ComponentFactory.createButton("none", "none", showChange));
-		tblChangeOwner.register("0",ComponentFactory.createButton("0", "0", showChange));
-		tblChangeOwner.register("1",ComponentFactory.createButton("1", "1", showChange));
-		tblChangeOwner.register("cancel",ComponentFactory.createButton("Cancel", null, clHidePanel));
+		tblChangeOwner.register("none",ComponentFactory.createButton("none", showChange));
+		tblChangeOwner.register("0",ComponentFactory.createButton("0", showChange));
+		tblChangeOwner.register("1",ComponentFactory.createButton("1", showChange));
+		tblChangeOwner.register("cancel",ComponentFactory.createButton("Cancel", clHidePanel));
 		tblChangeOwner.parse(
 				"'Select new owner'" +
 				"---" +
@@ -194,7 +195,7 @@ public class MapEditorUI extends UI {
             	popupSaveMap.show();
             }
         } ));
-		permanentTable.register("new", ComponentFactory.createButton("NEW", null, new ClickListener() {
+		permanentTable.register("new", ComponentFactory.createButton("NEW", new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	popupNewMap.show();
@@ -219,20 +220,26 @@ public class MapEditorUI extends UI {
 		/**
 		 * POPUPS
 		 */
-		popupSaveMap = new Popup(new PopupListener(true) {
-		            @Override
-		            public void handle(String text){
-		            	String name = ComponentFactory.getTextFieldValue(popupSaveMap,"name");
-						if(name.length()>0){
-							MapEditor.getInstance().saveMap(name);
-							Popup.currentPopup.clearInputs();
-							Popup.currentPopup.close();
-						}
-		            }
-		        }, "Save map", 
-				ComponentFactory.createTextField("Map name","name",false),
-				new Row(ComponentFactory.createButton("Ok", Popup.OK), ComponentFactory.createButton("Cancel", Popup.CANCEL)));
+		popupSaveMap = new Popup("Save map", ComponentFactory.createTextField("Map name", false));
 		
+		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
+		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				String mapName = saveMapTextfield.getText();
+				if(mapName.length() > 0){
+					MapEditor.getInstance().saveMap(mapName);
+					Popup.currentPopup.clearInputs();
+					Popup.currentPopup.close();
+				}
+			}
+		});
+		
+		popupSaveMap.setComponents(
+				saveMapTextfield,
+				new Row(saveMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
+		
+				
 		Table table1 = new Table();
 		Table table2 = new Table();
 		
@@ -276,16 +283,19 @@ public class MapEditorUI extends UI {
 				" [scrollW] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f) +
 				" [scrollH] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f));
 		
-		popupNewMap = new Popup(new PopupListener() {
-		            @Override
-		            public void handle(String text){
-		        			int mapWidth = Map.MIN_SIZE + (int)(scroll1.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
-		        			int mapHeight = Map.MIN_SIZE + (int)(scroll2.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
-		        			MapEditor.getInstance().actionHandler.createNewMap(mapWidth, mapHeight);
-		            }
-		        }, "New map",
-				flickTable,
-		        new Row(ComponentFactory.createButton("Ok", Popup.OK), ComponentFactory.createButton("Cancel", Popup.CANCEL)));
+		popupNewMap = new Popup("New map");
+		Button newMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				int mapWidth = Map.MIN_SIZE + (int)(scroll1.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
+    			int mapHeight = Map.MIN_SIZE + (int)(scroll2.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
+    			MapEditor.getInstance().actionHandler.createNewMap(mapWidth, mapHeight);
+				Popup.currentPopup.close();
+			}
+		});
+		
+		popupNewMap.setComponents(flickTable,
+		        new Row(newMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
 	}
 	
 	private void updateSize(float width) {
@@ -372,12 +382,12 @@ public class MapEditorUI extends UI {
 	public Popup getMapsPopup() {
 		String[] mapStrings = Assets.getMapList(true, false);
 		if (mapStrings.length > 0) {
-			return new MapsPopup(new PopupListener() {
-	            @Override
-	            public void handle(String text){
-	            	MapEditor.getInstance().initMap(Assets.loadMap(text, false));
-	            }
-	        },false,"Load map",mapStrings);
+			return new MapsPopup(new MapsPopupHandler() {
+				@Override
+				public void mapSelected(String map) {
+					MapEditor.getInstance().initMap(Assets.loadMap(map, false));
+				}
+			}, false, "Load map", mapStrings);
 		}
 		return null;
 	}

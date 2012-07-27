@@ -27,7 +27,6 @@ public class UnitInfoPopup extends Popup {
 	private Table contents, effectsTable, abilityTable;
 
 	public UnitInfoPopup() {
-		super(null, "");
 		this.setBackground(Assets.SKIN.getPatch("black"));
 		
 		contents = new Table();

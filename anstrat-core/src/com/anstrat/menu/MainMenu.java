@@ -16,8 +16,8 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.network.GameRequest;
 import com.anstrat.popup.MapsPopup;
+import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.PopupListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -46,8 +46,8 @@ public class MainMenu extends MenuScreen {
 	
 	private static MainMenu me;
 	
-	public static TextField usernameInput = ComponentFactory.createTextField("Login",null,false);
-	public static TextField passwordInput = ComponentFactory.createTextField("Password", null, true);
+	public static TextField usernameInput = ComponentFactory.createTextField("Login", false);
+	public static TextField passwordInput = ComponentFactory.createTextField("Password", true);
 	
 	public static MapsPopup mapsPopup;
 	public static String HOTSEAT = "Hotseat", INTERNET = "Internet";
@@ -372,17 +372,17 @@ public class MainMenu extends MenuScreen {
 		String[] mapNames = Assets.getMapList(true, true);
 		
 		if (mapNames.length > 0) {
-			mapsPopup = new MapsPopup(new PopupListener() {
-	            @Override
-	            public void handle(String text){
-	            	Map map = null;
+			mapsPopup = new MapsPopup(new MapsPopupHandler() {
+				@Override
+				public void mapSelected(String mapName) {
+					Map map = null;
 					
-					if(text.equalsIgnoreCase("RANDOM")){
+					if(mapName.equalsIgnoreCase("RANDOM")){
 						MapsPopup popup = (MapsPopup)Popup.currentPopup;
 						map = new Map(popup.randWidth,popup.randHeight,new Random());
 					}
 					else{
-						map = Assets.loadMap(text);
+						map = Assets.loadMap(mapName);
 					}
 					
 			        if(versusAI == true){
@@ -391,8 +391,8 @@ public class MainMenu extends MenuScreen {
 			        else{
 			        	GameInstance.createHotseatGame(map).showGame(true);
 			        }
-	            }
-	        }, true, "Choose map", mapNames);
+				}
+			}, true, "Choose map", mapNames);
 			return mapsPopup;
 		}
 		else 
