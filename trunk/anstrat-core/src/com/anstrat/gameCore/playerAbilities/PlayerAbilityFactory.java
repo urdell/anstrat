@@ -15,6 +15,8 @@ public class PlayerAbilityFactory {
 			return new Teleport(player);
 		else if (type.equals(PlayerAbilityType.ZOMBIFY))
 			return new Zombify(player);
+		else if (type.equals(PlayerAbilityType.THORS_RAGE))
+			return new ThorsRage(player);
 		else
 			return null;
 	}
