@@ -26,6 +26,7 @@ public class GUnit extends GObject {
 	private Animation[] animations;
 	private boolean animationLooping[];
 	
+	public float scale = 0.85f;
 	public Unit unit;
 	private Sprite sprite;
 	private Vector2 centerPosition;
@@ -49,7 +50,7 @@ public class GUnit extends GObject {
 	{	
 		this.unit = unit;
 		sprite = new Sprite(getTextureRegion(unit.getUnitType()));
-		sprite.setScale(0.85f);
+		sprite.setScale(scale);
 		sprite.flip(false, true);
 		
 		healthBar = new HealthBar();
