@@ -73,6 +73,7 @@ public class SelectionHandler {
 			deselect();
 			return;
 		}
+		selectedUnit = null;
 		GEngine.getInstance().highlighter.highlightTiles(highlights);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
 	}
@@ -86,6 +87,7 @@ public class SelectionHandler {
 			deselect();
 			return;
 		}
+		selectedUnit = null;
 		GEngine.getInstance().highlighter.highlightTiles(highlights);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
 	}

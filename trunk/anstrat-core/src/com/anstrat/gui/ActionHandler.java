@@ -4,6 +4,7 @@ import com.anstrat.animation.FullscreenTextAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
+import com.anstrat.command.ActivatePlayerAbilityCommand;
 import com.anstrat.command.ActivateTargetedAbilityCommand;
 import com.anstrat.command.ActivateTargetedPlayerAbilityCommand;
 import com.anstrat.command.AttackCommand;
@@ -24,6 +25,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
+import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.popup.Popup;
@@ -134,13 +136,19 @@ public class ActionHandler {
 													gEngine.selectionHandler.selectedUnit.abilities.indexOf(gEngine.selectionHandler.selectedTargetedAbility));
 			if(command.isAllowed())
 				requestAbilityConfirm(gTile, gEngine.selectionHandler.selectedUnit, command, gEngine.selectionHandler.selectedTargetedAbility, clickedQuadrant);
+			else
+				gEngine.selectionHandler.deselect();
 			//CommandHandler.execute(command);
 			//gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
-			CommandHandler.execute(command);
-			gEngine.selectionHandler.deselect();
+			if(command.isAllowed())
+				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, clickedQuadrant);
+			else
+				gEngine.selectionHandler.deselect();
+			//CommandHandler.execute(command);
+			//gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY:
 			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
@@ -150,8 +158,12 @@ public class ActionHandler {
 			}
 			else {
 				command = new ActivateDoubleTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility.type, temp.coords, gTile.tile.coordinates);
-				CommandHandler.execute(command);
-				gEngine.selectionHandler.deselect();
+				if(command.isAllowed())
+					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, clickedQuadrant);
+				else
+					gEngine.selectionHandler.deselect();
+				//CommandHandler.execute(command);
+				//gEngine.selectionHandler.deselect();
 			}
 			break;
 		default:
@@ -275,6 +287,30 @@ public class ActionHandler {
 		}
 		else if(command instanceof ActivateTargetedAbilityCommand){
 			gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+		}
+	}
+	/**
+	 * Shows the confirmdialog for a playerAbility command (both targeted and non-targeted).
+	 * @param targetTile
+	 * @param unit
+	 * @param ability
+	 * @param command
+	 */
+	public void requestPlayerAbilityConfirm(GTile targetTile, Command command, PlayerAbility ability, int clickedQuadrant){	
+		GEngine gEngine = GEngine.getInstance();
+		confirmTile = targetTile;
+		confirmCommand = command;
+		showingConfirmDialog = true;
+		int dialogPosition = ConfirmDialog.invertQuadrant(clickedQuadrant);
+		if(command instanceof ActivatePlayerAbilityCommand){
+			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
+
+		}
+		else if(command instanceof ActivateTargetedPlayerAbilityCommand){
+			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
+		}
+		else if(command instanceof ActivateDoubleTargetedPlayerAbilityCommand){
+			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
 		}
 	}
 	
