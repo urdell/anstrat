@@ -3,6 +3,12 @@ package com.anstrat.gameCore.playerAbilities;
 import java.io.Serializable;
 
 import com.anstrat.gameCore.Player;
+import com.anstrat.gameCore.Unit;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.CostRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public abstract class PlayerAbility implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,5 +32,11 @@ public abstract class PlayerAbility implements Serializable {
 	
 	public static PlayerAbility[] getAbilities() {
 		return null;
+	}
+	
+	public ConfirmDialog generateConfirmDialog(int position){
+		ConfirmRow nameRow = new TextRow(type.name);
+		ConfirmRow costRow = new CostRow(player.mana, type.manaCost, false);
+		return ConfirmDialog.abilityConfirm(position, nameRow, costRow);
 	}
 }
