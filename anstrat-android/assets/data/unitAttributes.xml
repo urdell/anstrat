@@ -135,6 +135,7 @@
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
 		<cost>30</cost>
+		<ability1>12</ability1><!-- Poison -->
 		<description>The Dark Elf is a poweful and mobile unit. Has the longest attack range in the game.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
