@@ -1,5 +1,7 @@
 package com.anstrat.gui;
 
+import com.anstrat.animation.FullscreenTextAnimation;
+import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
 import com.anstrat.command.ActivateTargetedAbilityCommand;
@@ -26,6 +28,7 @@ import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 
 /**
@@ -95,11 +98,15 @@ public class ActionHandler {
 				}
 				else if(unit.ownerId != State.activeState.currentPlayerId && selectedUnit.ownerId==State.activeState.currentPlayerId){
 					Command c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
-					requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
-					//CommandHandler.execute(c);
-					gEngine.actionMap.prepare(gEngine.selectionHandler.selectedUnit);
+					if(c.isAllowed())
+						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
+					else
+						gEngine.animationHandler.runParalell(new FullscreenTextAnimation("Can not attack this"));
 					
-					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(selectedUnit));
+					//CommandHandler.execute(c);
+					
+					//gEngine.actionMap.prepare(gEngine.selectionHandler.selectedUnit);  //state has not changed, no need for this
+					//gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(selectedUnit)); 
 				}else{
 					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
 					gEngine.selectionHandler.selectUnit(unit);
@@ -113,15 +120,22 @@ public class ActionHandler {
 			break;
 		case SelectionHandler.SELECTION_SPAWN:
 			command = new CreateUnitCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
-			requestConfirm(gTile, null, command, clickedQuadrant);
+			if(command.isAllowed())
+				requestConfirm(gTile, null, command, clickedQuadrant);
+			else{
+				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((CreateUnitCommand)command).getReason() ));
+				deselectPress();
+			}
 			//CommandHandler.execute(command);
 			break;
 		case SelectionHandler.SELECTION_TARGETED_ABILITY:
 			command = new ActivateTargetedAbilityCommand(gEngine.selectionHandler.selectedUnit, 
 													gTile.tile.coordinates, 
 													gEngine.selectionHandler.selectedUnit.abilities.indexOf(gEngine.selectionHandler.selectedTargetedAbility));
-			CommandHandler.execute(command);
-			gEngine.selectionHandler.deselect();
+			if(command.isAllowed())
+				requestAbilityConfirm(gTile, gEngine.selectionHandler.selectedUnit, command, gEngine.selectionHandler.selectedTargetedAbility, clickedQuadrant);
+			//CommandHandler.execute(command);
+			//gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
@@ -199,9 +213,10 @@ public class ActionHandler {
 		if(unit.ownerId == State.activeState.currentPlayerId){
 			Ability ability = unit.getAbilities().get(i);
 			if(ability != null){
-				if(!(ability instanceof TargetedAbility)){
+				if(!(ability instanceof TargetedAbility)){ // not targeted
 					Command c = new ActivateAbilityCommand(unit, i);
-					CommandHandler.execute(c);
+					requestAbilityConfirm(GEngine.getInstance().getMap().getTile(unit.tileCoordinate), unit, c, ability, ConfirmDialog.BOTTOM_RIGHT);
+					//CommandHandler.execute(c);
 				}
 				
 				if(ability instanceof TargetedAbility){
@@ -224,31 +239,52 @@ public class ActionHandler {
 		confirmTile = targetTile;
 		confirmCommand = command;
 		showingConfirmDialog = true;
-		int position = ConfirmDialog.invertQuadrant(clickedQuadrant);
+		int dialogPosition = ConfirmDialog.invertQuadrant(clickedQuadrant);
 		if(command instanceof MoveCommand){
 
-			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), position );
+			gEngine.confirmDialog = ConfirmDialog.moveConfirm( unit, ((MoveCommand) command).getPath(), dialogPosition );
 
 		}
-		if(command instanceof AttackCommand){
-			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, StateUtils.getUnitByTile(targetTile.tile.coordinates), position );
+		else if(command instanceof AttackCommand){
+			gEngine.confirmDialog = ConfirmDialog.attackConfirm( unit, StateUtils.getUnitByTile(targetTile.tile.coordinates), dialogPosition );
 		}
-		if(command instanceof CaptureCommand){
-			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, State.activeState.map.getBuildingByTile(targetTile.tile.coordinates), position );
+		else if(command instanceof CaptureCommand){
+			gEngine.confirmDialog = ConfirmDialog.captureConfirm( unit, State.activeState.map.getBuildingByTile(targetTile.tile.coordinates), dialogPosition );
 		}
-		if(command instanceof CreateUnitCommand){
-			gEngine.confirmDialog = ConfirmDialog.buyConfirm( ((CreateUnitCommand)command).getUnitType(), position );
+		else if(command instanceof CreateUnitCommand){
+			gEngine.confirmDialog = ConfirmDialog.buyConfirm( ((CreateUnitCommand)command).getUnitType(), dialogPosition );
 		}
-		
-		
-		
+	}
+	
+	/**
+	 * Shows the confirmdialog for an ability command (both targeted and non-targeted).
+	 * @param targetTile
+	 * @param unit
+	 * @param ability
+	 * @param command
+	 */
+	public void requestAbilityConfirm(GTile targetTile, Unit unit, Command command, Ability ability, int clickedQuadrant){	
+		GEngine gEngine = GEngine.getInstance();
+		confirmTile = targetTile;
+		confirmCommand = command;
+		showingConfirmDialog = true;
+		int dialogPosition = ConfirmDialog.invertQuadrant(clickedQuadrant);
+		if(command instanceof ActivateAbilityCommand){
+			gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+
+		}
+		else if(command instanceof ActivateTargetedAbilityCommand){
+			gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+		}
 	}
 	
 	public void confirmPress(){
 		CommandHandler.execute(confirmCommand);
 		showingConfirmDialog = false;
 		GEngine.getInstance().confirmOverlay.clear();
-		
+		Unit selectedUnit = GEngine.getInstance().selectionHandler.selectedUnit;
+		GEngine.getInstance().selectionHandler.deselect();
+		GEngine.getInstance().selectionHandler.selectUnit(selectedUnit);
 	}
 	public void confirmCancelPress(){
 		showingConfirmDialog = false;

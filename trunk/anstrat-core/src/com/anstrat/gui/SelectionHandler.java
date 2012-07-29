@@ -38,7 +38,7 @@ public class SelectionHandler {
 	
 	
 	public void selectUnit(Unit unit){
-		if(unit != null){
+		if(unit != null && unit.currentHP > 0){
 			selectedUnit = unit;
 			selectionType = SELECTION_UNIT;
 			GEngine.getInstance().userInterface.showUnit(unit);
@@ -46,6 +46,8 @@ public class SelectionHandler {
 			
 			if(unit.ownerId == State.activeState.currentPlayerId)
 				GEngine.getInstance().actionMap.prepare(unit);
+		} else{
+			deselect();
 		}
 	}
 	public void selectAbility(Unit source, TargetedAbility ability){

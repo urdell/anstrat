@@ -3,7 +3,7 @@ package com.anstrat.command;
 import java.util.Queue;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.CannotCreateUnitAnimation;
+import com.anstrat.animation.FullscreenTextAnimation;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.State;
@@ -43,7 +43,7 @@ public abstract class CommandHandler {
 			Gdx.app.log("CommandHandler", String.format("Attempted to execute an invalid '%s' command. Disallowed.", command));
 			
 			if (command instanceof CreateUnitCommand) {
-				Animation animation = new CannotCreateUnitAnimation(((CreateUnitCommand) command).getReason());
+				Animation animation = new FullscreenTextAnimation(((CreateUnitCommand) command).getReason());
 				GEngine.getInstance().animationHandler.runParalell(animation);
 			}
 		}

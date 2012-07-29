@@ -138,6 +138,19 @@ public class ConfirmDialog {
 		}
 	}
 	
+	public static ConfirmDialog abilityConfirm(int dialogPosition, ConfirmRow... confirmRows){
+		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
+		
+		confirmDialog.topLabel = Assets.getTextureRegion("confirm-ability");
+		confirmDialog.rows.add(new TextRow(""));//empty row to make room for top label
+		for(ConfirmRow row : confirmRows){
+			confirmDialog.rows.add(row);
+		}
+		
+		confirmDialog.refreshBounds();
+		return confirmDialog;
+	}
+	
 	public static ConfirmDialog moveConfirm(Unit unit, Path path, int dialogPosition){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CannotCreateUnitAnimation extends Animation {
+public class FullscreenTextAnimation extends Animation {
 
 	private float x, y;
 	private float speed = 0;
@@ -13,7 +13,7 @@ public class CannotCreateUnitAnimation extends Animation {
 	private float width;
 	private float size = 2.0f;
 	
-	public CannotCreateUnitAnimation(String reason){
+	public FullscreenTextAnimation(String reason){
 		length = 3;
 		lifetimeLeft = length;
 		x=Gdx.graphics.getWidth() / 2f;
