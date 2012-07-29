@@ -14,6 +14,7 @@ import com.anstrat.command.Command;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
+import com.anstrat.gameCore.effects.TriggerOnTurnStart;
 import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -107,7 +108,16 @@ public class State implements Serializable{
 						effectsToBeRemoved.add(effect);
 				}
 				u.effects.removeAll(effectsToBeRemoved);
+				
+				for(Effect effect : u.effects){
+					if(effect instanceof TriggerOnTurnStart){
+						((TriggerOnTurnStart) effect).triggerOnTurnStart(u);
+					}
 			}
+			
+				
+			}
+			
 			
 			// Regenerate HP for all units currently located in a friendly building
 			for (Building building : State.activeState.map.buildingList.values()){

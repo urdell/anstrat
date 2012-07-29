@@ -12,7 +12,6 @@ public class PoisonEffect extends Effect implements DamageModifier,TriggerOnTurn
 		this.name = "Poison";
 		this.iconName = "sword";
 		this.nrOfRoundsTotal = nrOfRounds;
-		System.out.println("Poison");
 	}
 	
 	@Override
