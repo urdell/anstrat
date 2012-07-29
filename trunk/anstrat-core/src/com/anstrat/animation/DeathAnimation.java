@@ -23,6 +23,11 @@ public class DeathAnimation extends Animation {
 		this.direction = direction;
 	}
 	
+	/**
+	 * Creates an deathanimation for the specified and the attack from the specified tilecoordinate
+	 * @param unit that dies
+	 * @param coordinate of the attacker
+	 */
 	public DeathAnimation(Unit unit, TileCoordinate coordinate){
 		this.unit = GEngine.getInstance().getUnit(unit);
 		timeElapsed = 0f;

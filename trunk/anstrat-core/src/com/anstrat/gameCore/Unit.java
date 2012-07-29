@@ -7,6 +7,7 @@ import java.util.List;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.AbilityFactory;
 import com.anstrat.gameCore.effects.AffectsAttack;
+import com.anstrat.gameCore.effects.DamageModifier;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.EffectFactory;
 import com.anstrat.geography.TileCoordinate;
@@ -66,12 +67,25 @@ public class Unit implements Serializable {
 	public int getAttack(){
 		int addedAttack = 0;
 		for(Effect effectAttack : effects){
+			System.out.println(effects);
 			if(effectAttack instanceof AffectsAttack){
 				addedAttack += ((AffectsAttack) effectAttack).attackIncrease(this);
 			}
 		}
 		
 		return this.type.attack + addedAttack;
+	}
+	
+	public float getDamageModification(){
+		float damageModification = 1;
+		for(Effect effectAttack : effects){
+			
+			if(effectAttack instanceof DamageModifier){
+				damageModification += ((DamageModifier) effectAttack).damageModification(this);
+			}
+		}
+		
+		return damageModification;
 	}
 	
 	public int getMaxAP(){

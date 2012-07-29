@@ -2,6 +2,7 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
+import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.HealAnimation;
 import com.anstrat.animation.LifeStealAnimation;
 import com.anstrat.gameCore.StateUtils;
@@ -42,6 +43,10 @@ public class ShadowImage extends TargetedAbility {
 		
 		Animation animation = new LifeStealAnimation(source,targetUnit);
 		GEngine.getInstance().animationHandler.enqueue(animation);
+		if(targetUnit.resolveDeath()){
+			Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
+			GEngine.getInstance().animationHandler.enqueue(deathAnimation);
+		}
 	}
 
 	@Override
