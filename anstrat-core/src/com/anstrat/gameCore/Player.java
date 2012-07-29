@@ -39,7 +39,7 @@ public class Player implements Serializable {
 	
 	public int gold = 50;
 	
-	public int mana = 11;
+	public int mana = 50;
 	
 	public Player(long userID, int playerID, String displayName, int team){
 		this.userID = userID;

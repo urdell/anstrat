@@ -242,7 +242,7 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
-		abilityPopup = new AbilityPopup(PlayerAbilityType.THUNDERBOLT, PlayerAbilityType.SPEEDBOOST, PlayerAbilityType.COMETSTRIKE, PlayerAbilityType.TELEPORT, PlayerAbilityType.ZOMBIFY);
+		abilityPopup = new AbilityPopup(PlayerAbilityType.THUNDERBOLT, PlayerAbilityType.SPEEDBOOST, PlayerAbilityType.COMETSTRIKE, PlayerAbilityType.TELEPORT, PlayerAbilityType.ZOMBIFY, PlayerAbilityType.THORS_RAGE);
 		//buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.SHAMAN, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
 		
 		buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];

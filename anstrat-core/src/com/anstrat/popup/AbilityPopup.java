@@ -181,9 +181,9 @@ public class AbilityPopup extends Popup {
 		
 		abilities[4].x = width-buttonWidth;
 		abilities[4].y = (float) (4.5*buttonHeight);
-		/*
+		
 		abilities[5].x = width-buttonWidth;
-		abilities[5].y = (float) (3*buttonHeight);*/
+		abilities[5].y = (float) (3*buttonHeight);
 		
 		for(Button ability : abilities){
 			ability.width = buttonWidth;

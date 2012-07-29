@@ -13,7 +13,8 @@ public enum PlayerAbilityType {
 	SPEEDBOOST("Speedboost"),
 	COMETSTRIKE("Comet Strike"),
 	TELEPORT("Teleport"),
-	ZOMBIFY("Zombify");
+	ZOMBIFY("Zombify"),
+	THORS_RAGE("Thors Rage");
 	
 	public transient final String name;
 	public transient int manaCost;
@@ -38,6 +39,9 @@ public enum PlayerAbilityType {
 		
 			for (int i = 0; i < root.getChildCount(); i++) {
 				loadPlayerAbilityType(root.getChild(i));
+				/*for(int y = 0; y < root.getChild(i).getChildCount(); y++) {
+				loadPlayerAbilityType(root.getChild(i).getChild(y));
+				}*/
 			}
 		} catch (IOException e) {
 			throw new GdxRuntimeException(String.format("Failed to parse player ability types from '%s'", file.name()), e);
