@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PlayerAbilities>
 	<PlayerAbility>
+		<name>Speedboost</name>
+		<manacost>10</manacost>
+		<description>Odin fully restores target unit's AP</description>
+	</PlayerAbility>
+	<PlayerAbility>
 		<name>Thunderbolt</name>
 		<manacost>10</manacost>
 		<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
 	</PlayerAbility>
 	<PlayerAbility>
 		<name>Comet Strike</name>
-		<manacost>5</manacost>
+		<manacost>15</manacost>
 		<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 	</PlayerAbility>
 	<PlayerAbility>
-		<name>Speedboost</name>
-		<manacost>10</manacost>
-		<description>Odin fully restores target unit's AP</description>
-	</PlayerAbility>
-	<PlayerAbility>
-		<name>Teleport</name>
+		<name>Thors Rage</name>
 		<manacost>5</manacost>
-		<description>Loke flips the position of 2 target units</description>
-	</PlayerAbility>
-	<PlayerAbility>
-		<name>Zombify</name>
-		<manacost>5</manacost>
-		<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
+		<description>Target unit is blessed with Thors rage and has increased damage</description>
 	</PlayerAbility>
 	
+	<PlayerAbility>
+		<name>Zombify</name>
+		<manacost>15</manacost>
+		<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
+	</PlayerAbility>
+		
+	<PlayerAbility>
+		<name>Teleport</name>
+		<manacost>10</manacost>
+		<description>Loke flips the position of 2 target units</description>
+	</PlayerAbility>
 </PlayerAbilities>
