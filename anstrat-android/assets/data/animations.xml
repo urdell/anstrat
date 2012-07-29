@@ -373,6 +373,14 @@
         <frame image="meteorimpact-0002" number="2"/>
         <frame image="meteorimpact-0003" number="3"/>
     </animation>
+    <animation name="zombify" fps="6">
+        <frame image="zombify-0001" number="1"/>
+        <frame image="zombify-0002" number="2"/>
+        <frame image="zombify-0003" number="3"/>
+        <frame image="zombify-0004" number="4"/>
+        <frame image="zombify-0005" number="5"/>
+        <frame image="zombify-0006" number="6"/>
+    </animation>
     <animation name="shaman-walk" fps="5">
         <frame image="shaman-walk-0001" number="1"/>
         <frame image="shaman-walk-0002" number="2"/>
@@ -416,10 +424,10 @@
         <frame image="wolf-death-0002" number="2" count="2"/>
 	<frame image="wolf-death-0003" number="3" count="10"/>
     </animation>
-    <animation name="lightning" fps="3">
-        <frame image="lightning-0001" number="1" count="2"/>
-        <frame image="lightning-0001" number="1" count="2"/>
-        <frame image="lightning-0001" number="1" count="2"/>
+    <animation name="lightning" fps="6">
+        <frame image="lightning-0001" number="1"/>
+        <frame image="lightning-0002" number="2"/>
+        <frame image="lightning-0003" number="3"/>
     </animation>
     <animation name="shaman-idle">
         <frame image="shaman-idle-0001" number="1"/>
