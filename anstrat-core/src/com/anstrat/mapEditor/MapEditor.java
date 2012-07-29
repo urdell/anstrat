@@ -11,6 +11,7 @@ import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.gui.CameraUtil;
+import com.anstrat.gui.FloatingBackground;
 import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GMap;
 import com.anstrat.popup.Popup;
@@ -32,6 +33,7 @@ public class MapEditor implements Screen {
 	private OrthographicCamera camera;
 	private CameraController cameraController;
 	private SpriteBatch batch;
+	private FloatingBackground floatingBackground;
 	private MapEditorInputHandler inputHandler;
 	
 	public GMap gMap;
@@ -52,6 +54,7 @@ public class MapEditor implements Screen {
 		actionHandler = new MapEditorActionHandler();
 		inputHandler  = new MapEditorInputHandler();
 		gBuildings = new HashMap<Integer, GBuilding>();
+		floatingBackground = new FloatingBackground(camera);
 
 		initMap(new Map(STANDARD_COLUMNS, STANDARD_ROWS));
 	}
@@ -122,10 +125,15 @@ public class MapEditor implements Screen {
 		cameraController.update(delta);
 		camera.update();
 		camera.apply(gl);
-		gMap.render(gl);
-
+		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		floatingBackground.draw(batch);
+		batch.flush();
+		
+		gMap.render(gl);
+
+		
 		
 		for(GBuilding b : gBuildings.values()){			
 			// Only render unit if visible
