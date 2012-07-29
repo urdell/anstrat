@@ -178,10 +178,10 @@ public class AbilityPopup extends Popup {
 		abilities[3].x = (float) (width-1.6*buttonWidth);
 		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
 		
-		/*
+		
 		abilities[4].x = width-buttonWidth;
 		abilities[4].y = (float) (4.5*buttonHeight);
-		
+		/*
 		abilities[5].x = width-buttonWidth;
 		abilities[5].y = (float) (3*buttonHeight);*/
 		

@@ -13,6 +13,8 @@ public class PlayerAbilityFactory {
 			return new CometStrike(player);
 		else if (type.equals(PlayerAbilityType.TELEPORT))
 			return new Teleport(player);
+		else if (type.equals(PlayerAbilityType.ZOMBIFY))
+			return new Zombify(player);
 		else
 			return null;
 	}

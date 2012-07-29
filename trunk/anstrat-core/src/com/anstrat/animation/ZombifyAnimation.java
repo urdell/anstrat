@@ -10,15 +10,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class ZombifyAnimation extends Animation {
-	private GUnit target;
+	private GUnit target, zombie;
 	private boolean started = false;
 	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
 	
-	public ZombifyAnimation(Unit target) {
+	public ZombifyAnimation(Unit target, Unit newZombie) {
 		animation = Assets.getAnimation("zombify");
 		
 		this.target = GEngine.getInstance().getUnit(target);
+		this.zombie = new GUnit(newZombie);
+		this.zombie.setAlpha(0f);
+		
+		
+		this.zombie.setPosition(this.target.getPosition());
 		length = animation.animationDuration;
 		lifetimeLeft = length;
 	}
@@ -28,12 +33,22 @@ public class ZombifyAnimation extends Animation {
 		// Run once
 		if(!started){
 			started = true;	
-		}
 			
-		if(lifetimeLeft <= 0f){
-			target.updateHealthbar();
+			
 		}
 		
+		float var = (lifetimeLeft-(length/2))/(length/2);
+		if(lifetimeLeft < length/2)
+			var = 0;
+		
+		target.setAlpha(var);
+		
+		if(lifetimeLeft <= 0) {
+			GEngine.getInstance().gUnits.remove(target.unit.id);
+			GEngine.getInstance().gUnits.put(zombie.unit.id, this.zombie);
+			zombie.setAlpha(1f);
+		}
+		System.out.println("timepassed"+timePassed);
 		timePassed += deltaTime;
 	}
 	
@@ -44,10 +59,12 @@ public class ZombifyAnimation extends Animation {
 		GMap map = GEngine.getInstance().map;
 		Vector2 position = target.getPosition();
 		
-		float width = map.TILE_WIDTH;
-		float height = map.TILE_HEIGHT;
+		float width = map.TILE_WIDTH;//*target.scale;
+		float height = map.TILE_HEIGHT;//*target.scale;
 		
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
-		batch.draw(region, position.x-(width/2), position.y-(2*map.TILE_HEIGHT), width, height);
+
+		System.out.println(region.getRegionX());
+		batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
 	}
 }
