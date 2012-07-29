@@ -67,7 +67,7 @@ public class Unit implements Serializable {
 	public int getAttack(){
 		int addedAttack = 0;
 		for(Effect effectAttack : effects){
-			System.out.println(effects);
+			
 			if(effectAttack instanceof AffectsAttack){
 				addedAttack += ((AffectsAttack) effectAttack).attackIncrease(this);
 			}
