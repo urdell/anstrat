@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 /**
  * A "card" displaying unit summary
  * @author eriter
  */
 public class UnitTypeCard extends ColorTable {
-	private Label name, cost, description, attack,armor,hp,ap;//,abilities;
+	private Label name, cost, description, attack,hp,ap;
 	private Image image;
 	public UnitType type;
 	
@@ -32,45 +33,50 @@ public class UnitTypeCard extends ColorTable {
 		description.setWrap(true);
 		image = new Image(GUnit.getTextureRegion(type));
 		attack = new Label(type.name,Assets.SKIN);
-		armor = new Label(type.name,Assets.SKIN);
 		hp = new Label(type.name,Assets.SKIN);
 		ap = new Label(type.name,Assets.SKIN);
-		
-		this.register("cost",cost);
-		this.register("costIcon",new Image(Assets.getTextureRegion("gold")));
-		this.register("name",name);
-		this.register("desc",description);
-		this.register("image",image);
-		this.register("attack",attack);
-		this.register("armor",armor);
-		this.register("hp",hp);
-		this.register("ap",ap);
-		this.register("apIcon",new Image(Assets.getTextureRegion("hp")));
-		this.register("hpIcon",new Image(Assets.getTextureRegion("ap")));
-		this.register("atkIcon",new Image(Assets.getTextureRegion("sword")));
+		Image hpIcon = new Image(Assets.getTextureRegion("hp"));
+		Image apIcon = new Image(Assets.getTextureRegion("ap"));
+		Image attackIcon = new Image(Assets.getTextureRegion("sword"));
+		Image costIcon = new Image(Assets.getTextureRegion("gold"));
 		
 		int imageSize = (int)(Main.percentWidth*40);
-		String iconSize = "size:"+(int)(Main.percentHeight*5)+" paddingRight:"+(int)(Main.percentHeight);
+		int iconSize = (int)(Main.percentHeight*5);
 		
-		this.parse("align:top,left " +
-				"* expand:x fill:x" +
-				"{" +
-					"[image] align:left size:"+imageSize+" paddingRight:"+(int)(Main.percentHeight) +
-					"{" +
-						"* align:left" +
-						"[atkIcon]"+iconSize+"[attack]" + "---"+ 
-						"[apIcon]" +iconSize+"[ap]" + "---" +
-						"[hpIcon]" +iconSize+"[hp]" +
-					"} align:left " +
-					"[] fill expand" +
-				"}"+
-				"---" +
-				"[desc]" +
-				"--- [] fill expand ---" +
-				"{" +
-					"*align:left" +
-					"[costIcon] "+iconSize+" [cost] [] expand:x fill:x" +
-				"}");
+		this.top().left();
+		this.defaults().expandX().fillX();
+		
+		Table outer1 = new Table();
+		outer1.add(image).left().size(imageSize).padRight((int)(Main.percentHeight));
+		
+		Table inner = new Table();
+		inner.defaults().left();
+		inner.add(attackIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(attack);
+		inner.row();
+		inner.add(apIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(ap);
+		inner.row();
+		inner.add(hpIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(hp);
+		
+		outer1.add(inner).left();
+		outer1.add().fill().expand();
+		
+		this.add(outer1);
+		this.row();
+		this.add(description);
+		this.row();
+		this.add().fill().expand();
+		this.row();
+		
+		Table outer2 = new Table();
+		outer2.defaults().left();
+		outer2.add(costIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		outer2.add(cost);
+		outer2.add().expandX().fillX();
+		
+		this.add(outer2);
 	}
 	
 	@Override
@@ -79,10 +85,7 @@ public class UnitTypeCard extends ColorTable {
 	}
 	
 	public void setDisabled(boolean disabled){
-		if(disabled)
-			cost.setColor(Color.LIGHT_GRAY);
-		else
-			cost.setColor(Color.WHITE);
+		cost.setColor(disabled ? Color.LIGHT_GRAY : Color.WHITE);
 	}
 	
 	public void setType(UnitType type) {
@@ -93,6 +96,6 @@ public class UnitTypeCard extends ColorTable {
 		image.setRegion(GUnit.getUnitPortrait(type));
 		attack.setText(String.valueOf(type.attack));
 		hp.setText(String.valueOf(type.maxHP));
-		ap.setText(String.valueOf(type.maxAP + "(+" + type.APReg + ")"));
+		ap.setText(String.format("%d (%d)", type.maxAP, type.APReg));
 	}
 } 

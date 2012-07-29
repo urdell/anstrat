@@ -165,20 +165,24 @@ public class MapList extends Table {
 		if(!withRandom)
 			return;
 		random.clear();
+		
 		if(expand){
-			random.register("randX",randX);
-			random.register("randY",randY);
-			random.register("randomError",randomError);
-			random.parse("align:top" +
-					"'GENERATE MAP' height:"+(int)(Main.percentHeight*4) +
-					"---" +
-					"{*width:"+(int)(random.width/3)+" height:"+(int)(8*Main.percentHeight)+" [randX][randY]}" +
-					"---" +
-					"[randomError]  height:"+(int)(Main.percentHeight*4));
-			list.getCell(random).height((int)(Main.percentHeight*22));
+			Table innerTable = new Table().width((int)(random.width/3f)).height((int)(8f*Main.percentHeight));
+			innerTable.add(randX);
+			innerTable.add(randY);
+			
+			random.row();
+			random.add("GENERATE MAP").height((int)(Main.percentHeight*4f));
+			random.row();
+			random.add(innerTable);
+			random.row();
+			random.add(randomError).height((int)(Main.percentHeight*4f));
+			
+			list.getCell(random).height((int)(Main.percentHeight*28f));
 		} else {
-			random.parse("align:center 'GENERATE MAP' height:"+(int)(Main.percentHeight*4));
-			list.getCell(random).height((int)(Main.percentHeight*10));
+			random.row().center();
+			random.add("GENERATE MAP").height((int)(Main.percentHeight*4f));
+			list.getCell(random).height((int)(Main.percentHeight*10f));
 		}
 		list.layout();
 	}
@@ -191,16 +195,17 @@ public class MapList extends Table {
 	public Table formatMap(String filename){
 		
 		Map map = Assets.loadMap(filename);
+		if(map == null) return null;
 		
-		if(map == null)
-			return null;
+		
+		Label nameLabel = new Label(map.name, Assets.SKIN);
+		Label sizeLabel = new Label(String.format("%dx%d", map.getXSize(), map.getYSize()), Assets.SKIN);
 		
 		Table table = new Table(Assets.SKIN);
 		table.setBackground(Assets.SKIN.getPatch("single-border"));
-		table.register("name", new Label(map.name,Assets.SKIN));
-		table.register("size", new Label(map.getXSize()+"x"+map.getYSize(),Assets.SKIN));
-		table.parse("* align:left height:"+(int)(4*Main.percentHeight) +
-				"[name] fill:x expand:x [size]");
+		table.defaults().left().height((int)(4*Main.percentHeight));
+		table.add(nameLabel).fillX().expandX();
+		table.add(sizeLabel);
 		
 		return table;
 	}

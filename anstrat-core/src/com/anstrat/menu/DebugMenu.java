@@ -6,28 +6,29 @@ import java.util.List;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
-import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class DebugMenu extends MenuScreen {
 
 	private DebugMenu() {
 		super();
 		
-		contents.register("fps", ComponentFactory.createMenuButton("Show FPS: "+(Options.showFps?"ON":"OFF"), new ClickListener() {
+		Button fps = ComponentFactory.createMenuButton("Show FPS: "+(Options.showFps?"ON":"OFF"), new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {
 				Options.showFps = !Options.showFps;
-				GEngine.getInstance().userInterface.fpsLabel.setText("");
 				((TextButton)actor).setText("Show FPS: "+(Options.showFps?"ON":"OFF"));
 			}
-		}));
-        
-		contents.register("clearGames", ComponentFactory.createMenuButton("Clear games", new ClickListener(){
+		});
+		
+		Button clearGames = ComponentFactory.createMenuButton("Clear games", new ClickListener(){
             @Override
             public void click(Actor actor, float x, float y){
             	List<GameInstance> games = new ArrayList<GameInstance>();
@@ -39,9 +40,9 @@ public class DebugMenu extends MenuScreen {
         	
             	Gdx.files.local("games.bin").delete();
             }
-        }));
+        });
         
-		contents.register("clearLogin",ComponentFactory.createMenuButton("Logout", new ClickListener(){
+		Button clearLogin = ComponentFactory.createMenuButton("Logout", new ClickListener(){
             @Override
             public void click(Actor actor, float x, float y){
             	Main.getInstance().network.logout();
@@ -49,19 +50,24 @@ public class DebugMenu extends MenuScreen {
         		
         		Main.getInstance().setScreen(AccountMenu.getInstance());
             }
-        }));
+        });
         
-        contents.register("loginname", ComponentFactory.createLoginLabel());
+		Label loginName = ComponentFactory.createLoginLabel();
         
         contents.padTop((int) (3*Main.percentHeight));
-        contents.parse(	"* spacing:"+(int) (2*Main.percentWidth)+" padding:0 align:top width:"+BUTTON_WIDTH+" height:"+BUTTON_HEIGHT+
-    					"[fps]" +
-    					"---" +
-    					"[clearGames]"+
-    					"---"+
-    					"[clearLogin] expand:y"+
-    					"---"+
-    					"{*align:center [loginname]}");
+        contents.defaults().space((int) (2*Main.percentWidth)).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.add(fps);
+        contents.row();
+        contents.add(clearGames);
+        contents.row();
+        contents.add(clearLogin).expandY();
+        contents.row();
+        
+        Table inner = new Table();
+        inner.defaults().center();
+        inner.add(loginName);
+        
+        contents.add(inner);
 	}
 	
 	private static MenuScreen instance;

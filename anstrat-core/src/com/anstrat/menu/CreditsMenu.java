@@ -12,13 +12,14 @@ public class CreditsMenu extends MenuScreen {
 	
 	public CreditsMenu() {
 		super();
-		contents.register("top", new Label("Credits", new LabelStyle(Assets.MENU_FONT,Color.BLACK)));
-		creditsTable = new Table();
-		contents.register("credits", creditsTable);
-		contents.parse("align:top,center " +
-				"[top]" +
-				"---" +
-				"[credits] fill:x expand:x fill:y expand:y");
+		
+		Table creditsTable = new Table();
+		creditsTable.add(new Label(Gdx.files.internal("data/credits.txt").readString(), new LabelStyle(Assets.UI_FONT,Color.BLACK)));
+		
+		contents.defaults().top().center();
+		contents.add(new Label("Credits", new LabelStyle(Assets.MENU_FONT,Color.BLACK)));
+		contents.row();
+		contents.add(creditsTable).fill().expand();
 	}
 
 	private static CreditsMenu me;
@@ -34,13 +35,6 @@ public class CreditsMenu extends MenuScreen {
 	public void render(float delta) {
 		super.render(delta);
 		//TODO Scroll credits
-	}
-	
-	@Override
-	public void show() {
-		creditsTable.clear();
-		creditsTable.add(new Label(Gdx.files.internal("data/credits.txt").readString(),new LabelStyle(Assets.UI_FONT,Color.BLACK)));
-		creditsTable.layout();
 	}
 	
 	@Override

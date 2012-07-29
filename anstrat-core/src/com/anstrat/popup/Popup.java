@@ -52,24 +52,6 @@ public class Popup extends Window {
 	public boolean handlesBackspace = false;
 	public boolean drawOverlay = true;
 
-	/*
-	protected ClickListener cl = new ClickListener() {
-        @Override
-        public void click(Actor actor,float x,float y ){
-        	handler.handlePopupAction(actor.name);
-        }
-    };
-    
-    protected TextFieldListener tl = new TextFieldListener() {
-    	@Override
-		public void keyTyped (TextField textField, char key) {
-			if (key == '\n')
-				textField.getOnscreenKeyboard().show(false);
-			else if (key == '\t')
-				textField.next(false);
-		}
-	};
-	*/
 	/**
 	 * 
 	 * @param handler
@@ -214,9 +196,11 @@ public class Popup extends Window {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		if(drawOverlay)
-			overlay.draw(batch);
+		if(drawOverlay) overlay.draw(batch);
 		super.draw(batch, parentAlpha);
+		
+		// Only actually draws debug if it's enabled on the table layout
+		drawDebug(stage);
 	}
 	
 	public void resize(int width, int height) {

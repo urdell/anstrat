@@ -7,6 +7,8 @@ import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class NewGameMenu extends MenuScreen {
 
@@ -21,7 +23,7 @@ public class NewGameMenu extends MenuScreen {
             	Main.getInstance().setScreen(HostGameMenu.getInstance());
             }
         } );
-        contents.register( "host", hostButton);
+		
         NetworkDependentTracker.registerNetworkButton(hostButton);
         
         Button joinButton = ComponentFactory.createMenuButton("Join Specific Game",new ClickListener() {
@@ -30,7 +32,7 @@ public class NewGameMenu extends MenuScreen {
             	Main.getInstance().setScreen(JoinGameMenu.getInstance());
             }
         });
-        contents.register("join", joinButton);
+        
         NetworkDependentTracker.registerNetworkButton(joinButton);
 
         Button randomButton = ComponentFactory.createMenuButton("Join Random Game",new ClickListener() {
@@ -39,10 +41,10 @@ public class NewGameMenu extends MenuScreen {
         		Main.getInstance().startRandomGameSearch();
             }
         } );
-        contents.register("random", randomButton);
+        
         NetworkDependentTracker.registerNetworkButton(randomButton);
         
-        contents.register("hotseat",ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
+        Button hotseatButton = ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
         	@Override
             public void click(Actor actor, float x, float y){
         		
@@ -58,9 +60,9 @@ public class NewGameMenu extends MenuScreen {
         			GameInstance.createHotseatGame(null).showGame(true);
         		}
             }
-        } ));
-        
-        contents.register("ai", ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
+        });
+        		
+        Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	MainMenu.versusAI = true;
@@ -75,29 +77,35 @@ public class NewGameMenu extends MenuScreen {
         			GameInstance.createAIGame(null, 1).showGame(true);
         		}
             }
-        } ));
+        });
         
-        contents.register( "login", ComponentFactory.createLoginLabel());
+
+        Label login = ComponentFactory.createLoginLabel();
         
         contents.padTop((int) (3*Main.percentHeight));
-        String size = String.format(" size:%d,%d", BUTTON_WIDTH, BUTTON_HEIGHT);
+        contents.defaults().space((int)Main.percentWidth).pad(0).top().center();
+        contents.add("Online").expandX().padBottom(-5);
+        contents.row();
+        contents.add(randomButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.row();
+        contents.add(hostButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.row();
+        contents.add(joinButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.row();
+        contents.add("Offline").expandX().padBottom(-5);
+        contents.row();
+        contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.row();
+        contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.row();
         
-        contents.parse( " * spacing:"+(int)Main.percentWidth+" padding:0 align:top,center"
-        			  + "'Online' expand:x padb:-5"
-					  + "---"
-    				  + "[random]" + size
-    				  + "---"
-    				  + "[host]" + size
-    				  + "---"
-    				  + "[join]" + size
-       				  + "---"
-    				  + "'Offline' expand:x padb:-5"
-    				  + "---"
-    				  + "[hotseat]" + size
-    				  + "---"
-    				  + "[ai] fill:y expand:y" + size
-    				  + "---"
-    				  + "{[login] align:center}");
+        Table inner = new Table();
+        inner.defaults().center();
+        inner.add(login);
+        
+        contents.add().fillY().expandY();
+        contents.row();
+        contents.add(inner);
 	}
 	
 	public static synchronized NewGameMenu getInstance() {

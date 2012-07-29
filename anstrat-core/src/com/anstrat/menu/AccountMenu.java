@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 /**
  * Menu to handle login, upgrade, register and logout 
@@ -29,52 +29,56 @@ public class AccountMenu extends MenuScreen {
 		registerPopup = createRegisterPopup();
 		connectingPopup = createConnectingPopup();
 		
-		contents.register( "fastLoginButton",ComponentFactory.createMenuButton("Quick Login",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	quickPlay();
-            }
-        }));
-
-		contents.register( "loginButton",ComponentFactory.createMenuButton("Login",new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	loginPopup.show();
-            }
-        }));
-
-        TextButton registerButton = ComponentFactory.createMenuButton("Register",new ClickListener() {
+        Button registerButton = ComponentFactory.createMenuButton("Register",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	Popup.showGenericPopup("Register", "Please use Quick Login.");
             	//AccountMenu.registerPopup.show();
             }
         });
-        
+       
+		Button fastLoginButton = ComponentFactory.createMenuButton("Quick Login",new ClickListener() {
+            @Override
+            public void click(Actor actor,float x,float y ){
+            	quickPlay();
+            }
+        });
+		
+		Button loginButton = ComponentFactory.createMenuButton("Login",new ClickListener() {
+            @Override
+            public void click(Actor actor,float x,float y ){
+            	loginPopup.show();
+            }
+        });
+		
         Assets.SKIN.setEnabled(registerButton, false);
         
-        contents.register( "registerButton", registerButton);
-
-        contents.register("debugMenuButton", ComponentFactory.createMenuButton("Debug",new ClickListener() {
+        Button debugMenuButton = ComponentFactory.createMenuButton("Debug",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	Main.getInstance().setScreen(DebugMenu.getInstance());
             }
-        }));
+        });
         
-        contents.register( "login", ComponentFactory.createLoginLabel());
+        Label login = ComponentFactory.createLoginLabel();
         
         contents.padTop((int) (3*Main.percentHeight));
-        contents.parse( 	"* spacing:"+(int)(2*Main.percentWidth)+" padding:0 align:top width:"+BUTTON_WIDTH+" height:"+BUTTON_HEIGHT+
-    					"[fastLoginButton]"+
-    					"---"+
-    					"[loginButton]"+
-    					"---"+
-    					"[registerButton]"+
-    					"---"+
-    					"[debugMenuButton] expand:y"+
-    					"---"+
-    					"{*align:center [login]}");
+        contents.defaults().space((int)(2*Main.percentWidth)).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        
+        contents.add(fastLoginButton);
+        contents.row();
+        contents.add(loginButton);
+        contents.row();
+        contents.add(registerButton);
+        contents.row();
+        contents.add(debugMenuButton).expandY();
+        
+        Table contentsInnerTable = new Table();
+        contentsInnerTable.defaults().center();
+        contentsInnerTable.add(login);
+        
+        contents.row();
+        contents.add(contentsInnerTable);
 	}
 	
 	public static AccountMenu getInstance() {
