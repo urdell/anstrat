@@ -3,6 +3,10 @@ package com.anstrat.gameCore.abilities;
 import java.io.Serializable;
 
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public abstract class Ability implements Serializable {
 	
@@ -24,6 +28,12 @@ public abstract class Ability implements Serializable {
 	
 	public boolean isAllowed(Unit source){
 		return source.currentAP >= apCost;	// Unit must have the required ap
+	}
+	
+	public ConfirmDialog generateConfirmDialog(Unit source, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow);
 	}
 	
 	public abstract String getIconName(Unit source);
