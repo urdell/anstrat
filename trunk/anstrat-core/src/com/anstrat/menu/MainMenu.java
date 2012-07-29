@@ -75,21 +75,19 @@ public class MainMenu extends MenuScreen {
 			
 		});
 
-        contents.register("newGameButton", ComponentFactory.createMenuButton("New Game",new ClickListener() {
+		Button newGameButton = ComponentFactory.createMenuButton("New Game",new ClickListener() {
         	@Override
         	public void click(Actor actor, float x, float y) {
         		Main.getInstance().setScreen(NewGameMenu.getInstance());
         	}
-        }));
+        });
 
-        contents.register("mapEditorButton", ComponentFactory.createMenuButton("Map Editor",new ClickListener() {
+        Button mapEditorButton = ComponentFactory.createMenuButton("Map Editor",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	Main.getInstance().setScreen(MapEditor.getInstance());
             }
-        }));
-        
-        contents.register("login", ComponentFactory.createLoginLabel());
+        });
         
         NinePatch emp = Assets.SKIN.getPatch("empty");
         TextButton ver = new TextButton(" "+Main.version,
@@ -100,7 +98,6 @@ public class MainMenu extends MenuScreen {
             	Main.getInstance().setScreen(DebugMenu.getInstance());
             }
         });
-        contents.register("version", ver);
 
         gamesList = new Table(Assets.SKIN);
         updateGamesList();
@@ -110,12 +107,8 @@ public class MainMenu extends MenuScreen {
 		scrollTable = new Table();
 		scrollTable.align("top");
 		scrollTable.add(scroll).fill().expand();
-		contents.register( "games", scrollTable );
 		
-		contents.register("mute", muteButton );
-		contents.register("logo", new Image(Assets.getTextureRegion("logo")));
 		Image empty = new Image(Assets.SKIN.getPatch("empty"));
-		contents.register("empty", empty);
 		
 		int logoWidth = (int)(Main.percentWidth*55);
 		
@@ -130,21 +123,27 @@ public class MainMenu extends MenuScreen {
         transBack.height = Gdx.graphics.getHeight();
         transBack.width = Gdx.graphics.getWidth();
         
-        contents.parse(
-        		"debug * spacing:"+(int) Main.percentHeight+" align:top,center" +
-        		"{" +
-        			"[version] uniform align:top,left" +
-        			"[logo] height:"+(int)(logoWidth/2.8f)+" width:"+logoWidth+" align:center paddingTop:"+(int)(Main.percentHeight*7) +
-        			"[mute] align:top,right uniform width:"+(int)((Main.percentWidth*100-logoWidth)/2)+" paddingTop:"+(int)(Main.percentHeight*3) +
-        		"} align:top,left fill:x " +
-        		"---" +
-    			"[newGameButton] height:"+buttonHeight+" width:"+buttonWidth +
-    			"---" +
-    			"[mapEditorButton] height:"+buttonHeight+" width:"+buttonWidth +
-    			"---" +
-    			"[empty] fill:90,100 expand:y paddingBottom:"+(int)(Main.percentHeight*10)+" paddingTop:"+(int)(Main.percentHeight*5) +
-    			"---" +
-    			"{[login] align:center}");
+        contents.defaults().space((int)Main.percentHeight).top().center();
+        
+        Table inner1 = new Table();
+        inner1.add(ver).uniform().top().left();
+        inner1.add(new Image(Assets.getTextureRegion("logo"))).height((int)(logoWidth/2.8f)).width(logoWidth).center().padTop((int)(Main.percentHeight*7));
+        inner1.add(muteButton).top().right().uniform().width((int)((Main.percentWidth*100-logoWidth)/2)).padTop((int)(Main.percentHeight*3));
+        
+        contents.add(inner1);
+        contents.row();
+        contents.add(newGameButton).height(buttonHeight).width(buttonWidth);
+        
+        contents.row();
+        contents.add(mapEditorButton).height(buttonHeight).width(buttonWidth);
+        contents.row();
+        contents.add(empty).fill().expandY().padBottom((int)(Main.percentHeight*10)).padTop((int)(Main.percentHeight*5));
+        
+        Table inner2 = new Table();
+        inner2.add(ComponentFactory.createLoginLabel()).center();
+        contents.row();
+        contents.add(inner2);
+        
         contents.layout();
         Vector2 gameListPos = new Vector2();
         Widget.toScreenCoordinates(empty, gameListPos);
@@ -152,6 +151,7 @@ public class MainMenu extends MenuScreen {
         scrollTable.y = gameListPos.y;
         scrollTable.width = empty.getImageWidth();
         scrollTable.height = empty.getImageHeight();
+        
         
 	}
 	
@@ -220,15 +220,20 @@ public class MainMenu extends MenuScreen {
 		gamesList.align("top");
 		gamesList.setFillParent(true);
 		
-		String topLayout = "height:"+(int)(Main.percentHeight*4)+" paddingTop:"+(int)(Main.percentHeight*4) +
-				"---";
+		int height = (int)(Main.percentHeight*4);
+		int paddingTop = (int)(Main.percentHeight*4);
 		
 		Table current = new Table(Assets.SKIN);
-		current.parse("'Your turn:'" + topLayout);
+		current.add("Your turn:").height(height).padTop(paddingTop);
+		current.row();
+		
 		Table waiting = new Table(Assets.SKIN);
-		waiting.parse("'Waiting for other players:'" + topLayout);
+		waiting.add("Waiting for other players:").height(height).padTop(paddingTop);
+		waiting.row();
+		
 		Table requests = new Table(Assets.SKIN);
-		requests.parse("'Game requests:'" + topLayout);
+		requests.add("Game requests:").height(height).padTop(paddingTop);
+		requests.row();
 		
 		NinePatch gameTableBackground = Assets.SKIN.getPatch("line-border-thin");
 		
@@ -239,15 +244,13 @@ public class MainMenu extends MenuScreen {
             	boolean isPlayerTurn = gi.getCurrentPlayer().userID == User.globalUserID;
             	Table t = new Table(Assets.SKIN);
             	Label timeleftLabel = null;
+            	Label turn = new Label("Turn "+gi.getTurnNumber(),Assets.SKIN);
+            	Label type = new Label("("+(gi.isAiGame() ? "AI" : 
+            		(gi instanceof NetworkGameInstance ? "Network" : "Hotseat"))+")", Assets.SKIN);
+            	Label map = new Label("'"+gi.state.map.name+"'",Assets.SKIN);
+            	Label mapSize = new Label(gi.state.map.getXSize()+"x"+gi.state.map.getYSize(),Assets.SKIN);
             	
             	t.setBackground(gameTableBackground);
-            	t.register("turn", new Label("Turn "+gi.getTurnNumber(),Assets.SKIN));
-            	t.register("type", new Label("("+(gi.isAiGame() ? "AI" : 
-            		(gi instanceof NetworkGameInstance ? "Network" : "Hotseat"))+")", Assets.SKIN));
-            	t.register("map", new Label("'"+gi.state.map.name+"'",Assets.SKIN));
-            	t.register("mapSize", new Label(gi.state.map.getXSize()+"x"+gi.state.map.getYSize(),Assets.SKIN));
-            	t.register("numPlayers", new Label(" "+gi.state.players.length, Assets.SKIN));
-            	t.register("timeleft", timeleftLabel = new Label("", Assets.SKIN));
             	
             	if(gi instanceof NetworkGameInstance){
             		timeleftLabels.put((NetworkGameInstance) gi, timeleftLabel);
@@ -262,7 +265,6 @@ public class MainMenu extends MenuScreen {
         	        	updateGamesList();
         	        }
         		});
-            	t.register("cancel",cancel);
             	
             	String opponent = "vs. ";
             	if(gi.isAiGame() || gi instanceof NetworkGameInstance)
@@ -275,18 +277,31 @@ public class MainMenu extends MenuScreen {
             	else{
             		opponent = gi.state.players[0].displayedName + " vs. " +gi.state.players[1].displayedName;
             	}
-            	t.register("players", new Label(opponent, Assets.SKIN));
+            	Label players = new Label(opponent, Assets.SKIN);
             	
-            	t.parse("align:left padding:"+(int)(2*Main.percentWidth) +
-            			"* align:left fill:x expand:x "+
-            			"{ * align:left height:"+(int)(4*Main.percentHeight) +
-            				"[players]" +
-            				"---" +
-            				"{[map] fill:x expand:x [mapSize]} expand:x fill:x" +
-            				"---" +
-            				"{[type] [turn] expand:x [timeleft]} expand:x fill:x" +
-            			"} expand:x fill:x paddingleft:"+(int)(Main.percentHeight) +
-            			"[cancel] padding:"+(int)(3+Main.percentWidth)+" height:"+(int)(7*Main.percentHeight)+" width:"+(int)(7*Main.percentHeight)+" align:bottom,right");
+            	t.left().pad((int)(2*Main.percentWidth));
+            	t.defaults().left().fillX().expandX();
+            	
+            	Table outer = new Table();
+            	outer.defaults().left().height((int)(4*Main.percentHeight));
+            	outer.add(players);
+            	outer.row();
+            	
+            	Table inner1 = new Table();
+            	inner1.add(map).fillX().expandX();
+            	inner1.add(mapSize);
+            	
+            	Table inner2 = new Table();
+            	inner2.add(type);
+            	inner2.add(turn).expandX();
+            	inner2.add(timeleftLabel);
+            	
+            	outer.add(inner1).expandX().fillX();
+            	outer.row();
+            	outer.add(inner2).expandX().fillX();
+            	
+            	t.add(outer).expandX().fillX().padLeft((int)(Main.percentHeight));
+            	t.add(cancel).pad((int)(3+Main.percentWidth)).height((int)(7*Main.percentHeight)).width((int)(7*Main.percentHeight)).bottom().right();
             	
             	Table tab = (isPlayerTurn || !(gi instanceof NetworkGameInstance))?current:waiting;
             	tab.add(t).fillX().expandX().height((int)(17*Main.percentHeight));
@@ -306,12 +321,11 @@ public class MainMenu extends MenuScreen {
         	Table t = new Table(Assets.SKIN);
         	t.setBackground(gameTableBackground);
         	
-        	t.register("gameName", new Label(gr.gameName, Assets.SKIN));
-        	t.register("limit", new Label("Limit: "+gr.timeLimit, Assets.SKIN));
-        	
         	Map map = gr.map;
-        	t.register("mapName", new Label(map==null?"null":map.name, Assets.SKIN));
-        	t.register("mapSize", new Label(map==null?"null":(map.getXSize()+"x"+map.getYSize()), Assets.SKIN));
+        	Label gameName = new Label(gr.gameName, Assets.SKIN);
+        	Label limit = new Label("Limit: "+gr.timeLimit, Assets.SKIN);
+        	Label mapSize = new Label(map==null?"null":(map.getXSize()+"x"+map.getYSize()), Assets.SKIN);
+        	Label mapName = new Label(map==null?"null":map.name, Assets.SKIN);
         	
         	String status = "";
         	switch(gr.status){
@@ -325,7 +339,6 @@ public class MainMenu extends MenuScreen {
         		status="Waiting for opponent";
         		break;
         	}
-        	t.register("status", new Label(status, Assets.SKIN));
         	
         	Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.getStyle("image-toggle", ButtonStyle.class));
         	final long nonce = gr.nonce;
@@ -335,18 +348,29 @@ public class MainMenu extends MenuScreen {
     	        	Main.getInstance().cancelRequest(nonce);
     	        }
     		});
-        	t.register("cancel",cancel);
         	
-        	t.parse("align:left padding:"+(int)(2*Main.percentWidth) +
-        			"* align:left fill:x expand:x "+
-        			"{ * align:left height:"+(int)(4*Main.percentHeight) +
-        				"{[gameName] fill:x expand:x [limit]} expand:x fill:x" +
-        				"---" +
-        				"{[mapName] fill:x expand:x [mapSize]} expand:x fill:x" +
-        				"---" +
-        				"[status]" +
-        			"} expand:x fill:x paddingleft:"+(int)(Main.percentHeight) +
-        			"[cancel] padding:"+(int)(3+Main.percentWidth)+" height:"+(int)(7*Main.percentHeight)+" width:"+(int)(7*Main.percentHeight)+" align:bottom,right");
+        	t.left().pad((int)(2*Main.percentWidth));
+        	t.defaults().left().fillX().expandX();
+        	
+        	Table outer = new Table(Assets.SKIN);
+        	outer.defaults().left().height((int)(4*Main.percentHeight));
+        	
+        	Table inner1 = new Table();
+        	inner1.add(gameName).fillX().expandX();
+        	inner1.add(limit);
+        	
+        	Table inner2 = new Table();
+        	inner2.add(mapName).fillX().expandX();
+        	inner2.add(mapSize);
+        	
+        	outer.add(inner1).expandX().fillX();
+        	outer.row();
+        	outer.add(inner2).expandX().fillX();
+        	outer.row();
+        	outer.add(status);
+        	
+        	t.add(outer).expandX().fillX().padLeft((int)(Main.percentHeight));
+        	t.add(cancel).pad((int)(3+Main.percentWidth)).height((int)(7*Main.percentHeight)).width((int)(7*Main.percentHeight)).bottom().right();
         	
         	requests.add(t).fillX().expandX().height((int)(17*Main.percentHeight));
         	requests.row();

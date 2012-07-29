@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
  */
 public class UnitInfoPopup extends Popup {
 	
-	private static int MARIGIN = 25;
+	private static int MARGIN = 25;
 	
 	private Image portrait;
 	private Label description, name;
@@ -51,41 +51,40 @@ public class UnitInfoPopup extends Popup {
 		effectsTable = new Table(Assets.SKIN);
 		abilityTable = new Table(Assets.SKIN);
 
-		layout.register("name", name);
-		layout.register("portrait", portrait);
-		layout.register("health", hp);
-		layout.register("ap", ap);
-		layout.register("attack", attack);
-		layout.register("defence", defence);
-		layout.register("range", apReg);
-		layout.register("description", description);
-		layout.register("effects", effectsTable);
-		layout.register("abilities", abilityTable);
+		layout.pad(MARGIN);
+		layout.defaults().top().left().padBottom((int)(5*Main.percentHeight));
 		
-		layout.parse("padding:"+MARIGIN+"\n"+
-				"* align:top,left paddingBottom:"+(int)(5*Main.percentHeight)+""+
-				"{{* align:top,left"+
-					"[name] align:center"+
-					"---"+
-					"[portrait]"+
-					"---"+
-					"[health]"+
-					"---"+
-					"[ap]"+
-				"} paddingRight:"+(int)(8*Main.percentWidth)+""+
-				"{ * align:top,left"+
-					"[attack]"+
-					"---"+
-					"[defence]"+
-					"---"+
-					"[range]"+
-				"} align:top}"+
-				"---"+
-				"[description] expand:x fill:x" +
-				"---" +
-				"[abilities]" +
-				"---" +
-				"[effects]");
+		Table outer = new Table();
+		
+		Table inner1 = new Table();
+		inner1.defaults().top().left();
+		inner1.add(name).center();
+		inner1.row();
+		inner1.add(portrait);
+		inner1.row();
+		inner1.add(hp);
+		inner1.row();
+		inner1.add(ap);
+		
+		outer.add(inner1).padRight((int)(8*Main.percentWidth));
+		
+		Table inner2 = new Table();
+		inner2.defaults().top().left();
+		inner2.add(attack);
+		inner2.row();
+		inner2.add(defence);
+		inner2.row();
+		inner2.add(apReg);
+		
+		outer.add(inner2).top();
+		
+		layout.add(outer);
+		layout.row();
+		layout.add(description).expandX().fillX();
+		layout.row();
+		layout.add(abilityTable);
+		layout.row();
+		layout.add(effectsTable);
 		
 		this.setClickListener(new ClickListener() {
 	        @Override
@@ -110,39 +109,51 @@ public class UnitInfoPopup extends Popup {
 		defence.update(unit);
 		apReg.update(unit);
 		
+		// Effects
 		effectsTable.clear();
-		TableLayout tl = effectsTable.getTableLayout();
-		int count = 0;
-		String layout = "*align:left 'Effects:'---";
-		for(Effect e : unit.effects){
-			tl.register("icon"+count, new Image(Assets.getTextureRegion(e.iconName)));
-			tl.register("name"+count, new Label(e.name,Assets.SKIN));
-			Label temp = new Label(" -"+e.description,Assets.SKIN);
-			temp.pack();
-			tl.register("description"+count, temp);
-			layout += "{[icon"+count+"] height:"+(int)(3*Main.percentHeight)+" width:"+(int)(5*Main.percentWidth)+" paddingRight:"+(int)(Main.percentHeight)+
-					" [name"+count+"] expand:x fill:x} --- " +
-					" [description"+count+"] ---";
-			count++;
-		}
-		tl.parse(layout);
+		effectsTable.defaults().left();
+		effectsTable.add("Effects:");
+		effectsTable.row();
 		
-		abilityTable.clear();
-		layout = "*align: left 'Abilities:'---";
-		count = 0;
-		tl = abilityTable.getTableLayout();
-		for(Ability a : unit.abilities){
-			tl.register("icon"+count, new Image(Assets.getTextureRegion(a.getIconName(unit))));
-			tl.register("name"+count, new Label(a.name,Assets.SKIN));
-			Label temp = new Label(" -"+a.description,Assets.SKIN);
-			temp.pack();
-			tl.register("description"+count, temp);
-			layout += "{[icon"+count+"] height:"+(int)(3*Main.percentHeight)+" width:"+(int)(5*Main.percentWidth)+" paddingRight:"+(int)(Main.percentWidth)+
-					" [name"+count+"] expand:x fill:x} --- " +
-					" [description"+count+"] ---";
-			count++;
+		for(int i = 0; i < unit.effects.size(); i++){
+			Effect effect = unit.effects.get(i);
+			
+			Image icon = new Image(Assets.getTextureRegion(effect.iconName));
+			Label name = new Label(effect.name, Assets.SKIN);
+			Label description = new Label(" -" + effect.description, Assets.SKIN);
+			
+			Table inner = new Table();
+			inner.add(icon).height((int)(3*Main.percentHeight)).width((int)(5*Main.percentWidth)).padRight((int)(Main.percentWidth));
+			inner.add(name).expandX().fillX();
+
+			effectsTable.add(inner);
+			effectsTable.row();
+			effectsTable.add(description);
+			effectsTable.row();
 		}
-		tl.parse(layout);
+		
+		// Abilities
+		abilityTable.clear();
+		abilityTable.defaults().left();
+		abilityTable.add("Abilities:");
+		abilityTable.row();
+		
+		for(int i = 0; i < unit.abilities.size(); i++){
+			Ability ability = unit.abilities.get(i);
+			
+			Image icon = new Image(Assets.getTextureRegion(ability.getIconName(unit)));
+			Label name = new Label(ability.name, Assets.SKIN);
+			Label description = new Label(" -" + ability.description, Assets.SKIN);
+			
+			Table inner = new Table();
+			inner.add(icon).height((int)(3*Main.percentHeight)).width((int)(5*Main.percentWidth)).padRight((int)(Main.percentWidth));
+			inner.add(name).expandX().fillX();
+
+			abilityTable.add(inner);
+			abilityTable.row();
+			abilityTable.add(description);
+			abilityTable.row();
+		}
 		
 		this.show();
 	}

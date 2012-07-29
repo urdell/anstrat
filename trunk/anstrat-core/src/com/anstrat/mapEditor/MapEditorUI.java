@@ -27,12 +27,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class MapEditorUI extends UI {
 
-	private Button terrainToggle, buildingsToggle;
+	private Button terrainToggle, buildingsToggle, clearButton, newButton, saveButton, loadButton;
 	private Image ttImg, btImg;
 	
 	public Popup popupLoadMap,	popupSaveMap, popupChangeOwner, popupNewMap, popupClearMap;
@@ -40,6 +41,7 @@ public class MapEditorUI extends UI {
 	private Table permanentTable;
 	private int size;
 	public Table tblChangeOwner, panelTable;
+	public TextButton changeOwner0, changeOwner1, changeOwnerNone;
 	
 	public MapEditorUI(MapEditor editor, SpriteBatch batch, OrthographicCamera camera) {
 		super(batch, camera);
@@ -63,7 +65,9 @@ public class MapEditorUI extends UI {
 		 * BUILDING BUTTONS
 		 */
 		final Table buildingsTable = new Table();
-		buildingsTable.parse("center paddingTop:"+(int)((size-bsize)/2)+"* spacing:"+padding);
+		buildingsTable.padTop((int)((size-bsize)/2));
+		buildingsTable.defaults().center().space(padding);
+		
 		Button village = ComponentFactory.createButton(Assets.getTextureRegion("village"), "image", new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
@@ -86,10 +90,9 @@ public class MapEditorUI extends UI {
 		 * TERRAIN BUTTONS
 		 */
 		final Table terrainTable = new Table();
-		terrainTable.parse("align:center" +
-				" paddingTop:"+(int)((size-bsize)/2) +
-				" paddingBottom:"+(int)((size-bsize)/2) +
-				"* spacing:"+padding);
+		
+		terrainTable.padTop((int)((size-bsize)/2)).padBottom((int)((size-bsize)/2)).center();
+		terrainTable.defaults().space(padding);
 		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
 			if(t==TerrainType.CASTLE || t==TerrainType.VILLAGE)
@@ -104,7 +107,6 @@ public class MapEditorUI extends UI {
 			if(++cnt % 6 == 0)
 				terrainTable.row();
 		}
-		//terrainTable.height(size);
 		
 		/**
 		 * Tables for bottom extra panel
@@ -118,31 +120,29 @@ public class MapEditorUI extends UI {
             	showPanel(null, false);
             }
         };
-		tblClearMap.register("ok",ComponentFactory.createButton("Ok", clClearMap));
-		tblClearMap.register("cancel",ComponentFactory.createButton("Cancel", clHidePanel));
-		tblClearMap.parse(
-				"'Clear map?'" +
-				"---" +
-				"{* min:1 height:"+bsize+" [ok][cancel]} fill:80,100 ");
+        
+		Table tblClearMapInner = new Table();
+		tblClearMapInner.defaults().minSize(1).height(bsize);
+		tblClearMapInner.add(ComponentFactory.createButton("Ok", clClearMap));
+		tblClearMapInner.add(ComponentFactory.createButton("Cancel", clHidePanel));
 		
+		tblClearMap.add("Clear map?");
+		tblClearMap.row();
+		tblClearMap.add(tblClearMapInner).fill();
 		
 		//Change owner table
 		tblChangeOwner    = new Table(Assets.SKIN);
-		ClickListener showChange = new ClickListener() {
-            @Override
-            public void click(Actor actor,float x,float y ){
-            	MapEditor.getInstance().actionHandler.changeOwner(actor.name);
-            	showPanel(null,false);
-            }
-        };
-		tblChangeOwner.register("none",ComponentFactory.createButton("none", showChange));
-		tblChangeOwner.register("0",ComponentFactory.createButton("0", showChange));
-		tblChangeOwner.register("1",ComponentFactory.createButton("1", showChange));
-		tblChangeOwner.register("cancel",ComponentFactory.createButton("Cancel", clHidePanel));
-		tblChangeOwner.parse(
-				"'Select new owner'" +
-				"---" +
-				"{* min:1 height:"+bsize+" [0][1][none][cancel]}");
+
+		Table tblChangeOwnerInner = new Table();
+		tblChangeOwnerInner.defaults().minSize(1).height(bsize);
+		tblChangeOwnerInner.add(changeOwner0 = ComponentFactory.createButton("0", getChangeOwnerClickListener("0")));
+		tblChangeOwnerInner.add(changeOwner1 = ComponentFactory.createButton("1", getChangeOwnerClickListener("1")));
+		tblChangeOwnerInner.add(changeOwnerNone = ComponentFactory.createButton("none", getChangeOwnerClickListener("none")));
+		tblChangeOwnerInner.add(ComponentFactory.createButton("Cancel", clHidePanel));
+		
+		tblChangeOwner.add("Select new owner");
+		tblChangeOwner.row();
+		tblChangeOwner.add(tblChangeOwnerInner);
 		
 		/**
 		 * PERMANENT BUTTONS
@@ -158,7 +158,7 @@ public class MapEditorUI extends UI {
             	showPanel(terrainTable,terrainTable.parent==null);
             }
         } );
-		permanentTable.register("terrain", terrainToggle);
+		
 		btImg = new Image(Assets.getTextureRegion("building-button"));
 		buildingsToggle = new Button(btImg, Assets.SKIN.getStyle("image", ButtonStyle.class));
 		buildingsToggle.setClickListener( new ClickListener() {
@@ -167,15 +167,16 @@ public class MapEditorUI extends UI {
             	showPanel(buildingsTable,buildingsTable.parent==null);
             }
         } );
-		permanentTable.register("buildings", buildingsToggle);
-		permanentTable.register("clear", ComponentFactory.createButton(Assets.getTextureRegion("cancel"),
+		
+		clearButton = ComponentFactory.createButton(Assets.getTextureRegion("cancel"),
 				new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	showPanel(tblClearMap,tblClearMap.parent==null);
             }
-        } ));
-		permanentTable.register("load", ComponentFactory.createButton(Assets.getTextureRegion("open-button"), "image",
+        });
+		
+		loadButton = ComponentFactory.createButton(Assets.getTextureRegion("open-button"), "image",
 				new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
@@ -187,21 +188,23 @@ public class MapEditorUI extends UI {
     				Popup.showGenericPopup("Error", "No maps found");
     			}
             }
-        } ));
-		permanentTable.register("save", ComponentFactory.createButton(Assets.getTextureRegion("save-button"), "image",
+        });
+		
+		saveButton = ComponentFactory.createButton(Assets.getTextureRegion("save-button"), "image",
 				new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	popupSaveMap.show();
             }
-        } ));
-		permanentTable.register("new", ComponentFactory.createButton("NEW", new ClickListener() {
+        });
+		
+		newButton = ComponentFactory.createButton("NEW", new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	popupNewMap.show();
             }
-        } ));
-
+        });
+		
 		addActor(permanentTable);
 		
 		
@@ -246,7 +249,7 @@ public class MapEditorUI extends UI {
 		Label[] labels1 = new Label[Map.MAX_SIZE-Map.MIN_SIZE+1];
 		Label[] labels2 = new Label[Map.MAX_SIZE-Map.MIN_SIZE+1];
 		
-		table1.parse("* expand:x");
+		table1.defaults().expandX();
 		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
 		    table1.row();
 		    Label label = new Label(new Integer(i).toString(), new LabelStyle(Assets.UI_FONT, Color.WHITE));
@@ -254,7 +257,7 @@ public class MapEditorUI extends UI {
 		    labels1[i-Map.MIN_SIZE]= label; 
 		}
 		
-		table2.parse("* expand:x");
+		table2.defaults().expandX();
 		for (int i = Map.MIN_SIZE; i <= Map.MAX_SIZE; i++) {
 		    table2.row();
 		    Label label = new Label(new Integer(i).toString(), new LabelStyle(Assets.UI_FONT, Color.WHITE));
@@ -273,15 +276,13 @@ public class MapEditorUI extends UI {
 		flickTable2.setBackground(Assets.SKIN.getPatch("single-border"));
 			
 		Table flickTable = new Table(Assets.SKIN);
-		flickTable.register("labelWidth", new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
-		flickTable.register("labelHeight", new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
-		flickTable.register("scrollW",flickTable1);
-		flickTable.register("scrollH",flickTable2);
-		flickTable.parse("* height:"+(int)(Main.percentHeight*12f)+
-				" [labelWidth][labelHeight] " +
-				" --- " +
-				" [scrollW] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f) +
-				" [scrollH] height:"+(int)(Main.percentHeight*16f) + " width:" + (int)(Main.percentHeight*16f));
+		flickTable.defaults().height((int)(Main.percentHeight*12f));
+		flickTable.add(new Label("Width", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
+		flickTable.add(new Label("Height", new LabelStyle(Assets.MENU_FONT, Color.WHITE)));
+		flickTable.row().height((int)(Main.percentHeight*16f)).width((int)(Main.percentHeight*16f));
+		flickTable.add(flickTable1);
+		flickTable.add(flickTable2);
+		
 		
 		popupNewMap = new Popup("New map");
 		Button newMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
@@ -332,7 +333,15 @@ public class MapEditorUI extends UI {
 		super.resize(width, height);
 		updateSize(width);
 		
-		permanentTable.parse("height:"+(int)(size*1.05)+" align:left,bottom * size:"+size+" [clear][terrain][buildings][load][save][new] height:"+(int)(size/1.2));
+		permanentTable.height((int)(size*1.05)).left().bottom();
+		permanentTable.defaults().size(size);
+		permanentTable.add(clearButton);
+		permanentTable.add(terrainToggle);
+		permanentTable.add(buildingsToggle);
+		permanentTable.add(loadButton);
+		permanentTable.add(saveButton);
+		permanentTable.add(newButton).height((int)(size/1.2f));
+		
 		permanentTable.pack();
 		
 		permanentTable.y = permanentTable.x = 0;
@@ -390,5 +399,15 @@ public class MapEditorUI extends UI {
 			}, false, "Load map", mapStrings);
 		}
 		return null;
+	}
+	
+	private ClickListener getChangeOwnerClickListener(final String owner){
+		return new ClickListener() {
+            @Override
+            public void click(Actor actor,float x,float y ){
+            	MapEditor.getInstance().actionHandler.changeOwner(owner);
+            	showPanel(null,false);
+            }
+        };
 	}
 }

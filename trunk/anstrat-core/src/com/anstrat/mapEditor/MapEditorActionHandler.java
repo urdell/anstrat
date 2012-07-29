@@ -121,11 +121,10 @@ public class MapEditorActionHandler {
 			MapEditorUI ui = MapEditor.getInstance().userInterface;
 			int owner = building.controllerId;
 			
-			for(int i=0; i<2; i++){
-				TextButton b = (TextButton)ui.tblChangeOwner.findActor(String.valueOf(i));
-				b.setText(owner==i?("[ "+i+" ]"):String.valueOf(i));
-			}
-			TextButton none = (TextButton)ui.tblChangeOwner.findActor("none");
+			ui.changeOwner0.setText(owner==0?("[ "+0+" ]"):String.valueOf(0));
+			ui.changeOwner1.setText(owner==1?("[ "+1+" ]"):String.valueOf(1));
+			
+			TextButton none = ui.changeOwnerNone; //(TextButton)ui.tblChangeOwner.findActor("none");
 			none.setText(owner==-1?"[ none ]":"none");
 			Assets.SKIN.setEnabled(none, building.type!=Building.TYPE_CASTLE);
 			ui.showChangeOwner();
@@ -137,9 +136,12 @@ public class MapEditorActionHandler {
 	 */
 	public void changeOwner(String newOwner){
 		Building b = MapEditor.getInstance().map.getBuildingByTile(selectedTile.tile.coordinates);
-		if(newOwner=="none" && b.type == Building.TYPE_CASTLE)
+		
+		if(newOwner.equals("none") && b.type == Building.TYPE_CASTLE){
 			return;
-		b.controllerId = newOwner=="none"?-1:Integer.parseInt(newOwner);
+		}
+		
+		b.controllerId = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
 	}
 	
 	public void createNewMap(int width, int height){

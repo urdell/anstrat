@@ -5,6 +5,7 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
@@ -22,15 +23,14 @@ public class JoinGameMenu extends MenuScreen {
 		password = ComponentFactory.createTextField("Game Password", true);
 		Table settings = new Table(Assets.SKIN);
         settings.setBackground(Assets.SKIN.getPatch("single-border"));
-        settings.register("name",name);
-        settings.register("password",password);
-        settings.parse("* height:"+(int)(Main.percentHeight*10) +
-        		"'Name: '[name] fill:x expand:x" +
-				"---" +
-				"'Password: '[password] fill:x expand:x");
-		contents.register("settings",settings);
+        settings.defaults().height((int)(Main.percentHeight*10));
+        settings.add("Name:");
+        settings.add(name).fillX().expandX();
+        settings.row();
+        settings.add("Password:");
+        settings.add(password).fillX().expandX();
 		
-		contents.register("join",ComponentFactory.createMenuButton( "Join Game",new ClickListener() {
+		Button join = ComponentFactory.createMenuButton( "Join Game",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	if(name.getText()==""){
@@ -39,17 +39,19 @@ public class JoinGameMenu extends MenuScreen {
             	}
             	Main.getInstance().joinGame(name.getText(), password.getText());
             }
-        } ));
-		contents.register("login", ComponentFactory.createLoginLabel());
+        });
 		
 		contents.padTop((int) (3*Main.percentHeight));
-		contents.parse(
-				"* spacing:5 padding:0 align:top width:"+BUTTON_WIDTH+
-				"[settings] "+
-				"---" +
-				"[join] fill:y expand:y height:"+BUTTON_HEIGHT+
-				"---" +
-				"{[login] align:center}");
+		contents.defaults().space(5).pad(0).top().width(BUTTON_WIDTH);
+		contents.add(settings);
+		contents.row();
+		contents.add(join).fillY().expandY().height(BUTTON_HEIGHT);
+		contents.row();
+		
+		Table inner = new Table();
+		inner.add(ComponentFactory.createLoginLabel()).center();
+		
+		contents.add(inner);
 	}
 	
 	public static synchronized JoinGameMenu getInstance() {

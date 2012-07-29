@@ -49,31 +49,16 @@ public class BuyUnitPopup extends Popup{
 		}
 	};
 	
-	/*
-	private ClickListener cl = new ClickListener() {
-        @Override
-        public void click(Actor actor,float x,float y ){
-        	handler.handlePopupAction(actor.equals(buy)?Popup.OK:Popup.CANCEL);
-        }
-    };
-	*/
-	
 	public BuyUnitPopup(UnitType... types) {
-		super();
-		
 		this.types = types;
+		this.drawOverlay = false;
 		
 		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", BUY_BUTTON_LISTENER);
-		
 		Button buttonCancel = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		units = new Button[6];
 		unitSilhouettes = new NinePatch[6];
 		card  = new UnitTypeCard(types[0]);
-		this.register("card",card);
-		this.drawOverlay = false;
-		
-		unitTable = new ColorTable(Color.BLUE);
 		
 		for(int i=0; i<units.length; i++){
 			unitSilhouettes[i] = new NinePatch(GUnit.getTextureRegion(types[i]));
@@ -84,43 +69,54 @@ public class BuyUnitPopup extends Popup{
 			        selectButton((Button)actor);
 			    }
 			});
-			unitTable.register("unit"+i, units[i]);
 		}
+		
 		int unitWidth = (int)(Main.percentWidth*100/6*1.3);
 		int pad = (int)(-unitWidth*0.15);
-		unitTable.parse("align:center" +
-				"*size:"+unitWidth+" paddingLeft:"+pad+" paddingRight:"+pad +
-				"[unit0][unit3][unit1][unit2][unit5][unit4]");
+		
+		// The silhouettes of the purchasable units
+		unitTable = new ColorTable(Color.BLUE);
 		unitTable.setBackground(Assets.SKIN.getPatch("border-thick-updown"));
-		this.register("units", unitTable);
+		unitTable.defaults().size(unitWidth).padLeft(pad).padRight(pad);
 		
+		// Don't ask me why it has to be this order...
+		unitTable.add(units[0]);
+		unitTable.add(units[3]);
+		unitTable.add(units[1]);
+		unitTable.add(units[2]);
+		unitTable.add(units[5]);
+		unitTable.add(units[4]);
 		
+		// The buy and close buttons
 		Table buttonTable = new Table(Assets.SKIN);
-		buttonTable.register("buy", buyButton);
-		buttonTable.register("cancel", buttonCancel);
-		int buttonHeight = (int)(Main.percentHeight*15);
-		buttonTable.parse("align:right" +
-				"*min:1 size:"+buttonHeight+" [buy] [cancel]");
 		buttonTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
-		this.register("buttons", buttonTable);
 		
-		this.register("hack", new Image(Assets.SKIN.getPatch("empty")));	//Ugly fix so the card is not affected by the unit colors. 
-
-
+		int buttonHeight = (int)(Main.percentHeight*15);
+		
+		buttonTable.right();
+		buttonTable.defaults().size(buttonHeight);
+		buttonTable.add(buyButton);
+		buttonTable.add(buttonCancel);
+		
+		// Put all components together into the main table
 		int cardW = (int)(Main.percentWidth*85);
 		int cardH = (int)(Main.percentHeight*60);
-		this.parse("align:center *expand:x fill:x "+
-				"[units] expand:x fill:x paddingTop:"+(int)(-unitTable.getBackgroundPatch().getTopHeight()/3) +
-				"--- [empty] fill expand uniform ---" +
-				"[card] height:"+cardH+" width:"+cardW +
-				"--- [] fill expand uniform ---" +
-				"[buttons] expand:x fill:x height:"+buttonHeight);
 		
+		this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
+		this.add(unitTable).width(Gdx.graphics.getWidth()).padTop((int)(-unitTable.getBackgroundPatch().getTopHeight()/3));
+		this.row();
+		this.add().expand().uniform();
+		this.row();
+		this.add(card).height(cardH).width(cardW);
+		this.row();
+		this.add().expand().uniform();
+		this.row();
+		this.add(buttonTable).height(buttonHeight).width(Gdx.graphics.getWidth()).expandY().bottom();
 		
 		selectButton(units[0]);
-		this.setBackground(Assets.SKIN.getPatch("empty"));
 	}
 	
+	@Override
 	public void resize(int width, int height){
 		overlay.setSize(width, height);
 		this.width = width;

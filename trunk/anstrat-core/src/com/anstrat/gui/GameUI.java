@@ -47,7 +47,6 @@ public class GameUI extends UI {
 	private Button endTurnButton;
 	private ValueDisplay goldDisplay, manaDisplay;
 	private Label turnDisplay;
-	public Label fpsLabel;
 	
 	//Bottom panel
 	public Table bottomPanel;
@@ -64,7 +63,7 @@ public class GameUI extends UI {
 	private Table unitTable;
 	private ValueDisplay hpDisplay;
 	private ValueDisplay apDisplay;
-	private Button[] abilityButton = new Button[MAX_ABILITIES];
+	private Button[] abilityButtons = new Button[MAX_ABILITIES];
 	private Image[] effectImage = new Image[MAX_EFFECTS];
 	private Button captureButton;
 
@@ -91,10 +90,6 @@ public class GameUI extends UI {
 		turntable = new ColorTable(Color.BLACK);
 		turntable.setBackground(Assets.SKIN.getPatch("single-border"));
 		turntable.add(turnDisplay).align("center");
-		fpsLabel = new Label("",Assets.SKIN);
-		fpsLabel.setColor(Color.LIGHT_GRAY);
-		
-		//topPanel.addActor(fpsLabel);
         
         addActor(topPanel);
         
@@ -156,15 +151,15 @@ public class GameUI extends UI {
             }
         } );
         for(int i=0; i<MAX_ABILITIES; i++){
-        	abilityButton[i] = new Button(new Image(Assets.getTextureRegion("Ok-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
-        	final int abilityId = i;
-        	abilityButton[i].setClickListener(new ClickListener() {
+        	abilityButtons[i] = new Button(new Image(Assets.getTextureRegion("Ok-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
+        	final int abilityIndex = i;
+        	abilityButtons[i].setClickListener(new ClickListener() {
                 @Override
                 public void click(Actor actor,float x,float y ){
-                	GEngine.getInstance().actionHandler.abilityPress(abilityId);
+                	GEngine.getInstance().actionHandler.abilityPress(abilityIndex);
                 }
             } );
-        	unitTable.addActor(abilityButton[i]);
+        	unitTable.addActor(abilityButtons[i]);
         }
         for(int i=0; i<MAX_EFFECTS; i++){
         	effectImage[i] = new Image(Assets.getTextureRegion("grid"));
@@ -182,6 +177,7 @@ public class GameUI extends UI {
             } );
         
         addActor(bottomPanel);
+        
         //Set sizes and positions initially so that others can access that info.
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
@@ -207,93 +203,75 @@ public class GameUI extends UI {
 		lastHeight = height;
 		
 		int bph = (int)Main.percentHeight*20;//hp*4;
-		
 		int pad = 2;
 		int tph = (int)Main.percentHeight*10;//hp*2;
 		
 		//Top panel
 		setBounds(topPanel, 0, height - tph, width, tph);
-		topPanel.clear();
-		topPanel.register("end", endTurnButton);
-		topPanel.register("gold", goldDisplay);
-		topPanel.register("mana", manaDisplay);
-		topPanel.register("name", turntable);	//TODO: make sure name gets cut off if too long.
-		topPanel.register("fps", fpsLabel);
 		int padh = (int)(tph*0.1);
 		int padv = -(int)(turntable.getBackgroundPatch().getPatches()[0].getRegionHeight()/2);
-		topPanel.parse("align:left padding:"+pad +
-				"* height:"+(int)(tph*0.8) +
-				"[end] width:"+(int)(tph*2) +
-				"[name] expand fill padb:"+padv+" padt:"+padv+" padl:"+padh+" padr:"+padh +
-				"{*align:left [fps] ignore ---[gold]} maxwidth:"+(int)(tph*1.5));	//---[mana]
+		topPanel.clear();
+
+		// Top panel non-json
+		topPanel.row().align("left").pad(pad).fill().height((int)(tph*0.8f));
+		topPanel.add(endTurnButton).width((int)(tph*2));
+		topPanel.add(turntable).pad(padv, padh, padv, padh);
+		topPanel.add(goldDisplay).expand().align("left");
 		
 		// Permanent Panel
 		float pwidth = bph*1.8f;
 		setBounds(permanentPanel, width-pwidth, 0, pwidth, bph/2);
 		permanentPanel.clear();
-        permanentPanel.register("buy", buyButton);
-        permanentPanel.register("help", helpButton);
-        permanentPanel.register("spell", spellButton);
-        permanentPanel.parse("align:right,bottom *size:"+(int)(bph/2)+" [][help][spell][buy]");
+		
+        permanentPanel.row().right().bottom().fill().size((int)(bph/2));
+        permanentPanel.add(helpButton);
+        permanentPanel.add(spellButton);
+        permanentPanel.add(buyButton);
         
         // Unit table
-        unitTable.clear();
-        unitTable.register("hp", hpDisplay);
-        unitTable.register("ap", apDisplay);
-        unitTable.register("name", nameLabel);
-        unitTable.register("portrait", selectedImage);
-        unitTable.register("deselect", deselectButton);
-
-        // Action + capture placement
-        String buttonLayout = "";
- 		if(true){
- 			
- 			int iconSize = (int)(bph/4);
- 			for(int i=0; i<MAX_EFFECTS; i++){
- 				if(effectImage[i].visible){
- 					unitTable.register("ef"+i,effectImage[i]);
- 	 				buttonLayout += "[ef"+i+"] size:"+iconSize;
- 					effectImage[i].visible = true;
- 				}
- 			}
- 			
- 			if(abilityButton[0].visible){
- 				unitTable.register("ab0",abilityButton[0]);
- 				buttonLayout += "[ab0]";
- 			}
- 			if(abilityButton[1].visible){
- 				unitTable.register("ab1",abilityButton[1]);
- 				buttonLayout += "[ab1]";
- 			}
- 			if(captureButton.visible){
- 		        unitTable.register("capture", captureButton);
- 		        buttonLayout += "[capture]";
- 			}
- 		}
+        layoutUnitTable();
         
-        unitTable.parse("align:top,left " +
-        		"{debug * align:top,left" +
-        			"[name] height:"+(int)(bph/6) +
-        			"---" +
-        			"[portrait] size:"+(int)(bph/2) +
-        			"---" +
-        			"[hp]" +
-        			"---" +
-        			"[ap]" +
-        		"} paddingLeft:"+(int)(Main.percentWidth/2)+" paddingTop:"+(int)(Main.percentWidth) +
-        		"{ * align:left size:"+(int)(bph/2) +
-        			buttonLayout +
-        		"} align:top,left expand:x fill:x" +
-        		"[deselect] align:top,right size:"+(int)(bph/2));
-
 		// Bottom panel
         setBounds(bottomPanel, 0,0 ,width,bph);
         bottomPanel.clear();
-        bottomPanel.register("unit", unitTable);
-        bottomPanel.register("permanent", permanentPanel);
-        bottomPanel.parse(
-        		"[unit] fill expand" +
-        		"[permanent] ignore align:bottom,right height:"+(int)(bph/2));
+        bottomPanel.add(unitTable);
+        bottomPanel.add(permanentPanel).ignore().bottom().right().height((int)(bph/2));
+	}
+	
+	private void layoutUnitTable(){
+		int bph = (int)(Main.percentHeight * 20f);
+        
+        unitTable.clear();
+        unitTable.row().expand().pad(2).top();
+        
+        // Left table, portrait, name, ap, health
+        Table table1 = new Table();
+        table1.defaults().top().left();
+        table1.row();
+        table1.add(nameLabel).height((int)(bph/6));
+        table1.row();
+        table1.add(selectedImage).size((int)(bph/2));
+        table1.row();
+        table1.add(hpDisplay);
+        table1.row();
+        table1.add(apDisplay);
+        
+        // Right table, effects + abilities
+        Table table2 = new Table();
+        
+		// Abilities
+		for(Button b : abilityButtons){
+			if(b.visible) table2.add(b).size((int)(bph/2));
+		}
+		
+		// Capture button
+		if(captureButton.visible) table2.add(captureButton).size((int)(bph/2));
+		
+		// Deselect button
+		table2.add(deselectButton).size((int)(bph/2)).right();
+		
+		unitTable.add(table1).left();
+		unitTable.add(table2).expand().right();
 	}
 	
 	/**
@@ -320,16 +298,17 @@ public class GameUI extends UI {
 		for(Image i : effectImage){
 			i.visible = false;
 		}
-		for(Button b : abilityButton){
+		for(Button b : abilityButtons){
 			b.visible = false;
 		}
 		nrShownAbilities=0;
+		
 		for(Ability a : unit.getAbilities()){
-			Actor actor = (abilityButton[nrShownAbilities].getActors().get(0));
+			Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
 			if(actor instanceof Image){
 				((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
 			}
-			abilityButton[nrShownAbilities].visible = true;
+			abilityButtons[nrShownAbilities].visible = true;
 			nrShownAbilities++;
 		}
 		
@@ -397,6 +376,5 @@ public class GameUI extends UI {
 		}
 		else
 			return (y <= topPanel.height || y>= Gdx.graphics.getHeight()-permanentPanel.height);
-
 	}
 }

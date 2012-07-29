@@ -7,6 +7,7 @@ import com.anstrat.animation.Animation;
 import com.anstrat.animation.AnimationHandler;
 import com.anstrat.animation.MoveCameraAnimation;
 import com.anstrat.animation.ZoomCameraAnimation;
+import com.anstrat.core.Assets;
 import com.anstrat.core.CameraController;
 import com.anstrat.core.GestureMultiplexer;
 import com.anstrat.core.Main;
@@ -57,7 +58,6 @@ public class GEngine implements Screen{
 	public FloatingBackground floatingBackground;
 	private SpriteBatch batch;
 	
-	
 	public HashMap<Integer,GUnit> gUnits;
 	public HashMap<Integer,GBuilding> gBuildings;
 	
@@ -69,6 +69,8 @@ public class GEngine implements Screen{
 	public ActionMap actionMap;
 	public State state;
 
+	private Vector2 FPS_POSITION = new Vector2();
+	
 	public static synchronized GEngine getInstance(){
 		if(me == null){
 			me = new GEngine();
@@ -245,12 +247,16 @@ public class GEngine implements Screen{
 		animationHandler.drawAll(delta, batch);
 		animationHandler.drawAllFixed(delta, batch);
 		
-		if(Options.showFps)
-			userInterface.fpsLabel.setText(Gdx.graphics.getFramesPerSecond()+"");
-		
 		userInterface.draw();
 		if(actionHandler.showingConfirmDialog)
 			confirmDialog.draw(batch);
+		
+		if(Options.showFps){
+			batch.setProjectionMatrix(uiCamera.combined);
+			batch.begin();
+			Assets.UI_FONT_BIG.draw(batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), FPS_POSITION.x, FPS_POSITION.y);
+			batch.end();
+		}
 	}
 	
 	@Override
@@ -262,6 +268,10 @@ public class GEngine implements Screen{
 		
 		// Update offsets since ui has changed size
 		cameraController.setOffsets(userInterface.topPanel.height+Options.mapBorderOffset, userInterface.bottomPanel.height+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
+
+		// Draw fps at a fixed position
+		FPS_POSITION.x = 20f;
+		FPS_POSITION.y = height - 70f;
 	}
 	
 	@Override

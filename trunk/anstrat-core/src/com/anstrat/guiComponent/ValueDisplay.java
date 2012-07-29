@@ -42,21 +42,19 @@ public class ValueDisplay extends Table {
 		TableLayout layout = this.getTableLayout();
 		
 		icon = new Image(getValueTexture(valueType));
-		layout.register("icon", icon);
 		
 		usesBar = valueType==VALUE_UNIT_HP;
 		
 		if(!usesBar){
 			label = new Label("", Assets.SKIN);
-			layout.register("info", label);
 		}
 		else{
 			bar = new GBar(100f, 16f, 1f);
 			bar.setColors(Color.GREEN, new Color(0f, 0.3f, 0f, 1f), Color.GRAY);
-			layout.register("info", bar);
-		}		
-		layout.parse("[icon] size:"+(int)(3*Main.percentHeight)+" paddingRight:"+(int)(2*Main.percentWidth)+
-				" [info] expand:x fill:x height:"+(int)(3*Main.percentHeight));
+		}
+		
+		layout.add(icon).size((int)(3f*Main.percentHeight)).padRight((int)(2f*Main.percentWidth));
+		layout.add(usesBar ? bar : label).expandX().fillX().height((int)(3f*Main.percentHeight));
 	}
 	
 	// Returns null if the value isn't currently applicable (for example the name of a unit if no unit is selected)

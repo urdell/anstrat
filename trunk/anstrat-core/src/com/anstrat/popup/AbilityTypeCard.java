@@ -42,26 +42,27 @@ public class AbilityTypeCard extends Table {
 		//TODO 
 		image = new Image();
 		//statDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_ATTACK)
+		Image costIcon = new Image(Assets.getTextureRegion("mana"));
 		
 		TableLayout layout = this.getTableLayout();
-		layout.register("cost",cost);
-		layout.register("costIcon",new Image(Assets.getTextureRegion("mana")));
-		layout.register("name",name);
-		layout.register("desc",description);
-		layout.register("image",image);
 		
 		int imageHeight = Gdx.graphics.getHeight()/5;
 		int imageWidth = Gdx.graphics.getWidth()/3;
 		
-		layout.parse("* align:top" +
-				"[name] align:center paddingTop:"+(int)(-3*Main.percentHeight)+" paddingBottom:"+(int)(-2*Main.percentHeight) +
-				"---" +
-				"[image] align:left width:"+imageWidth+" height:"+imageHeight+
-				"---" +
-				"[desc] fill:y expand:y fill:x expand:x" +
-				"---" +
-				"{*align:left [costIcon] height:"+(int)(3*Main.percentHeight)+" width:"+(int)(6*Main.percentWidth)+" [cost]} align:left height:"+(int)(3*Main.percentHeight));
+		layout.defaults().top();
+		layout.add(name).center().padTop((int)(-3*Main.percentHeight)).padBottom((int)(-2*Main.percentHeight));
+		layout.row();
+		layout.add(image).left().width(imageWidth).height(imageHeight);
+		layout.row();
+		layout.add(description).fill().expand();
+		layout.row();
 		
+		Table inner = new Table();
+		inner.defaults().left();
+		inner.add(costIcon).height((int)(3*Main.percentHeight)).width((int)(6*Main.percentWidth));
+		inner.add(cost);
+		
+		layout.add(inner).left().height((int)(3*Main.percentHeight));
 	}
 	
 	public void setSize(float width, float height){
