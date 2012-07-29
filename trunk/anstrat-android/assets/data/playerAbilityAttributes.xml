@@ -20,5 +20,10 @@
 		<manacost>5</manacost>
 		<description>Loke flips the position of 2 target units</description>
 	</PlayerAbility>
+	<PlayerAbility>
+		<name>Zombify</name>
+		<manacost>5</manacost>
+		<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
+	</PlayerAbility>
 	
 </PlayerAbilities>
