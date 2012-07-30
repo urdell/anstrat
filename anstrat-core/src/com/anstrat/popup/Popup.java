@@ -78,7 +78,7 @@ public class Popup extends Window {
 		super(Assets.SKIN);
 		this.setTitle(title);
 
-		align("top");
+		top();
 		setComponents(actors);
 		this.layout();
 	}
@@ -105,7 +105,7 @@ public class Popup extends Window {
 	public Cell add (Actor actor) {
 		//setListeners(actor);
 		row();
-		Cell cell = super.add(actor).width(WIDTH).align("center");
+		Cell cell = super.add(actor).width(WIDTH).center();
 		if(actor instanceof TextButton)
 			cell.height((int)Main.percentHeight*8);
 		else if(actor instanceof Label)
@@ -120,7 +120,7 @@ public class Popup extends Window {
 	
 	@SuppressWarnings("rawtypes")
 	public Cell add(Actor actor, int height, int width) {
-		return super.add(actor).width(width).align("center");
+		return super.add(actor).width(width).center();
 	}
 	
 	/**

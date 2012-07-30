@@ -212,7 +212,7 @@ public class MapEditorUI extends UI {
 		 * The "extra" panel that appears on top of the permanent one
 		 */
 		panelTable = new Table();
-		panelTable.align("center");
+		panelTable.center();
 		panelTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
 		panelTable.visible = false;
 		addActor(panelTable);

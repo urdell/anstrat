@@ -34,7 +34,7 @@ public class UnitInfoPopup extends Popup {
 		contents.x = contents.y = 0;
 		contents.width = width;
 		contents.height = height;
-		contents.align("top left");
+		contents.top().left();
 		this.addActor(contents);
 		
 		portrait = new Image();
