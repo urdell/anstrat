@@ -288,7 +288,7 @@ public class Assets {
 		return atlas.createSprite(name);
 	}
 	
-	public static synchronized Pair<Animation[], boolean[]> getAnimations(UnitType type){	
+	public static synchronized Pair<Animation[], boolean[]> getAnimations(UnitType type){
 		// If not already loaded, load
 		if(!unitAnimations.containsKey(type)){
 			int numStates = AnimationState.values().length;

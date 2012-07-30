@@ -217,6 +217,7 @@ public class GameUI extends UI {
 		topPanel.add(endTurnButton).width((int)(tph*2));
 		topPanel.add(turntable).pad(padv, padh, padv, padh);
 		topPanel.add(goldDisplay).expand().align("left");
+		topPanel.add(manaDisplay).expand().align("left");
 		
 		// Permanent Panel
 		float pwidth = bph*1.8f;
