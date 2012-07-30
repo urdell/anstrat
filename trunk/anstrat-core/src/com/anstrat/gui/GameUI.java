@@ -209,7 +209,7 @@ public class GameUI extends UI {
 		//Top panel
 		setBounds(topPanel, 0, height - tph, width, tph);
 		int padh = (int)(tph*0.1);
-		int padv = -(int)(turntable.getBackgroundPatch().getPatches()[0].getRegionHeight()/2);
+		int padv = -(int)(Assets.NinePatchUtils.getTopLeft(Assets.getTextureRegion("border-thin"), 15, 15, 15, 15).getRegionHeight()/2);
 		topPanel.clear();
 
 		// Top panel non-json

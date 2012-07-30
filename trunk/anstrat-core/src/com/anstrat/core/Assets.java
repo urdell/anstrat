@@ -177,17 +177,25 @@ public class Assets {
 				null,line,null,
 				null,null,null,
 				null,line,null));
+		
+		TextureRegion singleBorderWhiteBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thin-white"), 15, 15, 15, 15);
+		
 		SKIN.addResource ("line-border-thin", new NinePatch(
 				null,null,null,
 				null,null,null,
-				null,singleBorderWhite.getPatches()[7],null));
+				null,singleBorderWhiteBottomCenter,null));
 		SKIN.addResource ("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
 		NinePatch borderThick = new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20);
+		
 		SKIN.addResource ("double-border", borderThick);
+		
+		TextureRegion borderThickBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
+		TextureRegion borderThickTopCenter = NinePatchUtils.getTopCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
+		
 		SKIN.addResource ("border-thick-updown", new NinePatch(
-				null,borderThick.getPatches()[1],null,
+				null,borderThickTopCenter,null,
 				null,null,null,
-				null,borderThick.getPatches()[7],null));
+				null,borderThickBottomCenter,null));
 		SKIN.addResource ("button-up", new NinePatch(Assets.getTextureRegion("button-available")));
 		SKIN.addResource ("button-down", new NinePatch(Assets.getTextureRegion("button-pressed")));
 		SKIN.addResource ("button-disabled", new NinePatch(Assets.getTextureRegion("button-unavailable")));
@@ -608,6 +616,23 @@ public class Assets {
 			
 			setVertices(combined);
 			setIndices(indices);
+		}
+	}
+	
+	public static class NinePatchUtils {
+		public static TextureRegion getBottomCenter(TextureRegion region, int left, int right, int top, int bottom){
+			int middleWidth = region.getRegionWidth() - left - right;
+			int middleHeight = region.getRegionHeight() - top - bottom;
+			return new TextureRegion(region, left, top + middleHeight, middleWidth, bottom);
+		}
+		
+		public static TextureRegion getTopCenter(TextureRegion region, int left, int right, int top, int bottom){
+			int middleWidth = region.getRegionWidth() - left - right;
+			return new TextureRegion(region, left, 0, middleWidth, top);
+		}
+		
+		public static TextureRegion getTopLeft(TextureRegion region, int left, int right, int top, int bottom){
+			return new TextureRegion(region, 0, 0, left, top);
 		}
 	}
 }
