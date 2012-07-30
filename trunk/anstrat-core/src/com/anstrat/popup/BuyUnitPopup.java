@@ -76,7 +76,8 @@ public class BuyUnitPopup extends Popup{
 		
 		// The silhouettes of the purchasable units
 		unitTable = new ColorTable(Color.BLUE);
-		unitTable.setBackground(Assets.SKIN.getPatch("border-thick-updown"));
+		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
+		unitTable.setBackground(unitTableBackgroundPatch);
 		unitTable.defaults().size(unitWidth).padLeft(pad).padRight(pad);
 		
 		// Don't ask me why it has to be this order...
@@ -103,7 +104,7 @@ public class BuyUnitPopup extends Popup{
 		int cardH = (int)(Main.percentHeight*60);
 		
 		this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
-		this.add(unitTable).width(Gdx.graphics.getWidth()).padTop((int)(-unitTable.getBackgroundPatch().getTopHeight()/3));
+		this.add(unitTable).width(Gdx.graphics.getWidth()).padTop((int)(-unitTableBackgroundPatch.getTopHeight()/3));
 		this.row();
 		this.add().expand().uniform();
 		this.row();

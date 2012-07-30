@@ -58,7 +58,7 @@ public class MapList extends Table {
 		selected = null;
 		
 		list = new Table(Assets.SKIN);
-		list.align("top");
+		list.top();
 		
 		if(withRandom){
 			randomError = new Label(Assets.SKIN);

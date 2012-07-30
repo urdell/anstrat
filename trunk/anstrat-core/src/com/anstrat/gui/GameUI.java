@@ -89,7 +89,7 @@ public class GameUI extends UI {
 		turnDisplay = new Label("",Assets.SKIN);
 		turntable = new ColorTable(Color.BLACK);
 		turntable.setBackground(Assets.SKIN.getPatch("single-border"));
-		turntable.add(turnDisplay).align("center");
+		turntable.add(turnDisplay).center();
         
         addActor(topPanel);
         
@@ -213,10 +213,10 @@ public class GameUI extends UI {
 		topPanel.clear();
 
 		// Top panel non-json
-		topPanel.row().align("left").pad(pad).fill().height((int)(tph*0.8f));
+		topPanel.row().left().pad(pad).fill().height((int)(tph*0.8f));
 		topPanel.add(endTurnButton).width((int)(tph*2));
 		topPanel.add(turntable).pad(padv, padh, padv, padh);
-		topPanel.add(goldDisplay).expand().align("left");
+		topPanel.add(goldDisplay).expand().left();
 		topPanel.add(manaDisplay).expand().align("left");
 		
 		// Permanent Panel

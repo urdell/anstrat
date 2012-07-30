@@ -105,7 +105,7 @@ public class MainMenu extends MenuScreen {
 		scroll = new FlickScrollPane(gamesList);
 		scroll.setScrollingDisabled(true, false);
 		scrollTable = new Table();
-		scrollTable.align("top");
+		scrollTable.top();
 		scrollTable.add(scroll).fill().expand();
 		
 		Image empty = new Image(Assets.SKIN.getPatch("empty"));
@@ -217,7 +217,7 @@ public class MainMenu extends MenuScreen {
 		
 		timeleftLabels.clear();
 		gamesList.clear();
-		gamesList.align("top");
+		gamesList.top();
 		gamesList.setFillParent(true);
 		
 		int height = (int)(Main.percentHeight*4);

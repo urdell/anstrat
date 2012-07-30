@@ -38,7 +38,7 @@ public abstract class MenuScreen implements Screen {
 		
 		contents = new Table(Assets.SKIN);
 		setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        contents.align("top center");
+        contents.top().center();
         contents.setBackground(new NinePatch(Assets.getTextureRegion("MenuBackground")));
         
         stage.addActor(contents);
