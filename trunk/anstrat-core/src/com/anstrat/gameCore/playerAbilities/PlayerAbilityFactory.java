@@ -17,6 +17,8 @@ public class PlayerAbilityFactory {
 			return new Zombify(player);
 		else if (type.equals(PlayerAbilityType.THORS_RAGE))
 			return new ThorsRage(player);
+		else if (type.equals(PlayerAbilityType.ODINS_BLESSING))
+			return new OdinsBlessing(player);
 		else
 			return null;
 	}

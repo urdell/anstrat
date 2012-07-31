@@ -1,5 +1,9 @@
 package com.anstrat.gameCore;
 
+import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import com.anstrat.geography.TileCoordinate;
 
 /**
@@ -37,5 +41,16 @@ public abstract class StateUtils {
 	
 	public static Building getCurrentPlayerCastle(){
 		return State.activeState.map.getPlayersCastle(State.activeState.currentPlayerId);
+	}
+	
+	public static Unit[] getPlayersUnits(Player player) {
+		Set<Entry<Integer, Unit>> units = State.activeState.unitList.entrySet();
+		ArrayList<Unit> res = new ArrayList<Unit>();
+		for(Entry<Integer, Unit> entry : units) {
+			if(entry.getValue().ownerId == player.playerId) {
+				res.add(entry.getValue());
+			}
+		}
+		return res.toArray(new Unit[res.size()]);
 	}
 }
