@@ -6,6 +6,11 @@
 			<manacost>10</manacost>
 			<description>Odin fully restores target unit's AP</description>
 		</PlayerAbility>
+		<PlayerAbility>
+			<name>Odin's Blessing</name>
+			<manacost>15</manacost>
+			<description>Odin restores some AP to all your units</description>
+		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Thor">
 		<PlayerAbility>
@@ -19,7 +24,7 @@
 			<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 		</PlayerAbility>
 		<PlayerAbility>
-			<name>Thors Rage</name>
+			<name>Thor's Rage</name>
 			<manacost>5</manacost>
 			<description>Target unit is blessed with Thors rage and has increased damage</description>
 		</PlayerAbility>

@@ -1,5 +1,8 @@
 package com.anstrat.gameCore.playerAbilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.ThunderboltAnimation;
@@ -7,6 +10,8 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.geography.TerrainType;
+import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -35,7 +40,15 @@ public class Thunderbolt extends TargetedPlayerAbility {
 			State.activeState.unitList.remove(target.id);
 		}
 		Gdx.app.log("PlayerAbility", "Thunderbolt was cast");
-		Animation animation = new ThunderboltAnimation(target);
+		List<Unit> list = this.getAffectedUnits(tile);
+		for(Unit unit : list) {
+			unit.currentHP -= damage;
+			if(unit.currentHP <= 0){
+				GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(unit, GEngine.getInstance().getUnit(target).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
+				State.activeState.unitList.remove(target.id);
+			}
+		}
+		Animation animation = new ThunderboltAnimation(target, list, damage);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	
@@ -46,4 +59,27 @@ public class Thunderbolt extends TargetedPlayerAbility {
 				targetUnit != null &&
 				targetUnit.ownerId != player.playerId;
 	}
+	
+	private List<Unit> getAffectedUnits(TileCoordinate tc) {
+		List<Unit> res = new ArrayList<Unit>();
+		if (State.activeState.map.getTile(tc).terrain.equals(TerrainType.SHALLOW_WATER)) {
+			List<Tile> temp = State.activeState.map.getNeighbors(tc);
+			for(int i = 0; i < temp.size(); i++) {
+				Tile tile = temp.get(i);
+				if (tile.terrain.equals(TerrainType.SHALLOW_WATER)) {
+					if (StateUtils.getUnitByTile(tile.coordinates) != null)
+						res.add(StateUtils.getUnitByTile(tile.coordinates));
+					for(Tile t : State.activeState.map.getNeighbors(tile)) {
+						if (!temp.contains(t) && t.terrain.equals(TerrainType.SHALLOW_WATER)) {
+							temp.add(t);
+						}
+					}
+				}
+			}
+		}
+		
+		return res;
+	}
 }
+
+	
