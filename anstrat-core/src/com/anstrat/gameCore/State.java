@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
+import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.command.Command;
 import com.anstrat.core.GameInstance;
@@ -19,6 +20,7 @@ import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * 
@@ -91,6 +93,7 @@ public class State implements Serializable{
 		currentPlayerId = (currentPlayerId + 1) % players.length;
 		Player player = State.activeState.getCurrentPlayer();
 		
+		List<Unit> unitsToBeRemoved = new ArrayList<Unit>();
 		for(Unit u : unitList.values()){
 			
 			// Update AP for all units
@@ -113,9 +116,7 @@ public class State implements Serializable{
 					if(effect instanceof TriggerOnTurnStart){
 						((TriggerOnTurnStart) effect).triggerOnTurnStart(u);
 					}
-			}
-			
-				
+				}
 			}
 			
 			
@@ -130,7 +131,13 @@ public class State implements Serializable{
 					if(HPReg > 0) GEngine.getInstance().animationHandler.enqueue(new FloatingTextAnimation(u.tileCoordinate, String.valueOf(HPReg), Color.GREEN));
 				}
 			}
+			if(u.currentHP <= 0)
+				unitsToBeRemoved.add(u);
 			
+		}
+		for(Unit u : unitsToBeRemoved){
+			u.resolveDeath();
+			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(u, GEngine.getInstance().getUnit(u).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 		}
 		//Regenerate capture-points if no unit is occupying village
 		
