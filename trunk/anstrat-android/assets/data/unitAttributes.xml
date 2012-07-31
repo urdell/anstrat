@@ -3,11 +3,11 @@
 	<UnitType>
 		<name>Berserker</name>
 		<imageFolder>berserker</imageFolder>
-		<maxHP>15</maxHP>
-		<attack>9</attack>
+		<maxHP>18</maxHP>
+		<attack>10</attack>
 		<maxAP>7</maxAP>
 		<APReg>5</APReg>
-		<cost>25</cost>
+		<cost>33</cost>
 		<ability1>5</ability1><!-- Leap Attack -->
 		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
 		<idleImage>berserker-idle-0001</idleImage>
@@ -16,12 +16,12 @@
 	<UnitType>
 		<name>Shaman</name>
 		<imageFolder>shaman</imageFolder>
-		<maxHP>13</maxHP>
-		<attack>4</attack>
+		<maxHP>16</maxHP>
+		<attack>7</attack>
 		<maxAttackRange>2</maxAttackRange>
-		<maxAP>6</maxAP>
+		<maxAP>7</maxAP>
 		<APReg>4</APReg>
-		<cost>21</cost>
+		<cost>30</cost>
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
@@ -45,7 +45,7 @@
 	<UnitType>
 		<name>Wolf</name>
 		<imageFolder>wolf</imageFolder>
-		<maxHP>15</maxHP>
+		<maxHP>18</maxHP>
 		<attack>6</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
@@ -59,7 +59,7 @@
 	<UnitType>
 		<name>Hawk</name>
 		<imageFolder>hawk</imageFolder>
-		<maxHP>12</maxHP>
+		<maxHP>11</maxHP>
 		<attack>4</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>9</maxAP>
@@ -88,7 +88,7 @@
 		<name>Swordsman</name>
 		<imageFolder>swordsman</imageFolder>
 		<maxHP>25</maxHP>
-		<attack>6</attack>
+		<attack>8</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
@@ -100,12 +100,12 @@
 	<UnitType>
 		<name>Valkyrie</name>
 		<imageFolder>valkyrie</imageFolder>
-		<maxHP>25</maxHP>
-		<attack>7</attack>
+		<maxHP>20</maxHP>
+		<attack>8</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
-		<cost>38</cost>
+		<cost>30</cost>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
 		<terrainPenaltyHill>1</terrainPenaltyHill>
@@ -129,7 +129,7 @@
 		<name>Fallen Warrior</name>
 		<imageFolder>fallen</imageFolder>
 		<maxHP>14</maxHP>
-		<attack>5</attack>
+		<attack>7</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>2</APReg>
@@ -143,12 +143,12 @@
 	<UnitType>
 		<name>Dark Elf</name>
 		<imageFolder>elf</imageFolder>
-		<maxHP>15</maxHP>
+		<maxHP>13</maxHP>
 		<attack>6</attack>
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
-		<cost>25</cost>
+		<cost>22</cost>
 		<ability1>12</ability1><!-- Poison -->
 		<description>The Dark Elf is a poweful and mobile unit.</description>
 		<idleImage>elf-idle-0001</idleImage>
@@ -158,7 +158,7 @@
 		<name>Goblin Shaman</name>
 		<imageFolder>goblin</imageFolder>
 		<maxHP>12</maxHP>
-		<attack>4</attack>
+		<attack>6</attack>
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
@@ -171,12 +171,12 @@
 	<UnitType>
 		<name>Jotun</name>
 		<imageFolder>jotun</imageFolder>
-		<maxHP>50</maxHP>
-		<attack>10</attack>
+		<maxHP>45</maxHP>
+		<attack>14</attack>
 		<maxAttackRange>1</maxAttackRange>
-		<maxAP>6</maxAP>
-		<APReg>3</APReg>
-		<cost>55</cost>
+		<maxAP>5</maxAP>
+		<APReg>4</APReg>
+		<cost>40</cost>
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
@@ -184,12 +184,12 @@
 	<UnitType>
 		<name>Troll</name>
 		<imageFolder>troll</imageFolder>
-		<maxHP>30</maxHP>
-		<attack>7</attack>
+		<maxHP>26</maxHP>
+		<attack>8</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
-		<cost>30</cost>
+		<cost>25</cost>
 		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
 		<terrainPenaltyMountain>4</terrainPenaltyMountain>
