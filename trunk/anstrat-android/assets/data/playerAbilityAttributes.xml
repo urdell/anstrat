@@ -35,6 +35,11 @@
 			<manacost>15</manacost>
 			<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
 		</PlayerAbility>
+		<PlayerAbility>
+			<name>Hel's Curse</name>
+			<manacost>5</manacost>
+			<description>Hel curses target unit with frightening visions. Target unit takes some damage each turn until it dies</description>
+		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Loki">	
 		<PlayerAbility>

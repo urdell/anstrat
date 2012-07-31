@@ -106,6 +106,20 @@
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
 		<cost>38</cost>
+		<terrainPenaltyMountain>1</terrainPenaltyMountain>
+		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
+		<terrainPenaltyHill>1</terrainPenaltyHill>
+		<terrainPenaltySnow>1</terrainPenaltySnow>
+		<terrainPenaltyForest>1</terrainPenaltyForest>
+		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
+		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
+		<terrainPenaltyRockyhill>1</terrainPenaltyRockyhill>
+		<terrainPenaltyVolcano>1</terrainPenaltyVolcano>
+		<terrainPenaltyRockylava>1</terrainPenaltyRockylava>
+		<terrainPenaltyRockylavapool>1</terrainPenaltyRockylavapool>
+		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
+		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
+		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<ability1>4</ability1><!-- Magic Spear -->
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
@@ -173,12 +187,17 @@
 		<maxHP>30</maxHP>
 		<attack>7</attack>
 		<maxAttackRange>1</maxAttackRange>
-		<maxAP>6</maxAP>
+		<maxAP>5</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
 		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
-		<description>The Troll is the only unit with a passive regeneration ability.</description>
+		<terrainPenaltyMountain>4</terrainPenaltyMountain>
+		<terrainPenaltyForest>1</terrainPenaltyForest>
+		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
+		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
+		<terrainPenaltySnowmountain>4</terrainPenaltySnowmountain>
+		<description>The Troll is the only unit with a passive regeneration ability. It can also climp mountains and have no terrain penalty in forests.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 	</UnitType>
