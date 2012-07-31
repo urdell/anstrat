@@ -25,7 +25,7 @@
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
-			<manacost>25</manacost>
+			<manacost>15</manacost>
 			<description>Target unit is blessed with Thors rage and has increased damage</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
@@ -33,12 +33,17 @@
 		<PlayerAbility>
 			<name>Zombify</name>
 			<manacost>35</manacost>
-			<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
+			<description>Hel turns one target enemy unit into a Fallen Warrior under her controll</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Hel's Curse</name>
-			<manacost>5</manacost>
-			<description>Hel curses target unit with frightening visions. Target unit takes some damage each turn until it dies</description>
+			<manacost>15</manacost>
+			<description>Hel curses target enemy unit with frightening visions. Target unit takes 6 damage each turn until it dies</description>
+		</PlayerAbility>
+		<PlayerAbility>
+			<name>Confusion</name>
+			<manacost>10</manacost>
+			<description>Hel confuses target enemy unit, making it attack itself.</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Loki">	
