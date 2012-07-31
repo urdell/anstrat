@@ -129,7 +129,7 @@
 		<name>Fallen Warrior</name>
 		<imageFolder>fallen</imageFolder>
 		<maxHP>14</maxHP>
-		<attack>3</attack>
+		<attack>5</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>2</APReg>
@@ -144,13 +144,13 @@
 		<name>Dark Elf</name>
 		<imageFolder>elf</imageFolder>
 		<maxHP>15</maxHP>
-		<attack>8</attack>
-		<maxAttackRange>3</maxAttackRange>
-		<maxAP>9</maxAP>
+		<attack>6</attack>
+		<maxAttackRange>2</maxAttackRange>
+		<maxAP>8</maxAP>
 		<APReg>5</APReg>
-		<cost>30</cost>
+		<cost>25</cost>
 		<ability1>12</ability1><!-- Poison -->
-		<description>The Dark Elf is a poweful and mobile unit. Has the longest attack range in the game.</description>
+		<description>The Dark Elf is a poweful and mobile unit.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 	</UnitType>
@@ -162,7 +162,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
-		<cost>30</cost>
+		<cost>18</cost>
 		<ability1>8</ability1><!-- AP Heal -->
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
@@ -197,7 +197,7 @@
 		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowmountain>4</terrainPenaltySnowmountain>
-		<description>The Troll is the only unit with a passive regeneration ability. It can also climp mountains and have no terrain penalty in forests.</description>
+		<description>The Troll is the only unit with a passive regeneration ability. It can also climb mountains and have no terrain penalty in forests.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 	</UnitType>

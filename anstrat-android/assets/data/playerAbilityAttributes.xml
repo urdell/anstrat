@@ -3,12 +3,12 @@
 	<PlayerAbilityGod god="Odin">
 		<PlayerAbility>
 			<name>Speedboost</name>
-			<manacost>10</manacost>
+			<manacost>20</manacost>
 			<description>Odin fully restores target unit's AP</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Odin's Blessing</name>
-			<manacost>15</manacost>
+			<manacost>25</manacost>
 			<description>Odin restores some AP to all your units</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
@@ -20,19 +20,19 @@
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Comet Strike</name>
-			<manacost>15</manacost>
+			<manacost>35</manacost>
 			<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
-			<manacost>5</manacost>
+			<manacost>25</manacost>
 			<description>Target unit is blessed with Thors rage and has increased damage</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Hel">
 		<PlayerAbility>
 			<name>Zombify</name>
-			<manacost>15</manacost>
+			<manacost>35</manacost>
 			<description>Hel turns one target unit into a Fallen Warrior under her controll</description>
 		</PlayerAbility>
 		<PlayerAbility>
@@ -44,7 +44,7 @@
 	<PlayerAbilityGod god="Loki">	
 		<PlayerAbility>
 			<name>Teleport</name>
-			<manacost>10</manacost>
+			<manacost>12</manacost>
 			<description>Loke flips the position of 2 target units</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
