@@ -20,6 +20,7 @@ import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmOverlay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +36,9 @@ import com.badlogic.gdx.utils.BufferUtils;
  *
  */
 public class GEngine implements Screen{
+	
+	/**If true prints coordinates for all tiles*/
+	private boolean showCoordinates = true;
 	
 	/**
 	 * The zoom level at the start of the game, in number of tile widths.
@@ -240,8 +244,9 @@ public class GEngine implements Screen{
 		highlighter.render(batch);
 		if(actionHandler.showingConfirmDialog)
 			confirmOverlay.drawTopLayer(batch);
-		
-		//drawCoordinates();
+		if(showCoordinates){
+			drawCoordinates();
+		}
 		batch.end();
 		
 		animationHandler.drawAll(delta, batch);
@@ -328,7 +333,7 @@ public class GEngine implements Screen{
 		else 
 			return true;
 	}
-/*
+
 	private void drawCoordinates(){
 		Assets.STANDARD_FONT.setColor(Color.WHITE);
 		for(GTile[] tileRow : map.tiles){
@@ -340,7 +345,7 @@ public class GEngine implements Screen{
 		}
 	
 	}
-*/
+
 	private void decideSmoothLines(){
 		IntBuffer ib = BufferUtils.newIntBuffer(16);
 		Gdx.gl.glGetIntegerv(GL10.GL_SMOOTH_LINE_WIDTH_RANGE, ib);
