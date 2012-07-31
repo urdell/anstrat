@@ -24,7 +24,7 @@ public class Thunderbolt extends TargetedPlayerAbility {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static final int damage = 5;
+	public static final int damage = 8;
 	
 	public Thunderbolt(Player player) {
 		super(player, PlayerAbilityType.THUNDERBOLT);

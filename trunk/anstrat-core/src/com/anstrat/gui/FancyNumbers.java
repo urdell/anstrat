@@ -25,10 +25,11 @@ public class FancyNumbers {
 	}
 	public static void drawValueDecrement(int before, int after, float x, float y, float size, boolean flipped, SpriteBatch batch){
 		drawNumber(before, x, y, size, flipped, batch);
-		if(before >= 10)
-			x += 2*size*sideIncrement;
-		else
+		if(before >= 100)
 			x += size*sideIncrement;
+		if(before >= 10)
+			x += size*sideIncrement;
+		x += size*sideIncrement;
 		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
 		batch.draw(arrow, x+size*0.1f, y, size*0.8f, 	// if flipped, invert height
 				flipped ? -size : size);
@@ -46,12 +47,19 @@ public class FancyNumbers {
 	 * @param batch
 	 */
 	public static void drawNumber(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
-		int tens = number/10;
+		int hundreds = number/100;
+		int tens = number/10%10;
 		int ones = number%10;
 		
-		TextureRegion onesTexture, tensTexture;
+		TextureRegion onesTexture, tensTexture, hundredsTextrue;
 		
-		
+		if(hundreds > 0)
+		{
+			hundredsTextrue = Assets.getTextureRegion("ap-"+hundreds);
+			batch.draw(hundredsTextrue, x, y, size, 	// if flipped, invert height
+					flipped ? -size : size);
+			x += size*sideIncrement;
+		}
 		if(tens > 0)
 		{
 			tensTexture = Assets.getTextureRegion("ap-"+tens);

@@ -39,7 +39,7 @@ public class Player implements Serializable {
 	
 	public int gold = 50;
 	
-	public int mana = 50;
+	public int mana = 10;
 	
 	public int god;
 	
