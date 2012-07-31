@@ -1,10 +1,13 @@
 package com.anstrat.gameCore.effects;
 
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gui.GEngine;
 
 public class PoisonEffect extends Effect implements DamageModifier,TriggerOnTurnEnd {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int nrOfRoundsTotal;
 	private int nrOfRoundsSoFar = 0;
 	
