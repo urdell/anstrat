@@ -166,15 +166,19 @@ public class AbilityPopup extends Popup {
 		card.y = (float) (2.25*buttonHeight)-Main.percentHeight;
 		card.setSize(cardWidth+4*Main.percentWidth, cardHeight+2*Main.percentHeight);
 		
-		abilities[0].x = 0;
-		abilities[0].y = (float) (3*buttonHeight);
-		
-		abilities[1].x = 0;
-		abilities[1].y = (float) (4.5*buttonHeight);
-		
-		abilities[2].x = (float) (0.6*buttonWidth);
-		abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		
+		if(abilities.length > 0) {
+			abilities[0].x = 0;
+			abilities[0].y = (float) (3*buttonHeight);
+		}
+		if(abilities.length > 1) {
+			abilities[1].x = 0;
+			abilities[1].y = (float) (4.5*buttonHeight);
+		}
+		if(abilities.length > 2) {
+			abilities[2].x = (float) (0.6*buttonWidth);
+			abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
+		}
+		/*
 		abilities[3].x = (float) (width-1.6*buttonWidth);
 		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
 		
@@ -184,7 +188,7 @@ public class AbilityPopup extends Popup {
 		
 		abilities[5].x = width-buttonWidth;
 		abilities[5].y = (float) (3*buttonHeight);
-		
+		*/
 		for(Button ability : abilities){
 			ability.width = buttonWidth;
 			ability.height = buttonHeight;

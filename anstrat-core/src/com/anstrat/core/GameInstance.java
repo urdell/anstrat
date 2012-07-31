@@ -56,9 +56,9 @@ public class GameInstance implements Serializable{
 	
 	public static void createOnlineGame(long gameid, long randomseed, long timelimit, String gamename, Map map, long opponentId, String opponentName, boolean host){
 		if (host)
-			new NetworkGameInstance(gameid, new Player[]{new Player(User.globalUserID, 0, "Player "+0, 0), new Player(opponentId, 1, opponentName, 1)},map, randomseed, timelimit);
+			new NetworkGameInstance(gameid, new Player[]{new Player(User.globalUserID, 0, "Player "+0, 0, Player.getRandomGodFromTeam(0)), new Player(opponentId, 1, opponentName, 1, Player.getRandomGodFromTeam(1))},map, randomseed, timelimit);
 		else
-			new NetworkGameInstance(gameid, new Player[]{new Player(opponentId, 0, opponentName, 0), new Player(User.globalUserID, 1, "Player "+0, 1)},map, randomseed, timelimit);
+			new NetworkGameInstance(gameid, new Player[]{new Player(opponentId, 0, opponentName, 0, Player.getRandomGodFromTeam(0)), new Player(User.globalUserID, 1, "Player "+0, 1, Player.getRandomGodFromTeam(1))},map, randomseed, timelimit);
 	}
 	
 	public static GameInstance createHotseatGame(Map map, int numPlayers){
@@ -68,7 +68,7 @@ public class GameInstance implements Serializable{
 		int team = 0;
 		
 		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(User.globalUserID, i, "Player " + i, team);
+			players[i] = new Player(User.globalUserID, i, "Player " + i, team, Player.getRandomGodFromTeam(team));
 			
 			// Toggle team
 			team = (team + 1) % UnitType.TEAMS.length;

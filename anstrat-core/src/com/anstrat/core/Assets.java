@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Assets {
 
-	public static boolean USE_GENERATED_FONTS = true;
+	public static boolean USE_GENERATED_FONTS = false;
 
 	// TODO: Ugly way of storing two values, but a rewrite of the animation system is required to do this properly
 	private static HashMap<UnitType, Pair<Animation[], boolean[]>> unitAnimations;

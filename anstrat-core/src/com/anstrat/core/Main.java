@@ -120,9 +120,10 @@ public class Main extends Game implements ApplicationListener, INetworkListener 
 		Assets.load();													// Textures, fonts
 		UnitType.loadAttributesFromFile(
 				Gdx.files.internal("data/unitAttributes.xml"));			// Attributes (name, stats etc) for all units
+		Options.loadPreferences();										// Settings, sound on/off etc
 		PlayerAbilityType.loadAttributesFromFile(
 				Gdx.files.internal("data/playerAbilityAttributes.xml"));
-		Options.loadPreferences();										// Settings, sound on/off etc
+
 		GameInstance.loadGameInstances(Gdx.files.local("games.bin"));	// Loads all saved game instances
 		
 		// Create the single instance of sprite batch

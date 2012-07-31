@@ -39,8 +39,8 @@ public class Popup extends Window {
 	private static Popup genericPopup;
 	
 	private static BuyUnitPopup[] buyUnitPopups;
+	private static AbilityPopup[] abilityPopups; 
 	public static UnitInfoPopup unitInfoPopup;
-	public static AbilityPopup abilityPopup; 
 	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
 		@Override
@@ -226,8 +226,12 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
-		abilityPopup = new AbilityPopup(PlayerAbilityType.THUNDERBOLT, PlayerAbilityType.SPEEDBOOST, PlayerAbilityType.COMETSTRIKE, PlayerAbilityType.TELEPORT, PlayerAbilityType.ZOMBIFY, PlayerAbilityType.THORS_RAGE);
 		//buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.SHAMAN, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
+		abilityPopups = new AbilityPopup[4];
+
+		for (int i = 0; i < abilityPopups.length; i++) {
+			abilityPopups[i] = new AbilityPopup(PlayerAbilityType.getAbilitiesFromGod(i));
+		}
 		
 		buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
 		for(int i = 0; i < buyUnitPopups.length; i++){
@@ -254,6 +258,11 @@ public class Popup extends Window {
 		return buyUnitPopups[currentPlayer.team];
 	}
 	
+	public static AbilityPopup getAbilityPopup(){
+		Player currentPlayer = com.anstrat.gameCore.State.activeState.players[com.anstrat.gameCore.State.activeState.currentPlayerId];
+		return abilityPopups[currentPlayer.god];
+	}
+	
 	/**
 	 * Shows a generic {@link Popup}
 	 * @param message The message to be shown
@@ -268,12 +277,12 @@ public class Popup extends Window {
 	public static void disposePopups(){
 		
 		buyUnitPopups = null;
+		abilityPopups = null;
 		overlay = null;
 		gestureHandler = null;
 		currentPopup = null;
 		genericPopup = null;
 		genericPopupLabel = null;
-		abilityPopup = null;
 		unitInfoPopup = null;
 	}
 }

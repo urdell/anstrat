@@ -126,7 +126,7 @@ public class GameUI extends UI {
         spellButton.setClickListener(new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Popup.abilityPopup.show();
+            	Popup.getAbilityPopup().show();
             }
         } );
       
