@@ -15,7 +15,8 @@ public enum PlayerAbilityType {
 	TELEPORT("Teleport"),
 	ZOMBIFY("Zombify"),
 	THORS_RAGE("Thor's Rage"),
-	ODINS_BLESSING("Odin's Blessing");
+	ODINS_BLESSING("Odin's Blessing"),
+	HELS_CURSE("Hel's Curse");
 	
 	public transient final String name;
 	public transient int manaCost;
@@ -118,7 +119,7 @@ public enum PlayerAbilityType {
 		case GOD_ODIN:
 			return new PlayerAbilityType[]{SPEEDBOOST, ODINS_BLESSING};
 		case GOD_HEL:
-			return new PlayerAbilityType[]{ZOMBIFY};
+			return new PlayerAbilityType[]{HELS_CURSE, ZOMBIFY};
 		case GOD_LOKI:
 			return new PlayerAbilityType[]{TELEPORT};
 		}

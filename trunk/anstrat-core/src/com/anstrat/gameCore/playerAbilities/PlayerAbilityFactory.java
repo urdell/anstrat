@@ -19,6 +19,8 @@ public class PlayerAbilityFactory {
 			return new ThorsRage(player);
 		else if (type.equals(PlayerAbilityType.ODINS_BLESSING))
 			return new OdinsBlessing(player);
+		else if (type.equals(PlayerAbilityType.HELS_CURSE))
+			return new HelsCurse(player);
 		else
 			return null;
 	}
