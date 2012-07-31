@@ -18,7 +18,7 @@ public class RemoveEffects extends TargetedPlayerAbility {
 	private static final long serialVersionUID = 1L;
 
 	public RemoveEffects(Player player) {
-		super(player, PlayerAbilityType.SPEEDBOOST);
+		super(player, PlayerAbilityType.REMOVE_EFFECTS);
 	}
 	
 	@Override

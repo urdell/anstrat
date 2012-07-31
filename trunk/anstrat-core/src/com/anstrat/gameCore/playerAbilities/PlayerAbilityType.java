@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public enum PlayerAbilityType {
 	THUNDERBOLT("Thunderbolt"),
-	SPEEDBOOST("Speedboost"),
+	REMOVE_EFFECTS("Remove Effects"),
 	COMETSTRIKE("Comet Strike"),
 	SWAP("Swap"),
 	ZOMBIFY("Zombify"),
@@ -118,7 +118,7 @@ public enum PlayerAbilityType {
 		case GOD_THOR:
 			return new PlayerAbilityType[]{THORS_RAGE, THUNDERBOLT, COMETSTRIKE};
 		case GOD_ODIN:
-			return new PlayerAbilityType[]{SPEEDBOOST, ODINS_BLESSING};
+			return new PlayerAbilityType[]{REMOVE_EFFECTS, ODINS_BLESSING};
 		case GOD_HEL:
 			return new PlayerAbilityType[]{HELS_CURSE, ZOMBIFY};
 		case GOD_LOKI:

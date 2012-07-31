@@ -7,7 +7,7 @@ public class PlayerAbilityFactory {
 	public static PlayerAbility createAbility(PlayerAbilityType type, Player player){
 		if (type.equals(PlayerAbilityType.THUNDERBOLT))
 			return new Thunderbolt(player);
-		else if (type.equals(PlayerAbilityType.SPEEDBOOST))
+		else if (type.equals(PlayerAbilityType.REMOVE_EFFECTS))
 			return new RemoveEffects(player);
 		else if (type.equals(PlayerAbilityType.COMETSTRIKE))
 			return new CometStrike(player);
