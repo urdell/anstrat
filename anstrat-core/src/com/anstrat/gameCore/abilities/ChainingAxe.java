@@ -24,7 +24,7 @@ public class ChainingAxe extends TargetedAbility {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int AP_COST = 3;
+	private static final int AP_COST = 4;
 	private static final int RANGE = 2;
 
 	
