@@ -38,7 +38,7 @@ import com.badlogic.gdx.utils.BufferUtils;
 public class GEngine implements Screen{
 	
 	/**If true prints coordinates for all tiles*/
-	private boolean showCoordinates = true;
+	private boolean showCoordinates = false;
 	
 	/**
 	 * The zoom level at the start of the game, in number of tile widths.
