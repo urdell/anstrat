@@ -176,6 +176,7 @@
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
 		<cost>30</cost>
+		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
 		<description>The Troll is the only unit with a passive regeneration ability.</description>
 		<idleImage>troll-idle-0001</idleImage>

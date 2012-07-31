@@ -12,7 +12,7 @@ public class AbilityFactory {
 	public static final int CHAINING_AXE = 7;
 	public static final int AP_HEAL = 8;
 	public static final int THROW_ICE = 9;
-	public static final int HP_REG = 10;
+	public static final int KNOCKBACK = 10;
 	public static final int DARK_RITUAL = 11;
 	public static final int POISON = 12;
 
@@ -27,7 +27,7 @@ public class AbilityFactory {
 			case CHAINING_AXE: return new ChainingAxe();
 			case AP_HEAL: 		return new APHeal();
 			case THROW_ICE: return new ThrowIce();
-			case HP_REG: return new HPReg();
+			case KNOCKBACK: return new Knockback();
 			case DARK_RITUAL: return new DarkRitual();
 			case POISON: return new Poison();
 			default: return null;
