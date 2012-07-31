@@ -2,14 +2,14 @@
 <PlayerAbilities>
 	<PlayerAbilityGod god="Odin">
 		<PlayerAbility>
-			<name>Speedboost</name>
+			<name>Remove Effects</name>
 			<manacost>20</manacost>
-			<description>Odin fully restores target unit's AP</description>
+			<description>Odin removes all of target unit's effects.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Odin's Blessing</name>
-			<manacost>25</manacost>
-			<description>Odin restores some AP to all your units</description>
+			<manacost>40</manacost>
+			<description>Odin blesses your units. They restore 3 AP.</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Thor">
@@ -43,9 +43,14 @@
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Loki">	
 		<PlayerAbility>
-			<name>Teleport</name>
-			<manacost>12</manacost>
-			<description>Loke flips the position of 2 target units</description>
+			<name>Swap</name>
+			<manacost>15</manacost>
+			<description>Loke swaps the position of 2 target units</description>
+		</PlayerAbility>
+		<PlayerAbility>
+			<name>Freeze</name>
+			<manacost>20</manacost>
+			<description>Loke freezes target tile. Any unit standing on the tile takes 4 damage and is freezed, meaning it will regenerate less AP each round.</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 </PlayerAbilities>
