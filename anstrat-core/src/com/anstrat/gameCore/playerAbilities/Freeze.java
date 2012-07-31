@@ -7,6 +7,7 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.effects.FreezeEffect;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -19,9 +20,10 @@ public class Freeze extends TargetedPlayerAbility {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int damage = 4;
+	public static final int rounds = 3;
 	
 	public Freeze(Player player) {
-		super(player, PlayerAbilityType.COMETSTRIKE);
+		super(player, PlayerAbilityType.FREEZE);
 	}
 	
 	@Override
@@ -31,6 +33,7 @@ public class Freeze extends TargetedPlayerAbility {
 		Animation animation = new FreezeAnimation(tile, damage);
 		
 		if (centerTarget != null) {
+			centerTarget.getEffects().add((new FreezeEffect(centerTarget.getAPReg()/2, rounds)));
 			centerTarget.currentHP -= damage;
 			if (centerTarget.currentHP <= 0) {
 				GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(centerTarget, GEngine.getInstance().getUnit(centerTarget).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));

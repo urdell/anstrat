@@ -21,6 +21,8 @@ public class PlayerAbilityFactory {
 			return new OdinsBlessing(player);
 		else if (type.equals(PlayerAbilityType.HELS_CURSE))
 			return new HelsCurse(player);
+		else if (type.equals(PlayerAbilityType.FREEZE))
+			return new Freeze(player);
 		else if (type.equals(PlayerAbilityType.CONFUSION))
 			return new Confusion(player);
 		else
