@@ -1,6 +1,7 @@
 package com.anstrat.gui.confirmDialog;
 
 import com.anstrat.core.Assets;
+import com.anstrat.gui.FancyNumbers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,6 +11,8 @@ public class CostRow extends ConfirmRow {
 	TextureRegion resource;
 	int currentValue;
 	int endValue;
+	boolean isGold;
+	Color manaColor = new Color(0.5f, 0.5f, 1f, 1f);
 	
 	/**
 	 * 
@@ -19,6 +22,7 @@ public class CostRow extends ConfirmRow {
 	 */
 	public CostRow(int currentValue, int cost, boolean isGold){
 		this.currentValue = currentValue;
+		this.isGold = isGold;
 		endValue = currentValue-cost;
 		if(isGold){
 			resource = Assets.getTextureRegion("gold");
@@ -30,18 +34,14 @@ public class CostRow extends ConfirmRow {
 
 	@Override
 	public void draw(float x, float y, SpriteBatch batch) {
-		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
 		
 		batch.draw(resource, x+ROW_HEIGHT*0.0f, y, ROW_HEIGHT, ROW_HEIGHT);
-		batch.draw(arrow, x+ROW_HEIGHT*2f, y, ROW_HEIGHT, ROW_HEIGHT);
-		
-		float scale =Assets.DESCRIPTION_FONT.getScaleX();
-		Assets.UI_FONT.setScale(1.7f);
-		Assets.UI_FONT.setColor(Color.WHITE);
-		Assets.UI_FONT.draw(batch, ""+currentValue, x+ROW_HEIGHT, y+ROW_HEIGHT*0.85f);
-		Assets.UI_FONT.draw(batch, ""+endValue, x+ROW_HEIGHT*3, y+ROW_HEIGHT*0.85f);
-		Assets.UI_FONT.setScale(scale);
-		
+		if(isGold)
+			batch.setColor(Color.YELLOW);
+		else
+			batch.setColor(manaColor);
+		FancyNumbers.drawValueDecrement(currentValue, endValue, x+ROW_HEIGHT*0.9f, y+ROW_HEIGHT*0.2f, ROW_HEIGHT*0.7f, false, batch);
+		batch.setColor(Color.WHITE);
 	}
 
 }
