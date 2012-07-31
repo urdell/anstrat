@@ -20,6 +20,9 @@ public enum PlayerAbilityType {
 	public transient int manaCost;
 	public transient String description;
 	
+	public static final int GOD_THOR = 0, GOD_ODIN = 1, GOD_HEL = 2, GOD_LOKI = 3;
+	public transient int god;
+	
 	public transient String graphicsFolder;
 	
 	public String idleImage;
@@ -38,17 +41,18 @@ public enum PlayerAbilityType {
 			Element root = new XmlReader().parse(file);
 		
 			for (int i = 0; i < root.getChildCount(); i++) {
-				loadPlayerAbilityType(root.getChild(i));
-				/*for(int y = 0; y < root.getChild(i).getChildCount(); y++) {
-				loadPlayerAbilityType(root.getChild(i).getChild(y));
-				}*/
+				int god = getGodByName(root.getChild(i).get("god"));
+				
+				for(int y = 0; y < root.getChild(i).getChildCount(); y++) {
+					loadPlayerAbilityType(root.getChild(i).getChild(y), god);
+				}
 			}
 		} catch (IOException e) {
 			throw new GdxRuntimeException(String.format("Failed to parse player ability types from '%s'", file.name()), e);
 		}
 	}
 	
-	private static void loadPlayerAbilityType(Element element){
+	private static void loadPlayerAbilityType(Element element, int god){
 		String name = element.get("name");
 		PlayerAbilityType type = getPlayerAbilityTypeByName(name);
 		
@@ -63,6 +67,7 @@ public enum PlayerAbilityType {
 		//type.graphicsFolder = element.get("imageFolder", type.graphicsFolder);
 		type.manaCost = element.getInt("manacost", type.manaCost);
 		type.description = element.get("description", type.description);
+		type.god = god;
 		//type.idleImage = element.get("idleImage", type.idleImage);
 		
 		Gdx.app.log("PlayerAbilityType", String.format("Loaded attributes for '%s'.", name));
@@ -73,6 +78,49 @@ public enum PlayerAbilityType {
 			if(type.name.equals(name)) return type;
 		}
 		
+		return null;
+	}
+	
+	/**
+	 * Returns the integer associated with the god with name. If no such god was found returns -1.
+	 * @param name the name of the god
+	 * @return the integer associated with the god
+	 */
+	public static int getGodByName(String name) {
+		if(name.equals("Thor")) {
+			return GOD_THOR;
+		}
+		else if (name.equals("Odin")) {
+			return GOD_ODIN;
+		}
+		else if (name.equals("Hel")) {
+			return GOD_HEL;
+		}
+		else if (name.equals("Loki")) {
+			return GOD_LOKI;
+		}
+		else {
+			Gdx.app.error("PlayerAbilityType", "Error: God "+name+" does not exist");
+			return -1;
+		}
+	}
+	
+	/**
+	 * Returns all player abilities associated with god. If god was not found returns null
+	 * @param god
+	 * @return
+	 */
+	public static PlayerAbilityType[] getAbilitiesFromGod(int god) {
+		switch(god) {
+		case GOD_THOR:
+			return new PlayerAbilityType[]{THORS_RAGE, THUNDERBOLT, COMETSTRIKE};
+		case GOD_ODIN:
+			return new PlayerAbilityType[]{SPEEDBOOST};
+		case GOD_HEL:
+			return new PlayerAbilityType[]{ZOMBIFY};
+		case GOD_LOKI:
+			return new PlayerAbilityType[]{TELEPORT};
+		}
 		return null;
 	}
 }

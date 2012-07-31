@@ -41,11 +41,14 @@ public class Player implements Serializable {
 	
 	public int mana = 50;
 	
-	public Player(long userID, int playerID, String displayName, int team){
+	public int god;
+	
+	public Player(long userID, int playerID, String displayName, int team, int god){
 		this.userID = userID;
 		this.playerId = playerID;
 		this.displayedName = displayName;
 		this.team = team;
+		this.god = god;
 	}
 	
 	public Color getColor(){
@@ -53,5 +56,8 @@ public class Player implements Serializable {
 	}
 	public Color getSecondaryColor(){
 		return secondaryColor[playerId];
+	}
+	public static int getRandomGodFromTeam(int team) {
+		return (int)(Math.random()*2+2*team);
 	}
 }

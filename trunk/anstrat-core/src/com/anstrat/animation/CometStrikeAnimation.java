@@ -1,15 +1,11 @@
 package com.anstrat.animation;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.anstrat.core.Assets;
-import com.anstrat.gameCore.State;
-import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TerrainType;
-import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
