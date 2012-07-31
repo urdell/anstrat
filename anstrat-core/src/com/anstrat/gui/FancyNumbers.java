@@ -10,7 +10,8 @@ public class FancyNumbers {
 	public static final float sideIncrement = 0.7f;
 	
 	public static void drawDamageRange(int min, int max, float x, float y, float size, boolean flipped, SpriteBatch batch){
-		drawDamage(min, x, y, size, flipped, batch);
+		batch.setColor(Color.RED);
+		drawNumber(min, x, y, size, flipped, batch);
 		if(min >= 10)
 			x += 2*size*sideIncrement;
 		else
@@ -19,15 +20,37 @@ public class FancyNumbers {
 		batch.draw(dash, x, y, size, 	// if flipped, invert height
 				flipped ? -size : size);
 		x += size*sideIncrement;
-		drawDamage(max, x, y, size, flipped, batch);
+		drawNumber(max, x, y, size, flipped, batch);
+		batch.setColor(Color.WHITE);
+	}
+	public static void drawValueDecrement(int before, int after, float x, float y, float size, boolean flipped, SpriteBatch batch){
+		drawNumber(before, x, y, size, flipped, batch);
+		if(before >= 10)
+			x += 2*size*sideIncrement;
+		else
+			x += size*sideIncrement;
+		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
+		batch.draw(arrow, x+size*0.1f, y, size*0.8f, 	// if flipped, invert height
+				flipped ? -size : size);
+		x += size*sideIncrement;
+		drawNumber(after, x, y, size, flipped, batch);
 	}
 	
-	public static void drawDamage(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
+	/**
+	 * Tint before using
+	 * @param number
+	 * @param x
+	 * @param y
+	 * @param size
+	 * @param flipped
+	 * @param batch
+	 */
+	public static void drawNumber(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
 		int tens = number/10;
 		int ones = number%10;
 		
 		TextureRegion onesTexture, tensTexture;
-		batch.setColor(Color.RED);
+		
 		
 		if(tens > 0)
 		{
@@ -40,6 +63,6 @@ public class FancyNumbers {
 		batch.draw(onesTexture, x, y, size, 	// if flipped, invert height
 				flipped ? -size : size);
 		
-		batch.setColor(Color.WHITE);
+		
 	}
 }
