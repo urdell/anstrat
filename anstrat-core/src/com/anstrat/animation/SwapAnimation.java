@@ -5,11 +5,11 @@ import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.math.Vector2;
 
-public class TeleportAnimation extends Animation {
+public class SwapAnimation extends Animation {
 	
 	private GUnit t1, t2;
 	private boolean moved = false;
-	public TeleportAnimation(Unit t1, Unit t2) {
+	public SwapAnimation(Unit t1, Unit t2) {
 		
 		this.t1 = GEngine.getInstance().getUnit(t1);;
 		this.t2 = GEngine.getInstance().getUnit(t2);;
