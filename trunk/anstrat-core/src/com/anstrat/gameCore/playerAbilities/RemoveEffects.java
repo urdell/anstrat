@@ -1,22 +1,23 @@
 package com.anstrat.gameCore.playerAbilities;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.SpeedBoostAnimation;
+import com.anstrat.animation.RemoveEffectsAnimation;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
 
-public class Speedboost extends TargetedPlayerAbility {
+public class RemoveEffects extends TargetedPlayerAbility {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Speedboost(Player player) {
+	public RemoveEffects(Player player) {
 		super(player, PlayerAbilityType.SPEEDBOOST);
 	}
 	
@@ -24,10 +25,12 @@ public class Speedboost extends TargetedPlayerAbility {
 	public void activate(Player player, TileCoordinate tile){
 		super.activate();
 		Unit target = StateUtils.getUnitByTile(tile);
-		target.currentAP = target.getMaxAP();
-		Animation animation = new SpeedBoostAnimation(target);
+		for(Effect e : target.effects) {
+			target.effects.remove(e);
+		}
+		Animation animation = new RemoveEffectsAnimation(target);
 		GEngine.getInstance().animationHandler.enqueue(animation);
-		Gdx.app.log("PlayerAbility", "Speedboost was cast");
+		Gdx.app.log("PlayerAbility", "Remove effects was cast");
 	}
 	
 	@Override

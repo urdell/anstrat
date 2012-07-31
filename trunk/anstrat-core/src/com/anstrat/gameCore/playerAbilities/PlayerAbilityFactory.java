@@ -8,11 +8,11 @@ public class PlayerAbilityFactory {
 		if (type.equals(PlayerAbilityType.THUNDERBOLT))
 			return new Thunderbolt(player);
 		else if (type.equals(PlayerAbilityType.SPEEDBOOST))
-			return new Speedboost(player);
+			return new RemoveEffects(player);
 		else if (type.equals(PlayerAbilityType.COMETSTRIKE))
 			return new CometStrike(player);
-		else if (type.equals(PlayerAbilityType.TELEPORT))
-			return new Teleport(player);
+		else if (type.equals(PlayerAbilityType.SWAP))
+			return new Swap(player);
 		else if (type.equals(PlayerAbilityType.ZOMBIFY))
 			return new Zombify(player);
 		else if (type.equals(PlayerAbilityType.THORS_RAGE))

@@ -15,14 +15,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class SpeedBoostAnimation extends Animation {
+public class RemoveEffectsAnimation extends Animation {
 
 	private GUnit target;
 	private boolean started = false;
 	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
 	
-	public SpeedBoostAnimation(Unit target) {
+	public RemoveEffectsAnimation(Unit target) {
 		animation = Assets.getAnimation("speedup");
 		
 		this.target = GEngine.getInstance().getUnit(target);
