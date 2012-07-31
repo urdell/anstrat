@@ -143,9 +143,9 @@ public class State implements Serializable{
 					}
 				}
 				if(buildingNotOccupiedByEnemyUnit){
-					int capturePointMissing = (building.captureCost - building.captureCostRemaining);
+					int capturePointMissing = (building.captureCost - building.capturePointsRemaining);
 					int capturePointReg = Math.min(building.capturePointReg, capturePointMissing);
-					building.captureCostRemaining += capturePointReg;
+					building.capturePointsRemaining += capturePointReg;
 					
 				}
 			}

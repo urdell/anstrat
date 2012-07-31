@@ -22,38 +22,38 @@ public class Building implements Serializable {
 	public String typeName;
 	public int goldIncome = 0;
 	public int manaIncome = 0;
-	public int capturePointReg = 1;
+	public int capturePointReg = 0;
 	public int captureCost;
-	public int captureCostRemaining;
+	public int capturePointsRemaining;
 	
 	public Building(int type, int id, int controllerId)
 	{
 		switch(type) {
 		case TYPE_TEMPLE:
 			typeName = "Temple";
-			goldIncome = 2;
-			manaIncome = 5;
-			captureCost = 4;
+			goldIncome = 0;
+			manaIncome = 4;
+			captureCost = 1;
 			break;
 		case TYPE_VILLAGE:
 			typeName = "Village";
 			goldIncome = 5;
-			manaIncome = 2;
-			captureCost = 4;
+			manaIncome = 0;
+			captureCost = 1;
 			break;
 		case TYPE_CASTLE:
 			typeName = "Capital";
-			goldIncome = 8;
-			manaIncome = 8;
-			captureCost = 12;
+			goldIncome = 12;
+			manaIncome = 10;
+			captureCost = 3;
 			break;
 		default:
 			typeName = "Village";
 			goldIncome = 5;
-			manaIncome = 2;
-			captureCost = 4;
+			manaIncome = 0;
+			captureCost = 1;
 		}
-		captureCostRemaining = captureCost;
+		capturePointsRemaining = captureCost;
 		this.type = type;
 		tileCoordinate = null;
 		this.id = id;

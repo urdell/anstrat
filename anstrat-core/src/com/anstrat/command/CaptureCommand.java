@@ -13,6 +13,8 @@ public class CaptureCommand extends Command{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private static final int CAPTURE_COST = 4;
+	
 	private int buildingID;	// the building being captured
 	private int playerID;	
 	private int unitID;		// the unit capturing the building
@@ -27,23 +29,16 @@ public class CaptureCommand extends Command{
 	protected void execute(){
 		Unit unit = State.activeState.unitList.get(unitID);
 		Building captureBuilding = State.activeState.map.buildingList.get(buildingID);
+		captureBuilding.capturePointsRemaining -= 1;
 		
-		int tempCaptureCost = captureBuilding.captureCostRemaining;
-		captureBuilding.captureCostRemaining -= unit.currentAP;
-		
-		if (unit.currentAP > tempCaptureCost){
-			//GEngine.getInstance().animationHandler.enqueue(new FloatingTextAnimation(unit.tileCoordinate, " " + tempCaptureCost, Color.RED));
-			unit.currentAP -= tempCaptureCost;
-		}
-		else{
-			//GEngine.getInstance().animationHandler.enqueue(new FloatingTextAnimation(unit.tileCoordinate, " " + unit.currentAP, Color.RED));
-			unit.currentAP = 0;
-		}
+
+		unit.currentAP -= CAPTURE_COST;
+
 		GEngine.getInstance().animationHandler.enqueue(new CaptureAnimation(unit, captureBuilding));
 		
-		if (captureBuilding.captureCostRemaining <= 0){
+		if (captureBuilding.capturePointsRemaining <= 0){
 			captureBuilding.controllerId = playerID;
-			captureBuilding.captureCostRemaining = captureBuilding.captureCost;
+			captureBuilding.capturePointsRemaining = captureBuilding.captureCost;
 			
 			if(captureBuilding.type == Building.TYPE_CASTLE){
 				GameUI.showVictoryPopup(State.activeState.getCurrentPlayer().displayedName);
@@ -64,7 +59,7 @@ public class CaptureCommand extends Command{
 		
 		return super.isAllowed() &&
 					unit != null &&
-					unit.currentAP >= 4 && //Changed for only allowing cap at required AP
+					unit.currentAP >= CAPTURE_COST && //Changed for only allowing cap at required AP
 					unit.getUnitType() != UnitType.HAWK &&
 					unit.getUnitType() != UnitType.WOLF &&
 					unit.tileCoordinate == captureBuilding.tileCoordinate &&
