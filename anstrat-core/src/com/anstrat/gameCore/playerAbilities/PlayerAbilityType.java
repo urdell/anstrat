@@ -17,7 +17,8 @@ public enum PlayerAbilityType {
 	THORS_RAGE("Thor's Rage"),
 	ODINS_BLESSING("Odin's Blessing"),
 	HELS_CURSE("Hel's Curse"),
-	FREEZE("Freeze");
+	FREEZE("Freeze"),
+	CONFUSION("Confusion");
 	
 	public transient final String name;
 	public transient int manaCost;
@@ -120,7 +121,7 @@ public enum PlayerAbilityType {
 		case GOD_ODIN:
 			return new PlayerAbilityType[]{REMOVE_EFFECTS, ODINS_BLESSING};
 		case GOD_HEL:
-			return new PlayerAbilityType[]{HELS_CURSE, ZOMBIFY};
+			return new PlayerAbilityType[]{HELS_CURSE, CONFUSION, ZOMBIFY};
 		case GOD_LOKI:
 			return new PlayerAbilityType[]{SWAP, FREEZE};
 		}
