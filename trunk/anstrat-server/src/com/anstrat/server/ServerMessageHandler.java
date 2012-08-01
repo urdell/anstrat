@@ -8,6 +8,7 @@ import java.util.Queue;
 import com.anstrat.command.Command;
 import com.anstrat.geography.Map;
 import com.anstrat.network.NetworkMessage;
+import com.anstrat.server.util.Logger;
 
 /**
  * This class sorts the contents of NetworkMessages and delegates tasks to the corresponding handlers.
@@ -18,6 +19,7 @@ public class ServerMessageHandler {
 	private MainServer server;
 	private AuthMessageHandler amh;
 	private GameMessageHandler gmh;
+	private static final Logger logger = Logger.getGlobalLogger();
 	
 	/**
 	 * Default constructor.
@@ -45,7 +47,7 @@ public class ServerMessageHandler {
 		try
 		{
 			if(!command.equalsIgnoreCase("POLL_TURNS"))
-				server.logln("Received a "+command+" message from "+ps.getNetworkName()+".");
+				logger.info("Received a "+command+" message from "+ps.getNetworkName()+".");
 			
 			if(command.equalsIgnoreCase("LOGIN"))
 			{
@@ -149,21 +151,21 @@ public class ServerMessageHandler {
 				}
 				else
 				{
-					server.logln("Received unknown command from "+ps.getNetworkName()+": "+command);
+					logger.info("Received unknown command from %s: %s", ps.getNetworkName(), command);
 				}
 			}
 			else
 			{
-				server.logln("Received unauthorized command from "+ps.getNetworkName()+": "+command);
+				logger.info("Received unauthorized command from "+ps.getNetworkName()+": "+command);
 			}
 		}
 		catch(IndexOutOfBoundsException iobe)
 		{
-			server.logln("Illegal number of arguments in "+command+" message!");
+			logger.info("Illegal number of arguments in "+command+" message!");
 		}
 		catch(ClassCastException cce)
 		{
-			server.logln("Invalid input type in "+command+" message!");
+			logger.info("Invalid input type in "+command+" message!");
 		}
 	}
 }

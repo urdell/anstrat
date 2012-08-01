@@ -21,6 +21,7 @@ import com.anstrat.command.EndTurnCommand;
 import com.anstrat.network.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
 import com.anstrat.server.db.DatabaseHelper.DatabaseType;
+import com.anstrat.server.util.Logger;
 
 /**
  * All game-related NetworkMessage handling is delegated to this class.
@@ -31,6 +32,7 @@ public class GameMessageHandler {
 	
 	private MainServer server;
 	private GameMatcher matcher;
+	private static final Logger logger = Logger.getGlobalLogger();
 	private static final long TIMELIMIT_MAX = 604800000l; // One week
 	private static final long TIMELIMIT_MIN = 604800000l; // One week
 	
@@ -60,7 +62,7 @@ public class GameMessageHandler {
 			// Check if the user's turn has already expired
 			if(checkTurn){
 				boolean ended = checkTurnEnded(gameId, user);
-				server.logln("Checking turn ended for game '%d': ended=%s", gameId, ended);
+				logger.info("Checking turn ended for game '%d': ended=%s", gameId, ended);
 			
 				if(ended){
 					PlayerSocket socket = server.getSocketForUser(user.getUsername());
@@ -115,7 +117,7 @@ public class GameMessageHandler {
 			}
 		}
 		else{
-			server.logln("Unauthorized access attempt by "+user.getUsername()+": endTurn");
+			logger.info("Unauthorized access attempt by "+user.getUsername()+": endTurn");
 		}
 	}
 	
@@ -252,14 +254,14 @@ public class GameMessageHandler {
 			TurnList turn = getTurns(gameId, userID, expectedTurn);
 			
 			if(turn == null){
-				server.logln("An error occurred while polling turns >= %d from game %d.", expectedTurn, gameId);
+				logger.error("An error occurred while polling turns >= %d from game %d.", expectedTurn, gameId);
 			}
 			else if(!turn.turns.isEmpty()){
 				socket.sendMessage(new NetworkMessage("TURNS", gameId, expectedTurn, turn.timestamp, turn.stateChecksum, (Serializable)turn.turns));
 			}
 		}
 		else{
-			server.logln("Unauthorized access attempt by "+socket.getConnection()+": pollTurn");
+			logger.info("Unauthorized access attempt by "+socket.getConnection()+": pollTurn");
 		}
 	}
 	
@@ -410,7 +412,7 @@ public class GameMessageHandler {
 					turnLimit = gameRs.getLong("turnlimit");
 				}
 				else{
-					server.logln("Attempted to check turn ended for a game that doesn't exist.");
+					logger.info("Attempted to check turn ended for a game that doesn't exist.");
 					return false;
 				}
 			}

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.anstrat.network.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
+import com.anstrat.server.util.Password;
 
 /**
  * This class handles all NetworkMessages related to authentication.
@@ -51,7 +52,7 @@ public class AuthMessageHandler {
 		{
 			User user = DatabaseHelper.getUser(lowerCaseUsername);
 			
-			if(user == null || !PasswordUtil.authenticate(password, user.getEncryptedPassword())){
+			if(user == null || !Password.authenticate(password, user.getEncryptedPassword())){
 				response = new NetworkMessage("DENY_LOGIN",(Serializable) "Invalid username or password. Please try again.");
 			}
 			else{
