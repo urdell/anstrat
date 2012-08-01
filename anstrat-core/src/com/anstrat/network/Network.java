@@ -36,12 +36,14 @@ public class Network implements Runnable, INetworkReaderListener, IConnectionLos
 	private Thread poller;
 	private GameSocket socket;
 	
-	public Network(INetworkListener listener, String host, int port){
-		this.listener = listener;
-		
+	public Network(String host, int port){
 		socket = new GameSocket(host, port, this);
 		reader = new NetworkReaderWorker(RETRY_DELAY, socket, this);
 		sender = new NetworkSenderWorker(RETRY_DELAY, socket);
+	}
+	
+	public void setListener(INetworkListener listener){
+		this.listener = listener;
 	}
 
 	@Override
@@ -256,6 +258,11 @@ public class Network implements Runnable, INetworkReaderListener, IConnectionLos
 	public void messageReceived(NetworkMessage m) {
 		String c = m.getCommand();
 		List<Serializable> payload = m.getPayload();
+		
+		if(listener == null){
+			Gdx.app.log("Warning", "No network listener set, incoming message ignored.");
+			return;
+		}
 		
 		try{
 			// Login

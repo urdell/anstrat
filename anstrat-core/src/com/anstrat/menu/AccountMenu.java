@@ -125,7 +125,7 @@ public class AccountMenu extends MenuScreen {
 				
 				am.clearInputs();
 				
-				Main.getInstance().login(username, password);
+				Main.getInstance().network.login(username, password);
 				
 				Popup.currentPopup.close();
 				am.clearInputs();

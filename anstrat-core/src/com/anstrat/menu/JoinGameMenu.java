@@ -37,7 +37,7 @@ public class JoinGameMenu extends MenuScreen {
             		Popup.showGenericPopup("Error", "You must enter a game name.");
             		return;
             	}
-            	Main.getInstance().joinGame(name.getText(), password.getText());
+            	Main.getInstance().network.joinGame(name.getText(), password.getText());
             }
         });
 		
