@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package matchmaking;
 
 import java.util.HashMap;
 import java.util.LinkedList;

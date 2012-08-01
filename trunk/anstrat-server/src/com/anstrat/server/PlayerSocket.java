@@ -43,7 +43,7 @@ public class PlayerSocket implements Runnable {
 		// Needless to keep listening forever. The socket must die if the communication fails.
 		socket.setSoTimeout(SOCKET_TIMEOUT);
 		this.out = new ObjectOutputStream(socket.getOutputStream());
-		// Must flush to avoid deadlocks in initializing input streams.
+		// Must flush to avoid deadlocks in initializing object input streams.
 		this.out.flush();
 		this.in = new ObjectInputStream(socket.getInputStream());
 		new Thread(this).start();
