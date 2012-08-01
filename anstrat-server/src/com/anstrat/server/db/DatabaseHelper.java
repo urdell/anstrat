@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.anstrat.server.PasswordUtil;
 import com.anstrat.server.User;
+import com.anstrat.server.util.Password;
 
 /**
  * First draft of something that saves something to the database.
@@ -83,7 +83,7 @@ public abstract class DatabaseHelper {
 		
 		try
 		{
-			byte[] encryptedPassword = PasswordUtil.generateDatabaseBlob(password);
+			byte[] encryptedPassword = Password.generateDatabaseBlob(password);
 			
 			conn = connect(DatabaseType.PostgreSQL);
 			conn.setAutoCommit(false);

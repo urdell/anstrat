@@ -12,10 +12,11 @@ import com.anstrat.gameCore.GameType;
 import com.anstrat.geography.Map;
 import com.anstrat.network.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
+import com.anstrat.server.util.Logger;
 
 public class GameMatcher {
 	
-	private MainServer server;
+	private static final Logger logger = Logger.getGlobalLogger();
 	private Random rand = new Random();
 	public final Object lock = new Object();
 	
@@ -38,11 +39,6 @@ public class GameMatcher {
 	private HashMap<Long,List<String>> user_to_mapname = new HashMap<Long,List<String>>();
 	
 	private static final int MAX_NAME_ATTEMPTS = 100;
-	
-	public GameMatcher(MainServer server)
-	{
-		this.server = server;
-	}
 	
 	private class HostedGame
 	{
@@ -115,7 +111,7 @@ public class GameMatcher {
 		
 		if(queuedGames!=null)
 		{
-			server.logln("Removing player "+userId+" from "+queuedGames.size()+" listed games.");
+			logger.info("Removing player %d from %d listed games");
 			
 			for(String gameName : queuedGames)
 			{
@@ -194,10 +190,10 @@ public class GameMatcher {
 								rw.socket.sendMessage(new NetworkMessage("GAME_JOIN_SUCCESSFUL", (Long) rw.nonce, gameId, randSeed,
 										timelim, freeName, map, GameType.TYPE_CUSTOM, host.getUserId(), host.getDisplayedName()));
 								
-								server.logln("%s started a custom game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
+								logger.info("%s started a custom game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
 							}
 							else
-								server.logln("Joiner was null! Game discarded.");
+								logger.warning("Joiner was null! Game discarded.");
 						}
 						else
 						{
@@ -205,7 +201,7 @@ public class GameMatcher {
 							custom_waiting.put(freeName, hg);
 							socket.sendMessage(new NetworkMessage("GAME_HOST_WAIT_OPPONENT", (Long) nonce, freeName));
 							
-							server.logln("%s was placed into the custom_waiting queue.",host.getDisplayedName());
+							logger.info("%s was placed into the custom_waiting queue.",host.getDisplayedName());
 						}
 					}
 				}
@@ -264,7 +260,7 @@ public class GameMatcher {
 										socket.sendMessage(new NetworkMessage("GAME_JOIN_SUCCESSFUL", (Long) nonce, gameId, randSeed, timelim,
 												random.getKey(), hg.map, GameType.TYPE_RANDOM, host.getUserId(), host.getDisplayedName()));
 										
-										server.logln("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
+										logger.info("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
 										
 										joined_game = true;
 									}
@@ -305,7 +301,7 @@ public class GameMatcher {
 										timelim, opponentGameName, ropp.map, GameType.TYPE_RANDOM, 
 										host.getUserId(), host.getDisplayedName()));
 								
-								server.logln("%s started a random game with %s.",host.getDisplayedName(), joiner.getDisplayedName());
+								logger.info("%s started a random game with %s.",host.getDisplayedName(), joiner.getDisplayedName());
 								
 								joined_game = true;
 							}
@@ -344,7 +340,7 @@ public class GameMatcher {
 										socket.sendMessage(new NetworkMessage("GAME_JOIN_SUCCESSFUL", (Long) nonce, gameId, randSeed, 
 												timelim, custom.getKey(), hg.map, GameType.TYPE_CUSTOM, host.getUserId(), host.getDisplayedName()));
 										
-										server.logln("%s started a random game with %s.",host.getDisplayedName(), joiner.getDisplayedName());
+										logger.info("%s started a random game with %s.",host.getDisplayedName(), joiner.getDisplayedName());
 										
 										joined_game = true;
 									}
@@ -366,7 +362,7 @@ public class GameMatcher {
 							
 							socket.sendMessage(new NetworkMessage("GENERATE_MAP",randomGameName,9,9,rand.nextLong(),(Long) nonce));
 							
-							server.logln("Waiting to receive a map from "+joiner.getDisplayedName()+".");
+							logger.info("Waiting to receive a map from "+joiner.getDisplayedName()+".");
 						}
 					}
 				}
@@ -391,7 +387,7 @@ public class GameMatcher {
 				addGameForUser(randomGameName, socket.getUser().getUserId());
 				
 				socket.sendMessage(new NetworkMessage("GENERATE_MAP", randomGameName, width, height, rand.nextLong(), nonce));
-				server.logln("Waiting to receive a map from "+socket.getUser().getDisplayedName()+".");
+				logger.info("Waiting to receive a map from "+socket.getUser().getDisplayedName()+".");
 			}
 		}
 	}
@@ -401,7 +397,7 @@ public class GameMatcher {
 		synchronized(lock)
 		{
 			if(map==null)
-				server.logln("Received a null map!");
+				logger.info("Received a null map!");
 			else if(random_hosts_maps.containsKey(gameName))
 			{
 				HostedGame hg = random_hosts_maps.remove(gameName);
@@ -441,7 +437,7 @@ public class GameMatcher {
 						
 						matched = true;
 						
-						server.logln("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
+						logger.info("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
 					}
 				}
 				
@@ -449,7 +445,7 @@ public class GameMatcher {
 				{
 					random_waiting.put(gameName,hg);
 					hg.socket.sendMessage(new NetworkMessage("GAME_HOST_WAIT_OPPONENT",(Long) hg.nonce, gameName));
-					server.logln("%s was placed into the random_waiting queue.",hg.socket.getUser().getDisplayedName());
+					logger.info("%s was placed into the random_waiting queue.",hg.socket.getUser().getDisplayedName());
 				}
 			}
 			else if(random_joiners_maps.containsKey(gameName))
@@ -486,18 +482,18 @@ public class GameMatcher {
 					ropp.socket.sendMessage(new NetworkMessage("GAME_JOIN_SUCCESSFUL", (Long) ropp.nonce, gameId, randSeed,
 							timelim, gameName, map, GameType.TYPE_RANDOM, host.getUserId(), host.getDisplayedName()));
 					
-					server.logln("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
+					logger.info("%s started a random game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
 				}
 				else
 				{
 					random_joiners.put(gameName, rw);
 					rw.socket.sendMessage(new NetworkMessage("GAME_RANDOM_WAIT_OPPONENT",(Long) rw.nonce));
 					
-					server.logln("%s was placed in the random_joiners queue.",rw.socket.getUser().getDisplayedName());
+					logger.info("%s was placed in the random_joiners queue.",rw.socket.getUser().getDisplayedName());
 				}
 			}
 			else
-				server.logln("Received map for unknown game instance.");
+				logger.info("Received map for unknown game instance.");
 		}
 	}
 	
@@ -543,7 +539,7 @@ public class GameMatcher {
 			user_to_mapname.put(userId, new ArrayList<String>());
 		user_to_mapname.get(userId).add(gameName);
 		
-		server.logln("Game \'"+gameName+"\' linked to userId "+userId+".");
+		logger.info("Game \'"+gameName+"\' linked to userId "+userId+".");
 	}
 
 	public void joinGame(Long nonce, String gameName, String password, PlayerSocket socket) 
@@ -598,12 +594,12 @@ public class GameMatcher {
 						socket.sendMessage(new NetworkMessage("GAME_JOIN_SUCCESSFUL", (Long) nonce, gameId, randSeed, timelim,
 								gameName, game.map, GameType.TYPE_RANDOM, host.getUserId(), host.getDisplayedName()));
 						
-						server.logln("%s started a random game with %s",host.getDisplayedName(),joiner.getDisplayedName());
+						logger.info("%s started a random game with %s",host.getDisplayedName(),joiner.getDisplayedName());
 					}
 					else
 					{
 						socket.sendMessage(new NetworkMessage("COMMAND_REFUSED", "You are already the host of this game!"));
-						server.logln("%s mistakenly tried to join his own game."+joiner.getDisplayedName());
+						logger.info("%s mistakenly tried to join his own game."+joiner.getDisplayedName());
 					}
 				}
 				else
@@ -634,12 +630,12 @@ public class GameMatcher {
 						game.socket.sendMessage(new NetworkMessage("GAME_HOST_START",(Long) game.nonce, gameId, randSeed, gameName,
 								joiner.getUserId(), joiner.getDisplayedName()));
 						
-						server.logln("%s started a custom game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
+						logger.info("%s started a custom game with %s.",host.getDisplayedName(),joiner.getDisplayedName());
 					}
 					else
 					{
 						socket.sendMessage(new NetworkMessage("COMMAND_REFUSED", "You are already the host of this game!"));
-						server.logln("%s mistakenly tried to join his own game."+joiner.getDisplayedName());
+						logger.info("%s mistakenly tried to join his own game."+joiner.getDisplayedName());
 					}
 				}
 				else
@@ -776,6 +772,6 @@ public class GameMatcher {
 			}
 		}
 		
-		server.logln("Removed %d requests for player %d.",removed, (int) ps.getUser().getUserId());
+		logger.info("Removed %d requests for player %d.",removed, (int) ps.getUser().getUserId());
 	}
 }

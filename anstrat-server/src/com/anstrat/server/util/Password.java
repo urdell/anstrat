@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package com.anstrat.server.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class PasswordUtil {
+public class Password {
 	
 	private static final int NUM_ITERATIONS = 1000;
 	

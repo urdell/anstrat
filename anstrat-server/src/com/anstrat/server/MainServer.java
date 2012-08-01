@@ -1,19 +1,13 @@
 package com.anstrat.server;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.Semaphore;
 
 import com.anstrat.network.NetworkMessage;
+import com.anstrat.server.util.Logger;
 
 /**
  * The main server class.
@@ -23,12 +17,11 @@ import com.anstrat.network.NetworkMessage;
  */
 public class MainServer {
 	
-	private File logFile;
+	private static final Logger logger = Logger.getGlobalLogger();
 	private final Object lock = new Object();
 	private HashMap<String,PlayerSocket> users = new HashMap<String,PlayerSocket>();
 	private GameMatcher matcher;
 	private ServerMessageHandler handler;
-	private SimpleDateFormat timestamp = new SimpleDateFormat("[dd MMM 'kl' HH:mm]: ");
 	
 	private static final int DEFAULT_PORT = 25406;
 	
@@ -38,6 +31,7 @@ public class MainServer {
 	 */
 	public static void main(String[] args)
 	{
+		//Logger.getLogger(MainServer.class).addHandler(handler)
 		MainServer ms = new MainServer();
 		ms.listen(ms.choosePort(args));
 	}
@@ -45,7 +39,7 @@ public class MainServer {
 	private int choosePort(String[] args){
 		
 		if(args.length == 0){
-			logln("No port specified, using default port %d.", DEFAULT_PORT);
+			logger.info("No port specified, using default port %d.", DEFAULT_PORT);
 			return DEFAULT_PORT;
 		}
 		else{
@@ -64,76 +58,9 @@ public class MainServer {
 	 */
 	public MainServer()
 	{
-		matcher = new GameMatcher(this);
+		matcher = new GameMatcher();
 		handler = new ServerMessageHandler(this,matcher);
-		createLog();
-	}
-
-	/**
-	 * Attempts to create a log file into the supposedly locally existing "logs" folder.
-	 */
-	public void createLog()
-	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH;mm;ss");
-		new File("logs").mkdir();
-		logFile = new File("logs","Server log "+sdf.format(new Date())+".log");
-		
-		try{
-			if(!logFile.exists()){
-				logFile.createNewFile();
-				logln("Main server started.");
-			}
-		}
-		catch(IOException ioe){
-			System.err.println("Couldn't create log file...");
-			ioe.printStackTrace();
-			logFile = null;
-		}
-	}
-
-	/**
-	 * Logs a given message.
-	 * @param message The message to log.
-	 * @param formatArgs Formatting options for the message.
-	 */
-	public synchronized void log(String message, Object... formatArgs)
-	{
-		if(formatArgs.length > 0){
-			message = String.format(message, formatArgs);
-		}
-		
-		message = timestamp.format(new Date()) + message;
-		System.out.print(message);
-		if(logFile != null)
-		{
-			try
-			{
-				FileWriter fw = new FileWriter(logFile,true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.append(message);
-				bw.close();
-			}
-			catch(FileNotFoundException fnfe)
-			{
-				System.err.println("Log file not found.");
-			}
-			catch(IOException ioe)
-			{
-				System.err.println("Error writing to log file.");
-			}
-		}
-		else
-			System.err.println("Error: log file doesn't exist.");
-	}
-
-	/**
-	 * Helper method, simply adds a newline after the message and logs it.
-	 * @param message The message to log.
-	 * @param formatArgs Formatting options for the message.
-	 */
-	public void logln(String message, Object... formatArgs)
-	{
-		log(message+"\n", formatArgs);
+		logger.info("Main server started.");
 	}
 
 	/**
@@ -146,11 +73,11 @@ public class MainServer {
 		try
 		{
 			incomingConnections = new ServerSocket(port);
-			logln("Started listening on port %d.", port);
+			logger.info("Started listening on port %d.", port);
 		}
 		catch(IOException ioe)
 		{
-			logln("Couldn't create listener socket on port %d.", port);
+			logger.error("Couldn't create listener socket on port %d.", port);
 		}	
 		
 		while(incomingConnections != null)
@@ -162,7 +89,7 @@ public class MainServer {
 			}
 			catch(IOException ioe)
 			{
-				logln("Failed to open client socket.");
+				logger.info("Failed to open client socket.");
 			}
 		}
 	}
@@ -183,13 +110,13 @@ public class MainServer {
 				if(!users.containsKey(conn.toString()))
 				{
 					users.put(conn.toString(), playerSocket);
-					logln(conn+" connected ("+users.size()+" clients online).");
+					logger.info("%s connected. (%d clients online).", conn, users.size());
 				}
 				else
-					logln(conn+" tried to connect, was already connected!");
+					logger.info("%s tried to connect, was already connected!", conn);
 			} 
 			catch(IOException ioe){
-				logln("Failed to initialize connection for "+socket.getInetAddress()+".");
+				logger.info("Failed to initialize connection for %s.", socket.getInetAddress());
 			}	
 		}
 	}
@@ -210,7 +137,7 @@ public class MainServer {
 			else
 				users.remove(ps.getConnection().toString());
 			
-			logln(users.size()+" clients online.");
+			logger.info(users.size()+" clients online.");
 		}
 	}
 	
@@ -245,7 +172,7 @@ public class MainServer {
 	 */
 	public void login(PlayerSocket ps, String user, String dispName)
 	{
-		logln(ps.getConnection()+" logged in as "+dispName+".");
+		logger.info("%s logged in as '%s'.", ps.getConnection(), dispName);
 		synchronized(lock)
 		{
 			users.remove(ps.getConnection().toString());
@@ -266,14 +193,15 @@ public class MainServer {
 				logoutHalp(ps, stillAlive);
 			}
 		}
-		else
-			logln(ps.getNetworkName()+" sent LOGOUT, was not logged in.");
+		else{
+			logger.info("%s sent LOGOUT, was not logged in.", ps.getUser().getUsername());
+		}
 	}
 	
 	// TODO OMG UGLY BAD bugfix.
 	public void logoutHalp(PlayerSocket ps, boolean stillAlive)
 	{
-		logln("Attempting to remove "+ps.getUsername()+".");
+		logger.info("Attempting to remove '%s'.", ps.getUsername());
 		synchronized(matcher.lock)
 		{
 			matcher.removeUserFromLists(ps.getUser().getUserId());

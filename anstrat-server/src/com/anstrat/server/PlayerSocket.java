@@ -10,6 +10,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import com.anstrat.network.NetworkMessage;
+import com.anstrat.server.util.Logger;
 
 /**
  * A class containing a Socket and some extra functionality, including its own thread to read incoming messages.
@@ -23,6 +24,7 @@ public class PlayerSocket implements Runnable {
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
     private Connection connection;
+    private static final Logger logger = Logger.getGlobalLogger();
     private static final int SOCKET_TIMEOUT = 600000; //milliseconds
     
     // Used for authentication checks.
@@ -91,11 +93,11 @@ public class PlayerSocket implements Runnable {
     	try
     	{
     		out.writeObject(nm);
-    		server.logln("Sent a '%s' message to %s.", nm.getCommand(), getNetworkName());
+    		logger.info("Sent a '%s' message to %s.", nm.getCommand(), getNetworkName());
     	}
     	catch(IOException ioe)
     	{
-    		server.logln("Failed to send a '%s' message to %s.", nm.getCommand(), getNetworkName());
+    		logger.info("Failed to send a '%s' message to %s.", nm.getCommand(), getNetworkName());
     		kill();
     	}
     }
@@ -116,32 +118,32 @@ public class PlayerSocket implements Runnable {
 			}
 			catch(EOFException e)
 			{
-				server.logln(getNetworkName()+" disconnected [EOF].");
+				logger.info(getNetworkName()+" disconnected [EOF].");
 				kill();
 			}
 			catch(SocketTimeoutException e)
 			{
-				server.logln(getNetworkName()+" disconnected [Timed out].");
+				logger.info(getNetworkName()+" disconnected [Timed out].");
 				kill();
 			}
 			catch(SocketException e)
 			{
-				server.logln(getNetworkName()+" disconnected [SE].");
+				logger.info(getNetworkName()+" disconnected [SE].");
 				kill();
 			}
 			catch(ClassNotFoundException cnfe)
 			{
-				server.logln("Received erroneous message from "+getNetworkName()+": "+cnfe.getCause());
+				logger.info("Received erroneous message from "+getNetworkName()+": "+cnfe.getCause());
 			}
 			catch(IOException ioe)
 			{
-				server.logln("I/O failure for "+getNetworkName()+": "+ioe.getCause());
+				logger.info("I/O failure for "+getNetworkName()+": "+ioe.getCause());
 				ioe.printStackTrace();
 				kill();
 			}
 			catch(Exception e)
 			{
-				server.logln("Unknown error for "+getNetworkName()+": "+e.getLocalizedMessage());
+				logger.info("Unknown error for "+getNetworkName()+": "+e.getLocalizedMessage());
 				kill();
 			}
 			
@@ -151,7 +153,7 @@ public class PlayerSocket implements Runnable {
 					server.handleMessage(this, (NetworkMessage) obj);
 				else
 				{
-					server.logln(connection+" sent malformed network input (not a NetworkMessage).");
+					logger.info(connection+" sent malformed network input (not a NetworkMessage).");
 				}
 			}
 		}
@@ -186,7 +188,7 @@ public class PlayerSocket implements Runnable {
     	
     	socket = null;
     	
-    	server.logln("Removed connection "+connection+".");
+    	logger.info("Removed connection "+connection+".");
     }
     
     public InetAddress getInetAddress()
