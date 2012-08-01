@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package matchmaking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import java.util.Set;
 import com.anstrat.gameCore.GameType;
 import com.anstrat.geography.Map;
 import com.anstrat.network.NetworkMessage;
+import com.anstrat.server.PlayerSocket;
+import com.anstrat.server.User;
 import com.anstrat.server.db.DatabaseHelper;
 import com.anstrat.server.util.Logger;
 

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 
+import matchmaking.GameMatcher;
+
 import com.anstrat.command.Command;
 import com.anstrat.geography.Map;
 import com.anstrat.network.NetworkMessage;

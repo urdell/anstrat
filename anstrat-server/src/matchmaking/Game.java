@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package matchmaking;
 
 /**
  * Placeholder

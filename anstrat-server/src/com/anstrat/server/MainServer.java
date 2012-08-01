@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import matchmaking.GameMatcher;
+
 import com.anstrat.network.NetworkMessage;
 import com.anstrat.server.util.Logger;
 
@@ -18,8 +20,7 @@ import com.anstrat.server.util.Logger;
 public class MainServer {
 	
 	private static final Logger logger = Logger.getGlobalLogger();
-	private final Object lock = new Object();
-	private HashMap<String,PlayerSocket> users = new HashMap<String,PlayerSocket>();
+	private HashMap<String, PlayerSocket> users = new HashMap<String,PlayerSocket>();
 	private GameMatcher matcher;
 	private ServerMessageHandler handler;
 	
@@ -63,32 +64,23 @@ public class MainServer {
 		logger.info("Main server started.");
 	}
 
-	/**
-	 * Listens for incoming connections and handles them accordingly.
-	 */
-	public void listen(int port)
-	{
+	public void listen(int port){
 		ServerSocket incomingConnections = null;
 		
-		try
-		{
+		try{
 			incomingConnections = new ServerSocket(port);
 			logger.info("Started listening on port %d.", port);
 		}
-		catch(IOException ioe)
-		{
+		catch(IOException ioe){
 			logger.error("Couldn't create listener socket on port %d.", port);
 		}	
 		
-		while(incomingConnections != null)
-		{
-			try
-			{
+		while(true){
+			try{
 				Socket socket = incomingConnections.accept();
 				addConnection(socket);
 			}
-			catch(IOException ioe)
-			{
+			catch(IOException ioe){
 				logger.info("Failed to open client socket.");
 			}
 		}
@@ -98,47 +90,45 @@ public class MainServer {
 	 * Adds the new incoming connection to the list of connections.
 	 * @param socket The socket to add the connection for.
 	 */
-	public void addConnection(Socket socket)
-	{
-		synchronized(lock)
-		{
-			try {
-				PlayerSocket playerSocket = new PlayerSocket(this, socket);
-				Connection conn = new Connection(socket.getInetAddress(), socket.getPort());
-				playerSocket.setConnection(conn);
-				
+	public void addConnection(Socket socket){
+		try {
+			PlayerSocket playerSocket = new PlayerSocket(this, socket);
+			Connection conn = new Connection(socket.getInetAddress(), socket.getPort());
+			playerSocket.setConnection(conn);
+			
+			synchronized(users){
 				if(!users.containsKey(conn.toString()))
 				{
 					users.put(conn.toString(), playerSocket);
 					logger.info("%s connected. (%d clients online).", conn, users.size());
 				}
-				else
+				else{
+					// TODO: Is this even possible?
 					logger.info("%s tried to connect, was already connected!", conn);
-			} 
-			catch(IOException ioe){
-				logger.info("Failed to initialize connection for %s.", socket.getInetAddress());
-			}	
-		}
+				}
+			}
+		} 
+		catch(IOException ioe){
+			logger.info("Failed to initialize connection for %s.", socket.getInetAddress());
+		}	
 	}
 	
 	/**
 	 * Removes the connection for the socket in question.
 	 * @param ps The socket that was disconnected for whatever reason.
 	 */
-	public void removeConnection(PlayerSocket ps)
-	{
-		synchronized(lock)
+	public void removeConnection(PlayerSocket ps){
+		if(ps.isLoggedIn())
 		{
-			if(ps.isLoggedIn())
-			{
-				logoutHalp(ps, false);
-				users.remove(ps.getUsername());
-			}
-			else
-				users.remove(ps.getConnection().toString());
-			
-			logger.info(users.size()+" clients online.");
+			logoutHalp(ps, false);
 		}
+		else{
+			synchronized(users){
+				users.remove(ps.getConnection().toString());
+			}
+		}
+		
+		logger.info(users.size()+" clients online.");
 	}
 	
 	/**
@@ -146,18 +136,18 @@ public class MainServer {
 	 * @param username The username to match against.
 	 * @return Whether the user is already logged in.
 	 */
-	public boolean isLoggedIn(String username)
-	{
+	public boolean isLoggedIn(String username){
 		if(username == null) return false;
 		
-		synchronized(lock)
-		{
-			ArrayList<String> userlist = new ArrayList<String>(users.keySet());
-			
-			for(String user : userlist){
-				if(username.equalsIgnoreCase(user)){
-					return true;
-				}
+		ArrayList<String> userlist = null;
+		
+		synchronized(users){
+			userlist = new ArrayList<String>(users.keySet());
+		}
+		
+		for(String user : userlist){
+			if(username.equalsIgnoreCase(user)){
+				return true;
 			}
 		}
 
@@ -170,11 +160,10 @@ public class MainServer {
 	 * @param user The username to authenticate as.
 	 * @param dispName The displayedName to authenticate as.
 	 */
-	public void login(PlayerSocket ps, String user, String dispName)
-	{
+	public void login(PlayerSocket ps, String user, String dispName){
 		logger.info("%s logged in as '%s'.", ps.getConnection(), dispName);
-		synchronized(lock)
-		{
+		
+		synchronized(users){
 			users.remove(ps.getConnection().toString());
 			users.put(user, ps);
 		}
@@ -188,10 +177,7 @@ public class MainServer {
 	{
 		if(ps.isLoggedIn())
 		{
-			synchronized(lock)
-			{
-				logoutHalp(ps, stillAlive);
-			}
+			logoutHalp(ps, stillAlive);
 		}
 		else{
 			logger.info("%s sent LOGOUT, was not logged in.", ps.getUser().getUsername());
@@ -199,16 +185,22 @@ public class MainServer {
 	}
 	
 	// TODO OMG UGLY BAD bugfix.
-	public void logoutHalp(PlayerSocket ps, boolean stillAlive)
-	{
+	public void logoutHalp(PlayerSocket ps, boolean stillAlive){
+		
 		logger.info("Attempting to remove '%s'.", ps.getUsername());
-		synchronized(matcher.lock)
-		{
+		
+		synchronized(matcher.lock){
 			matcher.removeUserFromLists(ps.getUser().getUserId());
 		}
-		users.remove(ps.getUsername());
-		if(stillAlive)
-			users.put(ps.getConnection().toString(), ps);
+		
+		synchronized(users){
+			users.remove(ps.getUsername());
+			
+			if(stillAlive){
+				users.put(ps.getConnection().toString(), ps);
+			}
+		}
+		
 		ps.setUser(null);
 	}
 	
@@ -232,10 +224,7 @@ public class MainServer {
 		if(username == null) throw new IllegalArgumentException("username can't be null!");
 		PlayerSocket sock = null;
 		
-		synchronized(lock)
-		{
-			System.out.println("Searching for socket for user: " + username);
-			System.out.println("Users keys: " + users.keySet());
+		synchronized(users){
 			sock = users.get(username);
 		}
 		
