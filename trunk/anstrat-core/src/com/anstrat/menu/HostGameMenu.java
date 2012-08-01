@@ -67,7 +67,7 @@ public class HostGameMenu extends MenuScreen  {
 				if(!mapName.equalsIgnoreCase("RANDOM")){
 					// TODO insert correct value
 					map = Assets.loadMap(mapName);
-					Main.getInstance().hostCustomGame(604800000l, name.getText(), password.getText(), map);
+					Main.getInstance().network.hostCustomGame(604800000l, name.getText(), password.getText(), map);
 				}
 				
 				if (map == null || map.name.equalsIgnoreCase("RANDOM")) {
@@ -94,7 +94,7 @@ public class HostGameMenu extends MenuScreen  {
 		    		{
 		    			//TODO insert right value frmo box
 		    			Gdx.app.log("Main", "Using random map");
-		    			Main.getInstance().hostGameRandom(width, height, 604800000l, name.getText(), password.getText());
+		    			Main.getInstance().network.hostGameRandom(width, height, 604800000l, name.getText(), password.getText());
 		    		}
 				}
 		   }

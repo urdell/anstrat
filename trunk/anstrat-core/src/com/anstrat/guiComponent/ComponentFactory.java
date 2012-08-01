@@ -7,8 +7,6 @@ import com.anstrat.menu.NetworkDependentTracker;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
@@ -80,7 +78,7 @@ public class ComponentFactory {
 	}
 	
 	public static Label createLoginLabel(){
-		User user = Main.getInstance().user;
+		User user = Main.getInstance().network.getUser();
         Label label = new Label((user==null || user.displayName==null || user.displayName.equals(""))?"Connecting...":user.displayName, 
         				new LabelStyle(Assets.UI_FONT,Color.WHITE));
         NetworkDependentTracker.registerLabel(label);

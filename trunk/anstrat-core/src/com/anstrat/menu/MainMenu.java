@@ -211,7 +211,7 @@ public class MainMenu extends MenuScreen {
 		Table requests = new Table(Assets.SKIN);
 		requests.add("Game requests:").height(height).padTop(paddingTop);
 		
-        for(GameRequest request : Main.getInstance().gameRequests.values()){
+        for(GameRequest request : Main.getInstance().network.getGameRequests()){
         	requests.row();
         	requests.add(gameRequestToTable(request)).fillX().expandX().height((int)(17*Main.percentHeight));
         }
@@ -391,7 +391,7 @@ public class MainMenu extends MenuScreen {
     	cancel.setClickListener(new ClickListener() {
 	        @Override
 	        public void click(Actor actor,float x,float y ){
-	        	Main.getInstance().cancelRequest(nonce);
+	        	Main.getInstance().network.cancelRequest(nonce);
 	        }
 		});
     	
