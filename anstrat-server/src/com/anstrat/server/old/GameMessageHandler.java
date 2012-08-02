@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package com.anstrat.server.old;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,7 +19,7 @@ import java.util.Queue;
 
 import com.anstrat.command.Command;
 import com.anstrat.command.EndTurnCommand;
-import com.anstrat.network.NetworkMessage;
+import com.anstrat.network_old.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
 import com.anstrat.server.db.DatabaseHelper.DatabaseType;
 import com.anstrat.server.matchmaking.GameMatcher;
@@ -30,6 +30,7 @@ import com.anstrat.server.util.Logger;
  * @author jay
  *
  */
+@Deprecated
 public class GameMessageHandler {
 	
 	private MainServer server;

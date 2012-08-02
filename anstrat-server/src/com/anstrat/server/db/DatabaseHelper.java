@@ -15,7 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.anstrat.server.User;
+
+import com.anstrat.server.old.User;
 import com.anstrat.server.util.Password;
 
 /**

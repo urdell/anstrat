@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package com.anstrat.server.old;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import com.anstrat.network.NetworkMessage;
+import com.anstrat.network_old.NetworkMessage;
 import com.anstrat.server.util.Logger;
 
 /**
@@ -17,6 +17,7 @@ import com.anstrat.server.util.Logger;
  * @author jay
  *
  */
+@Deprecated
 public class PlayerSocket implements Runnable {
 	
 	private MainServer server;
