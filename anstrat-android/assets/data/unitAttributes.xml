@@ -177,6 +177,7 @@
 		<maxAP>5</maxAP>
 		<APReg>4</APReg>
 		<cost>40</cost>
+		<ability1>9</ability1><!-- Throw Ice -->
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
