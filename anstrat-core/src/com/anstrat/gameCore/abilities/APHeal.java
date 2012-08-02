@@ -7,6 +7,10 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class APHeal extends TargetedAbility{
 	
@@ -40,6 +44,14 @@ public class APHeal extends TargetedAbility{
 		
 		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(coordinate));
 		GEngine.getInstance().animationHandler.enqueue(animation);
+	}
+	
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow targetApRow = new APRow(StateUtils.getUnitByTile(target), -2);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, targetApRow);
 	}
 
 	@Override

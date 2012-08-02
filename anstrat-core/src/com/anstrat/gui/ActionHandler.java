@@ -61,10 +61,6 @@ public class ActionHandler {
 		case SelectionHandler.SELECTION_EMPTY:
 			gEngine.selectionHandler.gTile = gTile;
 			if(unit != null){
-				if(unit.ownerId == State.activeState.currentPlayerId)
-					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
-				else
-					gEngine.highlighter.highlightTile(unit.tileCoordinate);
 				gEngine.selectionHandler.selectUnit(unit);
 			}else if( StateUtils.getBuildingByTile(gTile.tile.coordinates) == StateUtils.getCurrentPlayerCastle()){ // clicked own castle
 				GameInstance game = State.activeState.gameInstance;
@@ -269,7 +265,7 @@ public class ActionHandler {
 
 		}
 		else if(command instanceof ActivateTargetedAbilityCommand){
-			gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+			gEngine.confirmDialog = ((TargetedAbility)ability).generateConfirmDialog(unit, targetTile.tile.coordinates, dialogPosition);
 		}
 	}
 	/**

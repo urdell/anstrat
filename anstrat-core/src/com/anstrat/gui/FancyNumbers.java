@@ -60,7 +60,7 @@ public class FancyNumbers {
 					flipped ? -size : size);
 			x += size*sideIncrement;
 		}
-		if(tens > 0)
+		if(tens > 0 || hundreds > 0)
 		{
 			tensTexture = Assets.getTextureRegion("ap-"+tens);
 			batch.draw(tensTexture, x, y, size, 	// if flipped, invert height

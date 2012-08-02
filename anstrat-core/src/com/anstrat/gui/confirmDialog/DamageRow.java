@@ -18,13 +18,6 @@ public class DamageRow extends ConfirmRow {
 	public void draw(float x, float y, SpriteBatch batch) {
 
 		batch.draw(Assets.getTextureRegion("attack-symbol"), x+ROW_HEIGHT*0.0f, y, ROW_HEIGHT, ROW_HEIGHT);
-		
-		/*float scale =Assets.DESCRIPTION_FONT.getScaleX();
-		Assets.UI_FONT.setScale(1.8f);
-		Assets.UI_FONT.setColor(Color.RED);
-		Assets.UI_FONT.draw(batch, min+"-"+max, x+ROW_HEIGHT*1.1f, y+ROW_HEIGHT);
-		Assets.UI_FONT.setScale(scale);*/
-		
 		FancyNumbers.drawDamageRange(min, max, x+ROW_HEIGHT*0.9f, y+ROW_HEIGHT*0.1f, ROW_HEIGHT*0.9f, false, batch);
 		
 	}
