@@ -81,19 +81,16 @@ public class ActionHandler {
 				if(gEngine.actionMap.getActionType(gTile.tile.coordinates) == ActionMap.ACTION_MOVE){
 					Command c = new MoveCommand(selectedUnit, gTile.tile.coordinates);
 					requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
-					//CommandHandler.execute(c);
-					refreshHighlight(selectedUnit);
 				}else{
 					gEngine.selectionHandler.deselect();
 				}
-				
-				
 			}
 			else{    //unit clicked
-				if(unit==gEngine.selectionHandler.selectedUnit){
+				if(unit==gEngine.selectionHandler.selectedUnit){ // current unit
 					gEngine.selectionHandler.deselect();
 				}
 				else if(unit.ownerId == gEngine.selectionHandler.selectedUnit.ownerId && selectedUnit.ownerId!=State.activeState.currentPlayerId){
+					
 					gEngine.selectionHandler.selectUnit(unit);
 					gEngine.selectionHandler.gTile = gTile;
 					gEngine.highlighter.highlightTile(unit.tileCoordinate);
@@ -104,11 +101,6 @@ public class ActionHandler {
 						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					else
 						gEngine.animationHandler.runParalell(new FullscreenTextAnimation("Can not attack this"));
-					
-					//CommandHandler.execute(c);
-					
-					//gEngine.actionMap.prepare(gEngine.selectionHandler.selectedUnit);  //state has not changed, no need for this
-					//gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(selectedUnit)); 
 				}else{
 					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
 					gEngine.selectionHandler.selectUnit(unit);
@@ -128,7 +120,6 @@ public class ActionHandler {
 				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((CreateUnitCommand)command).getReason() ));
 				deselectPress();
 			}
-			//CommandHandler.execute(command);
 			break;
 		case SelectionHandler.SELECTION_TARGETED_ABILITY:
 			command = new ActivateTargetedAbilityCommand(gEngine.selectionHandler.selectedUnit, 
@@ -138,8 +129,6 @@ public class ActionHandler {
 				requestAbilityConfirm(gTile, gEngine.selectionHandler.selectedUnit, command, gEngine.selectionHandler.selectedTargetedAbility, clickedQuadrant);
 			else
 				gEngine.selectionHandler.deselect();
-			//CommandHandler.execute(command);
-			//gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
@@ -147,8 +136,6 @@ public class ActionHandler {
 				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, clickedQuadrant);
 			else
 				gEngine.selectionHandler.deselect();
-			//CommandHandler.execute(command);
-			//gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY:
 			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
@@ -162,8 +149,6 @@ public class ActionHandler {
 					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, clickedQuadrant);
 				else
 					gEngine.selectionHandler.deselect();
-				//CommandHandler.execute(command);
-				//gEngine.selectionHandler.deselect();
 			}
 			break;
 		default:
@@ -318,9 +303,18 @@ public class ActionHandler {
 		CommandHandler.execute(confirmCommand);
 		showingConfirmDialog = false;
 		GEngine.getInstance().confirmOverlay.clear();
-		Unit selectedUnit = GEngine.getInstance().selectionHandler.selectedUnit;
-		GEngine.getInstance().selectionHandler.deselect();
-		GEngine.getInstance().selectionHandler.selectUnit(selectedUnit);
+		
+		if(confirmCommand instanceof EndTurnCommand) 	// Check for commands in which selection should be cleared.
+		{
+			GEngine.getInstance().selectionHandler.deselect();			
+		}else if(confirmCommand instanceof CreateUnitCommand){	// select the newly created unit
+			Unit newUnit = StateUtils.getUnitByTile(((CreateUnitCommand)confirmCommand).getTarget());
+			GEngine.getInstance().selectionHandler.selectUnit(newUnit);
+		}
+		else{
+			Unit selectedUnit = GEngine.getInstance().selectionHandler.selectedUnit;	// Reselect the current unit to make sure things are updated.
+			GEngine.getInstance().selectionHandler.selectUnit(selectedUnit);
+		}
 	}
 	public void confirmCancelPress(){
 		showingConfirmDialog = false;

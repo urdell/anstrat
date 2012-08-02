@@ -75,6 +75,9 @@ public class CreateUnitCommand extends Command {
 	public UnitType getUnitType(){
 		return unitType;
 	}
+	public TileCoordinate getTarget(){
+		return tileCoord;
+	}
 	
 	@Override
 	public int hashCode(){
