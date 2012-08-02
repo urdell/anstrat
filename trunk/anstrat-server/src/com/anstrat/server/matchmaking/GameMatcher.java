@@ -8,12 +8,12 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import com.anstrat.server.old.User;
 import com.anstrat.gameCore.GameType;
 import com.anstrat.geography.Map;
-import com.anstrat.network.NetworkMessage;
-import com.anstrat.server.PlayerSocket;
-import com.anstrat.server.User;
+import com.anstrat.network_old.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
+import com.anstrat.server.old.PlayerSocket;
 import com.anstrat.server.util.Logger;
 
 public class GameMatcher {

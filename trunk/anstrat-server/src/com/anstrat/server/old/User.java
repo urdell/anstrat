@@ -1,10 +1,11 @@
-package com.anstrat.server;
+package com.anstrat.server.old;
 
 /**
  * Container class for user-related information.
  * @author jay
  *
  */
+@Deprecated
 public class User {
 	
 	private String username, displayedName;

@@ -1,4 +1,4 @@
-package com.anstrat.server;
+package com.anstrat.server.old;
 
 import java.net.InetAddress;
 
@@ -7,6 +7,7 @@ import java.net.InetAddress;
  * @author jay
  *
  */
+@Deprecated
 public class Connection
 {
 	public InetAddress ia;
