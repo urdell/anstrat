@@ -161,6 +161,8 @@ public class ActionHandler {
 	}
 	
 	public void endTurnPress(){
+		confirmCancelPress();
+		GEngine.getInstance().selectionHandler.deselect();
 		Command c = new EndTurnCommand();
 		CommandHandler.execute(c);
 		GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
@@ -186,10 +188,6 @@ public class ActionHandler {
 			if (c != null){
 				requestConfirm(GEngine.getInstance().getMap().getTile(selectedUnit.tileCoordinate), selectedUnit, c, ConfirmDialog.BOTTOM_RIGHT);
 			}
-				
-			//CommandHandler.execute(c);
-			
-			refreshHighlight(selectedUnit);
 		}
 	}
 	
