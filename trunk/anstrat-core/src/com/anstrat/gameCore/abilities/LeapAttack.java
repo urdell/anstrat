@@ -6,6 +6,7 @@ import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.HealAnimation;
+import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -25,45 +26,55 @@ public class LeapAttack extends TargetedAbility{
 
 		
 		public LeapAttack(){
-			super("Leap Attack","Making a suicideÁttack dealing additional damage",AP_COST, RANGE);
+			super("Leap Attack","Making a leap-attack, jumping over the enemy and finishes with a dashing blow for extra damage",AP_COST, RANGE);
 		}
 		
 
 		public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 			Unit targetUnit = StateUtils.getUnitByTile(coordinates);
+			if(targetUnit == null)
+				return false;
+			boolean jumpingTarget = false;
+			TileCoordinate tile = Knockback.getKnockBackCoordinate(source, targetUnit);
+			if(StateUtils.getUnitByTile(tile) == null){
+				if(State.activeState.map.getTile(tile).terrain.penalty != Integer.MAX_VALUE){ 
+					jumpingTarget = true;
+				}
+			}		
+			
 			
 			return super.isAllowed(source, coordinates) 
 					&& targetUnit != null
-					&& targetUnit.ownerId != source.ownerId;
+					&& targetUnit.ownerId != source.ownerId
+					&& jumpingTarget;
 		}
 
 		@Override
 		public void activate(Unit source, TileCoordinate coordinate) {
 			super.activate(source, coordinate);
-			
+			TileCoordinate jumpingFrom = source.tileCoordinate;
 			Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 			
 			int roll = State.activeState.random.nextInt(6)+1;
-			
-			targetUnit.currentHP -= source.getAttack()+roll;
-			source.currentHP = 0;
-			
+			int damage = source.getAttack()+6+roll;
+			targetUnit.currentHP -= damage;
 			targetUnit.resolveDeath();
-			source.resolveDeath();
-			
+			source.tileCoordinate = Knockback.getKnockBackCoordinate(source, targetUnit);
+			Animation moveAnimation = new MoveAnimation(source, jumpingFrom, source.tileCoordinate);
+			GEngine.getInstance().animationHandler.enqueue(moveAnimation);
 			
 			CombatLog cl = new CombatLog();
 			cl.attacker = source;
 			cl.defender = targetUnit;
 			cl.newAttackerAP = source.currentAP;
 			cl.newDefenderHP = targetUnit.currentHP;
-			cl.attackDamage = source.getAttack()+roll;
+			cl.attackDamage = damage;
 			Animation animation = new AttackAnimation(cl);
 			GEngine.getInstance().animationHandler.enqueue(animation);
-			
-			Animation sourceDeathAnimation = new DeathAnimation(source, coordinate);
-			GEngine.getInstance().animationHandler.enqueue(sourceDeathAnimation);
-			
+			if(!targetUnit.isAlive){
+				Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
+				GEngine.getInstance().animationHandler.enqueue(deathAnimation);
+			}
 		}
 		
 		@Override
