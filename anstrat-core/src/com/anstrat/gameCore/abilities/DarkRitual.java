@@ -6,6 +6,7 @@ import java.util.List;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.BerserkAnimation;
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.animation.DebuffAnimation;
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -14,13 +15,14 @@ import com.anstrat.gameCore.effects.EffectFactory;
 import com.anstrat.geography.Tile;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.badlogic.gdx.graphics.Color;
 
 public class DarkRitual extends Ability{
 
-	private static final int AP_DRAIN_AMOUNT = 1;
+	private static final int AP_DRAIN_AMOUNT = 2;
 	
 	public DarkRitual() {
-		super("Dark Ritual", "Performs a dark ritual in which they offer their life for AP-loss to adjacent enemy units", 2);
+		super("Dark Ritual", "Performs a dark ritual in which they offer their life for AP-loss to adjacent enemy units", 0);
 	}
 
 	/**
@@ -46,10 +48,12 @@ public class DarkRitual extends Ability{
 			Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
 			if (unit != null){
 				if (unit.ownerId != source.ownerId){
-					unit.currentAP -= 1;
+					unit.currentAP -= AP_DRAIN_AMOUNT;
 					if (unit.currentAP < 0){
 						unit.currentAP = 0;
 					}
+					Animation animation = new DebuffAnimation(unit, Color.RED);
+					GEngine.getInstance().animationHandler.enqueue(animation);
 				}
 			}
 		}
