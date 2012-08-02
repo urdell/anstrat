@@ -1,6 +1,5 @@
 package com.anstrat.server.db;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -75,7 +74,5 @@ public class DatabaseHelper {
 	 */
 	public static void main(String[] args){
 		DatabaseSchema.initializeDB();
-		System.out.println(DatabaseMethods.setDisplayName(1, "Erik"));
-		System.out.println(DatabaseMethods.setDisplayName(2, "Erik"));
 	}
 }

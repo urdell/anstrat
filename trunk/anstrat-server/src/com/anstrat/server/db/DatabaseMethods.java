@@ -15,14 +15,14 @@ import com.anstrat.server.util.Password;
  */
 public class DatabaseMethods {
 
-	public static User createUser(){
+	public static User createUser(String password){
 		Connection conn = null;
 		PreparedStatement insertuser = null;
 		Statement seqnr = null;
 		ResultSet idnr = null;
 		
 		try{
-			byte[] encryptedPassword = Password.generateDatabaseBlob(Password.generateRandomAlphaNumericPassword(64));
+			byte[] encryptedPassword = Password.generateDatabaseBlob(password);
 			
 			conn = DatabaseHelper.getConnection();
 			conn.setAutoCommit(false);

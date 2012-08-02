@@ -75,9 +75,6 @@ public class DatabaseSchema {
 	}
 	
 	public static void seed(){
-		DatabaseMethods.createUser();
-		DatabaseMethods.createUser();
-		DatabaseMethods.createUser();
 	}
 	
 	public static boolean drop(){
