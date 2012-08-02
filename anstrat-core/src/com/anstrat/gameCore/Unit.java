@@ -32,6 +32,7 @@ public class Unit implements Serializable {
 	public int currentHP;
 	public int currentAP;
 	public int attacksThisTurn = 0;
+	public boolean isAlive = true;
 	
 	/**
 	 * Constructs a unit given the type and ownerID
@@ -134,12 +135,12 @@ public class Unit implements Serializable {
 	
 	/**
 	 * Removes units from the game if HP<=0
-	 * @return true if unit is dead
 	 */
-	public boolean resolveDeath(){
-		if(this.currentHP<=0)
+	public void resolveDeath(){
+		if(this.currentHP<=0){
 			State.activeState.unitList.remove(this.id);
-		return currentHP<=0;
+			isAlive = false;
+		}
 	}
 
 }

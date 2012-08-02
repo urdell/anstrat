@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.animation.KnockbackAnimation;
 import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -38,7 +39,7 @@ public class Knockback extends TargetedAbility {
 
 	@Override
 	public void activate(Unit source, TileCoordinate coordinate) {
-		boolean moved = false;
+		boolean canMove = false;
 		TileCoordinate knockedFrom = coordinate;
 		super.activate(source, coordinate);
 		
@@ -47,10 +48,7 @@ public class Knockback extends TargetedAbility {
 		int roll = State.activeState.random.nextInt(6)+1;
 		
 		targetUnit.currentHP -= source.getAttack()+roll;
-		if(targetUnit.resolveDeath() == false){
-			TileCoordinate knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
-			moved = knockBack(targetUnit, knockbackCoordinate);
-		}
+		
 		
 		
 		CombatLog cl = new CombatLog();
@@ -59,12 +57,22 @@ public class Knockback extends TargetedAbility {
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
 		cl.attackDamage = source.getAttack()+roll;
-		Animation attackAnimation = new AttackAnimation(cl);
-		GEngine.getInstance().animationHandler.enqueue(attackAnimation);
-		
-		if(moved){
-			Animation moveAnimation = new MoveAnimation(targetUnit,knockedFrom, targetUnit.tileCoordinate);
-			GEngine.getInstance().animationHandler.enqueue(moveAnimation);
+		targetUnit.resolveDeath();
+		if(targetUnit.isAlive){
+			TileCoordinate knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
+			canMove = knockBack(targetUnit, knockbackCoordinate);
+		}
+		System.out.println("canMove: " + canMove);
+		if(canMove){
+			System.out.println("Knockbackanimation");
+			Animation knockbackAnimation = new KnockbackAnimation(cl);
+			GEngine.getInstance().animationHandler.enqueue(knockbackAnimation);
+			
+		}
+		if(!canMove){
+			System.out.println("AttackAnimation");
+			Animation attackAnimation = new AttackAnimation(cl);
+			GEngine.getInstance().animationHandler.enqueue(attackAnimation);
 		}
 		
 	}
@@ -77,7 +85,7 @@ public class Knockback extends TargetedAbility {
 	 * @return TileCoordinate to be knockbacked too
 	 */
 
-	private TileCoordinate getKnockBackCoordinate(Unit source, Unit targetUnit) {
+	public static TileCoordinate getKnockBackCoordinate(Unit source, Unit targetUnit) {
 		TileCoordinate KnockBackCoordinate = new TileCoordinate();
 		TileCoordinate att = source.tileCoordinate;
 		TileCoordinate def = targetUnit.tileCoordinate;
