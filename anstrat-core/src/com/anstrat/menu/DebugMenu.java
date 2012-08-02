@@ -45,7 +45,7 @@ public class DebugMenu extends MenuScreen {
 		Button clearLogin = ComponentFactory.createMenuButton("Logout", new ClickListener(){
             @Override
             public void click(Actor actor, float x, float y){
-            	Main.getInstance().network.logout();
+            	//Main.getInstance().network.logout();
             	Gdx.files.local("login.bin").delete();
         		
         		Main.getInstance().setScreen(AccountMenu.getInstance());

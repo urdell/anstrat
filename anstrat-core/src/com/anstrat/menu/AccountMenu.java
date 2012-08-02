@@ -103,10 +103,12 @@ public class AccountMenu extends MenuScreen {
 	 * Starts a Quick Play game
 	 */
 	public void quickPlay(){
+		/*
 		if(!Main.getInstance().network.isLoggedIn())
 			Main.getInstance().network.quickLogin();
 		else
 			Popup.showGenericPopup("Quick login refused", "Already logged in.");
+		*/
 	}
 	
 	private Popup createLoginPopup(){
@@ -125,7 +127,7 @@ public class AccountMenu extends MenuScreen {
 				
 				am.clearInputs();
 				
-				Main.getInstance().network.login(username, password);
+				//Main.getInstance().network.login(username, password);
 				
 				Popup.currentPopup.close();
 				am.clearInputs();
@@ -153,7 +155,7 @@ public class AccountMenu extends MenuScreen {
 				am.clearInputs();
 				
 				System.out.println("Sending register request "+username+":"+password+":"+displayed);
-				Main.getInstance().network.register(username, password, displayed);
+				//Main.getInstance().network.register(username, password, displayed);
 				
 				Popup.currentPopup.close();
 				am.clearInputs();
