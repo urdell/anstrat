@@ -9,7 +9,7 @@ import java.util.List;
  * @author jay
  *
  */
-public abstract class NetworkMessage implements Serializable, Comparable<NetworkMessage> {
+public class NetworkMessage implements Serializable, Comparable<NetworkMessage> {
 	
 	private static final long serialVersionUID = 3L;
 
