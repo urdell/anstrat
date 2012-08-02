@@ -1,4 +1,4 @@
-package com.anstrat.server.db;
+package com.anstrat.server.old;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,7 +32,8 @@ public class DatabaseSchema {
 			// Users
 			s.executeUpdate("CREATE TABLE Users(" +
 					"id BIGSERIAL PRIMARY KEY, " +
-					"displayName VARCHAR(20) UNIQUE, " + 	// Can be null
+					"username VARCHAR(20) UNIQUE, " +
+					"displayedName VARCHAR(20) UNIQUE, " +
 					"password BYTEA)");	// password + salt
 			
 			// PlaysIn
@@ -74,12 +75,6 @@ public class DatabaseSchema {
 		}
 	}
 	
-	public static void seed(){
-		DatabaseMethods.createUser();
-		DatabaseMethods.createUser();
-		DatabaseMethods.createUser();
-	}
-	
 	public static boolean drop(){
 		Statement s = null;
 		Connection c = null;
@@ -103,6 +98,16 @@ public class DatabaseSchema {
 		finally{
 			DatabaseHelper.closeStmt(s);
 			DatabaseHelper.closeConn(c);
+		}
+	}
+	
+	public static void seed(){
+		// User accounts
+		String[] names = {"erik", "johnny", "kalle", "tomas", "andreas", "anton"};
+		
+		for(String name : names){
+			String capitalizedName = name.substring(0, 1).toUpperCase() + name.substring(1, name.length());
+			DatabaseHelper.createUser(name, capitalizedName + "1", "Viking" + capitalizedName);
 		}
 	}
 }

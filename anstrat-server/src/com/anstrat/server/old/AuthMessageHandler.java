@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Random;
 
 import com.anstrat.network_old.NetworkMessage;
-import com.anstrat.server.db.DatabaseHelper;
 import com.anstrat.server.util.Password;
 
 /**
