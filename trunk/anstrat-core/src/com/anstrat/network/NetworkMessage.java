@@ -9,24 +9,41 @@ import java.util.List;
  * @author jay
  *
  */
-public class NetworkMessage implements Serializable, Comparable<NetworkMessage> {
+public abstract class NetworkMessage implements Serializable, Comparable<NetworkMessage> {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6944277581424954132L;
-	private String command;
+	private static final long serialVersionUID = 3L;
+
+	public enum Command {
+		// Client -> Server
+		LOGIN,
+		CREATE_NEW_USER, 	
+		SET_DISPLAY_NAME,
+		REQUEST_GAME_UPDATE, 
+		REQUEST_RANDOM_GAME,
+		
+		// Server -> Client
+		ACCEPT_LOGIN, 
+		DENY_LOGIN, 
+		USER_CREDENTIALS, 
+		DISPLAY_NAME_CHANGED, 
+		DISPLAY_NAME_CHANGE_REJECTED,
+		GAME_STATE_CORRUPTED,
+		GAME_STARTED,
+		
+		// Server <-> Client
+		SEND_COMMAND,
+	}
+	
+	private Command command;
 	private List<Serializable> payload;
 	private transient int priority;
 	
-	public NetworkMessage(String command, List<Serializable> payload)
-	{
+	public NetworkMessage(Command command, List<Serializable> payload){
 		this.command = command;
 		this.payload = payload;
 	}
 	
-	public NetworkMessage(String command, Serializable... payload)
-	{
+	public NetworkMessage(Command command, Serializable... payload){
 		this(command, Arrays.asList(payload));
 	}
 	
@@ -38,17 +55,15 @@ public class NetworkMessage implements Serializable, Comparable<NetworkMessage> 
 		this.priority = priority;
 	}
 	
-	public String getCommand()
-	{
-		return command;
+	public Command getCommand(){
+		return this.command;
 	}
 	
 	public int getPriority(){
 		return this.priority;
 	}
 	
-	public List<Serializable> getPayload()
-	{
+	public List<Serializable> getPayload(){
 		return payload;
 	}
 

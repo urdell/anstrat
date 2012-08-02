@@ -1,4 +1,4 @@
-package com.anstrat.networkv2;
+package com.anstrat.network;
 
 import com.anstrat.command.Command;
 import com.anstrat.gameCore.Player;

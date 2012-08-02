@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import com.anstrat.menu.MainMenu;
-import com.anstrat.menu.NetworkDependentTracker;
 import com.badlogic.gdx.Gdx;
 
 /**
@@ -19,37 +19,20 @@ public class GameSocket {
 	private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private IConnectionLostListener listener;
     private InetSocketAddress endpoint;
     
-    private Runnable connectSucceded = new Runnable() {
-		@Override
-		public void run() {
-			NetworkDependentTracker.enableNetworkButtons();
-			MainMenu.getInstance().updateGamesList();
-		}
-	};
+    private Collection<IConnectionListener> listeners = new ArrayList<IConnectionListener>();
 
-	private Runnable connectFailed = new Runnable() {
-		@Override
-		public void run() {
-			NetworkDependentTracker.disableNetworkButtons();
-		}
-	};
-
-    public GameSocket(String host, int port, IConnectionLostListener listener){
-    	endpoint = new InetSocketAddress(host, port);
-    	this.listener = listener;
+    public GameSocket(String host, int port){
+    	this.endpoint = new InetSocketAddress(host, port);
     }
 
-    /**
-     * Initializes a connection with its underlying streams.
-     * @return true if the connection was successfully established, otherwise false.
-     */
-	public synchronized void connect(){
-		if(isConnected()) return;
-		
-		Gdx.app.postRunnable(connectFailed);
+    public void addListener(IConnectionListener listener){
+    	this.listeners.add(listener);
+    }
+    
+	public synchronized boolean connect(){
+		if(socket != null) return true;
 		
 		try{
 			Gdx.app.log("GameSocket", String.format("Connecting to %s:%d...", endpoint.getHostName(), endpoint.getPort()));
@@ -68,13 +51,20 @@ public class GameSocket {
         	socket.setKeepAlive(true);
 			
         	Gdx.app.log("GameSocket", String.format("Successfully connected to %s:%d", endpoint.getHostName(), endpoint.getPort()));
-        	Gdx.app.postRunnable(connectSucceded);
+        	
+        	for(IConnectionListener listener : listeners){
+        		listener.connectionEstablished();
+        	}
+        	
+        	return true;
 		}
 		catch(Exception e){
 			Gdx.app.log("GameSocket", String.format("Failed to connect to %s:%d due to '%s'.", endpoint.getHostName(), endpoint.getPort(), e.getMessage()));
 			
 			close();
 		}
+		
+		return false;
 	}
 	
 	public void sendObject(Serializable obj) throws IOException {
@@ -88,7 +78,10 @@ public class GameSocket {
 		}
 		catch(IOException e){
 			close();
-			listener.connectionLost(e);
+			
+        	for(IConnectionListener listener : listeners){
+        		listener.connectionLost(e);
+        	}
 			
 			throw e;
 		}
@@ -105,13 +98,13 @@ public class GameSocket {
 			
 		} catch (IOException e) {
 			close();
-			listener.connectionLost(e);
+			
+        	for(IConnectionListener listener : listeners){
+        		listener.connectionLost(e);
+        	}
+        	
 			throw e;
 		}
-	}
-	
-	public boolean isConnected(){
-		return socket != null;
 	}
 	
 	public void close(){
@@ -130,5 +123,10 @@ public class GameSocket {
 	
 	public int getPort(){
 		return this.endpoint.getPort();
+	}
+	
+	public static interface IConnectionListener {
+		public void connectionLost(Throwable cause);
+		public void connectionEstablished();
 	}
 }
