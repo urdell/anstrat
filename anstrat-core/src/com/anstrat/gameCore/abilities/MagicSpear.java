@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.HealAnimation;
+import com.anstrat.animation.UpdateBarAnimation;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
@@ -42,6 +43,8 @@ public class MagicSpear extends TargetedAbility {
 		targetUnit.currentHP -= source.getAttack();
 		
 		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(source.tileCoordinate));
+		GEngine.getInstance().animationHandler.enqueue(animation);
+		animation = new UpdateBarAnimation(targetUnit);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	
