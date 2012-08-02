@@ -78,10 +78,13 @@ public class ComponentFactory {
 	}
 	
 	public static Label createLoginLabel(){
+		return new Label("Network disabled.", Assets.SKIN);
+		/*
 		User user = Main.getInstance().network.getUser();
         Label label = new Label((user==null || user.displayName==null || user.displayName.equals(""))?"Connecting...":user.displayName, 
         				new LabelStyle(Assets.UI_FONT,Color.WHITE));
         NetworkDependentTracker.registerLabel(label);
         return label;
+        */
 	}
 }

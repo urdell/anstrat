@@ -38,7 +38,7 @@ public class NewGameMenu extends MenuScreen {
         Button randomButton = ComponentFactory.createMenuButton("Join Random Game",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-        		Main.getInstance().network.startRandomGameSearch();
+        		//Main.getInstance().network.startRandomGameSearch();
             }
         } );
         

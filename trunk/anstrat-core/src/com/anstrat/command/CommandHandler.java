@@ -32,7 +32,7 @@ public abstract class CommandHandler {
 				
 				// Send turn
 				ngi.lastStateChecksum += ngi.state.getCommands().hashCode();
-				Main.getInstance().network.endTurn(ngi.getGameID(), ngi.state.turnNr, ngi.state.getCommands());
+				//Main.getInstance().network.endTurn(ngi.getGameID(), ngi.state.turnNr, ngi.state.getCommands());
 				ngi.endTurn();
 			}
 	
