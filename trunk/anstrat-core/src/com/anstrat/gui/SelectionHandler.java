@@ -14,6 +14,7 @@ import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.geography.Map;
+import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 
@@ -38,14 +39,21 @@ public class SelectionHandler {
 	
 	
 	public void selectUnit(Unit unit){
+		GEngine gEngine = GEngine.getInstance();
 		if(unit != null && unit.currentHP > 0){
+			gEngine.highlighter.clearHighlights();
 			selectedUnit = unit;
 			selectionType = SELECTION_UNIT;
-			GEngine.getInstance().userInterface.showUnit(unit);
-			GEngine.getInstance().highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
+			gEngine.userInterface.showUnit(unit);
 			
-			if(unit.ownerId == State.activeState.currentPlayerId)
-				GEngine.getInstance().actionMap.prepare(unit);
+			gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
+			
+			if(unit.ownerId == State.activeState.currentPlayerId){
+				gEngine.actionMap.prepare(unit);
+				gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
+			}
+			else
+				gEngine.highlighter.highlightTile(unit.tileCoordinate);
 		} else{
 			deselect();
 		}
