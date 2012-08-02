@@ -10,6 +10,36 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class Password {
 	
+	private static char[] alphaNumericCharacters;
+	private static SecureRandom random;
+	
+	static {
+		// Use SecureRandom rather than Random for a cryptographically strong random number
+		try {
+			random = SecureRandom.getInstance("SHA1PRNG");
+		} catch (NoSuchAlgorithmException e) {
+			throw new IllegalStateException("Failed to create an SecureRandom instance.", e);
+		}
+		
+		// Generate all alpha numeric characters
+		StringBuffer buffer = new StringBuffer(128);
+		for(int i = 48; i <= 57; i++) buffer.append((char)i); // 0-9
+		for(int i = 65; i <= 90; i++) buffer.append((char)i); // A-Z
+		for(int i = 97; i <=122; i++) buffer.append((char)i); // a-z
+		alphaNumericCharacters = buffer.toString().toCharArray();
+	}
+	
+	public static String generateRandomAlphaNumericPassword(int length){
+		StringBuffer out = new StringBuffer();
+		
+		while(out.length() < length){
+			int idx = Math.abs((random.nextInt() % alphaNumericCharacters.length));
+			out.append(alphaNumericCharacters[idx]);
+		}
+		
+		return out.toString();
+	}
+	
 	private static final int NUM_ITERATIONS = 1000;
 	
 	public static boolean authenticate(String password, byte[] databaseBlob){
@@ -46,14 +76,7 @@ public class Password {
 	}
 	
 	private static byte[] generateSalt() {
-		// Use SecureRandom rather than Random for a cryptographically strong random number
-		SecureRandom random = null;
-		
-		try {
-			random = SecureRandom.getInstance("SHA1PRNG");
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException("Failed to generate salt.", e);
-		}
+
 		
 		// 8 byte salt as recommended by RSA PKCS5
 		byte[] salt = new byte[8];
