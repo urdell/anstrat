@@ -1,4 +1,4 @@
-package matchmaking;
+package com.anstrat.server.matchmaking;
 
 import java.io.Serializable;
 import java.util.ArrayList;

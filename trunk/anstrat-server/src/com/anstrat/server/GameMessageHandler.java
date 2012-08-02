@@ -16,13 +16,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import matchmaking.GameMatcher;
 
 import com.anstrat.command.Command;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.network.NetworkMessage;
 import com.anstrat.server.db.DatabaseHelper;
 import com.anstrat.server.db.DatabaseHelper.DatabaseType;
+import com.anstrat.server.matchmaking.GameMatcher;
 import com.anstrat.server.util.Logger;
 
 /**

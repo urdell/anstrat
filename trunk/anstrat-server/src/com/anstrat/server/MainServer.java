@@ -6,9 +6,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import matchmaking.GameMatcher;
 
 import com.anstrat.network.NetworkMessage;
+import com.anstrat.server.matchmaking.GameMatcher;
 import com.anstrat.server.util.Logger;
 
 /**
