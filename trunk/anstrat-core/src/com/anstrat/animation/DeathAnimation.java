@@ -24,7 +24,7 @@ public class DeathAnimation extends Animation {
 	}
 	
 	/**
-	 * Creates an deathanimation for the specified and the attack from the specified tilecoordinate
+	 * Creates an deathAnimation for the specified and the attack from the specified tileCoordinate
 	 * @param unit that dies
 	 * @param coordinate of the attacker
 	 */

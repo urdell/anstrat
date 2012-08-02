@@ -43,7 +43,8 @@ public class ShadowImage extends TargetedAbility {
 		
 		Animation animation = new LifeStealAnimation(source,targetUnit);
 		GEngine.getInstance().animationHandler.enqueue(animation);
-		if(targetUnit.resolveDeath()){
+		targetUnit.resolveDeath();
+		if(!targetUnit.isAlive){
 			Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
 			GEngine.getInstance().animationHandler.enqueue(deathAnimation);
 		}
