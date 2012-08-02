@@ -10,5 +10,9 @@ public interface IConnectionManager {
 	void sendMessage(InetSocketAddress address, NetworkMessage message);
 	void sendMessage(long userID, NetworkMessage message);
 	void linkUserToAddress(long userID, InetSocketAddress address);
+	
+	/**
+	 * @return the matching userID or -1 if none was found
+	 */
 	long getUserID(InetSocketAddress address);
 }
