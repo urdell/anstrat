@@ -1,4 +1,4 @@
-package com.anstrat.network;
+package com.anstrat.network_old;
 
 public interface IConnectionLostListener {
 

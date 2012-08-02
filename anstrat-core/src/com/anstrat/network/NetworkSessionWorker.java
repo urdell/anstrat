@@ -1,6 +1,4 @@
-package com.anstrat.networkv2;
-
-
+package com.anstrat.network;
 
 /**
  * Encapsulates the NetworkWorker, making sure a user always exists and is logged in.
