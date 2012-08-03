@@ -95,15 +95,15 @@ public class ClientWorker implements Runnable {
 					logger.info("General I/O failure for %s: %s", source, ioe.getCause());
 				}
 				
-				close();
+				close(ioe);
 			}
 			catch(ClassNotFoundException cnfe){
 				logger.info("Received erroneous message from %s: %s", source, cnfe.getCause());
-				close();
+				close(cnfe);
 			}
 			catch(Exception e){
 				logger.info("Unknown error for %s: %s.", source, e.getLocalizedMessage());
-				close();
+				close(e);
 			}
 			
 			if(obj != null){

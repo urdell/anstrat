@@ -31,7 +31,9 @@ public class ServerMessageHandler {
 		try{
 			switch(command){
 				case LOGIN: {
-					authMessageHandler.login(client, -1, null);
+					long userID = (Long) payload.get(0);
+					String password = (String) payload.get(1);
+					authMessageHandler.login(client, userID, password);
 					break;
 				}
 				case CREATE_NEW_USER: {

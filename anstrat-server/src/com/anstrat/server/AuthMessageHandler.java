@@ -8,10 +8,12 @@ import com.anstrat.network.NetworkMessage.Command;
 import com.anstrat.server.db.DatabaseMethods;
 import com.anstrat.server.db.User;
 import com.anstrat.server.db.DatabaseMethods.DisplayNameChangeResponse;
+import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
 
 public class AuthMessageHandler {
 
+	private static final Logger logger = Logger.getGlobalLogger();
 	private final IConnectionManager connectionManager;
 	
 	public AuthMessageHandler(IConnectionManager connectionManager){
@@ -23,13 +25,20 @@ public class AuthMessageHandler {
 		User user = DatabaseMethods.getUser(userID);
 		
 		// Authenticate
-		if(user != null && Password.authenticate(password, user.getEncryptedPassword())){
+		boolean userExists = user != null;
+		boolean userPasswordMatches = user == null || Password.authenticate(password, user.getEncryptedPassword());
+		
+		if(userExists && userPasswordMatches){
 			connectionManager.linkUserToAddress(userID, client);
 			connectionManager.sendMessage(client, new NetworkMessage(Command.ACCEPT_LOGIN, userID));
 		}
 		else{
 			connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "UserID / password combination does not match."));
 		}
+		
+		// More specific logging
+		if(!userExists) logger.info("%s attempted to login as userID '%d', but the user does not exist.", client, userID);
+		if(!userPasswordMatches) logger.info("%s attempted to login as user '%d' with an invalid password..", client, userID);
 	}
 	
 	// Triggers USER_CREDENTIALS(userID, password)
