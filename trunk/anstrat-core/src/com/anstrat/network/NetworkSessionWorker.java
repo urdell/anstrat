@@ -1,6 +1,5 @@
 package com.anstrat.network;
 
-import com.anstrat.core.User;
 
 /**
  * Encapsulates the NetworkWorker, making sure a user always exists and is logged in.

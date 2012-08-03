@@ -2,11 +2,14 @@ package com.anstrat.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import com.anstrat.ai.AIUtils;
 import com.anstrat.ai.ScriptAI;
+import com.anstrat.command.Command;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
@@ -30,7 +33,7 @@ public class GameInstance implements Serializable{
 	static List<GameInstance> gamesList = new ArrayList<GameInstance>();
 	
 	public State state;
-	private int[] aiPlayerIDs;
+	private Collection<Integer> aiPlayerIDs;
 	
 	public GameInstance(long gameID, Map map, Player[] players){
 		state = new State(map, players, this);
@@ -40,9 +43,9 @@ public class GameInstance implements Serializable{
 		state = new State(map, players, randomSeed, this);
 	}
 	
-	public static GameInstance createAIGame(Map map, int... aiPlayerIds){
+	public static GameInstance createAIGame(Map map, Integer... aiPlayerIds){
 		GameInstance gi = createHotseatGame(map);
-		gi.aiPlayerIDs = aiPlayerIds;
+		gi.aiPlayerIDs = Arrays.asList(aiPlayerIds);
 		return gi;
 	}
 	
@@ -54,21 +57,13 @@ public class GameInstance implements Serializable{
 		return GameInstance.createHotseatGame(map, 2);
 	}
 	
-	public static void createOnlineGame(long gameid, long randomseed, long timelimit, String gamename, Map map, long opponentId, String opponentName, boolean host){
-		if (host)
-			new NetworkGameInstance(gameid, new Player[]{new Player(User.globalUserID, 0, "Player "+0, 0, Player.getRandomGodFromTeam(0)), new Player(opponentId, 1, opponentName, 1, Player.getRandomGodFromTeam(1))},map, randomseed, timelimit);
-		else
-			new NetworkGameInstance(gameid, new Player[]{new Player(opponentId, 0, opponentName, 0, Player.getRandomGodFromTeam(0)), new Player(User.globalUserID, 1, "Player "+0, 1, Player.getRandomGodFromTeam(1))},map, randomseed, timelimit);
-	}
-	
 	public static GameInstance createHotseatGame(Map map, int numPlayers){
 		
-		// Hotseat game - create all players using the global user id
 		Player[] players = new Player[numPlayers];
 		int team = 0;
 		
 		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(User.globalUserID, i, "Player " + i, team, Player.getRandomGodFromTeam(team));
+			players[i] = new Player(i, "Player " + i, team, Player.getRandomGodFromTeam(team));
 			
 			// Toggle team
 			team = (team + 1) % UnitType.TEAMS.length;
@@ -107,11 +102,6 @@ public class GameInstance implements Serializable{
 		return this.state.turnNr;
 	}
 	
-	public Player getCurrentPlayer(){
-		int currentPlayerIndex = (state.turnNr - 1) % state.players.length; 
-		return state.players[currentPlayerIndex];
-	}
-	
 	public void resign(){
 		remove();
 	}
@@ -134,16 +124,20 @@ public class GameInstance implements Serializable{
 		return this.aiPlayerIDs != null;
 	}
 	
-	public boolean isInGame(long userId)
-	{
-		boolean inGame = false;
+	public Player getUserPlayer(){
+		if(aiPlayerIDs == null) return state.getCurrentPlayer();
 		
-		for(int i=0;!inGame && i<state.players.length;i++)
-		{
-			inGame = state.players[i].userID == userId;
+		// Find user player
+		for(Player p : state.players){
+			if(!aiPlayerIDs.contains(p.playerId)) return p;
 		}
 		
-		return inGame;
+		// Should NEVER happen
+		throw new RuntimeException("Game only contains AI's!");
+	}
+	
+	public void onCommandExecute(Command command){
+		
 	}
 	
 	public static List<GameInstance> getActiveGames(){

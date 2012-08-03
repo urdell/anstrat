@@ -62,18 +62,8 @@ public class State implements Serializable{
 		this.random.setSeed(randomSeed);
 	}
 	
-	/*
-	private void createTestUnits(){
-		TileCoordinate initOneUnitCoord = new TileCoordinate(2,2);
-		TileCoordinate initSecondUnit = new TileCoordinate(4,4);
-		
-		CreationHandler.createUnitStateOnly(initOneUnitCoord, UnitType.AXE, 0);
-		CreationHandler.createUnitStateOnly(initSecondUnit, UnitType.MACE, 1);
-	}*/
-	
 	// TODO: validation delegation
-	public void addUnit(TileCoordinate tilecoordinate, Unit unit)
-	{
+	public void addUnit(TileCoordinate tilecoordinate, Unit unit){
 		unitList.put(unit.id, unit);
 		unit.tileCoordinate = map.tiles[tilecoordinate.x][tilecoordinate.y].coordinates;
 	}
@@ -192,5 +182,9 @@ public class State implements Serializable{
 	
 	public Player getCurrentPlayer(){
 		return players[currentPlayerId];
+	}
+	
+	public boolean isUserCurrentPlayer(){
+		return gameInstance.getUserPlayer().playerId == currentPlayerId;
 	}
 }

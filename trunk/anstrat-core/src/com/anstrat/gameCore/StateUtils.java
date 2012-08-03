@@ -43,6 +43,10 @@ public abstract class StateUtils {
 		return State.activeState.map.getPlayersCastle(State.activeState.currentPlayerId);
 	}
 	
+	public static boolean isControlledByUser(Building building){
+		return building.controllerId == State.activeState.gameInstance.getUserPlayer().playerId;
+	}
+	
 	public static Unit[] getPlayersUnits(Player player) {
 		Set<Entry<Integer, Unit>> units = State.activeState.unitList.entrySet();
 		ArrayList<Unit> res = new ArrayList<Unit>();

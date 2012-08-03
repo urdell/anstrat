@@ -16,6 +16,7 @@ import com.anstrat.menu.NetworkDependentTracker;
 import com.anstrat.menu.SplashScreen;
 import com.anstrat.network.Network;
 import com.anstrat.network.NetworkController;
+import com.anstrat.network.User;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;

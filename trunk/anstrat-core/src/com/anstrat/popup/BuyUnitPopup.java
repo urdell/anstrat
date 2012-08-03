@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.core.NetworkGameInstance;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
@@ -135,13 +133,7 @@ public class BuyUnitPopup extends Popup{
 	 * Check if the unit is afforded before showing popup.
 	 */
 	@Override public void show(){
-		State state = State.activeState;
-		if(state.gameInstance.isAiGame())
-			opener = state.players[0].ai!=null?state.players[1]:state.players[0];
-		else if(state.gameInstance instanceof NetworkGameInstance)
-			opener = state.players[0].userID==User.globalUserID?state.players[0]:state.players[1];
-		else
-			opener = State.activeState.getCurrentPlayer();
+		opener = State.activeState.gameInstance.getUserPlayer();
 		checkUnitAffordable();
 		
 		unitTable.setColor(opener.getColor());
@@ -168,7 +160,7 @@ public class BuyUnitPopup extends Popup{
 			return;
 		
 		int gold = opener.gold;
-		boolean isPlayerTurn = State.activeState.getCurrentPlayer().userID == opener.userID;
+		boolean isPlayerTurn = State.activeState.getCurrentPlayer() == opener;
 		
 		//Disable buy button if current unit is not affordable
 		boolean canBuy = gold>=card.type.cost;

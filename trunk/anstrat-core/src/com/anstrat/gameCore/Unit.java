@@ -22,7 +22,7 @@ public class Unit implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public TileCoordinate tileCoordinate;
-	public int id;
+	public final int id;
 	public int ownerId;
 	
 	private UnitType type;

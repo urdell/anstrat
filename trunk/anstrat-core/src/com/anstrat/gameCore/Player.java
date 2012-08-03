@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.anstrat.ai.IArtificialIntelligence;
 import com.badlogic.gdx.graphics.Color;
 
-
 /**
  * 
  * Contains info about resources etc.
@@ -25,26 +24,24 @@ public class Player implements Serializable {
 	
 	public transient IArtificialIntelligence ai = null;
 	
-	//TODO Proper colors for players 3-4 as well, this is only for 2 players
+	// TODO: Proper colors for players 3-4 as well, this is only for 2 players
 	public static final Color[] primaryColor = {new Color(0.2f, 0.2f, 1f, 1f), new Color(1f, 0.15f, 0.15f, 1f), 
 												new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	public static final Color[] secondaryColor = {new Color(0f, 0f, 0.3f, 1f), new Color(0.3f, 0f, 0f, 1f),
 													new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	
 	public final int team;
-	public long userID;
 	public String displayedName;
 	
-	public int playerId;
+	public final int playerId;
 	
 	public int gold = 50;
 	
 	public int mana = 10;
 	
-	public int god;
+	public final int god;
 	
-	public Player(long userID, int playerID, String displayName, int team, int god){
-		this.userID = userID;
+	public Player(int playerID, String displayName, int team, int god){
 		this.playerId = playerID;
 		this.displayedName = displayName;
 		this.team = team;

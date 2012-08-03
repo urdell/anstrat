@@ -1,6 +1,5 @@
 package com.anstrat.animation;
 
-import com.anstrat.core.User;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -21,7 +20,7 @@ public class MoveAnimation extends Animation {
 	
 	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile){
 		GEngine engine = GEngine.getInstance();
-		shouldMoveCamera = engine.state.getCurrentPlayer().userID != User.globalUserID;
+		shouldMoveCamera = engine.state.isUserCurrentPlayer();
 		
 		gunit = engine.getUnit(unit);
 		

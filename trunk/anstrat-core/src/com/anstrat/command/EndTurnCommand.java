@@ -6,15 +6,7 @@ import com.anstrat.gui.GEngine;
 
 public class EndTurnCommand extends Command{
 	
-	private static final long serialVersionUID = 1L;
-
-	public EndTurnCommand(){
-		super();
-	}
-	
-	public EndTurnCommand(long callerID){
-		super(callerID);
-	}
+	private static final long serialVersionUID = 2L;
 	
 	@Override
 	protected void execute() {

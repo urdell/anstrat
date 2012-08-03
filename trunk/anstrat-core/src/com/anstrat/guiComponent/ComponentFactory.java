@@ -2,8 +2,8 @@ package com.anstrat.guiComponent;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.core.User;
 import com.anstrat.menu.NetworkDependentTracker;
+import com.anstrat.network.User;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
