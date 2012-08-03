@@ -426,7 +426,7 @@ public class GameMessageHandler {
 			if(now.after(turnEnds)){
 				// Turn has expired, insert an EndTurnCommand
 				Queue<Command> commands = new LinkedList<Command>();
-				commands.add(new EndTurnCommand(user.getUserId()));
+				//commands.add(new EndTurnCommand(user.getUserId()));
 				endTurn(gameID, turnNo + 1, commands, user, false);
 				
 				return true;
