@@ -198,6 +198,7 @@ public class MainMenu extends MenuScreen {
 		waiting.add("Waiting for other players:").height(height).padTop(paddingTop);
 		
         for(final GameInstance gi : GameInstance.getActiveGames()){
+        	if(!gi.isInGame(User.globalUserID)) continue;
         	
         	// Check if it's the player's turn (it's always the player's turn for offline games)
         	boolean isPlayerTurn = gi.getCurrentPlayer().userID == User.globalUserID || !(gi instanceof NetworkGameInstance);
