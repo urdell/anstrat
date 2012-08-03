@@ -3,7 +3,6 @@ package com.anstrat.network;
 import java.io.Serializable;
 import java.util.List;
 
-import com.anstrat.core.User;
 import com.anstrat.network.NetworkMessage.Command;
 import com.anstrat.network.NetworkWorker.INetworkCallback;
 import com.badlogic.gdx.Gdx;

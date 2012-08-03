@@ -1,15 +1,14 @@
-package com.anstrat.core;
+package com.anstrat.network;
 
 import java.io.Serializable;
 
+import com.anstrat.core.Serialization;
 import com.badlogic.gdx.files.FileHandle;
 
 public class User implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
-	public static long globalUserID = 1337;
-	public String username;
 	public String password;
 	public String displayName;
 

@@ -22,6 +22,10 @@ public class NetworkController {
 	}
 	
 	// UI actions
+	public long getGlobalUserID(){
+		return -1;
+	}
+	
 	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
 	
 	// Network listener implementation

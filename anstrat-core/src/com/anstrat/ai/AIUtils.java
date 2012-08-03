@@ -5,17 +5,9 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 
 public class AIUtils {
-	
 
-	
-	/**
-	 * Assigns an AI to the player. WARNING: Will break if used before globalUserId is set.
-	 * @param player
-	 * @param AIType
-	 */
 	public static void assignAI(Player player, IArtificialIntelligence ai){
 		player.ai = ai;
-		player.userID = player.playerId;
 		player.displayedName = "AI";
 	}
 	
@@ -34,6 +26,4 @@ public class AIUtils {
 		}
 		return foundUnit;
 	}
-	
-	
 }

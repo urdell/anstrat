@@ -1,7 +1,6 @@
 package com.anstrat.gui;
 
 import com.anstrat.animation.FullscreenTextAnimation;
-import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
 import com.anstrat.command.ActivatePlayerAbilityCommand;
@@ -15,8 +14,6 @@ import com.anstrat.command.CreateUnitCommand;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.core.GameInstance;
-import com.anstrat.core.NetworkGameInstance;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -30,7 +27,6 @@ import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 
 
 /**
@@ -58,19 +54,25 @@ public class ActionHandler {
 		}
 		
 		switch(gEngine.selectionHandler.selectionType){
-		case SelectionHandler.SELECTION_EMPTY:
+		case SelectionHandler.SELECTION_EMPTY: {
 			gEngine.selectionHandler.gTile = gTile;
+			Building currentPlayerCastle = StateUtils.getCurrentPlayerCastle();
+			
 			if(unit != null){
 				gEngine.selectionHandler.selectUnit(unit);
-			}else if( StateUtils.getBuildingByTile(gTile.tile.coordinates) == StateUtils.getCurrentPlayerCastle()){ // clicked own castle
-				GameInstance game = State.activeState.gameInstance;
-				if(!(game instanceof NetworkGameInstance || game.isAiGame()) ||
-						StateUtils.getCurrentPlayerCastle().controllerId==User.globalUserID ||
-						State.activeState.players[StateUtils.getCurrentPlayerCastle().controllerId].ai==null)
-					Popup.getBuyUnitPopup().show();
 			}
-			//TODO Might need some more verification than (unit!=null) for that tile contains a unit
+			
+			// User clicked the current player's castle
+			else if(StateUtils.getBuildingByTile(gTile.tile.coordinates) == currentPlayerCastle){
+				
+				// Does this castle belong to the user?
+				if(StateUtils.isControlledByUser(currentPlayerCastle)){
+					Popup.getBuyUnitPopup().show();
+				}
+			}
+			
 			break;
+		}
 		case SelectionHandler.SELECTION_UNIT:
 			Unit selectedUnit = gEngine.selectionHandler.selectedUnit;
 			if(unit == null){   //Empty tile clicked

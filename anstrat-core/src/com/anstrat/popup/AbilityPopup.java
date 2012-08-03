@@ -5,13 +5,12 @@ import com.anstrat.command.Command;
 import com.anstrat.command.CommandHandler;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.State;
+import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
-import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
@@ -124,7 +123,7 @@ public class AbilityPopup extends Popup {
 			return;
 		
 		int mana = State.activeState.getCurrentPlayer().mana;
-		boolean isPlayerTurn = State.activeState.getCurrentPlayer().userID == User.globalUserID;
+		boolean isPlayerTurn = State.activeState.isUserCurrentPlayer();
 		
 		//Disable cast button if current ability is not affordable
 		boolean canCast = mana>=card.type.manaCost;

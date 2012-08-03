@@ -5,7 +5,6 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -340,7 +339,7 @@ public class GameUI extends UI {
 		Player player = State.activeState.getCurrentPlayer();
 		GameInstance game = State.activeState.gameInstance;
 		String text;
-		if(player.userID == User.globalUserID)
+		if(State.activeState.isUserCurrentPlayer())
 		{
 			Assets.SKIN.setEnabled(endTurnButton, true);
 			Assets.SKIN.setEnabled(buyButton, true);

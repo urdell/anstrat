@@ -7,7 +7,6 @@ import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.core.Options;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
@@ -197,13 +196,8 @@ public class MainMenu extends MenuScreen {
 		Table waiting = new Table(Assets.SKIN);
 		waiting.add("Waiting for other players:").height(height).padTop(paddingTop);
 		
-        for(final GameInstance gi : GameInstance.getActiveGames()){
-        	if(!gi.isInGame(User.globalUserID)) continue;
-        	
-        	// Check if it's the player's turn (it's always the player's turn for offline games)
-        	boolean isPlayerTurn = gi.getCurrentPlayer().userID == User.globalUserID || !(gi instanceof NetworkGameInstance);
-        	
-        	Table table = isPlayerTurn ? current : waiting;
+        for(final GameInstance gi : GameInstance.getActiveGames()){    	
+        	Table table = gi.state.isUserCurrentPlayer() ? current : waiting;
         	table.row();
         	table.add(gameInstanceToTable(gi)).fillX().expandX().height((int)(17*Main.percentHeight));
         }
@@ -313,15 +307,23 @@ public class MainMenu extends MenuScreen {
 	        }
 		});
     	
-    	String opponent = "vs. ";
-    	if(instance.isAiGame() || instance instanceof NetworkGameInstance)
+    	String opponent = null;
+    	
+    	if(instance.isAiGame() || instance instanceof NetworkGameInstance){
+    		StringBuffer opponents = new StringBuffer("vs. ");
+    		boolean first = true;
+    		Player userPlayer = instance.getUserPlayer();
+    		
         	for(Player p : instance.state.players){
-        		if(p.userID != User.globalUserID){
-        			opponent += p.displayedName;
-        			break;
+        		if(p != userPlayer){
+        			if(!first) opponents.append(", ");
+        			opponents.append(p.displayedName);
         		}
         	}
-    	else{
+        	
+        	opponent = opponents.toString();
+    	}
+    	else {
     		opponent = instance.state.players[0].displayedName + " vs. " +instance.state.players[1].displayedName;
     	}
     	

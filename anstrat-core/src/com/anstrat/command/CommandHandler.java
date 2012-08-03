@@ -4,8 +4,6 @@ import java.util.Queue;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.FullscreenTextAnimation;
-import com.anstrat.core.Main;
-import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.UnitType;
@@ -25,17 +23,7 @@ public abstract class CommandHandler {
 		if(command.isAllowed()){			
 			Gdx.app.log("CommandHandler", String.format("Executing valid '%s' command.", command));
 			State.activeState.addCommand(command);
-	
-			// Send turn over network
-			if(State.activeState.gameInstance instanceof NetworkGameInstance && command instanceof EndTurnCommand){
-				NetworkGameInstance ngi = (NetworkGameInstance) State.activeState.gameInstance;
-				
-				// Send turn
-				ngi.lastStateChecksum += ngi.state.getCommands().hashCode();
-				//Main.getInstance().network.endTurn(ngi.getGameID(), ngi.state.turnNr, ngi.state.getCommands());
-				ngi.endTurn();
-			}
-	
+			State.activeState.gameInstance.onCommandExecute(command);
 			command.execute();
 			Pathfinding.ranges.clear();
 		}

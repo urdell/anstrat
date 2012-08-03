@@ -3,8 +3,6 @@ package com.anstrat.command;
 
 import java.io.Serializable;
 
-import com.anstrat.core.NetworkGameInstance;
-import com.anstrat.core.User;
 import com.anstrat.gameCore.State;
 import com.badlogic.gdx.Gdx;
 
@@ -15,35 +13,28 @@ import com.badlogic.gdx.Gdx;
  * OK classes: TileCoordinate, UnitType, TerrainType
  */
 public abstract class Command implements Serializable {
-	private long callerId;
+	private int playerID;
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	/**
-	 * Always called by all commands
+	 * Creates a command for the current player
 	 */
 	protected Command(){
-		this((State.activeState.getCurrentPlayer().ai == null) 
-				? User.globalUserID
-				: State.activeState.getCurrentPlayer().userID);	// The AI (currentPlayer) issued the command
+		this(State.activeState.getCurrentPlayer().playerId);
 	}
 	
-	/**
-	 * @param callId the userID of the player that this command is originating from.
-	 */
-	protected Command(long callId){
-		this.callerId = callId;
+	protected Command(int playerID){
+		this.playerID = playerID;
 	}
 
 	protected abstract void execute();
 	
 	public boolean isAllowed(){
-		boolean allowed = (callerId == State.activeState.getCurrentPlayer().userID) ||
-							(State.activeState.getCurrentPlayer().ai == null && 
-							!(State.activeState.gameInstance instanceof NetworkGameInstance));
+		boolean allowed = playerID == State.activeState.getCurrentPlayer().playerId;
 		
 		if(!allowed){
-			Gdx.app.log("Command", String.format("Refused due to invalid callerID, expected: '%d', found: '%d'", State.activeState.getCurrentPlayer().userID, callerId));
+			Gdx.app.log("Command", String.format("Refused due to invalid playerID, player %d is not the current player. (Expected player: %d), playerID", playerID, State.activeState.getCurrentPlayer().playerId));
 		}
 		return allowed;
 	}
@@ -55,6 +46,6 @@ public abstract class Command implements Serializable {
 	
 	@Override
 	public int hashCode(){
-		return getClass().hashCode() * 13 + (int)callerId * 17;
+		return getClass().hashCode() * 13 + playerID * 17;
 	}
 }
