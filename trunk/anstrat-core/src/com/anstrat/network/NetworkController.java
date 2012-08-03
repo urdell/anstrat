@@ -36,13 +36,13 @@ public class NetworkController {
 			}
 			
 			@Override
-			public void loginDenied() {
+			public void loginDenied(String reason) {
 				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
-			public void loginAccepted() {
+			public void loginAccepted(long userID) {
 				// TODO Auto-generated method stub
 				
 			}

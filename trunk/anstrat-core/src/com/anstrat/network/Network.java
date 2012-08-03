@@ -3,6 +3,7 @@ package com.anstrat.network;
 import java.io.Serializable;
 import java.util.List;
 
+import com.anstrat.core.User;
 import com.anstrat.network.NetworkMessage.Command;
 import com.anstrat.network.NetworkWorker.INetworkCallback;
 import com.badlogic.gdx.Gdx;
@@ -12,8 +13,8 @@ public class Network implements INetworkCallback {
 	private INetworkResponseHandler listener;
 	private NetworkSessionWorker worker;
 	
-	public Network(String host, int port){
-		this.worker = new NetworkSessionWorker(new GameSocket(host, port), this);
+	public Network(String host, int port, User storedLogin){
+		this.worker = new NetworkSessionWorker(new GameSocket(host, port), this, storedLogin);
 	}
 	
 	public void setListener(INetworkResponseHandler listener){
@@ -23,7 +24,7 @@ public class Network implements INetworkCallback {
 	@Override
 	public void messageReceived(NetworkMessage message) {
 		Command command = message.getCommand();
-		List<Serializable> payload = message.getPayload();
+		final List<Serializable> payload = message.getPayload();
 		
 		try{
 			switch(message.getCommand()){
@@ -31,7 +32,8 @@ public class Network implements INetworkCallback {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.loginAccepted()
+							long userID = (Long) payload.get(0);
+							listener.loginAccepted(userID);
 						}
 					});
 					
@@ -41,7 +43,8 @@ public class Network implements INetworkCallback {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.loginDenied();
+							String reason = (String) payload.get(0);
+							listener.loginDenied(reason);
 						}
 					});
 					
@@ -51,7 +54,9 @@ public class Network implements INetworkCallback {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.userCredentials();
+							long userID = (Long) payload.get(0);
+							String password = (String) payload.get(1);
+							listener.userCredentials(userID, password);
 						}
 					});
 					
@@ -61,7 +66,8 @@ public class Network implements INetworkCallback {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.displayNameChanged()
+							String name = (String) payload.get(0);
+							listener.displayNameChanged(name);
 						}
 					});
 					
@@ -71,7 +77,8 @@ public class Network implements INetworkCallback {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.displayNameChangeRejected()
+							String reason = (String) payload.get(0);
+							listener.displayNameChanged(reason);
 						}
 					});
 					
