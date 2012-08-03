@@ -48,6 +48,7 @@ public class Network implements Runnable, INetworkReaderListener, IConnectionLos
 
 	@Override
 	public void run(){
+		/*
 		while(!Thread.currentThread().isInterrupted()){
 			try {
 				Thread.sleep(POLL_INTERVAL);
@@ -75,6 +76,7 @@ public class Network implements Runnable, INetworkReaderListener, IConnectionLos
 				}
 			}
 		}
+		*/
 	}
 	
 	public void start(){
