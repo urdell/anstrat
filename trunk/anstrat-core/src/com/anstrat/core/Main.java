@@ -107,7 +107,7 @@ public class Main extends Game implements ApplicationListener {
 
 		GameInstance.loadGameInstances(Gdx.files.local("games.bin"));	// Loads all saved game instances
 
-		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, User.fromFile(Gdx.files.internal("login.bin")));
+		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
 		
 		// Create the single instance of sprite batch

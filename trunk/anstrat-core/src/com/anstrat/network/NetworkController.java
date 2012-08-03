@@ -30,26 +30,8 @@ public class NetworkController {
 	
 	// Network listener implementation
 	
-	private INetworkResponseHandler getNetworkResponseHandlerImplementation(){
-		return new INetworkResponseHandler() {
-			
-			@Override
-			public void userCredentials(long userID, String password) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void loginDenied(String reason) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void loginAccepted(long userID) {
-				// TODO Auto-generated method stub
-				
-			}
+	private INetworkResponseListener getNetworkResponseHandlerImplementation(){
+		return new INetworkResponseListener() {
 			
 			@Override
 			public void gameStateCorrupted(long gameID) {

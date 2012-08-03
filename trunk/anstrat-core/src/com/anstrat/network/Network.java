@@ -6,17 +6,18 @@ import java.util.List;
 import com.anstrat.network.NetworkMessage.Command;
 import com.anstrat.network.NetworkWorker.INetworkCallback;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 public class Network implements INetworkCallback {
 
-	private INetworkResponseHandler listener;
-	private NetworkSessionWorker worker;
+	private INetworkResponseListener listener;
+	private NetworkUserManager worker;
 	
-	public Network(String host, int port, User storedLogin){
-		this.worker = new NetworkSessionWorker(new GameSocket(host, port), this, storedLogin);
+	public Network(String host, int port, FileHandle storedLoginFile){
+		this.worker = new NetworkUserManager(new GameSocket(host, port), this, storedLoginFile);
 	}
 	
-	public void setListener(INetworkResponseHandler listener){
+	public void setListener(INetworkResponseListener listener){
 		this.listener = listener;
 	}
     
@@ -26,63 +27,8 @@ public class Network implements INetworkCallback {
 		final List<Serializable> payload = message.getPayload();
 		
 		try{
-			switch(message.getCommand()){
-				case ACCEPT_LOGIN: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							long userID = (Long) payload.get(0);
-							listener.loginAccepted(userID);
-						}
-					});
-					
-					break;
-				}
-				case DENY_LOGIN: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							String reason = (String) payload.get(0);
-							listener.loginDenied(reason);
-						}
-					});
-					
-					break;
-				}
-				case USER_CREDENTIALS: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							long userID = (Long) payload.get(0);
-							String password = (String) payload.get(1);
-							listener.userCredentials(userID, password);
-						}
-					});
-					
-					break;
-				}
-				case DISPLAY_NAME_CHANGED: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							String name = (String) payload.get(0);
-							listener.displayNameChanged(name);
-						}
-					});
-					
-					break;
-				}
-				case DISPLAY_NAME_CHANGE_REJECTED: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							String reason = (String) payload.get(0);
-							listener.displayNameChanged(reason);
-						}
-					});
-					
-					break;
-				}
+			switch(command){
+				
 				case GAME_STATE_CORRUPTED: {
 					Gdx.app.postRunnable(new Runnable() {
 						@Override

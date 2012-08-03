@@ -7,11 +7,16 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class User implements Serializable {
 	
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	
-	public String password;
-	public String displayName;
+	public final long userID;
+	public final String password;
 
+	public User(long userID, String password){
+		this.userID = userID;
+		this.password = password;
+	}
+	
 	public void toFile(FileHandle handle){
 		Serialization.writeObject(this, handle);
 	}

@@ -61,7 +61,7 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 	public void linkUserToAddress(long userID, InetSocketAddress address) {
 		this.authenticatedConnections.put(userID, address);
 		this.addressToUserID.remove(address);
-		logger.info("Authenticated client %s as user '%d'.", address, userID);
+		logger.info("Authenticated %s as user '%d'.", address, userID);
 	}
 
 	@Override

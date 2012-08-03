@@ -10,16 +10,17 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.PauseableThread;
 
 
-public class NetworkWorker {
+public abstract class NetworkWorker {
 
 	private GameSocket socket;
 	private PauseableThread sender, reader;
-	private BlockingQueue<NetworkMessage> outgoing;
+	private INetworkCallback callback;
+	protected BlockingQueue<NetworkMessage> outgoing;
 	
 	private int reconnectCount;
 	private static final long[] RETRY_DELAY = {5000, 10000, 15000, 30000};
 	
-	public NetworkWorker(final GameSocket socket, final INetworkCallback callback){
+	public NetworkWorker(final GameSocket socket){
 		this.socket = socket;
 		outgoing = new PriorityBlockingQueue<NetworkMessage>();
 		
@@ -64,13 +65,17 @@ public class NetworkWorker {
 				if(obj instanceof NetworkMessage){
 					NetworkMessage message = (NetworkMessage)obj;
 					Gdx.app.log("NetworkReaderWorker", String.format("Received network command '%s'.", message.getCommand()));
-					callback.messageReceived((NetworkMessage) obj);
+					if(callback != null) callback.messageReceived((NetworkMessage) obj);
 				}
 				else{
 					throw new GdxRuntimeException("Malformed network input (not a NetworkMessage).", cause);
 				}
 			}
 		});
+	}
+	
+	public void setCallback(INetworkCallback callback){
+		this.callback = callback;
 	}
 	
 	public void start(){
