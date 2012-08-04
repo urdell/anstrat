@@ -47,7 +47,6 @@ public class MainServer {
 		}
 	}
 
-	@SuppressWarnings("resource")
 	public void listen(int port){
 		ServerSocket incomingConnections = null;
 		

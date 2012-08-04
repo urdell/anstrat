@@ -3,9 +3,12 @@ package com.anstrat.server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.anstrat.network.NetworkMessage;
+import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.server.messageHandlers.ServerMessageHandler;
 import com.anstrat.server.util.Logger;
 
 public class ConnectionManager implements IConnectionManager, ClientWorker.IClientWorkerCallback {
@@ -15,12 +18,14 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 	private final ConcurrentHashMap<InetSocketAddress, ClientWorker> connections;
 	private final ConcurrentHashMap<Long, InetSocketAddress> authenticatedConnections;
 	private final ConcurrentHashMap<InetSocketAddress, Long> addressToUserID;
+	private final List<IClientEventListener> listeners;
 	
 	public ConnectionManager(){
 		this.messageHandler = new ServerMessageHandler(this);
 		this.connections = new ConcurrentHashMap<InetSocketAddress, ClientWorker>();
 		this.authenticatedConnections = new ConcurrentHashMap<Long, InetSocketAddress>();
 		this.addressToUserID = new ConcurrentHashMap<InetSocketAddress, Long>();
+		this.listeners = new ArrayList<IClientEventListener>();
 	}
 	
 	@Override
@@ -30,6 +35,11 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 		this.addressToUserID.remove(client);
 		this.connections.remove(client);
 		logger.info("%d clients online.", this.connections.size());
+		
+		// Notify listeners that a client disconnected
+		for(IClientEventListener listener : listeners){
+			listener.clientDisconnected(client);
+		}
 	}
 
 	@Override
@@ -62,6 +72,11 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 		this.authenticatedConnections.put(userID, address);
 		this.addressToUserID.remove(address);
 		logger.info("Authenticated %s as user '%d'.", address, userID);
+		
+		// Notify listeners that a client was authenticated
+		for(IClientEventListener listener : listeners){
+			listener.clientAuthenticated(address, userID);
+		}
 	}
 
 	@Override
@@ -75,6 +90,12 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 			int numClients = this.connections.size();
 			logger.info("%s connected.", worker.getClientAddress());
 			logger.info("%d client%s online.", numClients, numClients > 1 ? "s" : "");
+			
+			// Notify listeners that a client connected
+			for(IClientEventListener listener : listeners){
+				listener.clientConnected(worker.getClientAddress());
+			}
+			
 			new Thread(worker).start();
 		}
 		catch(IOException ioe){
@@ -86,5 +107,10 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 	public long getUserID(InetSocketAddress address) {
 		Long id = addressToUserID.get(address);
 		return id != null ? id : -1;
+	}
+
+	@Override
+	public void addClientEventListener(IClientEventListener listener) {
+		listeners.add(listener);
 	}
 }

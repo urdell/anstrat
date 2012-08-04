@@ -1,4 +1,4 @@
-package com.anstrat.server.matchmaking;
+package com.anstrat.server.old;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,14 +8,12 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
-import com.anstrat.server.old.DatabaseHelper;
-import com.anstrat.server.old.User;
 import com.anstrat.gameCore.GameType;
 import com.anstrat.geography.Map;
 import com.anstrat.network_old.NetworkMessage;
-import com.anstrat.server.old.PlayerSocket;
 import com.anstrat.server.util.Logger;
 
+@Deprecated
 public class GameMatcher {
 	
 	private static final Logger logger = Logger.getGlobalLogger();

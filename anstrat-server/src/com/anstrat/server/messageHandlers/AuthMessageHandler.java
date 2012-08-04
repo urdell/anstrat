@@ -1,10 +1,11 @@
-package com.anstrat.server;
+package com.anstrat.server.messageHandlers;
 
 import java.net.InetSocketAddress;
 import java.util.regex.Pattern;
 
-import com.anstrat.network.NetworkMessage;
-import com.anstrat.network.NetworkMessage.Command;
+import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.network.protocol.NetworkMessage.Command;
+import com.anstrat.server.IConnectionManager;
 import com.anstrat.server.db.DatabaseMethods;
 import com.anstrat.server.db.User;
 import com.anstrat.server.db.DatabaseMethods.DisplayNameChangeResponse;

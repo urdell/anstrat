@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 
 import com.anstrat.network_old.NetworkMessage;
-import com.anstrat.server.matchmaking.GameMatcher;
 import com.anstrat.server.util.Logger;
 
 /**

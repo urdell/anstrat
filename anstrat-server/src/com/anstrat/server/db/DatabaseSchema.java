@@ -24,27 +24,29 @@ public class DatabaseSchema {
 			// Games
 			s.executeUpdate("CREATE TABLE Games(" +
 					"id BIGSERIAL PRIMARY KEY, " +
-					"initialState BYTEA, " +
 					"randomSeed BIGINT, " +
-					"turnLimit BIGINT, " +
-					"timestamp TIMESTAMP)");
+					"map BYTEA, " +
+					"createdAt TIMESTAMP)");
 			
 			// Users
 			s.executeUpdate("CREATE TABLE Users(" +
 					"id BIGSERIAL PRIMARY KEY, " +
 					"displayName VARCHAR(20) UNIQUE, " + 	// Can be null
-					"password BYTEA)");	// password + salt
+					"password BYTEA)");						// password + salt
 			
 			// PlaysIn
 			s.executeUpdate("CREATE TABLE PlaysIn(" +
-					"gameID BIGINT, " +
-					"userID BIGINT, " +
-					"playerId INT, " +
+					"gameID BIGSERIAL, " +
+					"userID BIGSERIAL, " +
+					"playerIndex INT, " +
+					"team INT, " +
+					"god INT, " +
 					"PRIMARY KEY (gameID, userID), " +
 					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
 					"FOREIGN KEY(userID) REFERENCES Users(id))");
 			
 			// Turns
+			/*
 			s.executeUpdate("CREATE TABLE Turns(" +
 					"gameID BIGINT, " +
 					"userID BIGINT, " +
@@ -55,12 +57,13 @@ public class DatabaseSchema {
 					"PRIMARY KEY (gameId, userId, turnNo), " +
 					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
 					"FOREIGN KEY(userID) REFERENCES Users(id))");
-			
+			*/
 			// Default maps
+			/*
 			s.executeUpdate("CREATE TABLE DefaultMaps(" +
 					"mapID BIGINT PRIMARY KEY, " +
 					"map BYTEA)");
-			
+			*/
 			s.close();
 			
 			return true;

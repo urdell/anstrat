@@ -5,8 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.HashMap;
 
+import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.server.util.Password;
+import com.anstrat.server.util.StringUtils;
 
 /**
  * Contains methods for interacting with the database
@@ -25,31 +30,21 @@ public class DatabaseMethods {
 			byte[] encryptedPassword = Password.generateDatabaseBlob(password);
 			
 			conn = DatabaseHelper.getConnection();
-			conn.setAutoCommit(false);
 			
-			insertuser = conn.prepareStatement("INSERT INTO Users(password) VALUES(?)");
-	
+			insertuser = conn.prepareStatement("INSERT INTO Users(id, password) VALUES(DEFAULT, ?) RETURNING id");
 			insertuser.setBytes(1, encryptedPassword);
-			insertuser.executeUpdate();
+			idnr = insertuser.executeQuery();
 			
 			// Retrieve the auto generated user id
-			seqnr = conn.createStatement();
-			idnr = seqnr.executeQuery("SELECT last_value FROM Users_id_seq");
 			idnr.next();
+			long userID = idnr.getLong("id");
 			
-			conn.commit();
-			return new User(idnr.getLong(1), null, encryptedPassword);
+			return new User(userID, null, encryptedPassword);
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 		}
 		finally{
-			try {
-				conn.setAutoCommit(true);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
 			DatabaseHelper.closeStmt(insertuser);
 			DatabaseHelper.closeResSet(idnr);
 			DatabaseHelper.closeStmt(seqnr);
@@ -90,6 +85,101 @@ public class DatabaseMethods {
 		
 		// An error occurred.
 		return null;
+	}
+	
+	public static String[] getDisplayNames(long[] users){
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		
+		try{
+			conn = DatabaseHelper.getConnection();
+			
+			pst = conn.prepareStatement("SELECT id, displayName FROM Users WHERE id IN (?)");
+			pst.setString(1, StringUtils.join(", ", Arrays.asList(users)));
+			
+			result = pst.executeQuery();
+			
+			// Retrieve result
+			HashMap<Long, String> userToDisplayName = new HashMap<Long, String>();
+			
+			while(result.next()){
+				long userID = result.getLong("id");
+				String displayName = result.getString("displayName");
+				userToDisplayName.put(userID, displayName);
+			}
+			
+			// Pack into array
+			String[] displayNames = new String[users.length];
+			
+			for(int i = 0; i < users.length; i++){
+				long userID = users[i];
+				displayNames[i] = userToDisplayName.get(userID);
+			}
+			
+			return displayNames;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			DatabaseHelper.closeResSet(result);
+			DatabaseHelper.closeStmt(pst);
+			DatabaseHelper.closeConn(conn);
+		}
+		
+		// Error, will return null for all names
+		return new String[users.length];
+	}
+	
+	public static long createGame(GameSetup game){
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet idnr = null;
+		
+		try{
+			conn = DatabaseHelper.getConnection(false);
+			
+			// Create game
+			pst = conn.prepareStatement("INSERT INTO Games(id, randomSeed, map, createdAt) VALUES(DEFAULT, ?, ?, ?) RETURNING id");
+			pst.setLong(1, game.randomSeed);
+			pst.setBytes(2, DatabaseHelper.objectToByteArray(game.map));
+			pst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			
+			idnr = pst.executeQuery();
+			idnr.next();
+			
+			long gameID = idnr.getLong("id");
+			
+			// Add players to game
+			for(int i = 0; i < game.players.length; i++){
+				GameSetup.Player player = game.players[i];
+				
+				PreparedStatement insertPlayer = conn.prepareStatement("INSERT INTO PlaysIn(gameID, userID, playerIndex, team, god) VALUES(?, ?, ?, ?, ?)");
+				insertPlayer.setLong(1, gameID);
+				insertPlayer.setLong(2, player.userID);
+				insertPlayer.setInt(3, i);
+				insertPlayer.setInt(4, player.team);
+				insertPlayer.setInt(5, player.god);
+				
+				insertPlayer.executeUpdate();
+				insertPlayer.close();
+			}
+			
+			conn.commit();
+			return gameID;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			DatabaseHelper.closeResSet(idnr);
+			DatabaseHelper.closeStmt(pst);
+			DatabaseHelper.closeConn(conn);
+		}
+		
+		// An error occurred.
+		return -1;
 	}
 	
 	public enum DisplayNameChangeResponse {SUCCESS, FAIL_NAME_EXISTS, FAIL_ERROR}

@@ -9,7 +9,6 @@ import java.util.Queue;
 import com.anstrat.command.Command;
 import com.anstrat.geography.Map;
 import com.anstrat.network_old.NetworkMessage;
-import com.anstrat.server.matchmaking.GameMatcher;
 import com.anstrat.server.util.Logger;
 
 /**

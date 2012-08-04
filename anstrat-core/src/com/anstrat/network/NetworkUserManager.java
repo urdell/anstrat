@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import com.anstrat.network.NetworkMessage.Command;
+import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.network.protocol.NetworkMessage.Command;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
