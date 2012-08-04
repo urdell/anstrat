@@ -26,13 +26,14 @@ public class DatabaseSchema {
 					"id BIGSERIAL PRIMARY KEY, " +
 					"randomSeed BIGINT, " +
 					"map BYTEA, " +
-					"createdAt TIMESTAMP)");
+					"createdAt TIMESTAMP DEFAULT (now() AT TIME ZONE 'UTC'))");
 			
 			// Users
 			s.executeUpdate("CREATE TABLE Users(" +
 					"id BIGSERIAL PRIMARY KEY, " +
 					"displayName VARCHAR(20) UNIQUE, " + 	// Can be null
-					"password BYTEA)");						// password + salt
+					"password BYTEA, " +					// password + salt
+					"createdAt TIMESTAMP DEFAULT (now() AT TIME ZONE 'UTC'))");						
 			
 			// PlaysIn
 			s.executeUpdate("CREATE TABLE PlaysIn(" +
