@@ -9,7 +9,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import com.anstrat.network.NetworkMessage;
+import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.server.messageHandlers.ServerMessageHandler;
 import com.anstrat.server.util.Logger;
 
 /**
@@ -137,10 +138,6 @@ public class ClientWorker implements Runnable {
     	catch(Exception e){}
     	
     	callback.connectionClosed(source, cause);
-    }
-    
-    private void close(){
-    	close(null);
     }
     
     public static interface IClientWorkerCallback {

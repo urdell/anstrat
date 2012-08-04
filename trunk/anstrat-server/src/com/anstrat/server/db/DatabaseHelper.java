@@ -1,5 +1,9 @@
 package com.anstrat.server.db;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,16 +15,24 @@ public class DatabaseHelper {
 	private static final String DATABASE_USER = "anstrat";
 	private static final String DATABASE_PASSWORD = "Anstrat101lol!";
 	
-	public static Connection getConnection(){
+	public static Connection getConnection(boolean autocommit){
 		try {
 			Class.forName("org.postgresql.Driver");
 			
-			return DriverManager.getConnection(
+			Connection c = DriverManager.getConnection(
 					String.format("jdbc:%s:%s", "postgresql", DATABASE_URL),
 					DATABASE_USER, DATABASE_PASSWORD);
+			
+			c.setAutoCommit(autocommit);
+			return c;
+			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static Connection getConnection(){
+		return getConnection(true);
 	}
 	
 	/**
@@ -66,6 +78,21 @@ public class DatabaseHelper {
 			catch(Exception e){
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public static byte[] objectToByteArray(Serializable object){
+		try{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			oos.flush();
+			oos.close();
+			
+			return baos.toByteArray();
+			
+		} catch (IOException e){
+			throw new RuntimeException(e);
 		}
 	}
 	

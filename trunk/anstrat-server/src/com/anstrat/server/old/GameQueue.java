@@ -1,4 +1,4 @@
-package com.anstrat.server.matchmaking;
+package com.anstrat.server.old;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,6 +8,7 @@ import java.util.Queue;
 /**
  * A queue for waiting players, matching them to games.
  */
+@Deprecated
 public class GameQueue {
 
 	// Index = numPlayers - minNumPlayers
