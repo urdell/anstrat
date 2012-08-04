@@ -16,7 +16,6 @@ import com.anstrat.menu.NetworkDependentTracker;
 import com.anstrat.menu.SplashScreen;
 import com.anstrat.network.Network;
 import com.anstrat.network.NetworkController;
-import com.anstrat.network.User;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -44,6 +43,9 @@ public class Main extends Game implements ApplicationListener {
 	// Network
 	public NetworkController network;	// The mapping between UI actions and network commands 
 	private Network networkEngine;		// The network engine that constructs and parses network messages
+	
+	// Games
+	public GameManager games;
 	
 	public Music menuMusic;
 	
@@ -105,7 +107,8 @@ public class Main extends Game implements ApplicationListener {
 		PlayerAbilityType.loadAttributesFromFile(
 				Gdx.files.internal("data/playerAbilityAttributes.xml"));
 
-		GameInstance.loadGameInstances(Gdx.files.local("games.bin"));	// Loads all saved game instances
+		games = new GameManager();
+		games.loadGameInstances(Gdx.files.local("games.bin")); // Loads all saved game instances
 
 		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
@@ -190,7 +193,7 @@ public class Main extends Game implements ApplicationListener {
 		Gdx.app.log("", "Main.dispose()");
 		
 		if(networkEngine != null) networkEngine.stop();
-		GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
+		games.saveGameInstances(Gdx.files.local("games.bin"));
 		Options.savePreferences();
 		
 		batch.dispose();

@@ -196,7 +196,7 @@ public class MainMenu extends MenuScreen {
 		Table waiting = new Table(Assets.SKIN);
 		waiting.add("Waiting for other players:").height(height).padTop(paddingTop);
 		
-        for(final GameInstance gi : GameInstance.getActiveGames()){    	
+        for(final GameInstance gi : Main.getInstance().games.getActiveGames()){    	
         	Table table = gi.state.isUserCurrentPlayer() ? current : waiting;
         	table.row();
         	table.add(gameInstanceToTable(gi)).fillX().expandX().height((int)(17*Main.percentHeight));
@@ -247,10 +247,10 @@ public class MainMenu extends MenuScreen {
 					}
 					
 			        if(versusAI == true){
-			        	GameInstance.createAIGame(map, 1).showGame(true);
+			        	Main.getInstance().games.createAIGame(map, 1).showGame(true);
 			        }
 			        else{
-			        	GameInstance.createHotseatGame(map).showGame(true);
+			        	Main.getInstance().games.createHotseatGame(map).showGame(true);
 			        }
 				}
 			}, true, "Choose map", mapNames);

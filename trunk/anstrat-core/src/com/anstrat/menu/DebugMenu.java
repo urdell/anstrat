@@ -1,9 +1,5 @@
 package com.anstrat.menu;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.guiComponent.ComponentFactory;
@@ -28,20 +24,6 @@ public class DebugMenu extends MenuScreen {
 			}
 		});
 		
-		Button clearGames = ComponentFactory.createMenuButton("Clear games", new ClickListener(){
-            @Override
-            public void click(Actor actor, float x, float y){
-            	List<GameInstance> games = new ArrayList<GameInstance>();
-            	games.addAll(GameInstance.getActiveGames());
-            
-            	for(GameInstance gi : games){
-            		gi.resign();
-            	}
-        	
-            	Gdx.files.local("games.bin").delete();
-            }
-        });
-        
 		Button clearLogin = ComponentFactory.createMenuButton("Logout", new ClickListener(){
             @Override
             public void click(Actor actor, float x, float y){
@@ -57,8 +39,6 @@ public class DebugMenu extends MenuScreen {
         contents.padTop((int) (3*Main.percentHeight));
         contents.defaults().space((int) (2*Main.percentWidth)).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.add(fps);
-        contents.row();
-        contents.add(clearGames);
         contents.row();
         contents.add(clearLogin).expandY();
         contents.row();

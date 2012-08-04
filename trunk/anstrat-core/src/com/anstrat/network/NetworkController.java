@@ -1,8 +1,12 @@
 package com.anstrat.network;
 
-import com.anstrat.command.Command;
-import com.anstrat.gameCore.Player;
-import com.anstrat.geography.Map;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.anstrat.core.Main;
+import com.anstrat.core.NetworkGameInstance;
+import com.anstrat.menu.MainMenu;
+import com.anstrat.network.protocol.GameSetup;
 
 /**
  * Converts UI actions to network commands and vice-versa.<br>
@@ -30,6 +34,10 @@ public class NetworkController {
 	
 	// Network listener implementation
 	
+	public void findRandomGame(int team, int god){
+		this.network.requestRandomGame(team, god);
+	}
+	
 	private INetworkResponseListener getNetworkResponseHandlerImplementation(){
 		return new INetworkResponseListener() {
 			
@@ -40,9 +48,22 @@ public class NetworkController {
 			}
 			
 			@Override
-			public void gameStarted(long gameID, long seed, Map map, Player[] players) {
-				// TODO Auto-generated method stub
+			public void gameStarted(long gameID, GameSetup gameSetup) {
 				
+				List<NetworkGameInstance.NetworkPlayer> players = new ArrayList<NetworkGameInstance.NetworkPlayer>();
+				
+				// Create the players
+				for(int i = 0; i < gameSetup.players.length; i++){
+					GameSetup.Player player = gameSetup.players[i];
+					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, player.displayName, player.team, player.god));
+				}
+				
+				Main.getInstance().games.createNetworkGame(
+						gameID, 
+						players.toArray(new NetworkGameInstance.NetworkPlayer[players.size()]), 
+						gameSetup.map, 
+						gameSetup.randomSeed);
+				MainMenu.getInstance().updateGamesList();
 			}
 			
 			@Override
@@ -58,7 +79,7 @@ public class NetworkController {
 			}
 			
 			@Override
-			public void command(long gameID, int commandNr, Command command) {
+			public void command(long gameID, int commandNr, com.anstrat.command.Command command) {
 				// TODO Auto-generated method stub
 				
 			}
