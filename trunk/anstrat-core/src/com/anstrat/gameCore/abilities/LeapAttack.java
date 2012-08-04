@@ -14,6 +14,11 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 import com.badlogic.gdx.math.Vector2;
 
 public class LeapAttack extends TargetedAbility{
@@ -75,6 +80,14 @@ public class LeapAttack extends TargetedAbility{
 				Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
 				GEngine.getInstance().animationHandler.enqueue(deathAnimation);
 			}
+		}
+		
+		@Override
+		public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+			ConfirmRow nameRow = new TextRow(name);
+			ConfirmRow apRow = new APRow(source, apCost);
+			ConfirmRow damageRow = new DamageRow(source.getAttack()+7, source.getAttack()+12);
+			return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 		}
 		
 		@Override

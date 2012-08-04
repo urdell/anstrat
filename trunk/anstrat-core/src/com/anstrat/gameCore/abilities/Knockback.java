@@ -13,6 +13,11 @@ import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class Knockback extends TargetedAbility {
 
@@ -156,6 +161,14 @@ public class Knockback extends TargetedAbility {
 		}
 		return false;
 		
+	}
+	
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow damageRow = new DamageRow(source.getAttack()+1, source.getAttack()+6);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 
 	@Override
