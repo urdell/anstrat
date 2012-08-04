@@ -23,7 +23,7 @@ public class AuthMessageHandler {
 	
 	// Triggers ACCEPT_LOGIN or DENY_LOGIN
 	public void login(InetSocketAddress client, long userID, String password){
-		User user = DatabaseMethods.getUser(userID);
+		User user = DatabaseMethods.getUsers(userID).get(userID);
 		
 		// Authenticate
 		boolean userExists = user != null;

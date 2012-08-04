@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.server.util.Password;
-import com.anstrat.server.util.StringUtils;
 
 /**
  * Contains methods for interacting with the database
@@ -54,24 +52,25 @@ public class DatabaseMethods {
 		return null;
 	}
 	
-	public static User getUser(long userID){
+	public static Map<Long, User> getUsers(Long... userIDs){
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		HashMap<Long, User> map = new HashMap<Long, User>();
 		
 		try{
 			conn = DatabaseHelper.getConnection();
-			pst = conn.prepareStatement("SELECT * FROM USERS WHERE id = ?");
-			pst.setLong(1, userID);
-			
+			pst = conn.prepareStatement("SELECT * FROM USERS WHERE id = ANY(?)");
+			pst.setArray(1, conn.createArrayOf("integer", userIDs));
 			rs = pst.executeQuery();
 			
-			if(rs.next()){
-				long dbid = rs.getLong("id");
-				String dbdisplayedName = rs.getString("displayName");
+			// Retrieve result
+			while(rs.next()){
+				long userID = rs.getLong("id");
+				String displayName = rs.getString("displayName");
 				byte[] encryptedPassword = rs.getBytes("password");
 				
-				return new User(dbid, dbdisplayedName, encryptedPassword);
+				map.put(userID, new User(userID, displayName, encryptedPassword));
 			}
 		}
 		catch(SQLException e){
@@ -84,52 +83,7 @@ public class DatabaseMethods {
 		}
 		
 		// An error occurred.
-		return null;
-	}
-	
-	public static String[] getDisplayNames(long[] users){
-		Connection conn = null;
-		PreparedStatement pst = null;
-		ResultSet result = null;
-		
-		try{
-			conn = DatabaseHelper.getConnection();
-			
-			pst = conn.prepareStatement("SELECT id, displayName FROM Users WHERE id IN (?)");
-			pst.setString(1, StringUtils.join(", ", Arrays.asList(users)));
-			
-			result = pst.executeQuery();
-			
-			// Retrieve result
-			HashMap<Long, String> userToDisplayName = new HashMap<Long, String>();
-			
-			while(result.next()){
-				long userID = result.getLong("id");
-				String displayName = result.getString("displayName");
-				userToDisplayName.put(userID, displayName);
-			}
-			
-			// Pack into array
-			String[] displayNames = new String[users.length];
-			
-			for(int i = 0; i < users.length; i++){
-				long userID = users[i];
-				displayNames[i] = userToDisplayName.get(userID);
-			}
-			
-			return displayNames;
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		finally{
-			DatabaseHelper.closeResSet(result);
-			DatabaseHelper.closeStmt(pst);
-			DatabaseHelper.closeConn(conn);
-		}
-		
-		// Error, will return null for all names
-		return new String[users.length];
+		return map;
 	}
 	
 	public static long createGame(GameSetup game){
@@ -141,10 +95,9 @@ public class DatabaseMethods {
 			conn = DatabaseHelper.getConnection(false);
 			
 			// Create game
-			pst = conn.prepareStatement("INSERT INTO Games(id, randomSeed, map, createdAt) VALUES(DEFAULT, ?, ?, ?) RETURNING id");
+			pst = conn.prepareStatement("INSERT INTO Games(id, randomSeed, map) VALUES(DEFAULT, ?, ?) RETURNING id");
 			pst.setLong(1, game.randomSeed);
 			pst.setBytes(2, DatabaseHelper.objectToByteArray(game.map));
-			pst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			
 			idnr = pst.executeQuery();
 			idnr.next();

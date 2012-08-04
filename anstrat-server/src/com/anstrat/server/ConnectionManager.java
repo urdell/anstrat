@@ -21,11 +21,11 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 	private final List<IClientEventListener> listeners;
 	
 	public ConnectionManager(){
-		this.messageHandler = new ServerMessageHandler(this);
 		this.connections = new ConcurrentHashMap<InetSocketAddress, ClientWorker>();
 		this.authenticatedConnections = new ConcurrentHashMap<Long, InetSocketAddress>();
 		this.addressToUserID = new ConcurrentHashMap<InetSocketAddress, Long>();
 		this.listeners = new ArrayList<IClientEventListener>();
+		this.messageHandler = new ServerMessageHandler(this);
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class ConnectionManager implements IConnectionManager, ClientWorker.IClie
 	@Override
 	public void linkUserToAddress(long userID, InetSocketAddress address) {
 		this.authenticatedConnections.put(userID, address);
-		this.addressToUserID.remove(address);
+		this.addressToUserID.put(address, userID);
 		logger.info("Authenticated %s as user '%d'.", address, userID);
 		
 		// Notify listeners that a client was authenticated

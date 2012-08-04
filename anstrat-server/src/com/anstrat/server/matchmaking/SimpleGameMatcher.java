@@ -1,6 +1,7 @@
 package com.anstrat.server.matchmaking;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,6 +12,7 @@ import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.server.IClientEventListener;
 import com.anstrat.server.IConnectionManager;
 import com.anstrat.server.db.DatabaseMethods;
+import com.anstrat.server.db.User;
 
 public class SimpleGameMatcher implements IClientEventListener {
 
@@ -27,7 +29,7 @@ public class SimpleGameMatcher implements IClientEventListener {
 	// Adds the user to the game queue.
 	// May return a GameSetup of paired users 
 	public GameSetup addUserToQueue(long userID, int team, int god){
-		WaitingPlayer player1 = null, player2 = null;
+		ArrayList<WaitingPlayer> players = new ArrayList<WaitingPlayer>();
 		
 		synchronized(lock){
 			WaitingPlayer waitingPlayer = new WaitingPlayer(userID, god, team);
@@ -35,21 +37,30 @@ public class SimpleGameMatcher implements IClientEventListener {
 			userToPlayer.put(userID, waitingPlayer);
 			
 			if(userQueue.size() >= 2){
-				player1 = userQueue.poll();
-				player2 = userQueue.poll();
+				players.add(userQueue.poll());
+				players.add(userQueue.poll());
 			}
 		}
 		
-		if(player1 != null && player2 != null){
+		if(players.size() > 0){
 			// Get display names
-			String[] displayNames = DatabaseMethods.getDisplayNames(new long[]{player1.userID, player2.userID});
+			Long[] userIDs = new Long[players.size()];
+			
+			for(int i = 0; i < players.size(); i++){
+				userIDs[i] = players.get(i).userID;
+			}
+			
+			java.util.Map<Long, User> users = DatabaseMethods.getUsers(userIDs);
 			
 			// Create GameSetup
-			GameSetup.Player[] players = new GameSetup.Player[]{
-				new GameSetup.Player(player1.userID, player1.team, player1.god, displayNames[0]),
-				new GameSetup.Player(player2.userID, player2.team, player2.god, displayNames[1]),
-			};
-			return new GameSetup(new Map(10, 10), new Random().nextLong(), players);
+			GameSetup.Player[] gameSetupPlayers = new GameSetup.Player[players.size()];
+			
+			for(int i = 0; i < gameSetupPlayers.length; i++){
+				WaitingPlayer player = players.get(i);
+				gameSetupPlayers[i] = new GameSetup.Player(player.userID, player.team, player.god, users.get(player.userID).getDisplayedName());
+			}
+
+			return new GameSetup(new Map(10, 10), new Random().nextLong(), gameSetupPlayers);
 		}
 		
 		return null;
