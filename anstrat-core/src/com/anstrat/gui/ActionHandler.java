@@ -14,6 +14,7 @@ import com.anstrat.command.CreateUnitCommand;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.core.GameInstance;
+import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -163,7 +164,7 @@ public class ActionHandler {
 		GEngine.getInstance().selectionHandler.deselect();
 		Command c = new EndTurnCommand();
 		CommandHandler.execute(c);
-		GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
+		Main.getInstance().games.saveGameInstances(Gdx.files.local("games.bin"));
 	}
 	
 	public void capturePress(){

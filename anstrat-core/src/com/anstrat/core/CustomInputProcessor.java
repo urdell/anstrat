@@ -62,7 +62,7 @@ public class CustomInputProcessor extends InputAdapter {
 							GEngine.getInstance().highlighter.clearHighlights();
 							return true;
 						}
-						GameInstance.saveGameInstances(Gdx.files.local("games.bin"));
+						Main.getInstance().games.saveGameInstances(Gdx.files.local("games.bin"));
 					}
 					Main.getInstance().popScreen();
 					return true;

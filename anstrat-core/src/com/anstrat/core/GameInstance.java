@@ -1,22 +1,17 @@
 package com.anstrat.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 
 import com.anstrat.ai.AIUtils;
 import com.anstrat.ai.ScriptAI;
 import com.anstrat.command.Command;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Map;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 
 /**
  * A single game instance, containing a State.
@@ -30,7 +25,6 @@ import com.badlogic.gdx.files.FileHandle;
 public class GameInstance implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	static List<GameInstance> gamesList = new ArrayList<GameInstance>();
 	
 	public State state;
 	private Collection<Integer> aiPlayerIDs;
@@ -43,39 +37,8 @@ public class GameInstance implements Serializable{
 		state = new State(map, players, randomSeed, this);
 	}
 	
-	public static GameInstance createAIGame(Map map, Integer... aiPlayerIds){
-		GameInstance gi = createHotseatGame(map);
-		gi.aiPlayerIDs = Arrays.asList(aiPlayerIds);
-		return gi;
-	}
-	
-	/**
-	 * @param map a map or null to generate a random map
-	 * @return
-	 */
-	public static GameInstance createHotseatGame(Map map){
-		return GameInstance.createHotseatGame(map, 2);
-	}
-	
-	public static GameInstance createHotseatGame(Map map, int numPlayers){
-		
-		Player[] players = new Player[numPlayers];
-		int team = 0;
-		
-		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(i, "Player " + i, team, Player.getRandomGodFromTeam(team));
-			
-			// Toggle team
-			team = (team + 1) % UnitType.TEAMS.length;
-		}
-		
-		// If no map given, create a random one
-		if(map == null) map = new Map(10, 10, new Random());
-		
-		GameInstance gi = new GameInstance(gamesList.size() + 1, map, players);
-		gamesList.add(gi);
-		
-		return gi;
+	public void setAIPlayers(Integer... aiPlayerIDs){
+		this.aiPlayerIDs = Arrays.asList(aiPlayerIDs);
 	}
 	
 	/**
@@ -95,7 +58,7 @@ public class GameInstance implements Serializable{
 		GEngine.getInstance().init(state, startZoom);
 		Main.getInstance().setScreen(GEngine.getInstance());
 		GEngine.getInstance().userInterface.updateCurrentPlayer();
-		System.out.println("Game shown using GameInstance");
+		Gdx.app.log("GameInstane", "Game shown using GameInstance");
 	}
 	
 	public int getTurnNumber(){
@@ -103,21 +66,7 @@ public class GameInstance implements Serializable{
 	}
 	
 	public void resign(){
-		remove();
-	}
-	
-	/**
-	 * Removes this game.
-	 */
-	public void remove(){
-		gamesList.remove(this);
-		
-		// If AI game, clear all AI's
-		if(aiPlayerIDs != null){
-			for(int playerID : aiPlayerIDs){
-				state.players[playerID].ai = null;
-			}
-		}
+		Main.getInstance().games.endGame(this);
 	}
 	
 	public boolean isAiGame(){
@@ -138,46 +87,5 @@ public class GameInstance implements Serializable{
 	
 	public void onCommandExecute(Command command){
 		
-	}
-	
-	public static List<GameInstance> getActiveGames(){
-		return gamesList;
-	}
-	
-	public static void saveGameInstances(FileHandle handle){
-		Serialization.writeObject(new GameInstanceList(gamesList), handle);
-	}
-	
-	public static void loadGameInstances(FileHandle handle){
-		Object obj = Serialization.readObject(handle);
-		
-		if(obj == null){
-			Gdx.app.log("GameInstance", "No previous game instances found.");
-		}
-		else{
-			gamesList = ((GameInstanceList)obj).games;
-			
-			for(GameInstance gi : gamesList){
-				if(gi instanceof NetworkGameInstance){
-					NetworkGameInstance ngi = (NetworkGameInstance) gi;
-					NetworkGameInstance.gameByID.put(ngi.getGameID(), ngi);
-				}
-			}
-		}
-	}
-	
-	// Class used only to serialize/deserialize game instances
-	private static class GameInstanceList implements Serializable {
-		private static final long serialVersionUID = 1L;
-		private List<GameInstance> games;
-		
-		public GameInstanceList(List<GameInstance> games){
-			this.games = games;
-		}
-
-		@Override
-		public String toString() {
-			return String.format("%s(size = %d)", this.getClass().getSimpleName(), games.size());
-		}
 	}
 }

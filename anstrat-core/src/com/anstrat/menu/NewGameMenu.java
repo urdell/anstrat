@@ -39,6 +39,7 @@ public class NewGameMenu extends MenuScreen {
             @Override
             public void click(Actor actor,float x,float y ){
         		//Main.getInstance().network.startRandomGameSearch();
+            	Main.getInstance().network.findRandomGame(0, 0);
             }
         } );
         
@@ -57,7 +58,7 @@ public class NewGameMenu extends MenuScreen {
         		}
         		else{
         			// No maps found, create game with a random map
-        			GameInstance.createHotseatGame(null).showGame(true);
+        			Main.getInstance().games.createHotseatGame(null).showGame(true);
         		}
             }
         });
@@ -74,7 +75,7 @@ public class NewGameMenu extends MenuScreen {
         		}
         		else{
         			// No maps found, create game with a random map
-        			GameInstance.createAIGame(null, 1).showGame(true);
+        			Main.getInstance().games.createAIGame(null, 1).showGame(true);
         		}
             }
         });

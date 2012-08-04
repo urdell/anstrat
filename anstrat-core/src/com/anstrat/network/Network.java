@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.anstrat.network.NetworkWorker.INetworkCallback;
+import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
 import com.badlogic.gdx.Gdx;
@@ -41,10 +42,13 @@ public class Network implements INetworkCallback {
 					break;
 				}
 				case GAME_STARTED: {
+					final long gameID = (Long) payload.get(0);
+					final GameSetup game = (GameSetup) payload.get(1);
+					
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
-						public void run() {
-							//listener.gameStarted()
+						public void run(){
+							listener.gameStarted(gameID, game);
 						}
 					});
 					
@@ -94,15 +98,15 @@ public class Network implements INetworkCallback {
     // Network API
     
     public void setDisplayName(String name){
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    	worker.sendMessage(new NetworkMessage(Command.SET_DISPLAY_NAME, name));
     }
     
     public void requestGameUpdate(long gameID, int currentCommandNr, int stateChecksum){
     	throw new UnsupportedOperationException("Not implemented yet.");
     }
     
-    public void requestRandomGame(){
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    public void requestRandomGame(int team, int god){
+    	worker.sendMessage(new NetworkMessage(Command.REQUEST_RANDOM_GAME, team, god));
     }
     
     public void sendCommand(long gameID, int commandNr){
