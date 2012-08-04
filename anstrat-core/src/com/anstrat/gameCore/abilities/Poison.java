@@ -10,6 +10,11 @@ import com.anstrat.gameCore.effects.PoisonEffect;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class Poison extends TargetedAbility{
 
@@ -55,6 +60,15 @@ public class Poison extends TargetedAbility{
 		GEngine.getInstance().animationHandler.enqueue(attackanimation);
 	}
 
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow damageRow = new DamageRow(source.getAttack(), source.getAttack());
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
+	}
+	
+	
 	@Override
 	public String getIconName(Unit source) {
 		if(!isAllowed(source)) return "heal-button-gray";

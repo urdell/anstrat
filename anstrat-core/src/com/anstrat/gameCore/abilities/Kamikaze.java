@@ -13,6 +13,11 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 import com.badlogic.gdx.math.Vector2;
 
 public class Kamikaze extends TargetedAbility {
@@ -58,13 +63,21 @@ public class Kamikaze extends TargetedAbility {
 		cl.defender = targetUnit;
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
-		cl.attackDamage = source.getAttack()+roll;
+		cl.attackDamage = source.getAttack()+3+roll;
 		Animation animation = new AttackAnimation(cl);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
 		Animation sourceDeathAnimation = new DeathAnimation(source, coordinate);
 		GEngine.getInstance().animationHandler.enqueue(sourceDeathAnimation);
 		
+	}
+	
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow damageRow = new DamageRow(source.getAttack()+4, source.getAttack()+9);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	
 	@Override

@@ -10,6 +10,12 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.HealRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class ShadowImage extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
@@ -50,6 +56,19 @@ public class ShadowImage extends TargetedAbility {
 		}
 	}
 
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow damageRow = new DamageRow(source.getAttack()-1, source.getAttack()-1);
+		int HPAfterAttack = source.currentHP+source.getAttack()-1;
+		if(source.currentHP+source.getAttack() > source.getMaxHP() ){
+			HPAfterAttack = source.getMaxHP();
+		}
+		ConfirmRow healRow = new HealRow(source.currentHP, HPAfterAttack);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow,healRow);
+	}
+	
 	@Override
 	public String getIconName(Unit source) {
 		if(!isAllowed(source)) return "heal-button-gray";
