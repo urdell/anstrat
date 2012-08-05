@@ -42,6 +42,7 @@ public class ThrowIceAnimation extends Animation {
 		
 		end = this.target.getPosition();
 		
+		
 		xdiff = 3*GEngine.getInstance().map.TILE_WIDTH;
 		ydiff = 3*GEngine.getInstance().map.TILE_HEIGHT;
 		

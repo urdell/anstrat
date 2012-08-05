@@ -168,6 +168,7 @@ public class ActionHandler {
 	}
 	
 	public void capturePress(){
+		confirmCancelPress();
 		Command c = null;
 		
 		Player player = State.activeState.getCurrentPlayer();
@@ -203,6 +204,7 @@ public class ActionHandler {
 	}
 
 	public void abilityPress(int i) {
+		confirmCancelPress();
 		Unit unit = GEngine.getInstance().selectionHandler.selectedUnit;
 		if(unit.ownerId == State.activeState.currentPlayerId){
 			Ability ability = unit.getAbilities().get(i);
@@ -224,8 +226,9 @@ public class ActionHandler {
 	/**
 	 * Shows the confirmdialog for a given command.
 	 * @param targetTile
-	 * @param unit
+	 * @param unit The unit that executes the command. May be null
 	 * @param command
+	 * @param clickedQuadrant
 	 */
 	public void requestConfirm(GTile targetTile, Unit unit, Command command, int clickedQuadrant){
 		
@@ -301,10 +304,7 @@ public class ActionHandler {
 		showingConfirmDialog = false;
 		GEngine.getInstance().confirmOverlay.clear();
 		
-		if(confirmCommand instanceof EndTurnCommand) 	// Check for commands in which selection should be cleared.
-		{
-			GEngine.getInstance().selectionHandler.deselect();			
-		}else if(confirmCommand instanceof CreateUnitCommand){	// select the newly created unit
+		if(confirmCommand instanceof CreateUnitCommand){	// select the newly created unit
 			Unit newUnit = StateUtils.getUnitByTile(((CreateUnitCommand)confirmCommand).getTarget());
 			GEngine.getInstance().selectionHandler.selectUnit(newUnit);
 		}
