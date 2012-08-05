@@ -32,9 +32,9 @@ public class NetworkController {
 	
 	// UI actions
 	public long getGlobalUserID(){
-		return -1;
+		return network.getUserID();
 	}
-	
+		
 	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
 	
 	// Network listener implementation
@@ -60,6 +60,7 @@ public class NetworkController {
 				// Create the players
 				for(int i = 0; i < gameSetup.players.length; i++){
 					GameSetup.Player player = gameSetup.players[i];
+					System.out.println("Player: " + player.userID);
 					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, player.displayName, player.team, player.god));
 				}
 				

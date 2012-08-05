@@ -17,7 +17,7 @@ public class NetworkGameInstance extends GameInstance {
 	
 	@Override
 	public int getTurnNumber(){
-		throw new UnsupportedOperationException("Not implemented yet");
+		return state.turnNr;
 	}
 	
 	@Override

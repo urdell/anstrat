@@ -347,11 +347,11 @@ public class GameUI extends UI {
 				text = "Your turn";		
 			}
 			else
-				text = player.displayedName;
+				text = player.displayedName != null ? player.displayedName : "Unnamed";
 		} 
 		else
 		{
-			text = player.displayedName;
+			text = player.displayedName != null ? player.displayedName : "Unnamed";
 			if(game instanceof NetworkGameInstance  || game.isAiGame()){
 				Assets.SKIN.setEnabled(buyButton, false);
 				Assets.SKIN.setEnabled(endTurnButton, false);

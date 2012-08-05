@@ -80,7 +80,7 @@ public class SimpleGameMatcher {
 				gameSetupPlayers[i] = new GameSetup.Player(player.userID, player.team, player.god, users.get(player.userID).getDisplayedName());
 			}
 
-			return new GameSetup(new Map(10, 10), new Random().nextLong(), gameSetupPlayers);
+			return new GameSetup(new Map(10, 10, new Random()), new Random().nextLong(), gameSetupPlayers);
 		}
 		
 		return null;
