@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DatabaseHelper {
+public final class DatabaseHelper {
 	
 	private static final String DATABASE_URL = "//127.0.0.1:5432/anstratdb";
 	private static final String DATABASE_USER = "anstrat";

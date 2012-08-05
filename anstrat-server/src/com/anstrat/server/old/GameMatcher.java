@@ -16,7 +16,7 @@ import com.anstrat.server.util.Logger;
 @Deprecated
 public class GameMatcher {
 	
-	private static final Logger logger = Logger.getGlobalLogger();
+	private static final Logger logger = null;
 	private Random rand = new Random();
 	public final Object lock = new Object();
 	

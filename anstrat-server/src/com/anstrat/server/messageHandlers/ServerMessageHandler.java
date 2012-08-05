@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.anstrat.command.Command;
 import com.anstrat.network.protocol.NetworkMessage;
-import com.anstrat.server.IConnectionManager;
 import com.anstrat.server.util.Logger;
+import com.anstrat.server.util.DependencyInjector.Inject;
 
 /**
  * The main network message handler, retrieves the message content and then delegates it to: <br>
@@ -18,16 +18,12 @@ import com.anstrat.server.util.Logger;
  */
 public class ServerMessageHandler {
 
-	private static final Logger logger = Logger.getGlobalLogger();
-	private final AuthMessageHandler authMessageHandler;
-	private final GameMessageHandler gameMessageHandler;
-	private final SocialMessageHandler socialMessageHandler;
+	@Inject
+	private Logger logger;
 	
-	public ServerMessageHandler(IConnectionManager connectionManager){
-		this.authMessageHandler = new AuthMessageHandler(connectionManager);
-		this.gameMessageHandler = new GameMessageHandler(connectionManager);
-		this.socialMessageHandler = new SocialMessageHandler(connectionManager);
-	}
+	private final AuthMessageHandler authMessageHandler = new AuthMessageHandler();
+	private final GameMessageHandler gameMessageHandler = new GameMessageHandler();
+	private final SocialMessageHandler socialMessageHandler =  new SocialMessageHandler();
 	
 	/**
 	 * Checks the message's validity with regards to contents and delegates tasks further.

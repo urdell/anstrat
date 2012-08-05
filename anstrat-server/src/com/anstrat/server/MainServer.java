@@ -4,32 +4,39 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.anstrat.server.db.DatabaseManager;
+import com.anstrat.server.db.IDatabaseService;
+import com.anstrat.server.messageHandlers.ServerMessageHandler;
+import com.anstrat.server.util.ClientWorkerFactory;
+import com.anstrat.server.util.DependencyInjector;
+import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 
-/**
- * The main server class.
- * Handles connection creation and removal.
- * @author jay
- *
- */
 public class MainServer {
 	
-	private static final Logger logger = Logger.getGlobalLogger();
 	private static final int DEFAULT_PORT = 25406;
 	
-	private final ConnectionManager connectionManager;
+	@Inject
+	private Logger logger;
+	
+	@Inject
+	private IConnectionManager connectionManager;
 	
 	/**
 	 * @param args first argument will be treated as the port to listen to.
+	 * @throws IOException 
 	 */
 	public static void main(String[] args){
-		MainServer ms = new MainServer();
-		ms.listen(ms.choosePort(args));
-	}
-	
-	private MainServer(){
-		this.connectionManager = new ConnectionManager();
+		DependencyInjector injector = new DependencyInjector(MainServer.class.getPackage().getName());
 		
+		injector.bind(IConnectionManager.class, ConnectionManager.class);
+		injector.bind(ServerMessageHandler.class, ServerMessageHandler.class);
+		injector.bind(Logger.class, Logger.class);
+		injector.bind(ClientWorkerFactory.class, ClientWorkerFactory.class);
+		injector.bind(IDatabaseService.class, DatabaseManager.class);
+		
+		MainServer server = injector.get(MainServer.class);
+		server.listen(server.choosePort(args));
 	}
 	
 	private int choosePort(String[] args){

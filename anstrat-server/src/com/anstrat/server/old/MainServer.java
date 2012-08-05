@@ -19,7 +19,7 @@ import com.anstrat.server.util.Logger;
 @Deprecated
 public class MainServer {
 	
-	private static final Logger logger = Logger.getGlobalLogger();
+	private static final Logger logger = null;
 	private HashMap<String, PlayerSocket> users = new HashMap<String,PlayerSocket>();
 	private GameMatcher matcher;
 	private ServerMessageHandler handler;

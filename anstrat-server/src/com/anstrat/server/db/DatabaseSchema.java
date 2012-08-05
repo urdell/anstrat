@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class DatabaseSchema {
+public final class DatabaseSchema {
 	
 	public static void initializeDB(){
 		drop();

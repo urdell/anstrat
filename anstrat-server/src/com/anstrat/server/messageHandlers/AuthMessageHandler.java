@@ -6,24 +6,27 @@ import java.util.regex.Pattern;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
 import com.anstrat.server.IConnectionManager;
-import com.anstrat.server.db.DatabaseMethods;
+import com.anstrat.server.db.IDatabaseService;
+import com.anstrat.server.db.IDatabaseService.DisplayNameChangeResponse;
 import com.anstrat.server.db.User;
-import com.anstrat.server.db.DatabaseMethods.DisplayNameChangeResponse;
+import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
 
 public class AuthMessageHandler {
 
-	private static final Logger logger = Logger.getGlobalLogger();
-	private final IConnectionManager connectionManager;
+	@Inject
+	private Logger logger;
 	
-	public AuthMessageHandler(IConnectionManager connectionManager){
-		this.connectionManager = connectionManager;
-	}
+	@Inject
+	private IConnectionManager connectionManager;
+	
+	@Inject
+	private IDatabaseService database;
 	
 	// Triggers ACCEPT_LOGIN or DENY_LOGIN
 	public void login(InetSocketAddress client, long userID, String password){
-		User user = DatabaseMethods.getUsers(userID).get(userID);
+		User user = database.getUsers(userID).get(userID);
 		
 		// Authenticate
 		boolean userExists = user != null;
@@ -45,7 +48,7 @@ public class AuthMessageHandler {
 	// Triggers USER_CREDENTIALS(userID, password)
 	public void createNewUser(InetSocketAddress client){
 		String password = Password.generateRandomAlphaNumericPassword(64);
-		User user = DatabaseMethods.createUser(password);
+		User user = database.createUser(password);
 		
 		connectionManager.linkUserToAddress(user.getUserID(), client);
 		connectionManager.sendMessage(client, new NetworkMessage(Command.USER_CREDENTIALS, user.getUserID(), password));
@@ -71,7 +74,7 @@ public class AuthMessageHandler {
 		}
 		
 		// Go ahead with name change
-		DisplayNameChangeResponse response = DatabaseMethods.setDisplayName(userID, name);
+		DisplayNameChangeResponse response = database.setDisplayName(userID, name);
 		
 		switch(response){
 			case SUCCESS: {

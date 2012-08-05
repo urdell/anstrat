@@ -6,8 +6,9 @@ import com.anstrat.command.Command;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.server.IConnectionManager;
-import com.anstrat.server.db.DatabaseMethods;
+import com.anstrat.server.db.IDatabaseService;
 import com.anstrat.server.matchmaking.SimpleGameMatcher;
+import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 
 /**
@@ -17,14 +18,16 @@ import com.anstrat.server.util.Logger;
  */
 public class GameMessageHandler {
 
-	private static final Logger logger = Logger.getGlobalLogger();
-	private final IConnectionManager connectionManager;
-	private final SimpleGameMatcher matcher;
+	@Inject
+	private Logger logger;
 	
-	public GameMessageHandler(IConnectionManager connectionManager){
-		this.connectionManager = connectionManager;
-		this.matcher = new SimpleGameMatcher(connectionManager);
-	}
+	@Inject
+	private IConnectionManager connectionManager;
+	
+	@Inject
+	private IDatabaseService database;
+	
+	private final SimpleGameMatcher matcher = new SimpleGameMatcher();
 	
 	public void command(InetSocketAddress client, long gameID, int commandNr, Command command){
 		// Triggers a SEND_COMMAND to each other client.
@@ -45,7 +48,7 @@ public class GameMessageHandler {
 		
 		if(game != null){
 			// Create game
-			long gameID = DatabaseMethods.createGame(game);
+			long gameID = database.createGame(game);
 			
 			if(gameID != -1){
 				connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.GAME_STARTED, gameID, game));

@@ -1,29 +1,43 @@
 package com.anstrat.server.matchmaking;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
 import com.anstrat.geography.Map;
 import com.anstrat.network.protocol.GameSetup;
-import com.anstrat.server.IClientEventListener;
 import com.anstrat.server.IConnectionManager;
-import com.anstrat.server.db.DatabaseMethods;
+import com.anstrat.server.db.IDatabaseService;
 import com.anstrat.server.db.User;
+import com.anstrat.server.events.ClientDisconnectedEvent;
+import com.anstrat.server.events.Event;
+import com.anstrat.server.util.DependencyInjector.Inject;
+import com.anstrat.server.util.Logger;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.eventbus.Subscribe;
+import com.google.common.primitives.Longs;
 
-public class SimpleGameMatcher implements IClientEventListener {
+public class SimpleGameMatcher {
 
 	private Queue<WaitingPlayer> userQueue = new LinkedList<WaitingPlayer>();
-	private HashMap<Long, WaitingPlayer> userToPlayer = new HashMap<Long, WaitingPlayer>();
+	private HashMap<Long, WaitingPlayer> userToPlayer = Maps.newHashMap();
 	private Object lock = new Object();
-	private final IConnectionManager connectionManager;
 	
-	public SimpleGameMatcher(IConnectionManager connectionManager){
-		this.connectionManager = connectionManager;
-		connectionManager.addClientEventListener(this);
+	@Inject
+	private Logger logger;
+	
+	@Inject
+	private IConnectionManager connectionManager;
+	
+	@Inject
+	private IDatabaseService database;
+	
+	public SimpleGameMatcher(){
+		Event.register(this);
 	}
 
 	// Adds the user to the game queue.
@@ -32,25 +46,31 @@ public class SimpleGameMatcher implements IClientEventListener {
 		ArrayList<WaitingPlayer> players = new ArrayList<WaitingPlayer>();
 		
 		synchronized(lock){
+			if(userToPlayer.containsKey(userID)){
+				// User is already in queue, don't add twice
+				logger.info("Ignoring random game request, user '%d' is already in queue. (queue size = %d)", userID, userQueue.size());
+				return null;
+			}
+			
 			WaitingPlayer waitingPlayer = new WaitingPlayer(userID, god, team);
 			userQueue.add(waitingPlayer);
 			userToPlayer.put(userID, waitingPlayer);
+			logger.info("Added user '%d' to random game queue. (queue size = %d)", userID, userQueue.size());
 			
 			if(userQueue.size() >= 2){
-				players.add(userQueue.poll());
-				players.add(userQueue.poll());
+				for(int i = 0; i < 2; i++){
+					WaitingPlayer player = userQueue.poll();
+					players.add(player);
+					userToPlayer.remove(player);
+				}
 			}
 		}
 		
 		if(players.size() > 0){
 			// Get display names
-			Long[] userIDs = new Long[players.size()];
-			
-			for(int i = 0; i < players.size(); i++){
-				userIDs[i] = players.get(i).userID;
-			}
-			
-			java.util.Map<Long, User> users = DatabaseMethods.getUsers(userIDs);
+			List<Long> userIDs = Lists.newArrayList();
+			for(WaitingPlayer player : players) userIDs.add(player.userID);
+			java.util.Map<Long, User> users = database.getUsers(Longs.toArray(userIDs));
 			
 			// Create GameSetup
 			GameSetup.Player[] gameSetupPlayers = new GameSetup.Player[players.size()];
@@ -65,38 +85,28 @@ public class SimpleGameMatcher implements IClientEventListener {
 		
 		return null;
 	}
-	
-	@Override
-	public void clientConnected(InetSocketAddress address) {
-		
-	}
 
-	@Override
-	public void clientDisconnected(InetSocketAddress address) {
+	@Subscribe
+	public void clientDisconnected(ClientDisconnectedEvent event) {
 		
-		long userID = connectionManager.getUserID(address);
+		long userID = connectionManager.getUserID(event.getClient());
 		
 		// If user was logged in
 		if(userID != -1){
 			
 			// Check if user was in queue for a game, and if so remove him
 			synchronized(lock){
-				WaitingPlayer existing = userToPlayer.get(userID);
+				WaitingPlayer existing = userToPlayer.remove(userID);
 				
 				if(existing != null){
 					userQueue.remove(existing);
-					userToPlayer.remove(existing);
+					logger.info("Removed user '%d' from queue, user disconnected.", userID);
 				}
 			}
 		}
 	}
-
-	@Override
-	public void clientAuthenticated(InetSocketAddress address, long userID) {
-		
-	}
 	
-	private class WaitingPlayer {
+	private static class WaitingPlayer {
 		public final long userID;
 		public final int god;
 		public final int team;

@@ -11,8 +11,6 @@ public interface IConnectionManager {
 	void sendMessage(long userID, NetworkMessage message);
 	void linkUserToAddress(long userID, InetSocketAddress address);
 	
-	void addClientEventListener(IClientEventListener listener);
-	
 	/**
 	 * @return the matching userID or -1 if none was found
 	 */

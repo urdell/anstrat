@@ -10,7 +10,10 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.server.events.ClientDisconnectedEvent;
+import com.anstrat.server.events.Event;
 import com.anstrat.server.messageHandlers.ServerMessageHandler;
+import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 
 /**
@@ -21,7 +24,6 @@ import com.anstrat.server.util.Logger;
  */
 public class ClientWorker implements Runnable {
 	
-	private static final Logger logger = Logger.getGlobalLogger();
     private static final int SOCKET_TIMEOUT = 600000; //milliseconds
     
 	private final Socket socket;
@@ -29,21 +31,18 @@ public class ClientWorker implements Runnable {
 	private final ObjectOutputStream out;
     private final ObjectInputStream in;
     
-	private final IClientWorkerCallback callback;
-	private final ServerMessageHandler handler;
+	@Inject
+	private Logger logger;
 	
-    /**
-     * @param socket The socket containing the connection in question.
-     * @throws IOException
-     */
-    public ClientWorker(Socket socket, IClientWorkerCallback callback, ServerMessageHandler handler) throws IOException{
-		if(!socket.isConnected()){
+    @Inject
+	private ServerMessageHandler handler;
+	
+    public ClientWorker(Socket socket) throws IOException{
+    	if(!socket.isConnected()){
 			throw new IllegalArgumentException("Can't serve a closed connection!");
 		}
     	
     	this.socket = socket;
-		this.callback = callback;
-		this.handler = handler;
 		this.source = new InetSocketAddress(socket.getInetAddress(), socket.getPort());
 		
 		// Needless to keep listening forever. The socket must die if the communication fails.
@@ -68,6 +67,7 @@ public class ClientWorker implements Runnable {
     	}
     	catch(IOException ioe){
     		logger.info("Failed to send a '%s' message to %s.", message.getCommand(), source);
+    		close(ioe);
     	}
     }
     
@@ -137,10 +137,6 @@ public class ClientWorker implements Runnable {
     	}
     	catch(Exception e){}
     	
-    	callback.connectionClosed(source, cause);
-    }
-    
-    public static interface IClientWorkerCallback {
-    	public void connectionClosed(InetSocketAddress client, Throwable cause);
+    	Event.post(new ClientDisconnectedEvent(source, cause));
     }
 }
