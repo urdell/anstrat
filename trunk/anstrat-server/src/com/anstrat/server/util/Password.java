@@ -75,9 +75,7 @@ public class Password {
 		}
 	}
 	
-	private static byte[] generateSalt() {
-
-		
+	private static byte[] generateSalt() {		
 		// 8 byte salt as recommended by RSA PKCS5
 		byte[] salt = new byte[8];
 		random.nextBytes(salt);

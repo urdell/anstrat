@@ -25,7 +25,7 @@ public class PlayerSocket implements Runnable {
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
     private Connection connection;
-    private static final Logger logger = Logger.getGlobalLogger();
+    private static final Logger logger = null;
     private static final int SOCKET_TIMEOUT = 600000; //milliseconds
     
     // Used for authentication checks.

@@ -33,7 +33,7 @@ public class GameMessageHandler {
 	
 	private MainServer server;
 	private GameMatcher matcher;
-	private static final Logger logger = Logger.getGlobalLogger();
+	private static final Logger logger = null;
 	private static final long TIMELIMIT_MAX = 604800000l; // One week
 	private static final long TIMELIMIT_MIN = 604800000l; // One week
 	

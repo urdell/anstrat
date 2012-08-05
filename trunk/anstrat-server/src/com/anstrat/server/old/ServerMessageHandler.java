@@ -21,7 +21,7 @@ public class ServerMessageHandler {
 	private MainServer server;
 	private AuthMessageHandler amh;
 	private GameMessageHandler gmh;
-	private static final Logger logger = Logger.getGlobalLogger();
+	private static final Logger logger = null;
 	
 	/**
 	 * Default constructor.
