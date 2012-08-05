@@ -66,21 +66,21 @@ public class ThrowIce extends TargetedAbility{
 		
 		
 			
+		int splashDamage = (int)(source.getAttack()*splashReduction);	
+		for (Tile adjacentTile : adjacentTiles){
 			
-			for (Tile adjacentTile : adjacentTiles){
-				int damage = (int)(source.getAttack()*splashReduction);
-				Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
-				if (unit != null){
-					if (unit.ownerId != source.ownerId && unit.currentHP > 0){
-						
-						unit.currentHP -= damage;
-						map.put(unit, damage);	
-					}
+			Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
+			if (unit != null){
+				if (unit.ownerId != source.ownerId){					
+					unit.currentHP -= splashDamage;
+					unit.resolveDeath();
+					map.put(unit, splashDamage);
 				}
 			}
-			
-			Animation throwIceAnimation = new ThrowIceAnimation(targetUnit.tileCoordinate, map);
-			GEngine.getInstance().animationHandler.enqueue(throwIceAnimation);	
+		}
+		
+		Animation throwIceAnimation = new ThrowIceAnimation(targetUnit.tileCoordinate, map);
+		GEngine.getInstance().animationHandler.enqueue(throwIceAnimation);	
 	}
 	
 	@Override
