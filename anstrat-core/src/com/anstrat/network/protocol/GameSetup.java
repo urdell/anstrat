@@ -23,7 +23,9 @@ public class GameSetup implements Serializable {
 		this.players = players;
 	}
 
-	public static class Player {
+	public static class Player implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
 		public final long userID;
 		public final int team;
 		public final int god;

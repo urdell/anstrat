@@ -95,6 +95,10 @@ public class Network implements INetworkCallback {
 		worker.pause();
 	}
 	
+	public void resetLogin(){
+		worker.resetLogin();
+	}
+	
     // Network API
     
     public void setDisplayName(String name){

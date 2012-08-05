@@ -24,12 +24,13 @@ public class DebugMenu extends MenuScreen {
 			}
 		});
 		
-		Button clearLogin = ComponentFactory.createMenuButton("Logout", new ClickListener(){
+		Button resetLogin = ComponentFactory.createMenuButton("Reset login", new ClickListener(){
             @Override
             public void click(Actor actor, float x, float y){
             	//Main.getInstance().network.logout();
             	Gdx.files.local("login.bin").delete();
-        		
+            	
+        		Main.getInstance().network.resetLogin();
         		Main.getInstance().setScreen(AccountMenu.getInstance());
             }
         });
@@ -40,7 +41,7 @@ public class DebugMenu extends MenuScreen {
         contents.defaults().space((int) (2*Main.percentWidth)).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.add(fps);
         contents.row();
-        contents.add(clearLogin).expandY();
+        contents.add(resetLogin).expandY();
         contents.row();
         
         Table inner = new Table();

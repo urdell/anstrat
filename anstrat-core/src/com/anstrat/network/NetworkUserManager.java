@@ -64,6 +64,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						
 						synchronized(lock){
 							user = new User(userID, password);
+							loggedIn = true;
 						}
 						
 						user.toFile(storedLoginFile);
@@ -90,11 +91,19 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		synchronized (lock){
 			Queue<NetworkMessage> queue = loggedIn ? outgoing : pending;
 			queue.add(message);
+			
+			if(loggedIn){
+				Gdx.app.log("NetworkUserManager", String.format("Added %s to outgoing queue.", message.getCommand()));
+			}
+			else{
+				Gdx.app.log("NetworkUserManager", String.format("Added %s to pending queue.", message.getCommand()));
+			}
 		}
 	}
 	
 	@Override
 	public void connectionLost(Throwable cause) {
+		Gdx.app.log("NetworkUserManager", String.format("Connection lost due to: %s", cause));
 		synchronized(lock){
 			this.loggedIn = false;
 		}
@@ -112,5 +121,15 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 				outgoing.add(new NetworkMessage(Command.LOGIN, user.userID, user.password));
 			}
 		}
+	}
+	
+	public void resetLogin(){
+		synchronized(lock) {
+			user = null;
+			loggedIn = false;
+			pending.clear();
+		}
+		
+		connectionEstablished();
 	}
 }
