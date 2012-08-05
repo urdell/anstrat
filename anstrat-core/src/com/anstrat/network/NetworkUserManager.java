@@ -132,4 +132,8 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		
 		connectionEstablished();
 	}
+	
+	public User getUser(){
+		return this.user;
+	}
 }

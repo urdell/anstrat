@@ -23,6 +23,10 @@ public class Network implements INetworkCallback {
 		this.listener = listener;
 	}
     
+	public long getUserID(){
+		return worker.getUser().userID;
+	}
+	
 	@Override
 	public void messageReceived(NetworkMessage message) {
 		Command command = message.getCommand();
