@@ -25,6 +25,11 @@ public class NetworkController {
 		this.network.setListener(getNetworkResponseHandlerImplementation());
 	}
 	
+	// Debug
+	public void resetLogin(){
+		network.resetLogin();
+	}
+	
 	// UI actions
 	public long getGlobalUserID(){
 		return -1;
