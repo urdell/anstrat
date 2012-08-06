@@ -9,7 +9,6 @@ import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
@@ -100,8 +99,6 @@ public class HostGameMenu extends MenuScreen  {
 		   }
 		} );
 		
-		Label login = ComponentFactory.createLoginLabel();
-		
 		mapList = new MapList(goButton);
 		mapList.setMaps(true, Assets.getMapList(true, true));
 		
@@ -116,14 +113,11 @@ public class HostGameMenu extends MenuScreen  {
 		contents.add(mapList).fillY().expandY();
 		contents.row();
 		
-		Table contentsInner = new Table();
-		contentsInner.defaults().height(BUTTON_HEIGHT).width(BUTTON_WIDTH);
-		contentsInner.add(goButton).padBottom((int) (BUTTON_HEIGHT*1.3));
-		contentsInner.row();
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*1.3));
+		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(login);
-		contentsInner.add(centerLogin);
-		contents.add(contentsInner);
+		centerLogin.add(ComponentFactory.createLoginLabel());
+		contents.add(centerLogin);
 	}
 	
 	public static synchronized HostGameMenu getInstance() {
