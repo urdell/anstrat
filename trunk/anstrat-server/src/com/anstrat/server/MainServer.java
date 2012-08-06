@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.anstrat.server.db.DatabaseContext;
 import com.anstrat.server.db.DatabaseManager;
 import com.anstrat.server.db.IDatabaseService;
 import com.anstrat.server.messageHandlers.ServerMessageHandler;
@@ -34,6 +35,7 @@ public class MainServer {
 		injector.bind(Logger.class, Logger.class);
 		injector.bind(ClientWorkerFactory.class, ClientWorkerFactory.class);
 		injector.bind(IDatabaseService.class, DatabaseManager.class);
+		injector.bind(DatabaseContext.class, DatabaseContext.class);
 		
 		MainServer server = injector.get(MainServer.class);
 		server.listen(server.choosePort(args));

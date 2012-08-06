@@ -1,5 +1,9 @@
 package com.anstrat.server.db;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.anstrat.network.protocol.GameSetup;
+import com.anstrat.server.util.DependencyInjector.Inject;
+import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Longs;
 
@@ -20,16 +27,20 @@ import com.google.common.primitives.Longs;
  */
 public class DatabaseManager implements IDatabaseService {
 
+	@Inject
+	private Logger logger;
+	
+	@Inject
+	private DatabaseContext context;
+	
 	public User createUser(String password){
 		Connection conn = null;
 		PreparedStatement insertuser = null;
-		Statement seqnr = null;
 		ResultSet idnr = null;
 		
 		try{
 			byte[] encryptedPassword = Password.generateDatabaseBlob(password);
-			
-			conn = DatabaseHelper.getConnection();
+			conn = context.getConnection();
 			
 			insertuser = conn.prepareStatement("INSERT INTO Users(id, password) VALUES(DEFAULT, ?) RETURNING id");
 			insertuser.setBytes(1, encryptedPassword);
@@ -42,27 +53,25 @@ public class DatabaseManager implements IDatabaseService {
 			return new User(userID, null, encryptedPassword);
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			logger.exception(e, "SQLException when creating a user.");
 		}
 		finally{
-			DatabaseHelper.closeStmt(insertuser);
-			DatabaseHelper.closeResSet(idnr);
-			DatabaseHelper.closeStmt(seqnr);
-			DatabaseHelper.closeConn(conn);
+			closeResSet(idnr);
+			closeStmt(insertuser);
+			closeConn(conn);
 		}
 
 		return null;
 	}
 	
 	public Map<Long, User> getUsers(long... userIDs){
-		
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		HashMap<Long, User> map = Maps.newHashMap();
 		
 		try{
-			conn = DatabaseHelper.getConnection();
+			conn = context.getConnection();
 			pst = conn.prepareStatement("SELECT * FROM USERS WHERE id = ANY(?)");
 			pst.setArray(1, conn.createArrayOf("integer", Longs.asList(userIDs).toArray()));
 			rs = pst.executeQuery();
@@ -77,12 +86,12 @@ public class DatabaseManager implements IDatabaseService {
 			}
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			logger.exception(e, "SQLException when retrieving users: [%s].", Joiner.on(", ").join(Longs.asList(userIDs)));
 		}
 		finally{
-			DatabaseHelper.closeResSet(rs);
-			DatabaseHelper.closeStmt(pst);
-			DatabaseHelper.closeConn(conn);
+			closeResSet(rs);
+			closeStmt(pst);
+			closeConn(conn);
 		}
 		
 		// An error occurred.
@@ -92,46 +101,49 @@ public class DatabaseManager implements IDatabaseService {
 	public long createGame(GameSetup game){
 		Connection conn = null;
 		PreparedStatement pst = null;
+		PreparedStatement insertPlayer = null;
 		ResultSet idnr = null;
 		
 		try{
-			conn = DatabaseHelper.getConnection(false);
+			conn = context.getConnection(false);
 			
 			// Create game
 			pst = conn.prepareStatement("INSERT INTO Games(id, randomSeed, map) VALUES(DEFAULT, ?, ?) RETURNING id");
 			pst.setLong(1, game.randomSeed);
-			pst.setBytes(2, DatabaseHelper.objectToByteArray(game.map));
+			pst.setBytes(2, objectToByteArray(game.map));
 			
 			idnr = pst.executeQuery();
+			
+			// Get generated gameID
 			idnr.next();
-			
 			long gameID = idnr.getLong("id");
-			
-			// Add players to game
+
+			// Create batch of player inserts
+			 insertPlayer = conn.prepareStatement("INSERT INTO PlaysIn(gameID, userID, playerIndex, team, god) VALUES(?, ?, ?, ?, ?)");
+
 			for(int i = 0; i < game.players.length; i++){
 				GameSetup.Player player = game.players[i];
-				
-				PreparedStatement insertPlayer = conn.prepareStatement("INSERT INTO PlaysIn(gameID, userID, playerIndex, team, god) VALUES(?, ?, ?, ?, ?)");
 				insertPlayer.setLong(1, gameID);
 				insertPlayer.setLong(2, player.userID);
 				insertPlayer.setInt(3, i);
 				insertPlayer.setInt(4, player.team);
 				insertPlayer.setInt(5, player.god);
-				
-				insertPlayer.executeUpdate();
-				insertPlayer.close();
+				insertPlayer.addBatch();
 			}
 			
+			insertPlayer.executeBatch();
 			conn.commit();
+			
 			return gameID;
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			logger.exception(e, "SQLException when creating game.");
 		}
 		finally{
-			DatabaseHelper.closeResSet(idnr);
-			DatabaseHelper.closeStmt(pst);
-			DatabaseHelper.closeConn(conn);
+			closeResSet(idnr);
+			closeStmt(pst);
+			closeStmt(insertPlayer);
+			closeConn(conn);
 		}
 		
 		// An error occurred.
@@ -143,7 +155,7 @@ public class DatabaseManager implements IDatabaseService {
 		PreparedStatement pst = null;
 		
 		try{
-			conn = DatabaseHelper.getConnection();
+			conn = context.getConnection();
 			pst = conn.prepareStatement("UPDATE Users SET displayName = ? WHERE id = ?");
 			pst.setString(1, name);
 			pst.setLong(2, userID);
@@ -157,16 +169,86 @@ public class DatabaseManager implements IDatabaseService {
 			if(e.getSQLState().equals("23505")){
 				return DisplayNameChangeResponse.FAIL_NAME_EXISTS;
 			}
-			else{
-				// Something unexpected went wrong
-				e.printStackTrace();
-			}
+				
+			logger.exception(e, "Unexpected SQLException when setting display name of '%d' to '%s'.", userID, name);
 		}
 		finally{
-			DatabaseHelper.closeStmt(pst);
-			DatabaseHelper.closeConn(conn);
+			closeStmt(pst);
+			closeConn(conn);
 		}
 		
 		return DisplayNameChangeResponse.FAIL_ERROR;
+	}
+	
+	// Helpers
+	
+	/**
+	 * Closes the Connection in a robust manner.
+	 * @param conn The connection to close.
+	 */
+	private void closeConn(Connection conn){
+		if(conn != null){
+			try{
+				conn.close();
+			}
+			catch (SQLException e) {
+				logger.exception(e, "Could not close Connection.");
+			}
+			catch(Throwable t){
+				logger.exception(t, "Unexpected exception on closing Connection.");
+			}
+		}
+	}
+	
+	/**
+	 * Closes the ResultSet in a robust manner.
+	 * @param rs The ResultSet to close.
+	 */
+	public void closeResSet(ResultSet rs){
+		if(rs != null){
+			try{
+				rs.close();
+			}
+			catch (SQLException e) {
+				logger.exception(e, "Could not close ResultSet.");
+			}
+			catch(Throwable t){
+				logger.exception(t, "Unexpected exception on closing ResultSet.");
+			}
+		}
+	}
+	
+	/**
+	 * Closes the Statement in a robust manner.
+	 * Applicable for both Statements and PreparedStatements.
+	 * @param pst The Statement to close.
+	 */
+	public void closeStmt(Statement pst){
+		if(pst != null){
+			try{
+				pst.close();
+			}
+			catch (SQLException e) {
+				logger.exception(e, "Could not close Statement.");
+			}
+			catch(Throwable t){
+				logger.exception(t, "Unexpected exception on closing Statement.");
+			}
+		}
+	}
+	
+	private static byte[] objectToByteArray(Serializable object){
+		try{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			oos.flush();
+			oos.close();
+			
+			return baos.toByteArray();
+			
+		} catch (IOException e){
+			throw new RuntimeException(e);
+		}
 	}
 }
