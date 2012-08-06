@@ -98,7 +98,7 @@ public class DatabaseManager implements IDatabaseService {
 		return map;
 	}
 	
-	public long createGame(GameSetup game){
+	public Long createGame(GameSetup game){
 		Connection conn = null;
 		PreparedStatement pst = null;
 		PreparedStatement insertPlayer = null;
@@ -147,7 +147,7 @@ public class DatabaseManager implements IDatabaseService {
 		}
 		
 		// An error occurred.
-		return -1;
+		return null;
 	}
 	
 	public DisplayNameChangeResponse setDisplayName(long userID, String name){

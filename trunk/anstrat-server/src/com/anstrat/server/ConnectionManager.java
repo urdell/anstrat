@@ -102,8 +102,7 @@ public class ConnectionManager implements IConnectionManager {
 	}
 
 	@Override
-	public long getUserID(InetSocketAddress address) {
-		Long id = authenticatedConnections.inverse().get(address);
-		return id != null ? id : -1;
+	public Long getUserID(InetSocketAddress address) {
+		return authenticatedConnections.inverse().get(address);
 	}
 }

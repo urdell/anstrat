@@ -89,10 +89,10 @@ public class SimpleGameMatcher {
 	@Subscribe
 	public void clientDisconnected(ClientDisconnectedEvent event) {
 		
-		long userID = connectionManager.getUserID(event.getClient());
+		Long userID = connectionManager.getUserID(event.getClient());
 		
 		// If user was logged in
-		if(userID != -1){
+		if(userID != null){
 			
 			// Check if user was in queue for a game, and if so remove him
 			synchronized(lock){
