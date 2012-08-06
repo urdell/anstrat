@@ -48,8 +48,9 @@ public class NetworkGameInstance extends GameInstance {
 	}
 	
 	public void commandReceived(int commandNr, Command command){
-		if(commandNr != currentCommandNr + 1){
-			throw new IllegalStateException(String.format("Received command %d, expected: ", commandNr, currentCommandNr + 1));
+		if(commandNr != currentCommandNr){
+			// TODO: State is corrupted, should request new from server
+			throw new IllegalStateException(String.format("Received command %d, expected: %d", commandNr, currentCommandNr));
 		}
 		
 		if(isActiveGame()){
@@ -63,7 +64,7 @@ public class NetworkGameInstance extends GameInstance {
 			Gdx.app.log("NetworkGameInstance", String.format("Received command from network to game %d, game is NOT active, adding to queue.", gameID));
 		}
 		
-		commandNr++;
+		currentCommandNr++;
 		if(command instanceof EndTurnCommand) turnNr++;
 	}
 	
