@@ -36,6 +36,7 @@ public class Main extends Game implements ApplicationListener {
 	public static final String version = "Beta 1";
 	public static final String NETWORK_HOST = "localhost";
 	public static final int NETWORK_PORT = 25406;
+	public static String USER_FILE_NAME = "login.bin";
 	
 	public static float percentWidth;
 	public static float percentHeight;
@@ -110,7 +111,7 @@ public class Main extends Game implements ApplicationListener {
 		games = new GameManager();
 		games.loadGameInstances(Gdx.files.local("games.bin")); // Loads all saved game instances
 
-		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
+		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local(USER_FILE_NAME));
 		network = new NetworkController(networkEngine);
 		
 		// Create the single instance of sprite batch

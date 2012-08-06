@@ -1,14 +1,25 @@
 package com.anstrat.core;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.anstrat.command.Command;
+import com.anstrat.command.CommandHandler;
+import com.anstrat.command.EndTurnCommand;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
+import com.badlogic.gdx.Gdx;
 
 public class NetworkGameInstance extends GameInstance {
 	
 	private static final long serialVersionUID = 3L;
 	
 	private long gameID;
+	private int currentCommandNr = 1;
+	private int turnNr = 1;
+	
+	// Commands pending to be executed on the game state
+	private Queue<Command> pendingCommands = new LinkedList<Command>();
 	
 	public NetworkGameInstance(long gameID, NetworkPlayer[] players, Map map, long seed){
 		super(map, players, seed);
@@ -17,7 +28,7 @@ public class NetworkGameInstance extends GameInstance {
 	
 	@Override
 	public int getTurnNumber(){
-		return state.turnNr;
+		return turnNr;
 	}
 	
 	@Override
@@ -36,13 +47,49 @@ public class NetworkGameInstance extends GameInstance {
 		throw new RuntimeException("NetworkGameInstance does not contain the user player!");
 	}
 	
+	public void commandReceived(int commandNr, Command command){
+		if(commandNr != currentCommandNr + 1){
+			throw new IllegalStateException(String.format("Received command %d, expected: ", commandNr, currentCommandNr + 1));
+		}
+		
+		if(isActiveGame()){
+			// Execute command immediately
+			CommandHandler.executeNetwork(command);
+			Gdx.app.log("NetworkGameInstance", String.format("Received command from network to game %d, game is active, executing immediately.", gameID));
+		}
+		else{
+			// Add to pending commands
+			pendingCommands.add(command);
+			Gdx.app.log("NetworkGameInstance", String.format("Received command from network to game %d, game is NOT active, adding to queue.", gameID));
+		}
+		
+		commandNr++;
+		if(command instanceof EndTurnCommand) turnNr++;
+	}
+	
 	@Override
 	public void onCommandExecute(Command command){
-		// TODO: Send command over network
+		Main.getInstance().network.sendCommand(gameID, currentCommandNr, command);
+		currentCommandNr++;
+		if(command instanceof EndTurnCommand) turnNr++;
 	}
 	
 	public long getGameID(){
 		return this.gameID;
+	}
+	
+	@Override
+	public void showGame(boolean startZoom){
+		super.showGame(startZoom);
+		
+		// Execute any pending commands
+		if(pendingCommands.size() > 0){
+			Gdx.app.log("NetworkGameInstance", String.format("Executing %d pending commands on game %d.", pendingCommands.size(), gameID));
+		}
+		
+		while(!pendingCommands.isEmpty()){
+			CommandHandler.executeNetwork(pendingCommands.poll());
+		}
 	}
 	
 	public static class NetworkPlayer extends Player {

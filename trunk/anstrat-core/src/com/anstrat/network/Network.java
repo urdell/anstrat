@@ -117,7 +117,7 @@ public class Network implements INetworkCallback {
     	worker.sendMessage(new NetworkMessage(Command.REQUEST_RANDOM_GAME, team, god));
     }
     
-    public void sendCommand(long gameID, int commandNr){
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    public void sendCommand(long gameID, int commandNr, com.anstrat.command.Command command){
+    	worker.sendMessage(new NetworkMessage(Command.SEND_COMMAND, gameID, commandNr, command));
     }
 }
