@@ -37,15 +37,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 				
 				switch(command){
 					case ACCEPT_LOGIN: {
-						synchronized(lock){
-							loggedIn = true;
-							
-							// Send pending messages
-							while(!pending.isEmpty()){
-								outgoing.add(pending.poll());
-							}
-						}
-						
+						onLoggedIn();
 						break;
 					}
 					case DENY_LOGIN: {
@@ -64,11 +56,12 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						
 						synchronized(lock){
 							user = new User(userID, password);
-							loggedIn = true;
 						}
 						
 						user.toFile(storedLoginFile);
 						Gdx.app.log("NetworkUserManager", String.format("Received new user with id '%d' from server.", userID));
+						onLoggedIn();
+						
 						break;
 					
 					}
@@ -135,5 +128,14 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 	
 	public User getUser(){
 		return this.user;
+	}
+	
+	private void onLoggedIn(){
+		loggedIn = true;
+		
+		// Send pending messages
+		while(!pending.isEmpty()){
+			outgoing.add(pending.poll());
+		}
 	}
 }

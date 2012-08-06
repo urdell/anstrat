@@ -10,13 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.anstrat.command.Command;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Longs;
 
@@ -33,6 +36,7 @@ public class DatabaseManager implements IDatabaseService {
 	@Inject
 	private DatabaseContext context;
 	
+	@Override
 	public User createUser(String password){
 		Connection conn = null;
 		PreparedStatement insertuser = null;
@@ -64,6 +68,7 @@ public class DatabaseManager implements IDatabaseService {
 		return null;
 	}
 	
+	@Override
 	public Map<Long, User> getUsers(long... userIDs){
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -97,7 +102,48 @@ public class DatabaseManager implements IDatabaseService {
 		// An error occurred.
 		return map;
 	}
+
+	@Override
+	public Player[] getPlayers(long gameID) {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet res = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("SELECT userID, playerIndex, team, god, displayName FROM PlaysIn p JOIN Users u ON p.userID = u.id WHERE gameID = ?");
+			
+			pst.setLong(1, gameID);
+			res = pst.executeQuery();
+			
+			// Retrieve player information
+			List<Player> players = Lists.newArrayList();
+			while(res.next()){
+				long userID = res.getLong("userID");
+				int playerIndex = res.getInt("playerIndex");
+				int team = res.getInt("team");
+				int god = res.getInt("god");
+				String displayName = res.getString("displayName");
+				
+				players.add(new Player(userID, playerIndex, team, god, displayName));
+			}
+			
+			return players.toArray(new Player[players.size()]);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			closeResSet(res);
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return null;
+	}
 	
+	@Override
 	public Long createGame(GameSetup game){
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -150,6 +196,7 @@ public class DatabaseManager implements IDatabaseService {
 		return null;
 	}
 	
+	@Override
 	public DisplayNameChangeResponse setDisplayName(long userID, String name){
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -178,6 +225,34 @@ public class DatabaseManager implements IDatabaseService {
 		}
 		
 		return DisplayNameChangeResponse.FAIL_ERROR;
+	}
+	
+	@Override
+	public boolean createCommand(long gameID, int commandNr, Command command) {
+		Connection conn = null;
+		PreparedStatement insert = null;
+		
+		try{
+			byte[] serializedCommand = objectToByteArray(command);
+			conn = context.getConnection();
+			
+			insert = conn.prepareStatement("INSERT INTO Commands(gameID, commandNr, command) VALUES(?, ?, ?)");
+			insert.setLong(1, gameID);
+			insert.setInt(2, commandNr);
+			insert.setBytes(3, serializedCommand);
+			insert.executeUpdate();
+			
+			return true;
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when creating commad.");
+		}
+		finally{
+			closeStmt(insert);
+			closeConn(conn);
+		}
+		
+		return false;
 	}
 	
 	// Helpers

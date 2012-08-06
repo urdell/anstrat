@@ -29,11 +29,11 @@ public class Network implements INetworkCallback {
 	
 	@Override
 	public void messageReceived(NetworkMessage message) {
-		Command command = message.getCommand();
+		Command networkCommand = message.getCommand();
 		final List<Serializable> payload = message.getPayload();
 		
 		try{
-			switch(command){
+			switch(networkCommand){
 				
 				case GAME_STATE_CORRUPTED: {
 					Gdx.app.postRunnable(new Runnable() {
@@ -59,10 +59,14 @@ public class Network implements INetworkCallback {
 					break;
 				}
 				case SEND_COMMAND: {
+					final long gameID = (Long) payload.get(0);
+					final int commandNr = (Integer) payload.get(1);
+					final com.anstrat.command.Command command = (com.anstrat.command.Command) payload.get(2);
+					
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
-							//listener.command()
+							listener.command(gameID, commandNr, command);
 						}
 					});
 					
@@ -74,10 +78,10 @@ public class Network implements INetworkCallback {
 			}
 		}
 		catch(ClassCastException e){
-			Gdx.app.log("Network", String.format("Unexpected payload type in message '%s'. Reason: '%s'.", command, e.getMessage()));
+			Gdx.app.log("Network", String.format("Unexpected payload type in message '%s'. Reason: '%s'.", networkCommand, e.getMessage()));
 		}
 		catch(IndexOutOfBoundsException e){
-			Gdx.app.log("Network", String.format("Missing payload in message '%s'. Reason: '%s'.", command, e.getMessage()));
+			Gdx.app.log("Network", String.format("Missing payload in message '%s'. Reason: '%s'.", networkCommand, e.getMessage()));
 		}
 	}
 	

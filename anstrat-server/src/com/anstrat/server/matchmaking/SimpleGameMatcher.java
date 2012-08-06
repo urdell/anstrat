@@ -61,7 +61,7 @@ public class SimpleGameMatcher {
 				for(int i = 0; i < 2; i++){
 					WaitingPlayer player = userQueue.poll();
 					players.add(player);
-					userToPlayer.remove(player);
+					userToPlayer.remove(player.userID);
 				}
 			}
 		}
