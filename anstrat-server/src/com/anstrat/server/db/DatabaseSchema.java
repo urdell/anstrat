@@ -46,6 +46,13 @@ public class DatabaseSchema {
 					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
 					"FOREIGN KEY(userID) REFERENCES Users(id))");
 			
+			// Commands
+			s.executeUpdate("CREATE TABLE Commands(" +
+					"gameID BIGSERIAL, " +
+					"commandNr INT, " +
+					"command BYTEA, " +
+					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
+					"PRIMARY KEY(gameID, commandNr))");
 			// Turns
 			/*
 			s.executeUpdate("CREATE TABLE Turns(" +
