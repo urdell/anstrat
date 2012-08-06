@@ -32,22 +32,34 @@ public class GameMessageHandler {
 	
 	public void command(InetSocketAddress client, long gameID, int commandNr, Command command){
 		
+		Long userID = connectionManager.getUserID(client); // user who sent the command
+		if(userID == null){
+			logger.info("%s attempted to send a command without being logged in.", client);
+			return;
+
+		}
+		
+		Player[] players = database.getPlayers(gameID); // Players in game
+		if(players == null){
+			logger.info("Received command for game '%d' from %s, but that game does not exist.", gameID, client);
+			return;
+		}
+		
+		if(!containsUser(userID, players)){
+			logger.info("%s tried to send a command for a game he does not play in.", client);
+			return;
+		}
+		
 		// Add command to database
 		database.createCommand(gameID, commandNr, command);
 		
-		// Get players in game
-		Player[] players = database.getPlayers(gameID);
+		// Broadcast command to all players (except the source)
+		NetworkMessage message = new NetworkMessage(NetworkMessage.Command.SEND_COMMAND, gameID, commandNr, command);
 		
-		if(players != null){
-			// Broadcast command to all players (except the source)
-			NetworkMessage message = new NetworkMessage(NetworkMessage.Command.SEND_COMMAND, gameID, commandNr, command);
-			
-			for(Player player : players){
+		for(Player player : players){
+			if(player.userID != userID){
 				connectionManager.sendMessage(player.userID, message);
 			}
-		}
-		else{
-			logger.info("Received command for game '%d', but that game does not exist.", gameID);
 		}
 		
 	}
@@ -82,5 +94,10 @@ public class GameMessageHandler {
 				logger.info("Failed to create game.");
 			}
 		}
+	}
+	
+	private boolean containsUser(long userID, Player[] players){
+		for(Player p : players) if(p.userID == userID) return true;
+		return false;
 	}
 }
