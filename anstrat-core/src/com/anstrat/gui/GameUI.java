@@ -214,9 +214,12 @@ public class GameUI extends UI {
 		// Top panel non-json
 		topPanel.row().left().pad(pad).fill().height((int)(tph*0.8f));
 		topPanel.add(endTurnButton).width((int)(tph*2));
-		topPanel.add(turntable).pad(padv, padh, padv, padh);
-		topPanel.add(goldDisplay).expand().left();
-		topPanel.add(manaDisplay).expand().align("left");
+		topPanel.add(turntable).pad(padv, padh, padv, padh).expand().fill();
+		Table displays = new Table();
+		displays.add(goldDisplay).align("left");
+		displays.row();
+		displays.add(manaDisplay).align("left");
+		topPanel.add(displays);
 		
 		// Permanent Panel
 		float pwidth = bph*1.8f;
