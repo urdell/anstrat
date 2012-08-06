@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -17,10 +19,13 @@ public class MoveAnimation extends Animation {
 	private GUnit gunit;
 	private float xoffset, yoffset, amtOffset;
 	private boolean isFirst, isLast, started;
+	private TileCoordinate startTile, endTile;
 	
 	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile){
 		GEngine engine = GEngine.getInstance();
 		
+		this.startTile = startTile;
+		this.endTile = endTile;
 		gunit = engine.getUnit(unit);
 		
 		start = engine.getMap().getTile(startTile).getCenter();
@@ -84,5 +89,13 @@ public class MoveAnimation extends Animation {
 	private void moveCamera() {
 		Animation animation = new MoveCameraAnimation(end);
 		GEngine.getInstance().animationHandler.runParalell(animation);
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(startTile,  GameInstance.activeGame.getUserPlayer().playerId) ||
+				Fog.isVisible(endTile,  GameInstance.activeGame.getUserPlayer().playerId);
+		
 	}
 }

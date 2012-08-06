@@ -1,6 +1,8 @@
 package com.anstrat.animation;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
@@ -14,10 +16,11 @@ public class FloatingTextAnimation extends Animation{
 	String text;
 	Color color;
 	float width = -1;
+	private TileCoordinate origin;
 	
 	public FloatingTextAnimation(TileCoordinate origin, String text, Color color){
 		GMap map = GEngine.getInstance().map;
-		
+		this.origin = origin;
 		Vector2 pos = GEngine.getInstance().map.getTile(origin).getPosition();
 		x = pos.x + map.TILE_WIDTH / 2f;
 		y = pos.y + map.TILE_HEIGHT / 2f;
@@ -41,6 +44,12 @@ public class FloatingTextAnimation extends Animation{
 		}
 		Assets.STANDARD_FONT.setColor(color);
 		Assets.STANDARD_FONT.draw(batch, text, x-width/2, y);
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(origin,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 
 }

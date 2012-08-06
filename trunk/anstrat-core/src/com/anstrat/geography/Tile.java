@@ -15,6 +15,8 @@ public class Tile implements Serializable{
 	public TileCoordinate coordinates;
 	public TerrainType terrain;
 	
+	public int[] visible;
+	
 	/**
 	 * 
 	 * @param x
@@ -24,5 +26,6 @@ public class Tile implements Serializable{
 	public Tile(TileCoordinate coordinates, TerrainType terrain){
 		this.coordinates = coordinates;
 		this.terrain = terrain;
+		visible = new int[2];
 	}
 }

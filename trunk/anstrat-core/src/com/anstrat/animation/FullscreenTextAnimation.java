@@ -40,4 +40,10 @@ public class FullscreenTextAnimation extends Animation {
 		Assets.MENU_FONT.draw(batch, reason, x-width/2, y);
 		Assets.MENU_FONT.setScale(1);
 	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

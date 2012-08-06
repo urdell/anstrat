@@ -40,4 +40,9 @@ public abstract class Animation {
 	public void drawFixed(float deltaTime, SpriteBatch batch){
 	
 	}
+	
+	/**
+	 * Returns whether the animation is in fog of war or not. If not it will not be drawn.
+	 */
+	public abstract boolean isVisible();
 }

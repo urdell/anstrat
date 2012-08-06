@@ -30,4 +30,10 @@ public class GenericVisualAnimation extends Animation{
 		TextureRegion region = gdxAnimation.getKeyFrame(length - lifetimeLeft, false);
 		batch.draw(region, position.x-size/2, position.y-size/2, size, size);
 	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

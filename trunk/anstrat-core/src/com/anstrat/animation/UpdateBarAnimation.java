@@ -23,5 +23,10 @@ public class UpdateBarAnimation extends Animation {
 		updatedUnit.updateHealthbar();
 		
 	}
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 }

@@ -41,6 +41,8 @@ public class Player implements Serializable {
 	
 	public final int god;
 	
+	public boolean[][] visibleTiles;
+	
 	public Player(int playerID, String displayName, int team, int god){
 		this.playerId = playerID;
 		this.displayedName = displayName;

@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
@@ -28,5 +30,11 @@ public class BerserkAnimation extends Animation{
 	@Override
 	public void draw(float deltaTime, SpriteBatch batch){
 		super.draw(deltaTime, batch);
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(unit.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

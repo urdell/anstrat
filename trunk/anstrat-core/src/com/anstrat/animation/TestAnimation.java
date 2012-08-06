@@ -27,4 +27,10 @@ public class TestAnimation extends Animation {
 		androidRobot.draw(batch);
 	}
 
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

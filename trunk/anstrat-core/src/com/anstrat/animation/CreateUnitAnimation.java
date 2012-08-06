@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 
@@ -27,5 +29,11 @@ public class CreateUnitAnimation extends Animation {
 		}
 		
 		unit.setAlpha(finalAlpha*(1-Math.max(lifetimeLeft, 0)));
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(unit.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

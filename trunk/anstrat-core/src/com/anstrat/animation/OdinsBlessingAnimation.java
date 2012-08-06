@@ -54,4 +54,10 @@ public class OdinsBlessingAnimation extends Animation {
 			batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
 		}
 	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

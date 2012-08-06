@@ -111,5 +111,11 @@ public class ThrowIceAnimation extends Animation {
 		}
 	}
 
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 
 }
