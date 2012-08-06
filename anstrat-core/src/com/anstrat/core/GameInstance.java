@@ -87,6 +87,12 @@ public class GameInstance implements Serializable{
 		throw new RuntimeException("Game only contains AI's!");
 	}
 	
+	public boolean isUserCurrentPlayer(){
+		int currentPlayerIndex = (getTurnNumber() - 1) % state.players.length;
+		
+		return getUserPlayer().playerId == currentPlayerIndex;
+	}
+	
 	protected boolean isActiveGame(){
 		return Main.getInstance().getScreen() instanceof GEngine && activeGame == this;
 	}
