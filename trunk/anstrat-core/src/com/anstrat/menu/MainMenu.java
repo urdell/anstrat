@@ -197,7 +197,7 @@ public class MainMenu extends MenuScreen {
 		waiting.add("Waiting for other players:").height(height).padTop(paddingTop);
 		
         for(final GameInstance gi : Main.getInstance().games.getActiveGames()){    	
-        	Table table = gi.state.isUserCurrentPlayer() ? current : waiting;
+        	Table table = gi.isUserCurrentPlayer() ? current : waiting;
         	table.row();
         	table.add(gameInstanceToTable(gi)).fillX().expandX().height((int)(17*Main.percentHeight));
         }

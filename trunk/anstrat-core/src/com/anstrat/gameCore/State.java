@@ -9,7 +9,6 @@ import java.util.Random;
 
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
-import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
 import com.anstrat.gameCore.effects.TriggerOnTurnStart;
@@ -166,9 +165,5 @@ public class State implements Serializable{
 	
 	public Player getCurrentPlayer(){
 		return players[currentPlayerId];
-	}
-	
-	public boolean isUserCurrentPlayer(){
-		return GameInstance.activeGame.getUserPlayer().playerId == currentPlayerId;
 	}
 }

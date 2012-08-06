@@ -342,7 +342,7 @@ public class GameUI extends UI {
 		Player player = State.activeState.getCurrentPlayer();
 		GameInstance game = GameInstance.activeGame;
 		String text;
-		if(State.activeState.isUserCurrentPlayer())
+		if(GameInstance.activeGame.isUserCurrentPlayer())
 		{
 			Assets.SKIN.setEnabled(endTurnButton, true);
 			Assets.SKIN.setEnabled(buyButton, true);
