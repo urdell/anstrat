@@ -3,7 +3,7 @@
 	<PlayerAbilityGod god="Odin">
 		<PlayerAbility>
 			<name>Remove Effects</name>
-			<manacost>20</manacost>
+			<manacost>10</manacost>
 			<description>Odin removes all of target unit's effects.</description>
 		</PlayerAbility>
 		<PlayerAbility>
@@ -55,7 +55,7 @@
 		<PlayerAbility>
 			<name>Freeze</name>
 			<manacost>20</manacost>
-			<description>Loke freezes target tile. Any unit standing on the tile takes 4 damage and is freezed, meaning it will regenerate less AP each round.</description>
+			<description>Loke freezes target tile. Any unit standing on the tile takes 4 damage and is freezed for 2 turns, meaning it will regenerate less AP each round.</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 </PlayerAbilities>
