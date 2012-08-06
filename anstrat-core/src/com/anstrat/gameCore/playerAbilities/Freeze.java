@@ -20,7 +20,7 @@ public class Freeze extends TargetedPlayerAbility {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int damage = 4;
-	public static final int rounds = 3;
+	public static final int rounds = 2;
 	
 	public Freeze(Player player) {
 		super(player, PlayerAbilityType.FREEZE);

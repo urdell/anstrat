@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -55,5 +57,11 @@ public class DeathAnimation extends Animation {
 	public void removeGUnit()
 	{
 		GEngine.getInstance().gUnits.remove(unit.unit.id);
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(unit.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

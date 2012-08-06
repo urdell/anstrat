@@ -1,6 +1,8 @@
 package com.anstrat.animation;
 
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GEngine;
@@ -47,5 +49,11 @@ public class CaptureAnimation extends Animation{
 			started = true;
 			unit.updateHealthbar();	
 		}	
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(building.building.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

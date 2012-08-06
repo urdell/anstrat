@@ -50,14 +50,14 @@ public class AnimationHandler {
 	}
 	
 	public void drawAll(float deltaTime, SpriteBatch batch){
-		batch.setProjectionMatrix(GEngine.getInstance().camera.combined);
-		batch.begin();
+		//batch.setProjectionMatrix(GEngine.getInstance().camera.combined);
+		//batch.begin();
 		
 		for(Animation a : runningAnimations){
 			a.draw(deltaTime, batch);
 		}	
 		
-		batch.end();
+		//batch.end();
 	}
 	
 	public void drawAllFixed(float deltaTime, SpriteBatch batch){

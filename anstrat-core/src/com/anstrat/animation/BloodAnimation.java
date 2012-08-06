@@ -1,6 +1,8 @@
 package com.anstrat.animation;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.gui.GUnit;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 public class BloodAnimation extends Animation {
 
 	private Vector2 position;
+	private GUnit defender;
 	private boolean left;
 	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
@@ -21,6 +24,7 @@ public class BloodAnimation extends Animation {
 		animation = Assets.getAnimation("blood-big");
 		position = defender.getPosition();
 		this.left = directionLeft;
+		this.defender = defender;
 		length = animation.animationDuration;
 		lifetimeLeft = length;
 	}
@@ -57,6 +61,12 @@ public class BloodAnimation extends Animation {
 			batch.draw(region, position.x-rw*scaleFactor/2f-width/3f, position.y-rh*scaleFactor/2f, 
 					rw*scaleFactor, rh*scaleFactor);
 		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(defender.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 
 }

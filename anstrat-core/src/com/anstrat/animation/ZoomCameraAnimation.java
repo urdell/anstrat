@@ -36,4 +36,10 @@ public class ZoomCameraAnimation extends Animation {
 		current = start + (offset*amtOffset);
 		ge.camera.zoom = current;
 	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

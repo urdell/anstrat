@@ -46,4 +46,9 @@ public class MoveCameraAnimation extends Animation {
 		ge.setPosition(current);
 		ge.cameraController.checkBounds();
 	}
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

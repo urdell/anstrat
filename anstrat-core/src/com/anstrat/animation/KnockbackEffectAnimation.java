@@ -2,16 +2,18 @@
 	package com.anstrat.animation;
 
 	import com.anstrat.core.Assets;
-	import com.anstrat.gameCore.CombatLog;
-	import com.anstrat.gameCore.UnitType;
-	import com.anstrat.gameCore.abilities.Knockback;
-	import com.anstrat.geography.TileCoordinate;
-	import com.anstrat.gui.GEngine;
-	import com.anstrat.gui.GUnit;
-	import com.badlogic.gdx.graphics.Color;
-	import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-	import com.badlogic.gdx.graphics.g2d.TextureRegion;
-	import com.badlogic.gdx.math.Vector2;
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.CombatLog;
+import com.anstrat.gameCore.Fog;
+import com.anstrat.gameCore.UnitType;
+import com.anstrat.gameCore.abilities.Knockback;
+import com.anstrat.geography.TileCoordinate;
+import com.anstrat.gui.GEngine;
+import com.anstrat.gui.GUnit;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 	public class KnockbackEffectAnimation extends Animation {
 
@@ -116,6 +118,13 @@
 				if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
 			}*/
 			
+		}
+
+		@Override
+		public boolean isVisible() {
+			// TODO Auto-generated method stub
+			return Fog.isVisible(gAttacker.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId) ||
+					Fog.isVisible(gDefender.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 		}
 
 	}

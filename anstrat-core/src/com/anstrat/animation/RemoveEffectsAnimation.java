@@ -1,6 +1,8 @@
 package com.anstrat.animation;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -56,5 +58,11 @@ public class RemoveEffectsAnimation extends Animation {
 		
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
 		batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(target.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

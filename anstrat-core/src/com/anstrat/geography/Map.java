@@ -30,6 +30,8 @@ public class Map implements Serializable{
     
     public HashMap<Integer,Building> buildingList;
 	public int nextBuildingId;
+	
+	public boolean fogEnabled = false;
 
 	/** Creates an empty map of the given size filled with the standard terrain type. */
 	public Map(int xSize, int ySize){

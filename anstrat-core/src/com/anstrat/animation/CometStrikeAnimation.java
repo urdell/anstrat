@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
@@ -112,6 +114,12 @@ public class CometStrikeAnimation extends Animation {
 			batch.draw(region, position.x-(width/2), position.y-(width/2), width*2, height*2);
 		
 		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return Fog.isVisible(target.tile.coordinates,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 	
 

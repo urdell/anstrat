@@ -247,9 +247,13 @@ public class GEngine implements Screen{
 		if(showCoordinates){
 			drawCoordinates();
 		}
-		batch.end();
 		
 		animationHandler.drawAll(delta, batch);
+		
+		GFog.drawFog(batch);
+		
+		batch.end();
+		
 		animationHandler.drawAllFixed(delta, batch);
 		
 		userInterface.draw();

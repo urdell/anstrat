@@ -56,4 +56,10 @@ public class EndTurnAnimation extends Animation {
 		Assets.MENU_FONT.setScale(scale);
 	}
 
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

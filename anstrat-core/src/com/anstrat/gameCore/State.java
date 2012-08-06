@@ -64,7 +64,10 @@ public class State implements Serializable{
 	
 	public void endTurn(){
 		
-		currentPlayerId = (currentPlayerId + 1) % players.length;
+		// Update Fog for previous player.
+		Fog.fogTurn(currentPlayerId, map);
+		
+		currentPlayerId = (currentPlayerId + 1) % players.length;  // Flip to new player
 		Player player = State.activeState.getCurrentPlayer();
 		
 		List<Unit> unitsToBeRemoved = new ArrayList<Unit>();
@@ -113,8 +116,8 @@ public class State implements Serializable{
 			u.resolveDeath();
 			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(u, GEngine.getInstance().getUnit(u).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 		}
-		//Regenerate capture-points if no unit is occupying village
 		
+		//Regenerate capture-points if no unit is occupying village
 		for (Building building : State.activeState.map.buildingList.values()){
 			boolean buildingNotOccupiedByEnemyUnit = true;
 			if(building.controllerId == currentPlayerId){
@@ -132,6 +135,7 @@ public class State implements Serializable{
 			}
 		}
 		
+		Fog.recalculateFog(currentPlayerId, map);
 		
 		// Update gold and mana income
 		getIncome(currentPlayerId, tempIncome);
