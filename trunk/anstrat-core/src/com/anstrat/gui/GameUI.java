@@ -340,7 +340,7 @@ public class GameUI extends UI {
 	 */
 	public void updateCurrentPlayer(){
 		Player player = State.activeState.getCurrentPlayer();
-		GameInstance game = State.activeState.gameInstance;
+		GameInstance game = GameInstance.activeGame;
 		String text;
 		if(State.activeState.isUserCurrentPlayer())
 		{

@@ -3,6 +3,7 @@ package com.anstrat.command;
 
 import java.io.Serializable;
 
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.State;
 import com.badlogic.gdx.Gdx;
 
@@ -21,7 +22,7 @@ public abstract class Command implements Serializable {
 	 * Creates a command for the current player
 	 */
 	protected Command(){
-		this(State.activeState.getCurrentPlayer().playerId);
+		this(GameInstance.activeGame.getUserPlayer().playerId);
 	}
 	
 	protected Command(int playerID){

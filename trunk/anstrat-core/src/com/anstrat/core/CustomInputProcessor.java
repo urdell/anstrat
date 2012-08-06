@@ -1,6 +1,5 @@
 package com.anstrat.core;
 
-import com.anstrat.gameCore.State;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
 import com.anstrat.gui.UI;
@@ -27,7 +26,7 @@ public class CustomInputProcessor extends InputAdapter {
 					ComponentFactory.createButton("Yes", new ClickListener() {
 						@Override
 						public void click(Actor actor, float x, float y) {
-							State.activeState.gameInstance.resign();
+							GameInstance.activeGame.resign();
 							Main.getInstance().setScreen(MainMenu.getInstance());
 							Popup.currentPopup.close();
 						}
