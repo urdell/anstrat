@@ -4,21 +4,21 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.anstrat.server.util.DependencyInjector;
+import com.anstrat.server.util.DependencyInjector.Inject;
 
-public final class DatabaseSchema {
+
+public class DatabaseSchema {
 	
-	public static void initializeDB(){
-		drop();
-		create();
-		seed();
-	}
+	@Inject
+	private DatabaseContext context;
 	
-	public static boolean create(){
+	public boolean create(){
 		Statement s = null;
 		Connection c = null;
 		
 		try {
-			c = DatabaseHelper.getConnection();
+			c = context.getConnection();
 			s = c.createStatement();
 			
 			// Games
@@ -73,20 +73,26 @@ public final class DatabaseSchema {
 			return false;
 		}
 		finally{
-			DatabaseHelper.closeStmt(s);
-			DatabaseHelper.closeConn(c);
+			if(c != null){
+				try{
+					c.close();
+				} catch (SQLException e){
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
-	public static void seed(){
+	public void seed(){
+		
 	}
 	
-	public static boolean drop(){
+	public void drop(){
 		Statement s = null;
 		Connection c = null;
 		
 		try {
-			c = DatabaseHelper.getConnection();
+			c = context.getConnection();
 			s = c.createStatement();
 			s.executeUpdate("DROP TABLE IF EXISTS PlaysIn");
 			s.executeUpdate("DROP TABLE IF EXISTS Turns");
@@ -95,15 +101,31 @@ public final class DatabaseSchema {
 			s.executeUpdate("DROP TABLE IF EXISTS DefaultMaps");
 			s.close();
 			
-			return true;
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
 		finally{
-			DatabaseHelper.closeStmt(s);
-			DatabaseHelper.closeConn(c);
+			if(c != null){
+				try{
+					c.close();
+				} catch (SQLException e){
+					e.printStackTrace();
+				}
+			}
 		}
+	}
+	
+	/**
+	 * Connects to the PostgreSQL db and initializes its tables and data.
+	 */
+	public static void main(String[] args){
+		DependencyInjector injector = new DependencyInjector(DatabaseSchema.class.getPackage().getName());
+		injector.bind(DatabaseContext.class, DatabaseContext.class);
+		
+		// Completely resets the database
+		DatabaseSchema schema = injector.get(DatabaseSchema.class);
+		schema.drop();
+		schema.create();
+		schema.seed();
 	}
 }

@@ -85,4 +85,8 @@ public class Logger {
 	public void error(String message, Object... args){
 		logln(message, "ERROR", args);
 	}
+	
+	public void exception(Throwable t, String message, Object... args){
+		logln(String.format("%s : %s", message, t.getMessage()), "ERROR", args);
+	}
 }
