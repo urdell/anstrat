@@ -25,6 +25,7 @@ public class NetworkDependentTracker {
 	}
 	
 	public static void registerNetworkButton(Button newButton){
+		if(loginLabels == null) loginLabels = new ArrayList<Label>();
 		networkButtons.add(newButton);
 		
 		if(!hasNetwork) Assets.SKIN.setEnabled(newButton, false);
