@@ -38,8 +38,8 @@ public class GameMessageHandler {
 	}
 	
 	public void requestRandomGame(InetSocketAddress client, int team, int god){
-		long userID = connectionManager.getUserID(client);
-		if(userID == -1){
+		Long userID = connectionManager.getUserID(client);
+		if(userID == null){
 			logger.info("%s attempted to start a random game, but is not logged in.", client);
 			return;
 		}
@@ -48,9 +48,9 @@ public class GameMessageHandler {
 		
 		if(game != null){
 			// Create game
-			long gameID = database.createGame(game);
+			Long gameID = database.createGame(game);
 			
-			if(gameID != -1){
+			if(gameID != null){
 				connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.GAME_STARTED, gameID, game));
 			}
 			else{

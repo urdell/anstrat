@@ -9,6 +9,6 @@ public interface IDatabaseService {
 	
 	User createUser(String password);
 	Map<Long, User> getUsers(long... userIDs);
-	long createGame(GameSetup game);
+	Long createGame(GameSetup game);
 	DisplayNameChangeResponse setDisplayName(long userID, String name);
 }

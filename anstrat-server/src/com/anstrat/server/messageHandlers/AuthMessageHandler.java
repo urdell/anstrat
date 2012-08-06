@@ -65,10 +65,10 @@ public class AuthMessageHandler {
 			return;
 		}
 
-		long userID = connectionManager.getUserID(client);
+		Long userID = connectionManager.getUserID(client);
 		
 		// Not logged in?
-		if(userID != -1){
+		if(userID == null){
 			connectionManager.sendMessage(client, new NetworkMessage(Command.DISPLAY_NAME_CHANGE_REJECTED, "Not logged in."));
 			return;
 		}

@@ -139,10 +139,10 @@ public class SassyGameMatcher {
 	@Subscribe
 	public void clientDisconnected(ClientDisconnectedEvent event) {
 		
-		long userID = connectionManager.getUserID(event.getClient());
+		Long userID = connectionManager.getUserID(event.getClient());
 		
 		// If user was logged in
-		if(userID != -1){
+		if(userID != null){
 			
 			// Check if user was in queue for a game, and if so remove him
 			synchronized(lock){
@@ -156,7 +156,8 @@ public class SassyGameMatcher {
 									if(!medium_premade.remove(existing))
 										large_premade.remove(existing);
 					
-					logger.info("Removed user '%d' from queue, user disconnected.", userID);
+					
+					logger.info("Removed user '%d' from all queues, user disconnected.", userID);
 				}
 			}
 		}

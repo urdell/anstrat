@@ -12,7 +12,7 @@ public interface IConnectionManager {
 	void linkUserToAddress(long userID, InetSocketAddress address);
 	
 	/**
-	 * @return the matching userID or -1 if none was found
+	 * @return the matching userID or <code>null</code> if none was found
 	 */
-	long getUserID(InetSocketAddress address);
+	Long getUserID(InetSocketAddress address);
 }
