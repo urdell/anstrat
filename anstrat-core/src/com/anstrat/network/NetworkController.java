@@ -7,6 +7,7 @@ import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameSetup;
+import com.badlogic.gdx.Gdx;
 
 /**
  * Converts UI actions to network commands and vice-versa.<br>
@@ -31,11 +32,15 @@ public class NetworkController {
 	}
 	
 	// UI actions
+	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
 	public long getGlobalUserID(){
 		return network.getUserID();
 	}
-		
-	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
+	
+	public void sendCommand(long gameID, int commandNr, com.anstrat.command.Command command){
+		network.sendCommand(gameID, commandNr, command);
+	}
+	
 	
 	// Network listener implementation
 	
@@ -86,8 +91,14 @@ public class NetworkController {
 			
 			@Override
 			public void command(long gameID, int commandNr, com.anstrat.command.Command command) {
-				// TODO Auto-generated method stub
+				NetworkGameInstance game = Main.getInstance().games.getGame(gameID);
 				
+				if(game != null){
+					game.commandReceived(commandNr, command);
+				}
+				else{
+					Gdx.app.log("NetworkController", String.format("Received a command for a game that does not exist. (gameID = %d)"));
+				}
 			}
 		};
 			
