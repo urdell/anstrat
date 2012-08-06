@@ -19,7 +19,7 @@ public class TestUnit {
 	@Before
 	public void setUp() throws Exception {
 		// Create dummy state
-		State.activeState = new State(new Map(10, 10), new Player[0], null);
+		State.activeState = new State(new Map(10, 10), new Player[0]);
 		unit = new Unit(UnitType.AXE_THROWER, 0);
 	}
 	
