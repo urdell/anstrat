@@ -68,6 +68,20 @@ public class MapEditorActionHandler {
 		// Building
 		else if (selected instanceof Integer) {
 			Integer type = (Integer) selected;
+			
+			Building existing = mapEd.map.getBuildingByTile(gTile.tile.coordinates);
+			if(existing != null){
+				// Change owner if we try to place identical building on tile
+				if(type==existing.type){
+					changeOwnerPopup(gTile);
+					return;
+				}
+				
+				// Remove old building
+				mapEd.gBuildings.remove(existing.id);
+			}
+			
+			
 			// Handle castle
 			int controller = -1;
 			if (type == Building.TYPE_CASTLE) {
@@ -89,18 +103,6 @@ public class MapEditorActionHandler {
 					mapEd.gBuildings.remove(mapEd.map.getPlayersCastle(controller).id);
 					mapEd.map.buildingList.remove(mapEd.map.getPlayersCastle(controller).id);
 				}
-			}
-			
-			Building existing = mapEd.map.getBuildingByTile(gTile.tile.coordinates);
-			if(existing != null){
-				// Change owner if we try to place identical building on tile
-				if(type==existing.type){
-					changeOwnerPopup(gTile);
-					return;
-				}
-				
-				// Remove old building
-				mapEd.gBuildings.remove(existing.id);
 			}
 				
 			int id = mapEd.map.nextBuildingId++;
@@ -124,7 +126,7 @@ public class MapEditorActionHandler {
 			ui.changeOwner0.setText(owner==0?("[ "+0+" ]"):String.valueOf(0));
 			ui.changeOwner1.setText(owner==1?("[ "+1+" ]"):String.valueOf(1));
 			
-			TextButton none = ui.changeOwnerNone; //(TextButton)ui.tblChangeOwner.findActor("none");
+			TextButton none = ui.changeOwnerNone;
 			none.setText(owner==-1?"[ none ]":"none");
 			Assets.SKIN.setEnabled(none, building.type!=Building.TYPE_CASTLE);
 			ui.showChangeOwner();
@@ -135,13 +137,21 @@ public class MapEditorActionHandler {
 	 * Changes owner of a building. 
 	 */
 	public void changeOwner(String newOwner){
-		Building b = MapEditor.getInstance().map.getBuildingByTile(selectedTile.tile.coordinates);
+		Map map = MapEditor.getInstance().map;
+		Building b = map.getBuildingByTile(selectedTile.tile.coordinates);
 		
 		if(newOwner.equals("none") && b.type == Building.TYPE_CASTLE){
 			return;
 		}
 		
-		b.controllerId = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
+		int contr = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
+		
+		// make sure both castles don't have the same owner by switching
+		if(map.getPlayersCastle(contr) !=null && map.buildingList.containsKey(map.getPlayersCastle(contr).id)){
+			map.getPlayersCastle(contr).controllerId = contr==1?0:1;
+		}
+		
+		b.controllerId = contr;
 	}
 	
 	public void createNewMap(int width, int height){
