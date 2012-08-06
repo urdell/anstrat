@@ -4,14 +4,11 @@ package com.anstrat.gameCore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
-import com.anstrat.command.Command;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
@@ -36,29 +33,25 @@ public class State implements Serializable{
 	public static State activeState;
 	
 	public final Map map;
-	private Queue<Command> turnSoFar;
 	public HashMap<Integer,Unit> unitList;
 	public int nextUnitId;
 	public int turnNr = 1;
 	public Random random;
-	public final GameInstance gameInstance;
 	
 	public final Player[] players;
 	
 	/** Index in players */
 	public int currentPlayerId = 0;
 	
-	public State(Map map, Player[] players, GameInstance gi){
+	public State(Map map, Player[] players){
 		this.map = map;
 		this.players = players;
 		this.random = new Random();
 		this.unitList = new HashMap<Integer, Unit>();
-		this.gameInstance = gi;
-		this.turnSoFar = new LinkedList<Command>();
 	}
 	
-	public State(Map map, Player[] players, long randomSeed, GameInstance gi){
-		this(map, players, gi);
+	public State(Map map, Player[] players, long randomSeed){
+		this(map, players);
 		this.random.setSeed(randomSeed);
 	}
 	
@@ -69,14 +62,6 @@ public class State implements Serializable{
 	}
 	
 	private int[] tempIncome = new int[2];
-	
-	public void addCommand(Command command){
-		turnSoFar.add(command);
-	}
-	
-	public Queue<Command> getCommands(){
-		return this.turnSoFar;
-	}
 	
 	public void endTurn(){
 		
@@ -156,7 +141,6 @@ public class State implements Serializable{
 		
 		// Update turn information
 		turnNr++;
-		turnSoFar = new LinkedList<Command>();
 	}
 	
 	/**
@@ -185,6 +169,6 @@ public class State implements Serializable{
 	}
 	
 	public boolean isUserCurrentPlayer(){
-		return gameInstance.getUserPlayer().playerId == currentPlayerId;
+		return GameInstance.activeGame.getUserPlayer().playerId == currentPlayerId;
 	}
 }

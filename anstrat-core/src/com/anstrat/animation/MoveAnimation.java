@@ -16,11 +16,10 @@ public class MoveAnimation extends Animation {
 	private Vector2 start, current, end;
 	private GUnit gunit;
 	private float xoffset, yoffset, amtOffset;
-	private boolean isFirst, isLast, started, shouldMoveCamera;
+	private boolean isFirst, isLast, started;
 	
 	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile){
 		GEngine engine = GEngine.getInstance();
-		shouldMoveCamera = engine.state.isUserCurrentPlayer();
 		
 		gunit = engine.getUnit(unit);
 		
@@ -83,9 +82,7 @@ public class MoveAnimation extends Animation {
 	}
 	
 	private void moveCamera() {
-		if (shouldMoveCamera){
-			Animation animation = new MoveCameraAnimation(end);
-			GEngine.getInstance().animationHandler.runParalell(animation);
-		}
+		Animation animation = new MoveCameraAnimation(end);
+		GEngine.getInstance().animationHandler.runParalell(animation);
 	}
 }

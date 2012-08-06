@@ -1,6 +1,7 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.CaptureAnimation;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
@@ -48,7 +49,7 @@ public class CaptureCommand extends Command{
 				CommandHandler.execute(new EndTurnCommand());
 				
 				// Remove this game
-				Main.getInstance().games.endGame(State.activeState.gameInstance);
+				Main.getInstance().games.endGame(GameInstance.activeGame);
 			}
 		}
 	}

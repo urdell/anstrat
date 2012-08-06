@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.anstrat.core.GameInstance;
 import com.anstrat.geography.TileCoordinate;
 
 /**
@@ -44,7 +45,7 @@ public abstract class StateUtils {
 	}
 	
 	public static boolean isControlledByUser(Building building){
-		return building.controllerId == State.activeState.gameInstance.getUserPlayer().playerId;
+		return building.controllerId == GameInstance.activeGame.getUserPlayer().playerId;
 	}
 	
 	public static Unit[] getPlayersUnits(Player player) {

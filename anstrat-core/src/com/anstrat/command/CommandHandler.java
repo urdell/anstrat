@@ -1,9 +1,8 @@
 package com.anstrat.command;
 
-import java.util.Queue;
-
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.FullscreenTextAnimation;
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.UnitType;
@@ -22,8 +21,7 @@ public abstract class CommandHandler {
 	public static void execute(Command command){
 		if(command.isAllowed()){			
 			Gdx.app.log("CommandHandler", String.format("Executing valid '%s' command.", command));
-			State.activeState.addCommand(command);
-			State.activeState.gameInstance.onCommandExecute(command);
+			GameInstance.activeGame.onCommandExecute(command);
 			command.execute();
 			Pathfinding.ranges.clear();
 		}
@@ -41,17 +39,14 @@ public abstract class CommandHandler {
 	 * Will only be called when an incoming network turn is received
 	 * @param turn
 	 */
-	public static void execute(Queue<Command> turn){
-		while(!turn.isEmpty()){
-			Command command = turn.poll();
-			if(command.isAllowed()){
-				command.execute();
-				
-				Gdx.app.log("CommandHandler", String.format("Got a valid '%s' command from the server.", command));
-			}
-			else
-				Gdx.app.log("CommandHandler", String.format("Got a invalid '%s' command from the server!", command));
-		}		
+	public static void executeNetwork(Command command){
+		if(command.isAllowed()){
+			command.execute();
+			
+			Gdx.app.log("CommandHandler", String.format("Got a valid '%s' command from the server.", command));
+		}
+		else
+			Gdx.app.log("CommandHandler", String.format("Got a invalid '%s' command from the server!", command));	
 	}
 
 	// TODO: This should probably be moved somewhere else

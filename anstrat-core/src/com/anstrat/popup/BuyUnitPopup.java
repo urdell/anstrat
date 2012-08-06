@@ -3,6 +3,7 @@ package com.anstrat.popup;
 import java.util.Arrays;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -133,7 +134,7 @@ public class BuyUnitPopup extends Popup{
 	 * Check if the unit is afforded before showing popup.
 	 */
 	@Override public void show(){
-		opener = State.activeState.gameInstance.getUserPlayer();
+		opener = GameInstance.activeGame.getUserPlayer();
 		checkUnitAffordable();
 		
 		unitTable.setColor(opener.getColor());

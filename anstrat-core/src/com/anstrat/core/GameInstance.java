@@ -25,16 +25,17 @@ import com.badlogic.gdx.Gdx;
 public class GameInstance implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	public static GameInstance activeGame;
 	
 	public State state;
 	private Collection<Integer> aiPlayerIDs;
 	
 	public GameInstance(long gameID, Map map, Player[] players){
-		state = new State(map, players, this);
+		state = new State(map, players);
 	}
 	
 	protected GameInstance(Map map, Player[] players, long randomSeed){
-		state = new State(map, players, randomSeed, this);
+		state = new State(map, players, randomSeed);
 	}
 	
 	public void setAIPlayers(Integer... aiPlayerIDs){
@@ -45,6 +46,7 @@ public class GameInstance implements Serializable{
 	 * Switch to the ingame screen using this game. This is the only way you should move to the ingame screen through.
 	 */
 	public void showGame(boolean startZoom){
+		activeGame = this;
 		
 		// Assign AI if needed (needs to be done here to work with deserialization, as the AI engine is not serialized)
 		if(aiPlayerIDs != null){
@@ -83,6 +85,10 @@ public class GameInstance implements Serializable{
 		
 		// Should NEVER happen
 		throw new RuntimeException("Game only contains AI's!");
+	}
+	
+	protected boolean isActiveGame(){
+		return Main.getInstance().getScreen() instanceof GEngine && activeGame == this;
 	}
 	
 	public void onCommandExecute(Command command){
