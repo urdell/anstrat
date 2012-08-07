@@ -6,7 +6,6 @@ import com.anstrat.gameCore.Fog;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.gui.GUnit;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;

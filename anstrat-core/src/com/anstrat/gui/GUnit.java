@@ -1,7 +1,6 @@
 package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
-import com.anstrat.core.Main;
 import com.anstrat.core.Assets.Pair;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Player;

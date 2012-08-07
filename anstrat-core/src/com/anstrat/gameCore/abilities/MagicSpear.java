@@ -17,10 +17,6 @@ import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
 
 public class MagicSpear extends TargetedAbility {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 3;
 	private static final int RANGE = 2;

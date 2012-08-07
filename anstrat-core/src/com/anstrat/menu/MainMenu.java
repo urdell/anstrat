@@ -11,7 +11,6 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
-import com.anstrat.network_old.GameRequest;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -364,6 +363,7 @@ public class MainMenu extends MenuScreen {
     	return table;
 	}
 	
+	/*
 	private Table gameRequestToTable(GameRequest request){
 		Table table = new Table(Assets.SKIN);
     	table.setBackground(Assets.SKIN.getPatch("line-border-thin"));
@@ -424,8 +424,7 @@ public class MainMenu extends MenuScreen {
     	
     	return table;
 	}
-	
-	
+	*/
 }
 
 

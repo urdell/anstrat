@@ -1,11 +1,8 @@
 package com.anstrat.gameCore.abilities;
 
-import java.util.Random;
-
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
-import com.anstrat.animation.HealAnimation;
 import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -19,7 +16,6 @@ import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
-import com.badlogic.gdx.math.Vector2;
 
 public class LeapAttack extends TargetedAbility{
 		/**
@@ -29,12 +25,10 @@ public class LeapAttack extends TargetedAbility{
 		private static final int AP_COST = 3;
 		private static final int RANGE = 1;
 
-		
 		public LeapAttack(){
 			super("Leap Attack","Making a leap-attack, jumping over the enemy and finishes with a dashing blow for extra damage",AP_COST, RANGE);
 		}
 		
-
 		public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 			Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 			if(targetUnit == null)

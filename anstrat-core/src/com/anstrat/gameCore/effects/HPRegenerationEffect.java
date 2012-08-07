@@ -3,6 +3,7 @@ package com.anstrat.gameCore.effects;
 import com.anstrat.gameCore.Unit;
 
 public class HPRegenerationEffect extends Effect implements TriggerOnTurnStart{
+	private static final long serialVersionUID = 1L;
 
 	public HPRegenerationEffect(){
 		this.name = "HPRegeneration";

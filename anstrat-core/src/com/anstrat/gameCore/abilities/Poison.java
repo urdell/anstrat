@@ -2,7 +2,6 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
-import com.anstrat.animation.HealAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -17,10 +16,6 @@ import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
 
 public class Poison extends TargetedAbility{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 3;
 	private static final int RANGE = 2;

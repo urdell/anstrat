@@ -1,10 +1,6 @@
 package com.anstrat.gameCore.effects;
 
-import com.anstrat.animation.DeathAnimation;
-import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gui.GEngine;
-import com.badlogic.gdx.math.Vector2;
 
 public class HelsCurseEffect extends Effect implements TriggerOnTurnStart{
 	
@@ -23,9 +19,5 @@ public class HelsCurseEffect extends Effect implements TriggerOnTurnStart{
 	@Override
 	public void triggerOnTurnStart(Unit u) {
 		u.currentHP -= damage;
-		/*if(u.currentHP <= 0){	// Moved to state startTurn code
-			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(u, GEngine.getInstance().getUnit(u).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
-			State.activeState.unitList.remove(u.id);
-		}*/
 	}
 }
