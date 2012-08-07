@@ -3,6 +3,7 @@ package com.anstrat.network;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.menu.MainMenu;
@@ -18,12 +19,27 @@ import com.badlogic.gdx.Gdx;
 public class NetworkController {
 	private final Network network;
 	
-	public NetworkController(Network network){
+	public NetworkController(final Network network){
 		this.network = network;
 		
 		// Creating the implementation of the listener as an anonymous class, as we don't want
 		// the implemented methods to be directly callable on this object. (it would be confusing) 
 		this.network.setListener(getNetworkResponseHandlerImplementation());
+		
+		this.network.setLoginCallback(new Runnable() {
+			@Override
+			public void run() {
+				
+				// Request updates on all active games on login
+				for(GameInstance game : Main.getInstance().games.getActiveGames()){
+					if(game instanceof NetworkGameInstance){
+						NetworkGameInstance networkGame = (NetworkGameInstance) game;
+						
+						network.requestGameUpdate(networkGame.getGameID(), networkGame.getCurrentCommandNr());
+					}
+				}
+			}
+		});
 	}
 	
 	// Debug
@@ -33,6 +49,7 @@ public class NetworkController {
 	
 	// UI actions
 	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
+	
 	public long getGlobalUserID(){
 		return network.getUserID();
 	}
@@ -41,21 +58,18 @@ public class NetworkController {
 		network.sendCommand(gameID, commandNr, command);
 	}
 	
-	
-	// Network listener implementation
-	
 	public void findRandomGame(int team, int god){
 		this.network.requestRandomGame(team, god);
 	}
 	
+	public void requestGameUpdate(long gameID, int currentCommandNr){
+		this.network.requestGameUpdate(gameID, currentCommandNr);
+	}
+	
+	// Network listener implementation
+	
 	private INetworkResponseListener getNetworkResponseHandlerImplementation(){
 		return new INetworkResponseListener() {
-			
-			@Override
-			public void gameStateCorrupted(long gameID) {
-				// TODO Auto-generated method stub
-				
-			}
 			
 			@Override
 			public void gameStarted(long gameID, GameSetup gameSetup) {

@@ -1,9 +1,5 @@
 package com.anstrat.server.db;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +14,7 @@ import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
+import com.anstrat.server.util.Serialization;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -143,6 +140,40 @@ public class DatabaseManager implements IDatabaseService {
 		return null;
 	}
 	
+	public Command[] getCommands(long gameID, int greaterThanOrEqualToCommandNr){
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet res = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("SELECT command FROM Commands WHERE gameID = ? AND commandNr >= ? ORDER BY commandNr ASC");
+			pst.setLong(1, gameID);
+			pst.setInt(2, greaterThanOrEqualToCommandNr);
+			res = pst.executeQuery();
+			
+			// Get commands
+			List<Command> commands = Lists.newArrayList();
+			while(res.next()){
+				Command command = Serialization.deserialize(res.getBytes("command"));
+				commands.add(command);
+			}
+			
+			return commands.toArray(new Command[commands.size()]);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			closeResSet(res);
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return null;
+	}
+	
 	@Override
 	public Long createGame(GameSetup game){
 		Connection conn = null;
@@ -156,7 +187,7 @@ public class DatabaseManager implements IDatabaseService {
 			// Create game
 			pst = conn.prepareStatement("INSERT INTO Games(id, randomSeed, map) VALUES(DEFAULT, ?, ?) RETURNING id");
 			pst.setLong(1, game.randomSeed);
-			pst.setBytes(2, objectToByteArray(game.map));
+			pst.setBytes(2, Serialization.serialize(game.map));
 			
 			idnr = pst.executeQuery();
 			
@@ -233,7 +264,7 @@ public class DatabaseManager implements IDatabaseService {
 		PreparedStatement insert = null;
 		
 		try{
-			byte[] serializedCommand = objectToByteArray(command);
+			byte[] serializedCommand = Serialization.serialize(command);
 			conn = context.getConnection();
 			
 			insert = conn.prepareStatement("INSERT INTO Commands(gameID, commandNr, command) VALUES(?, ?, ?)");
@@ -309,21 +340,6 @@ public class DatabaseManager implements IDatabaseService {
 			catch(Throwable t){
 				logger.exception(t, "Unexpected exception on closing Statement.");
 			}
-		}
-	}
-	
-	private static byte[] objectToByteArray(Serializable object){
-		try{
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(object);
-			oos.flush();
-			oos.close();
-			
-			return baos.toByteArray();
-			
-		} catch (IOException e){
-			throw new RuntimeException(e);
 		}
 	}
 }

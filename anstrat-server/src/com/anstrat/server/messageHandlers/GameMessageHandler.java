@@ -64,8 +64,22 @@ public class GameMessageHandler {
 		
 	}
 	
-	public void requestGameUpdate(InetSocketAddress client, long gameID, int currentCommandNr, int stateChecksum){
-		// May trigger one or many SEND_COMMAND or a single GAME_STATE_CORRUPTED
+	public void requestGameUpdate(InetSocketAddress client, long gameID, int currentCommandNr){
+		
+		Long userID = connectionManager.getUserID(client);
+		if(userID == null){
+			logger.info("%s requested updates for game %d, commands >= %d, but is not logged in.", client, gameID, currentCommandNr);
+			return;
+		}
+		
+		// Here we could check if the user actually belongs to the gameID,
+		// but it would require an extra database query and there's no reason to check it
+		
+		// Send commands
+		Command[] commands = database.getCommands(gameID, currentCommandNr);
+		for(int i = 0; i < commands.length; i++){
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.SEND_COMMAND, gameID, currentCommandNr + i, commands[i]));
+		}
 	}
 	
 	public void requestRandomGame(InetSocketAddress client, int team, int god){

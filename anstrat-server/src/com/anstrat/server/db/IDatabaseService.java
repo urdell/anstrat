@@ -14,4 +14,5 @@ public interface IDatabaseService {
 	Long createGame(GameSetup game);
 	DisplayNameChangeResponse setDisplayName(long userID, String name);
 	Player[] getPlayers(long gameID);
+	Command[] getCommands(long gameID, int greaterThanOrEqualToCommandNr);
 }

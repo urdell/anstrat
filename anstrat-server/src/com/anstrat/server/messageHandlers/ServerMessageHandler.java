@@ -58,8 +58,7 @@ public class ServerMessageHandler {
 				case REQUEST_GAME_UPDATE: {
 					long gameID = (Long) payload.get(0);
 					int currentCommandNr = (Integer) payload.get(1);
-					int stateChecksum = (Integer) payload.get(2);
-					gameMessageHandler.requestGameUpdate(client, gameID, currentCommandNr, stateChecksum);
+					gameMessageHandler.requestGameUpdate(client, gameID, currentCommandNr);
 					break;
 				}
 				case REQUEST_RANDOM_GAME: {

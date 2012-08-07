@@ -27,6 +27,10 @@ public class Network implements INetworkCallback {
 		return worker.getUser().userID;
 	}
 	
+	public void setLoginCallback(Runnable callback){
+		this.worker.setOnLoggedInCallback(callback);
+	}
+	
 	@Override
 	public void messageReceived(NetworkMessage message) {
 		Command networkCommand = message.getCommand();
@@ -34,17 +38,6 @@ public class Network implements INetworkCallback {
 		
 		try{
 			switch(networkCommand){
-				
-				case GAME_STATE_CORRUPTED: {
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							//listener.gameStateCorrupted()
-						}
-					});
-					
-					break;
-				}
 				case GAME_STARTED: {
 					final long gameID = (Long) payload.get(0);
 					final GameSetup game = (GameSetup) payload.get(1);
@@ -113,8 +106,8 @@ public class Network implements INetworkCallback {
     	worker.sendMessage(new NetworkMessage(Command.SET_DISPLAY_NAME, name));
     }
     
-    public void requestGameUpdate(long gameID, int currentCommandNr, int stateChecksum){
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    public void requestGameUpdate(long gameID, int currentCommandNr){
+    	worker.sendMessage(new NetworkMessage(Command.REQUEST_GAME_UPDATE, gameID, currentCommandNr));
     }
     
     public void requestRandomGame(int team, int god){
