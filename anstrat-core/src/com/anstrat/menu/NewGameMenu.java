@@ -1,7 +1,7 @@
 package com.anstrat.menu;
 
-import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.Player;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,7 +39,8 @@ public class NewGameMenu extends MenuScreen {
             @Override
             public void click(Actor actor,float x,float y ){
         		//Main.getInstance().network.startRandomGameSearch();
-            	Main.getInstance().network.findRandomGame(0, 0);
+            	int team = Player.getRandomTeam();
+            	Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
             }
         } );
         
