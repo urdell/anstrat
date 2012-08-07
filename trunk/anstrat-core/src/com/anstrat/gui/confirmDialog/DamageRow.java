@@ -2,7 +2,6 @@ package com.anstrat.gui.confirmDialog;
 
 import com.anstrat.core.Assets;
 import com.anstrat.gui.FancyNumbers;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DamageRow extends ConfirmRow {

@@ -31,8 +31,6 @@ public class ChainingAxeAnimation extends Animation{
 	private int damage;
 	private boolean firstUnit;
 	
-	private String impactAnimationName;
-	
 	public ChainingAxeAnimation(Unit sourceUnit, Unit targetUnit, int damage, boolean firstUnit){
 		this.sourceUnit = sourceUnit;
 		this.targetUnit = targetUnit;
@@ -57,10 +55,6 @@ public class ChainingAxeAnimation extends Animation{
 		xoffset = target.x - start.x;
 		yoffset = target.y - start.y;
 		current = new Vector2();
-		
-		// Impact animation
-		impactAnimationName = "axe-attack-effect";
-				
 	}
 	@Override
 	public void run(float deltaTime) {

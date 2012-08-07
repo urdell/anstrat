@@ -2,10 +2,8 @@ package com.anstrat.gui.confirmDialog;
 
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Building;
-import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gui.APPieDisplay;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class FlagRow extends ConfirmRow {
 	
 	Color oldColor, newColor;
-	
 	
 	public FlagRow(Building building, Unit unit){
 		int oldId = building.controllerId;

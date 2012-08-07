@@ -29,8 +29,6 @@ public class AttackAnimation extends Animation{
 	private GUnit gAttacker, gDefender;
 	private CombatLog cl;
 	
-	private String impactAnimationName;
-	
 	public AttackAnimation(CombatLog combatLog){
 		this.cl = combatLog;
 		
@@ -75,32 +73,6 @@ public class AttackAnimation extends Animation{
 		xoffset = target.x - start.x;
 		yoffset = target.y - start.y;
 		current = new Vector2();
-		
-		// Impact animation
-		switch(cl.attacker.getUnitType()){
-			case AXE_THROWER:
-				impactAnimationName = "axe-attack-effect";
-				break;
-			case BERSERKER:
-				impactAnimationName = "hammer-attack-effect";
-				break;
-			case HAWK:
-				impactAnimationName = "hawk-attack-effect";
-				break;
-			case GOBLIN_SHAMAN: // Fall through
-			case SHAMAN:
-				impactAnimationName = "shaman-attack-effect";
-				break;
-			case SWORD:
-				impactAnimationName = "sword-attack-effect";
-				break;
-			case WOLF:
-				impactAnimationName = "wolf-attack-effect";
-				break;
-			default:
-				impactAnimationName = "hammer-attack-effect";
-				break;
-		}
 	}
 	
 	@Override

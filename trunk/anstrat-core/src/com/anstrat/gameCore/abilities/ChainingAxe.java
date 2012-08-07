@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.AttackAnimation;
-import com.anstrat.animation.BloodAnimation;
 import com.anstrat.animation.ChainingAxeAnimation;
-import com.anstrat.animation.DeathAnimation;
-import com.anstrat.animation.HealAnimation;
-import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -25,20 +20,14 @@ import com.anstrat.gui.confirmDialog.TextRow;
 
 public class ChainingAxe extends TargetedAbility {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
 	private static final int RANGE = 2;
 
-	
 	public ChainingAxe(){
 		super("Chaining Axe","Throws a magic axe jumping between up to 4 adjacent enemies, damage is reduced by for each succesive hit",AP_COST, RANGE);
 	}
 	
-	
-
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 		
@@ -49,8 +38,6 @@ public class ChainingAxe extends TargetedAbility {
 
 	@Override
 	public void activate(Unit source, TileCoordinate coordinate) {
-		
-		
 		super.activate(source, coordinate);
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);

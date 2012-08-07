@@ -5,7 +5,6 @@ import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GBar;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GTile;

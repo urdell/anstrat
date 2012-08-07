@@ -1,11 +1,8 @@
 package com.anstrat.gameCore.abilities;
 
-import java.util.Random;
-
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
-import com.anstrat.animation.HealAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -18,23 +15,16 @@ import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
-import com.badlogic.gdx.math.Vector2;
 
 public class Kamikaze extends TargetedAbility {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 3;
 	private static final int RANGE = 1;
 
-	
 	public Kamikaze(){
 		super("Kamikaze","Making a suicideÁttack dealing additional damage",AP_COST, RANGE);
 	}
 	
-
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 		

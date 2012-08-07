@@ -2,14 +2,11 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
-import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.KnockbackAnimation;
-import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
@@ -20,11 +17,6 @@ import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
 
 public class Knockback extends TargetedAbility {
-
-	
-	/**
-	 * 
-	 */
 	private static final int AP_COST = 3;
 	private static final int RANGE = 1;
 	private static final long serialVersionUID = 1L;
@@ -45,16 +37,11 @@ public class Knockback extends TargetedAbility {
 	@Override
 	public void activate(Unit source, TileCoordinate coordinate) {
 		boolean canMove = false;
-		TileCoordinate knockedFrom = coordinate;
 		super.activate(source, coordinate);
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
-		
 		int roll = State.activeState.random.nextInt(6)+1;
-		
 		targetUnit.currentHP -= source.getAttack()+roll;
-		
-		
 		
 		CombatLog cl = new CombatLog();
 		cl.attacker = source;

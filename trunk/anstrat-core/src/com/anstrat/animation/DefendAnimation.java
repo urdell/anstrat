@@ -3,8 +3,6 @@ package com.anstrat.animation;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.UnitType;
-import com.anstrat.gameCore.effects.ShieldWallEffect;
-import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 
 public class DefendAnimation extends Animation {

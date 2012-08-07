@@ -47,7 +47,6 @@ private Actor widget;
         private boolean clamp = true;
         private boolean hack = false;
         private Label[] labels;
-        private int test = 0;
 
         public SnapScrollPane (Label[] labels) {
                 this(null, null, labels);

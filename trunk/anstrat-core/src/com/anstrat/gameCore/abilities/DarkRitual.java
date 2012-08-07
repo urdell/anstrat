@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.BerserkAnimation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.DebuffAnimation;
-import com.anstrat.core.Assets;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.effects.EffectFactory;
 import com.anstrat.geography.Tile;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.ChainingAxeAnimation;
-import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.ThrowIceAnimation;
 import com.anstrat.animation.UpdateBarAnimation;
 import com.anstrat.gameCore.State;
@@ -29,13 +27,10 @@ public class ThrowIce extends TargetedAbility{
 	private static final int AP_COST = 5;
 	private static final int RANGE = 2;
 
-	
 	public ThrowIce(){
 		super("Throwing Ice block","Throws a Ice block which will cause AoE damage in adjacent Tiles",AP_COST, RANGE);
 	}
 	
-	
-
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 		
@@ -59,13 +54,8 @@ public class ThrowIce extends TargetedAbility{
 		
 		List<Tile> adjacentTiles = new ArrayList<Tile>();
 		adjacentTiles = State.activeState.map.getNeighbors(targetUnit.tileCoordinate);
-		List<Unit> alreadyHit = new ArrayList<Unit>();
 		targetUnit.resolveDeath();
 		
-		
-		
-		
-			
 		int splashDamage = (int)(source.getAttack()*splashReduction);	
 		for (Tile adjacentTile : adjacentTiles){
 			

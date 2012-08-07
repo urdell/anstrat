@@ -1,8 +1,6 @@
 package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.AttackAnimation;
-import com.anstrat.animation.HealAnimation;
 import com.anstrat.animation.LifeStealAnimation;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -19,8 +17,6 @@ public class LifeSteal extends TargetedAbility {
 		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);
 	}
 	
-	
-
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 		
