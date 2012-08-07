@@ -56,8 +56,12 @@ public class Player implements Serializable {
 	public Color getSecondaryColor(){
 		return secondaryColor[playerId];
 	}
+	
+	public static int getRandomTeam(){
+		return (int)(Math.random() * UnitType.TEAMS.length);
+	}
+	
 	public static int getRandomGodFromTeam(int team) {
-		int random = (int)(Math.random()*2+2*team);
-		return random;
+		return (int)(Math.random() * 2 + 2 * team);
 	}
 }
