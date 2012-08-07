@@ -87,6 +87,7 @@ public class MoveAnimation extends Animation {
 	}
 	
 	private void moveCamera() {
+		if(GameInstance.activeGame.isUserCurrentPlayer()) return;
 		Animation animation = new MoveCameraAnimation(end);
 		GEngine.getInstance().animationHandler.runParalell(animation);
 	}
