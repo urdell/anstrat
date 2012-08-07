@@ -26,27 +26,6 @@ public class NetworkGameInstance extends GameInstance {
 		this.gameID = gameID;
 	}
 	
-	@Override
-	public int getTurnNumber(){
-		return turnNr;
-	}
-	
-	@Override
-	public Player getUserPlayer(){
-		long globalUserID = Main.getInstance().network.getGlobalUserID();
-		
-		for(Player player : state.players){
-			NetworkPlayer networkPlayer = (NetworkPlayer) player;
-			
-			if(networkPlayer.userID == globalUserID){
-				return networkPlayer;
-			}
-		}
-		
-		// Games where the user is not playing in should not exist
-		throw new RuntimeException("NetworkGameInstance does not contain the user player!");
-	}
-	
 	public void commandReceived(int commandNr, Command command){
 		if(commandNr != currentCommandNr){
 			// TODO: State is corrupted, should request new from server
@@ -75,10 +54,6 @@ public class NetworkGameInstance extends GameInstance {
 		if(command instanceof EndTurnCommand) turnNr++;
 	}
 	
-	public long getGameID(){
-		return this.gameID;
-	}
-	
 	@Override
 	public void showGame(boolean startZoom){
 		super.showGame(startZoom);
@@ -91,6 +66,35 @@ public class NetworkGameInstance extends GameInstance {
 		while(!pendingCommands.isEmpty()){
 			CommandHandler.executeNetwork(pendingCommands.poll());
 		}
+	}
+	
+	@Override
+	public Player getUserPlayer(){
+		long globalUserID = Main.getInstance().network.getGlobalUserID();
+		
+		for(Player player : state.players){
+			NetworkPlayer networkPlayer = (NetworkPlayer) player;
+			
+			if(networkPlayer.userID == globalUserID){
+				return networkPlayer;
+			}
+		}
+		
+		// Games where the user is not playing in should not exist
+		throw new RuntimeException("NetworkGameInstance does not contain the user player!");
+	}
+	
+	@Override
+	public int getTurnNumber(){
+		return this.turnNr;
+	}
+	
+	public long getGameID(){
+		return this.gameID;
+	}
+	
+	public int getCurrentCommandNr(){
+		return this.currentCommandNr;
 	}
 	
 	public static class NetworkPlayer extends Player {

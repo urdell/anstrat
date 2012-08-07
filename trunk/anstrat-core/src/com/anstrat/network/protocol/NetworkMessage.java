@@ -29,7 +29,6 @@ public class NetworkMessage implements Serializable, Comparable<NetworkMessage> 
 		USER_CREDENTIALS, 
 		DISPLAY_NAME_CHANGED, 
 		DISPLAY_NAME_CHANGE_REJECTED,
-		GAME_STATE_CORRUPTED,
 		GAME_STARTED,
 		INVITE_REQUEST,
 		INVITE_PENDING,

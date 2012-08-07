@@ -56,7 +56,7 @@ public class ConnectionManager implements IConnectionManager {
 			worker.sendMessage(message);
 		}
 		else{
-			logger.info("Failed to send %s to %s, client is not connected", message.getCommand(), address);
+			logger.info("Could not send %s to %s, client is not connected", message.getCommand(), address);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class ConnectionManager implements IConnectionManager {
 			sendMessage(client, message);
 		}
 		else{
-			logger.info("Failed to send %s to user '%d', could not determine client address.", message.getCommand(), userID);
+			logger.info("Could not send %s to user '%d', could not determine client address.", message.getCommand(), userID);
 		}
 	}
 

@@ -92,12 +92,6 @@ public class DesktopGame {
 				System.out.println(String.format("Invalid cmdline argument value for height (-h): '%s'.", height));
 			}
 		}
-		
-		// Specify user file using -u
-		String userFile = getArgumentValue("-u", args);
-		if(userFile != null){
-			Main.USER_FILE_NAME = userFile;
-		}
 	}
 	
 	private static String getArgumentValue(String name, String[] args){
