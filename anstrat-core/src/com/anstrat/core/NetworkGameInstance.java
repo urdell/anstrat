@@ -27,9 +27,15 @@ public class NetworkGameInstance extends GameInstance {
 	}
 	
 	public void commandReceived(int commandNr, Command command){
-		if(commandNr != currentCommandNr){
-			// TODO: State is corrupted, should request new from server
-			throw new IllegalStateException(String.format("Received command %d, expected: %d", commandNr, currentCommandNr));
+		if(commandNr > currentCommandNr){
+			// We've seemed to have missed some commands, ignore this one and request all missing commands from the server
+			Main.getInstance().network.requestGameUpdate(gameID, currentCommandNr);
+			return;
+		}
+		else if(commandNr < currentCommandNr){
+			// Should not happen, log and ignore
+			Gdx.app.log("NetworkGameInstance", "Received an command already received before. SHOULD NOT BE POSSIBLE.");
+			return;
 		}
 		
 		if(isActiveGame()){
