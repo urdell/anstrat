@@ -12,7 +12,7 @@ import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
 
-public abstract class CommandHandler {
+public final class CommandHandler {
 
 	/**
 	 * Will only be called from the gui on the local client

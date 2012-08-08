@@ -12,7 +12,7 @@ import com.anstrat.gui.GUnit;
  * handles ingame creation of stuff that must be known by both the state and the gEngine
  *
  */
-public abstract class CreationHandler {
+public final class CreationHandler {
 
 	
 	/**

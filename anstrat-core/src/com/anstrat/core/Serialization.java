@@ -7,7 +7,7 @@ import java.io.Serializable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public class Serialization {
+public final class Serialization {
 
 	public static void writeObject(Serializable obj, FileHandle handle){
 		

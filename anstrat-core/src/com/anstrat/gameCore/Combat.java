@@ -9,7 +9,7 @@ import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
 
-public class Combat {
+public final class Combat {
 	
 	private static double randomness = 0.25;
 	/**

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class Password {
+public final class Password {
 	
 	private static char[] alphaNumericCharacters;
 	private static SecureRandom random;
