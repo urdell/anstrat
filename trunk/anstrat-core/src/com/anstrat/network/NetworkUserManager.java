@@ -74,12 +74,12 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 				
 			}
 		});
-		
+
 		socket.addListener(this);
 		user = User.fromFile(storedLoginFile);
 		System.out.println(user);
 	}
-	
+
 	public void setOnLoggedInCallback(Runnable callback){
 		this.loginCallback = callback;
 	}
@@ -98,7 +98,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 			}
 		}
 	}
-	
+
 	@Override
 	public void connectionLost(Throwable cause) {
 		Gdx.app.log("NetworkUserManager", String.format("Connection lost due to: %s", cause));
