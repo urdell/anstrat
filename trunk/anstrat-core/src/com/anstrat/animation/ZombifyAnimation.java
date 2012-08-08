@@ -50,7 +50,6 @@ public class ZombifyAnimation extends Animation {
 			GEngine.getInstance().gUnits.put(zombie.unit.id, this.zombie);
 			zombie.setAlpha(1f);
 		}
-		System.out.println("timepassed"+timePassed);
 		timePassed += deltaTime;
 	}
 	
@@ -66,7 +65,6 @@ public class ZombifyAnimation extends Animation {
 		
 		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
 
-		System.out.println(region.getRegionX());
 		batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
 	}
 
