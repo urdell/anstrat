@@ -12,7 +12,7 @@ import com.anstrat.geography.TileCoordinate;
  * @author jay
  *
  */
-public abstract class StateUtils {
+public final class StateUtils {
 	
 	/**
 	 * Gets the unit (if any) standing on the given tile

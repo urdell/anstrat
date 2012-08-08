@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class TestUtil {
+public abstract final class TestUtil {
 
 	public static void writeObject(Object serializable, String filename) throws FileNotFoundException, IOException{
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));

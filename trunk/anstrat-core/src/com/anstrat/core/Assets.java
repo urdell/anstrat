@@ -32,7 +32,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public class Assets {
+public final class Assets {
 
 	public static boolean USE_GENERATED_FONTS = true;
 

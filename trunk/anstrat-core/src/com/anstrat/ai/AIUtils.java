@@ -1,10 +1,9 @@
 package com.anstrat.ai;
 
-import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 
-public class AIUtils {
+public final class AIUtils {
 	/**
 	 * 
 	 * @return a unit that the current player has control over, and which has the most ap.

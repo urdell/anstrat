@@ -13,7 +13,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.ActionMap;
 import com.anstrat.gui.GEngine;
 
-public abstract class Pathfinding {
+public final class Pathfinding {
 	
 	public static HashMap<Unit, List<TileCoordinate>> ranges = new HashMap<Unit, List<TileCoordinate>>();
 	

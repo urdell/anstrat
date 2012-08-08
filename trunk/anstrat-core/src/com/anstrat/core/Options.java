@@ -3,7 +3,7 @@ package com.anstrat.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
-public class Options {
+public final class Options {
 
 	public static boolean DEBUG_SHOW_OWNER = false;
 	public static float mapBorderOffset = Gdx.graphics.getWidth()/8;
