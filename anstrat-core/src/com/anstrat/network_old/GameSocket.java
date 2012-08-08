@@ -8,7 +8,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import com.anstrat.menu.MainMenu;
-import com.anstrat.menu.NetworkDependentTracker;
 import com.badlogic.gdx.Gdx;
 
 /**

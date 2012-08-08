@@ -11,6 +11,10 @@
 			<manacost>40</manacost>
 			<description>Odin blesses your units. They restore 3 AP.</description>
 		</PlayerAbility>
+		<PlayerAbility>
+			<name>Hugin and Munin</name>
+			<manacost>20</manacost>
+			<description>Hugin and Munin spies on target location, making you see through fog of war.</description></PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Thor">
 		<PlayerAbility>

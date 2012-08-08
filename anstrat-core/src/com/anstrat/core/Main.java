@@ -12,7 +12,6 @@ import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.TransitionEffect;
 import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.menu.MainMenu;
-import com.anstrat.menu.NetworkDependentTracker;
 import com.anstrat.menu.SplashScreen;
 import com.anstrat.network.Network;
 import com.anstrat.network.NetworkController;

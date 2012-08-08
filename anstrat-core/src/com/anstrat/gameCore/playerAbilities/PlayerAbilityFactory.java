@@ -25,6 +25,8 @@ public class PlayerAbilityFactory {
 			return new Freeze(player);
 		else if (type.equals(PlayerAbilityType.CONFUSION))
 			return new Confusion(player);
+		else if (type.equals(PlayerAbilityType.HUGIN_AND_MUNIN))
+			return new HuginAndMunin(player);
 		else
 			return null;
 	}

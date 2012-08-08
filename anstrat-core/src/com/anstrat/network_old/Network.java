@@ -1,19 +1,14 @@
 package com.anstrat.network_old;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 
 import com.anstrat.command.Command;
-import com.anstrat.core.GameInstance;
-import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
-import com.anstrat.menu.NetworkDependentTracker;
 import com.badlogic.gdx.Gdx;
 
 /**
