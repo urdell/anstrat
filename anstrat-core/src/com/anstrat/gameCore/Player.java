@@ -22,7 +22,7 @@ public class Player implements Serializable {
 	public static Color neutralColor = Color.GRAY;
 	public static Color neutralSecondaryColor = Color.DARK_GRAY;
 	
-	public transient IArtificialIntelligence ai = null;
+	private transient IArtificialIntelligence ai = null;
 	
 	// TODO: Proper colors for players 3-4 as well, this is only for 2 players
 	public static final Color[] primaryColor = {new Color(0.2f, 0.2f, 1f, 1f), new Color(1f, 0.15f, 0.15f, 1f), 
@@ -31,7 +31,7 @@ public class Player implements Serializable {
 													new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	
 	public final int team;
-	public String displayedName;
+	private String displayedName;
 	
 	public final int playerId;
 	
@@ -50,11 +50,28 @@ public class Player implements Serializable {
 		this.god = god;
 	}
 	
+	public void assignAI(IArtificialIntelligence ai){
+		this.ai = ai;
+		this.displayedName = "AI";
+	}
+	
+	/**
+	 * @return the ai controlling this player or <code>null</code> if none
+	 */
+	public IArtificialIntelligence getAI(){
+		return this.ai;
+	}
+	
 	public Color getColor(){
 		return primaryColor[playerId];
 	}
+	
 	public Color getSecondaryColor(){
 		return secondaryColor[playerId];
+	}
+	
+	public String getDisplayName(){
+		return this.displayedName;
 	}
 	
 	public static int getRandomTeam(){

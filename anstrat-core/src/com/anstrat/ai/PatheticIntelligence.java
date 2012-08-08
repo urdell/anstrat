@@ -2,7 +2,6 @@ package com.anstrat.ai;
 
 import com.anstrat.command.Command;
 import com.anstrat.command.EndTurnCommand;
-import com.anstrat.gameCore.State;
 
 public class PatheticIntelligence implements IArtificialIntelligence {
 

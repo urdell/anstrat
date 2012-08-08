@@ -341,26 +341,14 @@ public class GameUI extends UI {
 	public void updateCurrentPlayer(){
 		Player player = State.activeState.getCurrentPlayer();
 		GameInstance game = GameInstance.activeGame;
-		String text;
-		if(GameInstance.activeGame.isUserCurrentPlayer())
-		{
-			Assets.SKIN.setEnabled(endTurnButton, true);
-			Assets.SKIN.setEnabled(buyButton, true);
-			if(game instanceof NetworkGameInstance || game.isAiGame())	{
-				text = "Your turn";		
-			}
-			else
-				text = player.displayedName != null ? player.displayedName : "Unnamed";
-		} 
-		else
-		{
-			text = player.displayedName != null ? player.displayedName : "Unnamed";
-			if(game instanceof NetworkGameInstance  || game.isAiGame()){
-				Assets.SKIN.setEnabled(buyButton, false);
-				Assets.SKIN.setEnabled(endTurnButton, false);
-			}
-		}
-		Popup.getBuyUnitPopup().checkUnitAffordable();
+		
+		boolean userCurrentPlayer = GameInstance.activeGame.isUserCurrentPlayer();
+		Assets.SKIN.setEnabled(endTurnButton, userCurrentPlayer);
+		Assets.SKIN.setEnabled(buyButton, userCurrentPlayer);
+		String text = (game instanceof NetworkGameInstance || game.isAiGame()) ? "Your turn" : player.getDisplayName();
+		
+		if(!userCurrentPlayer) Popup.getBuyUnitPopup().checkUnitAffordable();
+		
 		turnDisplay.setText(text);
 		turntable.setColor(player.getColor());
 	}

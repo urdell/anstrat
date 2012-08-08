@@ -79,8 +79,8 @@ public class NetworkController {
 				// Create the players
 				for(int i = 0; i < gameSetup.players.length; i++){
 					GameSetup.Player player = gameSetup.players[i];
-					System.out.println("Player: " + player.userID);
-					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, player.displayName, player.team, player.god));
+					String playerName = player.displayName != null ? player.displayName : "Unnamed" + player.userID;
+					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, playerName, player.team, player.god));
 				}
 				
 				Main.getInstance().games.createNetworkGame(

@@ -177,11 +177,12 @@ public class GEngine implements Screen{
 	}
 	
 	public void updateUI(){
-		if(state.players[state.currentPlayerId].ai!=null)
-			return;
+		if(state.players[state.currentPlayerId].getAI() != null) return;
 		userInterface.update();
-		if(selectionHandler.selectionType == SelectionHandler.SELECTION_UNIT)
+		
+		if(selectionHandler.selectionType == SelectionHandler.SELECTION_UNIT){
 			actionHandler.refreshHighlight(selectionHandler.selectedUnit);
+		}
 	}
 	
 	@Override

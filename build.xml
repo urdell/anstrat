@@ -85,7 +85,7 @@
     </target>
 
     <target name="run-db-init" depends="compile-server-only">
-        <java fork="yes" failonerror="yes" classname="com.anstrat.server.db.DatabaseHelper">
+        <java fork="yes" failonerror="yes" classname="com.anstrat.server.db.DatabaseSchema">
             <classpath refid="dependencies"/>
         </java>
     </target>

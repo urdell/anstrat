@@ -5,12 +5,6 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 
 public class AIUtils {
-
-	public static void assignAI(Player player, IArtificialIntelligence ai){
-		player.ai = ai;
-		player.displayedName = "AI";
-	}
-	
 	/**
 	 * 
 	 * @return a unit that the current player has control over, and which has the most ap.
