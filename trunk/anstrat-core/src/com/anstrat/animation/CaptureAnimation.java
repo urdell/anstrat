@@ -33,7 +33,7 @@ public class CaptureAnimation extends Animation{
 			
 			// Movetotileanimation
 			GTile tile = ge.map.getTile(building.building.tileCoordinate);
-			if (!GEngine.getInstance().tileIsOnScreen(tile)) {
+			if (!GEngine.getInstance().tileIsOnScreen(tile) && isVisible()) {
 				Animation mAnimation = new MoveCameraAnimation(building.getScreenPos());
 				ge.animationHandler.runParalell(mAnimation);
 			}

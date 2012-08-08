@@ -63,10 +63,11 @@ public class ChainingAxeAnimation extends Animation{
 		if (!started) {
 			GEngine ge = GEngine.getInstance();
 			ge.updateUI();
-			
-			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
-			ge.animationHandler.runParalell(mAnimation);
-			
+			if(isVisible()) {
+				Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
+				ge.animationHandler.runParalell(mAnimation);
+			}
+				
 			if(firstUnit){
 				gAttacker.healthBar.currentAP = sourceUnit.currentAP;
 			}
