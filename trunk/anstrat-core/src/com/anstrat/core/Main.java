@@ -34,7 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Main extends Game implements ApplicationListener {
 	
 	public static final String version = "Beta 1";
-	public static final String NETWORK_HOST = "localhost";
+	public static final String NETWORK_HOST = "192.168.0.182";
 	public static final int NETWORK_PORT = 25406;
 	
 	public static float percentWidth;

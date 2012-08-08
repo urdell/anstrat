@@ -48,7 +48,7 @@ public class State implements Serializable{
 		this.random = new Random();
 		this.unitList = new HashMap<Integer, Unit>();
 		for(int i=0; i<players.length; i++){
-			Fog.recalculateFog(i, map);
+			Fog.recalculateFog(i, this);
 		}
 		
 	}
@@ -70,7 +70,7 @@ public class State implements Serializable{
 		
 		// Update Fog for previous player.
 		Fog.fogTurn(currentPlayerId, map);
-		Fog.recalculateFog(currentPlayerId, State.activeState.map); // needed to see anything at all.
+		Fog.recalculateFog(currentPlayerId, this); // needed to see anything at all.
 		
 		currentPlayerId = (currentPlayerId + 1) % players.length;  // Flip to new player
 		Player player = State.activeState.getCurrentPlayer();
@@ -140,7 +140,7 @@ public class State implements Serializable{
 			}
 		}
 		
-		Fog.recalculateFog(currentPlayerId, map);
+		Fog.recalculateFog(currentPlayerId, this);
 		
 		// Update gold and mana income
 		getIncome(currentPlayerId, tempIncome);
