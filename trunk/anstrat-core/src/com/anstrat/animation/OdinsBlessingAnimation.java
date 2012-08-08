@@ -10,16 +10,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class OdinsBlessingAnimation extends Animation {
-	private GUnit[] target;
+	private OdinsBlessing2Animation[] animations;
 	private boolean started = false;
-	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
 	
 	public OdinsBlessingAnimation(Unit[] target) {
 		animation = Assets.getAnimation("speedup");
-		this.target = new GUnit[target.length];
+		this.animations = new OdinsBlessing2Animation[target.length];
 		for(int i = 0; i < target.length; i++) {
-			this.target[i] = GEngine.getInstance().getUnit(target[i]);
+			this.animations[i] = new OdinsBlessing2Animation(target[i]);
 		}
 		length = animation.animationDuration;
 		lifetimeLeft = length;
@@ -29,31 +28,17 @@ public class OdinsBlessingAnimation extends Animation {
 	public void run(float deltaTime) {
 		// Run once
 		if(!started){
+			for(Animation animation : animations) {
+				GEngine.getInstance().animationHandler.runParalell(animation);
+			}
 			started = true;	
 		}
 			
 		if(lifetimeLeft <= 0f){
-			for(GUnit target : this.target)
-				target.updateHealthbar();
 		}
 		
-		timePassed += deltaTime;
 	}
 	
-	@Override
-	public void draw(float deltaTime, SpriteBatch batch){
-		super.draw(deltaTime, batch);
-		
-		GMap map = GEngine.getInstance().map;
-		TextureRegion region = this.animation.getKeyFrame(timePassed, false);
-		float width = map.TILE_WIDTH;
-		float height = map.TILE_HEIGHT;
-		
-		for(GUnit target : this.target) {
-			Vector2 position = target.getPosition();
-			batch.draw(region, position.x-(width/2), position.y-(height/2), width, height);
-		}
-	}
 
 	@Override
 	public boolean isVisible() {
