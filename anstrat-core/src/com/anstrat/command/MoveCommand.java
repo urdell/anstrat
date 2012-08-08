@@ -51,7 +51,7 @@ public class MoveCommand extends Command {
 		unit.currentAP -= path.getPathCost(unit.getUnitType());
 		unit.tileCoordinate = state.map.tiles[endTile.x][endTile.y].coordinates;
 		
-		Fog.recalculateFog(playerID, State.activeState.map);
+		Fog.recalculateFog(playerID, State.activeState);
 		
 		//StateVerifier.verifyState(State.activeState);
 		//GEngine.getInstance().actionMap.prepare(unit);

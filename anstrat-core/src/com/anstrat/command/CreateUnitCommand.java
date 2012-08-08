@@ -38,7 +38,7 @@ public class CreateUnitCommand extends Command {
 	protected void execute() {
 		CreationHandler.createUnit(tileCoord, unitType, playerID);
 		GEngine.getInstance().selectionHandler.deselect();
-		Fog.recalculateFog(playerID, State.activeState.map);
+		Fog.recalculateFog(playerID, State.activeState);
 	}
 
 	@Override

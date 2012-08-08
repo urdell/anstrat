@@ -22,10 +22,11 @@ public class Fog {
 			}
 		}
 	}
-	public static void recalculateFog(int playerId, Map map){
+	public static void recalculateFog(int playerId, State state){
+		Map map = state.map;
 		if(map.fogEnabled) {
 			List<TileCoordinate> controlledTiles = new ArrayList<TileCoordinate>();
-			for(Unit unit : State.activeState.unitList.values()) {
+			for(Unit unit : state.unitList.values()) {
 				if (unit.ownerId == playerId)
 					controlledTiles.add(unit.tileCoordinate);
 			}
