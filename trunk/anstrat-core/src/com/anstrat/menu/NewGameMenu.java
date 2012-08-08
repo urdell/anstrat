@@ -17,25 +17,21 @@ public class NewGameMenu extends MenuScreen {
 	private NewGameMenu() {
 		super();
         
-		Button hostButton = ComponentFactory.createMenuButton("Host Game",new ClickListener() {
+		Button hostButton = ComponentFactory.createNetworkMenuButton("Host Game",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	Main.getInstance().setScreen(HostGameMenu.getInstance());
             }
         } );
-		
-        NetworkDependentTracker.registerNetworkButton(hostButton);
         
-        Button joinButton = ComponentFactory.createMenuButton("Join Specific Game",new ClickListener() {
+        Button joinButton = ComponentFactory.createNetworkMenuButton("Join Specific Game",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	Main.getInstance().setScreen(JoinGameMenu.getInstance());
             }
         });
-        
-        NetworkDependentTracker.registerNetworkButton(joinButton);
 
-        Button randomButton = ComponentFactory.createMenuButton("Join Random Game",new ClickListener() {
+        Button randomButton = ComponentFactory.createNetworkMenuButton("Join Random Game",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
         		//Main.getInstance().network.startRandomGameSearch();
@@ -43,8 +39,6 @@ public class NewGameMenu extends MenuScreen {
             	Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
             }
         } );
-        
-        NetworkDependentTracker.registerNetworkButton(randomButton);
         
         Button hotseatButton = ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
         	@Override

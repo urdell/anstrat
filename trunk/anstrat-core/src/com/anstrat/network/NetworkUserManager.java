@@ -20,7 +20,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 	private User user;
 	private boolean loggedIn;
 	private Object lock = new Object();
-	private Runnable loginCallback;
+	private Runnable loginCallback, connectionLostCallback;
 	
 	// Messages waiting for register/login to succeed
 	private Queue<NetworkMessage> pending = new LinkedList<NetworkMessage>();
@@ -105,6 +105,8 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		synchronized(lock){
 			this.loggedIn = false;
 		}
+		
+		if(connectionLostCallback != null) connectionLostCallback.run();
 	}
 
 	@Override
@@ -146,5 +148,9 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		}
 		
 		if(loginCallback != null) loginCallback.run();
+	}
+
+	public void setConnectionLostCallback(Runnable callback) {
+		this.connectionLostCallback = callback;
 	}
 }

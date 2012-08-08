@@ -1,6 +1,7 @@
 package com.anstrat.guiComponent;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.Main;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -72,14 +73,19 @@ public class ComponentFactory {
 		return tf;
 	}
 	
-	public static Label createLoginLabel(){
-		return new Label("Network disabled.", Assets.SKIN);
-		/*
-		User user = Main.getInstance().network.getUser();
-        Label label = new Label((user==null || user.displayName==null || user.displayName.equals(""))?"Connecting...":user.displayName, 
-        				new LabelStyle(Assets.UI_FONT,Color.WHITE));
-        NetworkDependentTracker.registerLabel(label);
-        return label;
-        */
+	public static Button createNetworkMenuButton(String caption, ClickListener cl){
+		Button button = createMenuButton(caption, cl);
+		Main.getInstance().network.registerNetworkButton(button);
+		return button;
+	}
+	
+	private static Label networkLabel;
+	public static synchronized Label createLoginLabel(){
+		if(networkLabel == null){
+			networkLabel = new Label(Assets.SKIN);
+			Main.getInstance().network.setNetworkLabel(networkLabel);
+		}
+		
+		return networkLabel;
 	}
 }
