@@ -7,6 +7,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.gui.GUnit;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +30,8 @@ public class HelsCurseAnimation extends Animation {
 	public void run(float deltaTime) {
 		// Run once
 		if(!started){
+			Animation animation = new FloatingTextAnimation(target.unit.tileCoordinate, "Cursed", Color.RED);
+			GEngine.getInstance().animationHandler.runParalell(animation);
 			started = true;	
 		}
 			

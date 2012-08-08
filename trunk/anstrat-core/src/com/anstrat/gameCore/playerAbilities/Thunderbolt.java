@@ -6,6 +6,7 @@ import java.util.List;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.ThunderboltAnimation;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -57,7 +58,8 @@ public class Thunderbolt extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				targetUnit.ownerId != player.playerId;
+				targetUnit.ownerId != player.playerId &&
+				Fog.isVisible(target, player.playerId);
 	}
 	
 	private List<Unit> getAffectedUnits(TileCoordinate tc) {

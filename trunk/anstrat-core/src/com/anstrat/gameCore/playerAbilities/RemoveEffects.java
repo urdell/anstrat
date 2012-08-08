@@ -2,6 +2,7 @@ package com.anstrat.gameCore.playerAbilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.RemoveEffectsAnimation;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -38,7 +39,8 @@ public class RemoveEffects extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				targetUnit.ownerId == player.playerId;
+				targetUnit.ownerId == player.playerId &&
+				Fog.isVisible(target, player.playerId);
 	}
 
 }

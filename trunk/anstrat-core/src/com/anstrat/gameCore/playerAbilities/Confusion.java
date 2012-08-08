@@ -1,6 +1,7 @@
 package com.anstrat.gameCore.playerAbilities;
 
 import com.anstrat.gameCore.Combat;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -32,6 +33,7 @@ public class Confusion extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				targetUnit.ownerId != player.playerId;
+				targetUnit.ownerId != player.playerId &&
+				Fog.isVisible(target, player.playerId);
 	}
 }
