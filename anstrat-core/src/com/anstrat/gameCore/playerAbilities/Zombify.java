@@ -53,6 +53,7 @@ public class Zombify extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				targetUnit.ownerId != player.playerId;
+				targetUnit.ownerId != player.playerId &&
+				Fog.isVisible(target, player.playerId);
 	}
 }

@@ -2,6 +2,7 @@ package com.anstrat.gameCore.playerAbilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.SwapAnimation;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -50,7 +51,7 @@ public class Swap extends DoubleTargetedPlayerAbility {
 	public boolean isAllowed(Player player, TileCoordinate tc1, TileCoordinate tc2){
 		Unit u1 = StateUtils.getUnitByTile(tc1);
 		Unit u2 = StateUtils.getUnitByTile(tc2);
-		if (u1 != null && u2 != null && !u1.equals(u2) && u1.ownerId == player.playerId && u2.ownerId == player.playerId) {
+		if (u1 != null && u2 != null && !u1.equals(u2) && u1.ownerId == player.playerId && u2.ownerId == player.playerId && Fog.isVisible(tc1, player.playerId) && Fog.isVisible(tc2, player.playerId)) {
 			return true;
 		}
 		else 
