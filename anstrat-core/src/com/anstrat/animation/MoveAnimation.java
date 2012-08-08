@@ -87,9 +87,10 @@ public class MoveAnimation extends Animation {
 	}
 	
 	private void moveCamera() {
-		if(GameInstance.activeGame.isUserCurrentPlayer() || isVisible())return;
-		Animation animation = new MoveCameraAnimation(end);
-		GEngine.getInstance().animationHandler.runParalell(animation);
+		if(isVisible()) {
+			Animation animation = new MoveCameraAnimation(end);
+			GEngine.getInstance().animationHandler.runParalell(animation);
+		}
 	}
 
 	@Override

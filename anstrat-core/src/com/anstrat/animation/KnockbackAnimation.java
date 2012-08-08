@@ -72,8 +72,10 @@ public class KnockbackAnimation extends Animation {
 			GEngine ge = GEngine.getInstance();
 			ge.updateUI();
 			
-			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
-			ge.animationHandler.runParalell(mAnimation);
+			if(isVisible()) {
+				Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
+				ge.animationHandler.runParalell(mAnimation);
+			}
 			
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;

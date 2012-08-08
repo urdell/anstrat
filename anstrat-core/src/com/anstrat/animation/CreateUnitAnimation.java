@@ -24,8 +24,10 @@ public class CreateUnitAnimation extends Animation {
 			started = true;
 			finalAlpha = 1;
 			GEngine.getInstance().updateUI();
-			Animation animation = new MoveCameraAnimation(unit.getPosition());
-			GEngine.getInstance().animationHandler.runParalell(animation);
+			if(isVisible()) {
+				Animation animation = new MoveCameraAnimation(unit.getPosition());
+				GEngine.getInstance().animationHandler.runParalell(animation);
+			}
 		}
 		
 		unit.setAlpha(finalAlpha*(1-Math.max(lifetimeLeft, 0)));
