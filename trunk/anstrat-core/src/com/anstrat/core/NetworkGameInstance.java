@@ -8,6 +8,7 @@ import com.anstrat.command.CommandHandler;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
+import com.anstrat.menu.MainMenu;
 import com.badlogic.gdx.Gdx;
 
 public class NetworkGameInstance extends GameInstance {
@@ -49,15 +50,21 @@ public class NetworkGameInstance extends GameInstance {
 			Gdx.app.log("NetworkGameInstance", String.format("Received command from network to game %d, game is NOT active, adding to queue.", gameID));
 		}
 		
-		currentCommandNr++;
-		if(command instanceof EndTurnCommand) turnNr++;
+		addCommand(command);
 	}
 	
 	@Override
 	public void onCommandExecute(Command command){
 		Main.getInstance().network.sendCommand(gameID, currentCommandNr, command);
+		addCommand(command);
+	}
+	
+	private void addCommand(Command command){
 		currentCommandNr++;
-		if(command instanceof EndTurnCommand) turnNr++;
+		if(command instanceof EndTurnCommand){
+			turnNr++;
+			MainMenu.getInstance().updateGamesList();
+		}
 	}
 	
 	@Override

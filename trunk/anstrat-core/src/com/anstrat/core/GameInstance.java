@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.anstrat.ai.AIUtils;
 import com.anstrat.ai.ScriptAI;
 import com.anstrat.command.Command;
 import com.anstrat.gameCore.Player;
@@ -52,7 +51,7 @@ public class GameInstance implements Serializable{
 		if(aiPlayerIDs != null){
 			for(int i : aiPlayerIDs){
 				Player p = state.players[i];
-				if(p.ai == null) AIUtils.assignAI(p, new ScriptAI());
+				p.assignAI(new ScriptAI());
 			}
 		}
 		

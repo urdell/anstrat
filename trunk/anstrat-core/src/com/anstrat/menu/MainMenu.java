@@ -316,14 +316,14 @@ public class MainMenu extends MenuScreen {
         	for(Player p : instance.state.players){
         		if(p != userPlayer){
         			if(!first) opponents.append(", ");
-        			opponents.append(p.displayedName);
+        			opponents.append(p.getDisplayName());
         		}
         	}
         	
         	opponent = opponents.toString();
     	}
     	else {
-    		opponent = instance.state.players[0].displayedName + " vs. " +instance.state.players[1].displayedName;
+    		opponent = instance.state.players[0].getDisplayName() + " vs. " +instance.state.players[1].getDisplayName();
     	}
     	
     	Label players = new Label(opponent, Assets.SKIN);

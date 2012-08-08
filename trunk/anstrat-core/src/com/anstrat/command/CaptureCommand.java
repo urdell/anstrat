@@ -43,7 +43,7 @@ public class CaptureCommand extends Command{
 			captureBuilding.capturePointsRemaining = captureBuilding.captureCost;
 			
 			if(captureBuilding.type == Building.TYPE_CASTLE){
-				GameUI.showVictoryPopup(State.activeState.getCurrentPlayer().displayedName);
+				GameUI.showVictoryPopup(State.activeState.getCurrentPlayer().getDisplayName());
 				
 				// Send a "hidden" EndTurnCommand
 				CommandHandler.execute(new EndTurnCommand());

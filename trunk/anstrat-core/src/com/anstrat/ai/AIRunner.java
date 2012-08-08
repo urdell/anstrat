@@ -13,11 +13,11 @@ public class AIRunner {
 	public static void run(float deltaTime){
 		
 		if(State.activeState != null &&
-				State.activeState.getCurrentPlayer().ai != null){
+				State.activeState.getCurrentPlayer().getAI() != null){
 			timeToNextAction -= deltaTime;
 			
 			if(timeToNextAction <= 0){
-				Command command = State.activeState.getCurrentPlayer().ai.generateNextCommand();
+				Command command = State.activeState.getCurrentPlayer().getAI().generateNextCommand();
 				CommandHandler.execute(command);
 				timeToNextAction = TIME_BETWEEN_ACTIONS;
 			}
