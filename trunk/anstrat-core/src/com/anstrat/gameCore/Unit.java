@@ -10,6 +10,7 @@ import com.anstrat.gameCore.effects.AffectsAttack;
 import com.anstrat.gameCore.effects.DamageModifier;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.EffectFactory;
+import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 
 /**
@@ -141,6 +142,13 @@ public class Unit implements Serializable {
 			State.activeState.unitList.remove(this.id);
 			isAlive = false;
 		}
+	}
+	
+	public boolean isVisible(int playerId){
+		Map map = State.activeState.map;
+		if(!map.fogEnabled)
+			return true;
+		return map.getTile(tileCoordinate).visible[playerId] >= 1;
 	}
 
 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.Gdx;
  * OK classes: TileCoordinate, UnitType, TerrainType
  */
 public abstract class Command implements Serializable {
-	private int playerID;
+	protected int playerID;
 	
 	private static final long serialVersionUID = 2L;
 	

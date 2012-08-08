@@ -1,6 +1,7 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.MoveAnimation;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -50,6 +51,7 @@ public class MoveCommand extends Command {
 		unit.currentAP -= path.getPathCost(unit.getUnitType());
 		unit.tileCoordinate = state.map.tiles[endTile.x][endTile.y].coordinates;
 		
+		Fog.recalculateFog(playerID, State.activeState.map);
 		
 		//StateVerifier.verifyState(State.activeState);
 		//GEngine.getInstance().actionMap.prepare(unit);

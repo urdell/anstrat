@@ -47,6 +47,10 @@ public class State implements Serializable{
 		this.players = players;
 		this.random = new Random();
 		this.unitList = new HashMap<Integer, Unit>();
+		for(int i=0; i<players.length; i++){
+			Fog.recalculateFog(i, map);
+		}
+		
 	}
 	
 	public State(Map map, Player[] players, long randomSeed){
@@ -66,6 +70,7 @@ public class State implements Serializable{
 		
 		// Update Fog for previous player.
 		Fog.fogTurn(currentPlayerId, map);
+		Fog.recalculateFog(currentPlayerId, State.activeState.map); // needed to see anything at all.
 		
 		currentPlayerId = (currentPlayerId + 1) % players.length;  // Flip to new player
 		Player player = State.activeState.getCurrentPlayer();

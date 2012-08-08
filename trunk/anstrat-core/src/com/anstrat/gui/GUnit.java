@@ -2,6 +2,7 @@ package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Assets.Pair;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.Unit;
@@ -108,49 +109,38 @@ public class GUnit extends GObject {
 	}
 	
 	public void render(SpriteBatch batch, float delta){
-		
-		healthBar.drawHealthBar(batch, sprite.getColor().a);
-		
-		Animation currentAnimation = animations[animationState.ordinal()];
-		
-		if(currentAnimation != null){
-			TextureRegion region = currentAnimation.getKeyFrame(animationTime * animationSpeed, true);
+		int drawingPlayerId = GameInstance.activeGame.getUserPlayer().playerId;
+		if(unit.isVisible(drawingPlayerId)){
+			healthBar.drawHealthBar(batch, sprite.getColor().a);
 			
-			// If region is not flipped even though we're not facing right, flip
-			if(region != null){
-				int regionWidth = region.getRegionWidth();
-				if(regionWidth < 0 && animationFacingRight || regionWidth > 0 && !animationFacingRight){
-					region.flip(true, false);
-				}
+			Animation currentAnimation = animations[animationState.ordinal()];
+			
+			if(currentAnimation != null){
+				TextureRegion region = currentAnimation.getKeyFrame(animationTime * animationSpeed, true);
 				
-				sprite.setRegion(region);
-				
-				animationTime += Gdx.graphics.getDeltaTime()*Options.speedFactor;
-				
-				if(!animationLooping[animationState.ordinal()] && currentAnimation.isAnimationFinished(animationTime)){
-					playIdle();
-				}
-			}else
-				System.err.println("Tried to draw null region in GUnit.render "+animationTime);
+				// If region is not flipped even though we're not facing right, flip
+				if(region != null){
+					int regionWidth = region.getRegionWidth();
+					if(regionWidth < 0 && animationFacingRight || regionWidth > 0 && !animationFacingRight){
+						region.flip(true, false);
+					}
+					
+					sprite.setRegion(region);
+					
+					animationTime += Gdx.graphics.getDeltaTime()*Options.speedFactor;
+					
+					if(!animationLooping[animationState.ordinal()] && currentAnimation.isAnimationFinished(animationTime)){
+						playIdle();
+					}
+				}else
+					System.err.println("Tried to draw null region in GUnit.render "+animationTime);
+			}
+			
+			sprite.draw(batch);
+	
+			healthBar.drawAPPie(batch, sprite.getColor().a);
+			healthBar.drawHealth(batch, sprite.getColor().a);
 		}
-		
-		sprite.draw(batch);
-
-		healthBar.drawAPPie(batch, sprite.getColor().a);
-		healthBar.drawHealth(batch, sprite.getColor().a);
-		
-		//Color c = batch.getColor();
-		//batch.setColor(c.r, c.g, c.b, alpha);
-		//batch.draw(Assets.unitTeamIndicators[unit.ownerId], sprite.getX() + sprite.getWidth() / 2f - 16f, sprite.getY() - 16f);
-		//batch.setColor(c);
-		
-		// Render health bar  information update handled by animations
-		/*float healthPercentage = (float)unit.currentHP/(float)unit.getMaxHP();
-		if(healthPercentage < 0f) healthPercentage = 0f;
-		
-		healthBar.value = healthPercentage;
-		healthBar.text = String.valueOf(unit.currentAP);*/
-		//oldHealthBar.render(batch);
 	}
 	
 	public void updateHealthbar(){
