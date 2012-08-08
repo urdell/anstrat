@@ -25,7 +25,7 @@ public class GameSocket {
     private Runnable connectSucceded = new Runnable() {
 		@Override
 		public void run() {
-			NetworkDependentTracker.enableNetworkButtons();
+			//NetworkDependentTracker.enableNetworkButtons();
 			MainMenu.getInstance().updateGamesList();
 		}
 	};
@@ -33,7 +33,7 @@ public class GameSocket {
 	private Runnable connectFailed = new Runnable() {
 		@Override
 		public void run() {
-			NetworkDependentTracker.disableNetworkButtons();
+			//NetworkDependentTracker.disableNetworkButtons();
 		}
 	};
 

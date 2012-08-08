@@ -3,12 +3,15 @@ package com.anstrat.network;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameSetup;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * Converts UI actions to network commands and vice-versa.<br>
@@ -18,6 +21,11 @@ import com.badlogic.gdx.Gdx;
  */
 public class NetworkController {
 	private final Network network;
+	private List<Button> networkButtons = new ArrayList<Button>();
+	
+	private Label networkLoginLabel;
+	private String networkLabelText = "Not connected.";
+	private String userDisplayName;
 	
 	public NetworkController(final Network network){
 		this.network = network;
@@ -29,17 +37,47 @@ public class NetworkController {
 		this.network.setLoginCallback(new Runnable() {
 			@Override
 			public void run() {
-				
 				// Request updates on all active games on login
 				for(GameInstance game : Main.getInstance().games.getActiveGames()){
 					if(game instanceof NetworkGameInstance){
-						NetworkGameInstance networkGame = (NetworkGameInstance) game;
-						
+						NetworkGameInstance networkGame = (NetworkGameInstance) game;				
 						network.requestGameUpdate(networkGame.getGameID(), networkGame.getCurrentCommandNr());
 					}
 				}
+				
+				// Enable network buttons
+				for(Button b : networkButtons){
+					Assets.SKIN.setEnabled(b, true);
+				}
+				
+				// Update login label to reflect the new status
+				String displayName = userDisplayName != null ? userDisplayName : "Unnamed" + network.getUserID();
+				networkLabelText = String.format("Logged in as: %s", displayName);
+				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
 			}
 		});
+		
+		this.network.setConnectionLostCallback(new Runnable() {
+			@Override
+			public void run() {
+				for(Button b : networkButtons){
+					Assets.SKIN.setEnabled(b, false);
+				}
+				
+				networkLabelText = "Not connected.";
+				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
+			}
+		});	
+	}
+	
+	public void setNetworkLabel(Label label){
+		this.networkLoginLabel = label;
+		label.setText(networkLabelText);
+		System.out.println("LOLOLOLOL");
+	}
+	
+	public void registerNetworkButton(Button button){
+		this.networkButtons.add(button);
 	}
 	
 	// Debug

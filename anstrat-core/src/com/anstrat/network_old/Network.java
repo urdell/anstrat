@@ -246,7 +246,7 @@ public class Network implements Runnable, INetworkReaderListener, IConnectionLos
 	
 	public void logout(){
 		sender.sendMessage(new NetworkMessage("LOGOUT"));
-		NetworkDependentTracker.changeLogin(null);
+		//NetworkDependentTracker.changeLogin(null);
 		session = null;
 	}
 	

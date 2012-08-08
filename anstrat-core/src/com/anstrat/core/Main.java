@@ -205,7 +205,6 @@ public class Main extends Game implements ApplicationListener {
 		
 		Assets.dispose();
 		menuMusic.dispose();
-		NetworkDependentTracker.dispose();
 		Popup.disposePopups();
 		overlayStage.dispose();
 		
