@@ -54,7 +54,8 @@ public class AnimationHandler {
 		//batch.begin();
 		
 		for(Animation a : runningAnimations){
-			a.draw(deltaTime, batch);
+			if(a.isVisible())
+				a.draw(deltaTime, batch);
 		}	
 		
 		//batch.end();
