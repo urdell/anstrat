@@ -1,10 +1,12 @@
 package com.anstrat.command;
 
 import com.anstrat.gameCore.CreationHandler;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.geography.Map;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
@@ -20,7 +22,6 @@ public class CreateUnitCommand extends Command {
 	private static final long serialVersionUID = 1L;
 	private UnitType unitType;
 	private TileCoordinate tileCoord;
-	private int playerID;
 	
 	/**
 	 * Constructor
@@ -31,13 +32,13 @@ public class CreateUnitCommand extends Command {
 	public CreateUnitCommand(Player player, TileCoordinate tileCoord, UnitType unitType) {
 		this.tileCoord = tileCoord;
 		this.unitType = unitType;
-		this.playerID = player.playerId;
 	}
 	
 	@Override
 	protected void execute() {
 		CreationHandler.createUnit(tileCoord, unitType, playerID);
 		GEngine.getInstance().selectionHandler.deselect();
+		Fog.recalculateFog(playerID, State.activeState.map);
 	}
 
 	@Override
