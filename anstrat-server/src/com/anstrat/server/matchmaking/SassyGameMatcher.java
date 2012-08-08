@@ -149,13 +149,7 @@ public class SassyGameMatcher {
 				WaitingPlayer existing = userToPlayer.remove(userID);
 				
 				if(existing != null){
-					if(!small_random.remove(existing))
-						if(!medium_random.remove(existing))
-							if(!large_random.remove(existing))
-								if(!small_premade.remove(existing))
-									if(!medium_premade.remove(existing))
-										large_premade.remove(existing);
-					
+					getQueueForGametype(existing.gametype).remove(existing);					
 					
 					logger.info("Removed user '%d' from all queues, user disconnected.", userID);
 				}
