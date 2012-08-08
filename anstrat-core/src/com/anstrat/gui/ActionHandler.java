@@ -13,8 +13,10 @@ import com.anstrat.command.CommandHandler;
 import com.anstrat.command.CreateUnitCommand;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.command.MoveCommand;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -58,7 +60,7 @@ public class ActionHandler {
 			gEngine.selectionHandler.gTile = gTile;
 			Building currentPlayerCastle = StateUtils.getCurrentPlayerCastle();
 			
-			if(unit != null){
+			if(unit != null && Fog.isVisible(gTile.tile.coordinates, GameInstance.activeGame.getUserPlayer().playerId)){
 				gEngine.selectionHandler.selectUnit(unit);
 			}
 			
