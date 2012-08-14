@@ -72,6 +72,8 @@ public class GEngine implements Screen{
 	public GMap map;
 	public ActionMap actionMap;
 	public State state;
+	
+	public static float elapsedTime = 0f;
 
 	private Vector2 FPS_POSITION = new Vector2();
 	
@@ -207,6 +209,7 @@ public class GEngine implements Screen{
 	@Override
 	public void render(float delta) {
 		delta = delta*Options.speedFactor;
+		elapsedTime += delta;
 		animationHandler.runAll(delta);
 		
 		GL10 gl = Gdx.graphics.getGL10();

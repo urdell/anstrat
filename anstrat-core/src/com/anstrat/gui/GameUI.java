@@ -288,6 +288,25 @@ public class GameUI extends UI {
 	}
 	
 	/**
+	 * Used for unit spawn
+	 * @param unit
+	 */
+	public void showUnitType(UnitType unit){
+		unitTable.visible = true;
+		selectedImage.setRegion( GUnit.getUnitPortrait(unit));
+		nameLabel.setText(unit.name);
+		
+		for(Image i : effectImage){
+			i.visible = false;
+		}
+		for(Button b : abilityButtons){
+			b.visible = false;
+		}
+		nrShownAbilities=0;
+		captureButton.visible = false;
+	}
+	
+	/**
 	 * If showing null, removes the display.
 	 * @param unit
 	 */

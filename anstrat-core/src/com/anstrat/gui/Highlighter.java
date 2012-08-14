@@ -218,12 +218,20 @@ public class Highlighter {
 		}
 		
 		if(gEngine.actionHandler.showingConfirmDialog){   // Render outline of target
-			Color targetColor = Color.WHITE;
+			Color targetColor = Color.GRAY;
+			Color modifiedColor = new Color(0f, 0f, 0f, 1f);
 			if(gEngine.actionHandler.confirmCommand instanceof MoveCommand)
-				targetColor = Color.CYAN;
-			if(gEngine.actionHandler.confirmCommand instanceof AttackCommand)
-				targetColor = Color.RED;
-			gEngine.actionHandler.confirmTile.renderOutline(Gdx.gl10, targetColor, 6f);
+				targetColor = Color.GRAY;
+			//if(gEngine.actionHandler.confirmCommand instanceof AttackCommand)
+			//	targetColor = Color.RED;
+			
+			float sinValue = 1-Math.abs((float)Math.sin(GEngine.elapsedTime*3));
+			modifiedColor.r = targetColor.r+(1-targetColor.r)*sinValue;
+			modifiedColor.g = targetColor.g+(1-targetColor.g)*sinValue;
+			modifiedColor.b = targetColor.b+(1-targetColor.b)*sinValue;
+			modifiedColor.a = targetColor.a+(1-targetColor.a)*sinValue;
+			
+			gEngine.actionHandler.confirmTile.renderOutline(Gdx.gl10, modifiedColor, 6f);
 		}
 	}
 	
