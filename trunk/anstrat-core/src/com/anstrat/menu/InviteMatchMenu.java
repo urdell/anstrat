@@ -12,17 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
-public class FindMatchMenu extends MenuScreen {
-	private static FindMatchMenu me;
+public class InviteMatchMenu extends MenuScreen {
+	private static InviteMatchMenu me;
 	
 	private static final String generatedMap = "Generated map";
-	private static final String randomServerMap = "Random map";
+	private static final String randomServerMap = "Random server map";
+	private static final String randomCustomMap = "Random custom map";
 	
 	private boolean specificMap = false;
 	
-	private FindMatchMenu(){
+	private InviteMatchMenu(){
         
 		Table settings = new Table(Assets.SKIN);
 		settings.setBackground(Assets.SKIN.getPatch("single-border"));
@@ -47,10 +49,20 @@ public class FindMatchMenu extends MenuScreen {
 							specificMap = true;
 							mapLabel.setText(map);
 						}
-					}, false, "Choose specific map", Assets.getMapList(false, true));
+					}, false, "Choose specific map", Assets.getMapList(true, true));
         		
         		popup.show();
 				
+			}
+			
+		});
+		Button mapCustomRandom = ComponentFactory.createButton(randomCustomMap, new ClickListener() {
+
+			@Override
+			public void click(Actor actor, float x, float y) {
+				
+				specificMap = false;
+				mapLabel.setText("Random custom map");
 			}
 			
 		});
@@ -59,7 +71,7 @@ public class FindMatchMenu extends MenuScreen {
 			@Override
 			public void click(Actor actor, float x, float y) {
 				specificMap = false;
-				mapLabel.setText("Random map");
+				mapLabel.setText("Random server map");
 				
 			}
 			
@@ -85,6 +97,7 @@ public class FindMatchMenu extends MenuScreen {
 			
 		});
 		
+		final TextField friendName = ComponentFactory.createTextField("Friend's name", false); 
 		
 		settings.defaults().height((int)(Main.percentHeight*10));
 		settings.add("Find Match");
@@ -92,9 +105,11 @@ public class FindMatchMenu extends MenuScreen {
 		settings.row();
 		settings.add("Choose map:");
 		settings.row();
-		settings.add(mapSpec).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
-		settings.add(mapServerRandom).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
-		settings.add(mapGenerate).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
+		settings.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		settings.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		settings.row();
+		settings.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		settings.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
 		settings.row();
 		settings.add(mapLabel).fillX().expandX();
 		settings.row();
@@ -106,12 +121,18 @@ public class FindMatchMenu extends MenuScreen {
 			@Override
 		    public void click(Actor actor,float x,float y ){
 				
+				String friend = friendName.getMessageText();
+				//TODO is friend existing? If so, go ahead, else inform user that friend is not existing
+				
 				if (specificMap == false) {
 					if (mapLabel.getText().toString().equals(generatedMap)) {
 
 		    			//TODO Main.getInstance().network.hostGameRandom(10, 10, 604800000l, name.getText(), password.getText());
 					}
 					else if (mapLabel.getText().toString().equals(randomServerMap)) {
+						//TODO host game
+					}
+					else if (mapLabel.getText().toString().equals(randomCustomMap)) {
 						//TODO host game
 					}
 				}
@@ -135,9 +156,9 @@ public class FindMatchMenu extends MenuScreen {
 		contents.add(centerLogin);
 	}
 	
-	public static synchronized FindMatchMenu getInstance() {
+	public static synchronized InviteMatchMenu getInstance() {
 		if(me == null){
-			me = new FindMatchMenu();
+			me = new InviteMatchMenu();
 		}
 		return me;
 	}
