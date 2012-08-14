@@ -48,7 +48,7 @@ public class GameManager {
 		int team = 0;
 		
 		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(i, "Player " + i, team, Player.getRandomGodFromTeam(team));
+			players[i] = new Player(i, "Player " + i, team, Player.getRandomGod());
 			
 			// Toggle team
 			team = (team + 1) % UnitType.TEAMS.length;

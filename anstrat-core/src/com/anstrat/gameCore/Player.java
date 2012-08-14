@@ -3,6 +3,7 @@ package com.anstrat.gameCore;
 import java.io.Serializable;
 
 import com.anstrat.ai.IArtificialIntelligence;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.badlogic.gdx.graphics.Color;
 
 /**
@@ -78,8 +79,8 @@ public class Player implements Serializable {
 		return (int)(Math.random() * UnitType.TEAMS.length);
 	}
 	
-	public static int getRandomGodFromTeam(int team) {
-		return (int)(Math.random() * 2 + 2 * team);
+	public static int getRandomGod() {
+		return (int)(Math.random() * PlayerAbilityType.GODS.length);
 	}
 	
 	@Override
