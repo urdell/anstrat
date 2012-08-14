@@ -98,7 +98,7 @@ public class GameMessageHandler {
 		}
 		
 		// Broadcast PLAYER_RESIGNED to all other plays in game
-		NetworkMessage message = new NetworkMessage(NetworkMessage.Command.PLAYER_RESIGNED, playerID);
+		NetworkMessage message = new NetworkMessage(NetworkMessage.Command.PLAYER_RESIGNED, gameID, playerID);
 		for(Player other : checks.others){
 			connectionManager.sendMessage(other.userID, message);
 		}
