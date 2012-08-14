@@ -18,7 +18,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
 		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	//TODO Main.getInstance().setScreen(HostGameMenu.getInstance());
+            	Main.getInstance().setScreen(FindMatchMenu.getInstance());
             }
         } );
         
