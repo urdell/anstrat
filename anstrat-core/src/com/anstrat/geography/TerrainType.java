@@ -28,7 +28,8 @@ public enum TerrainType {
 	
 	//Buildings
 	CASTLE("Castle", 1, "castle"),
-	VILLAGE("Village", 1, "village");
+	VILLAGE("Village", 1, "village"),
+	RUNE("Runestone", 1, "runestone-red");
 	
 	public transient final String name;
 	public transient final int penalty;
