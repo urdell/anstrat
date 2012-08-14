@@ -28,7 +28,6 @@ import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.Gdx;
 
 
 /**
@@ -165,7 +164,7 @@ public class ActionHandler {
 		GEngine.getInstance().selectionHandler.deselect();
 		Command c = new EndTurnCommand();
 		CommandHandler.execute(c);
-		Main.getInstance().games.saveGameInstances(Gdx.files.local("games.bin"));
+		Main.getInstance().games.saveGameInstances();
 	}
 	
 	public void capturePress(){

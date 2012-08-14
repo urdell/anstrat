@@ -22,6 +22,11 @@ import com.badlogic.gdx.files.FileHandle;
 public class GameManager {
 	private List<GameInstance> games = new ArrayList<GameInstance>();
 	private java.util.Map<Long, NetworkGameInstance> networkGameByID = new HashMap<Long, NetworkGameInstance>();
+	private FileHandle gamesFile;
+	
+	public GameManager(FileHandle gamesFile){
+		this.gamesFile = gamesFile;
+	}
 	
 	public GameInstance createAIGame(Map map, Integer... aiPlayerIds){
 		GameInstance gi = createHotseatGame(map);
@@ -75,16 +80,21 @@ public class GameManager {
 		return networkGameByID.get(gameID);
 	}
 	
+	public void clear(){
+		this.games.clear();
+		gamesFile.delete();
+	}
+	
 	public Collection<GameInstance> getActiveGames(){
 		return this.games;
 	}
 	
-	public void saveGameInstances(FileHandle handle){
-		Serialization.writeObject(new GameInstanceList(games), handle);
+	public void saveGameInstances(){
+		Serialization.writeObject(new GameInstanceList(games), gamesFile);
 	}
 	
-	public void loadGameInstances(FileHandle handle){
-		Object obj = Serialization.readObject(handle);
+	public void loadGameInstances(){
+		Object obj = Serialization.readObject(gamesFile);
 		
 		if(obj == null){
 			Gdx.app.log("GameInstance", "No previous game instances found.");

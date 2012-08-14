@@ -24,6 +24,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 	
 	// Messages waiting for register/login to succeed
 	private Queue<NetworkMessage> pending = new LinkedList<NetworkMessage>();
+	private Runnable newUserCredentialsCallback;
 	
 	public NetworkUserManager(GameSocket socket, final INetworkCallback callback, final FileHandle storedLoginFile) {
 		super(socket);
@@ -61,6 +62,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						
 						user.toFile(storedLoginFile);
 						Gdx.app.log("NetworkUserManager", String.format("Received new user with id '%d' from server.", userID));
+						if(newUserCredentialsCallback != null) newUserCredentialsCallback.run();
 						onLoggedIn();
 						
 						break;
@@ -82,6 +84,10 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 
 	public void setOnLoggedInCallback(Runnable callback){
 		this.loginCallback = callback;
+	}
+	
+	public void setOnNewUserCredentials(Runnable callback){
+		this.newUserCredentialsCallback = callback;
 	}
 	
 	public void sendMessage(NetworkMessage message){

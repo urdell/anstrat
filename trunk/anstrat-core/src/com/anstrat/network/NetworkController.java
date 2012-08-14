@@ -73,7 +73,15 @@ public class NetworkController {
 				networkLabelText = "Not connected.";
 				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
 			}
-		});	
+		});
+		
+		this.network.setNewUserCredentialsCallback(new Runnable() {
+			@Override
+			public void run() {
+				// Clear all saved games
+				Main.getInstance().games.clear();
+			}
+		});
 	}
 	
 	public void setNetworkLabel(Label label){
