@@ -3,6 +3,7 @@ package com.anstrat.gameCore.playerAbilities;
 import java.io.Serializable;
 
 import com.anstrat.gameCore.Player;
+import com.anstrat.gui.GEngine;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.CostRow;
@@ -22,6 +23,7 @@ public abstract class PlayerAbility implements Serializable {
 	
 	public void activate(){
 		player.mana -= type.manaCost;
+		GEngine.getInstance().updateUI();
 	}
 	
 	public boolean isAllowed(Player player){

@@ -335,13 +335,16 @@ public class GameUI extends UI {
 		}
 		nrShownAbilities=0;
 		
-		for(Ability a : unit.getAbilities()){
-			Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
-			if(actor instanceof Image){
-				((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
+		// Only show ability buttons if the unit belongs to the current user
+		if(unit.ownerId == GameInstance.activeGame.getUserPlayer().playerId){
+			for(Ability a : unit.getAbilities()){
+				Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
+				if(actor instanceof Image){
+					((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
+				}
+				abilityButtons[nrShownAbilities].visible = true;
+				nrShownAbilities++;
 			}
-			abilityButtons[nrShownAbilities].visible = true;
-			nrShownAbilities++;
 		}
 		
 		// if a on a building
