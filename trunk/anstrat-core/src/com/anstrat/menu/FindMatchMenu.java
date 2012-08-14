@@ -109,7 +109,7 @@ public class FindMatchMenu extends MenuScreen {
 				
 				// TODO: Use chosen settings
 				int team = Player.getRandomTeam();
-				Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
+				Main.getInstance().network.findRandomGame(team, Player.getRandomGod());
 				
 				if (specificMap == false) {
 					if (mapLabel.getText().toString().equals(generatedMap)) {
