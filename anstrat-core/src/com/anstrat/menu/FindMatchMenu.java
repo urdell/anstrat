@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.Player;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
@@ -105,6 +106,10 @@ public class FindMatchMenu extends MenuScreen {
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
 		    public void click(Actor actor,float x,float y ){
+				
+				// TODO: Use chosen settings
+				int team = Player.getRandomTeam();
+				Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
 				
 				if (specificMap == false) {
 					if (mapLabel.getText().toString().equals(generatedMap)) {
