@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -70,6 +72,11 @@ public class ComponentFactory {
 		tf.setPasswordMode(isPassword);
 		tf.setPasswordCharacter('*');
 		tf.setTextFieldListener(tl);
+		return tf;
+	}
+	
+	public static CheckBox createCheckBox(String messageText){
+		CheckBox tf = new CheckBox(messageText, Assets.SKIN.getStyle(CheckBoxStyle.class));
 		return tf;
 	}
 	
