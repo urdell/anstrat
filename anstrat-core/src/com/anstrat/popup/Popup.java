@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.Player;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -37,7 +35,6 @@ public class Popup extends Window {
 	private static Label genericPopupLabel;
 	private static Popup genericPopup;
 	
-	private static AbilityPopup[] abilityPopups; 
 	public static UnitInfoPopup unitInfoPopup;
 	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
@@ -224,12 +221,6 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
-		//buyUnitPopup = new BuyUnitPopup(UnitType.AXE_THROWER, UnitType.BERSERKER, UnitType.SHAMAN, UnitType.SWORD, UnitType.WOLF, UnitType.HAWK);
-		abilityPopups = new AbilityPopup[4];
-
-		for (int i = 0; i < abilityPopups.length; i++) {
-			abilityPopups[i] = new AbilityPopup(PlayerAbilityType.getAbilitiesFromGod(i));
-		}
 		
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);
@@ -245,11 +236,6 @@ public class Popup extends Window {
 		genericPopup = new Popup("", genericPopupLabel, genericPopupOK);
 	}
 	
-	public static AbilityPopup getAbilityPopup(){
-		Player currentPlayer = com.anstrat.gameCore.State.activeState.players[com.anstrat.gameCore.State.activeState.currentPlayerId];
-		return abilityPopups[currentPlayer.god];
-	}
-	
 	/**
 	 * Shows a generic {@link Popup}
 	 * @param message The message to be shown
@@ -262,8 +248,6 @@ public class Popup extends Window {
 	}
 	
 	public static void disposePopups(){
-		
-		abilityPopups = null;
 		overlay = null;
 		gestureHandler = null;
 		currentPopup = null;

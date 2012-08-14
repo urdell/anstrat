@@ -25,8 +25,15 @@ public enum PlayerAbilityType {
 	public transient int manaCost;
 	public transient String description;
 	
-	public static final int GOD_THOR = 0, GOD_ODIN = 1, GOD_HEL = 2, GOD_LOKI = 3;
 	public transient int god;
+	
+	public static final int GOD_THOR = 0, GOD_ODIN = 1, GOD_HEL = 2, GOD_LOKI = 3;
+	public static PlayerAbilityType[][] GODS = {
+		{THORS_RAGE, THUNDERBOLT, COMETSTRIKE},	// Thor = 0
+		{REMOVE_EFFECTS, HUGIN_AND_MUNIN, ODINS_BLESSING}, // Odin = 0
+		{HELS_CURSE, CONFUSION, ZOMBIFY}, // Hel
+		{SWAP, FREEZE}, // Loki
+	};
 	
 	public transient String graphicsFolder;
 	
@@ -108,24 +115,5 @@ public enum PlayerAbilityType {
 			Gdx.app.error("PlayerAbilityType", "Error: God "+name+" does not exist");
 			return -1;
 		}
-	}
-	
-	/**
-	 * Returns all player abilities associated with god. If god was not found returns null
-	 * @param god
-	 * @return
-	 */
-	public static PlayerAbilityType[] getAbilitiesFromGod(int god) {
-		switch(god) {
-		case GOD_THOR:
-			return new PlayerAbilityType[]{THORS_RAGE, THUNDERBOLT, COMETSTRIKE};
-		case GOD_ODIN:
-			return new PlayerAbilityType[]{REMOVE_EFFECTS, HUGIN_AND_MUNIN, ODINS_BLESSING};
-		case GOD_HEL:
-			return new PlayerAbilityType[]{HELS_CURSE, CONFUSION, ZOMBIFY};
-		case GOD_LOKI:
-			return new PlayerAbilityType[]{SWAP, FREEZE};
-		}
-		return null;
 	}
 }

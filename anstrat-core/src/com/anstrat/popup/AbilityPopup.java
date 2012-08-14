@@ -100,7 +100,7 @@ public class AbilityPopup extends Popup {
 	 * Check if the unit is buyable before showing popup.
 	 */
 	@Override public void show(){
-		checkAbilityAffordable();
+		update();
 		super.show();
 	}
 	
@@ -111,29 +111,24 @@ public class AbilityPopup extends Popup {
 		selectedButton.setChecked(true);
 		card.setType(types[button]);
 		card.setSize(card.width, card.height);
-		checkAbilityAffordable();
+		update();
 	}
 	
-	/**
-	 * Disables buy button if unit is too expensive.
-	 * 
-	 * NOTE: Do other things, like graying the unit portrait of all units that can't be bought.
-	 */
-	public void checkAbilityAffordable(){
+	public void update(){
 		if(State.activeState==null)
 			return;
 		
-		int mana = State.activeState.getCurrentPlayer().mana;
+		int mana = GameInstance.activeGame.getUserPlayer().mana;
 		boolean isPlayerTurn = GameInstance.activeGame.isUserCurrentPlayer();
 		
 		//Disable cast button if current ability is not affordable
-		boolean canCast = mana>=card.type.manaCost;
+		boolean canCast = mana >= card.type.manaCost;
 		Assets.SKIN.setEnabled(cast, canCast && isPlayerTurn);
 		card.setDisabled(!canCast);
 		
-		//Mark other abilities that are too expensive.		TODO: Just gray unit portraits or something instead, as current method fucks with button presses.
+		// Mark other abilities that are too expensive.
 		for(int i=0; i<types.length; i++){
-			if(mana<types[i].manaCost || !isPlayerTurn)
+			if(mana<types[i].manaCost)
 				abilities[i].setStyle(Assets.SKIN.getStyle("default-disabled", ButtonStyle.class));
 			else
 				abilities[i].setStyle(Assets.SKIN.getStyle("default", ButtonStyle.class));
