@@ -15,7 +15,7 @@ public class HealthBar {
 	public static float BAR_HEIGHT = 42;
 	public static float AP_SIZE = 30;
 	public static float DISTANCE_TO_UNIT_CENTER = 15;
-	public static float TEXT_SCALE = 0.75f;
+	public static float TEXT_SCALE = 0.65f;
 	public static float TEXT_Y_OFFSET = 58f;
 	public static float TEXT_X_OFFSET = 20f;
 	public static float TEXT_X_BUGFIX = 6f;
