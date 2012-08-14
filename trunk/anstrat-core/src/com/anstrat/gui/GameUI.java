@@ -345,7 +345,9 @@ public class GameUI extends UI {
 		boolean userCurrentPlayer = GameInstance.activeGame.isUserCurrentPlayer();
 		Assets.SKIN.setEnabled(endTurnButton, userCurrentPlayer);
 		Assets.SKIN.setEnabled(buyButton, userCurrentPlayer);
-		String text = (game instanceof NetworkGameInstance || game.isAiGame()) ? "Your turn" : player.getDisplayName();
+
+		boolean playerControlsAllPlayers = !(game instanceof NetworkGameInstance) && !game.isAiGame();
+		String text = (!playerControlsAllPlayers && userCurrentPlayer) ? "Your turn" : player.getDisplayName();
 		
 		if(!userCurrentPlayer) Popup.getBuyUnitPopup().checkUnitAffordable();
 		
