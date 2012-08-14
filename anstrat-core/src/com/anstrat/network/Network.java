@@ -35,6 +35,10 @@ public class Network implements INetworkCallback {
 		this.worker.setConnectionLostCallback(callback);
 	}
 	
+	public void setNewUserCredentialsCallback(Runnable callback){
+		this.worker.setOnNewUserCredentials(callback);
+	}
+	
 	@Override
 	public void messageReceived(NetworkMessage message) {
 		Command networkCommand = message.getCommand();

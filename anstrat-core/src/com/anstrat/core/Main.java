@@ -106,8 +106,8 @@ public class Main extends Game implements ApplicationListener {
 		PlayerAbilityType.loadAttributesFromFile(
 				Gdx.files.internal("data/playerAbilityAttributes.xml"));
 
-		games = new GameManager();
-		games.loadGameInstances(Gdx.files.local("games.bin")); // Loads all saved game instances
+		games = new GameManager(Gdx.files.local("games.bin"));
+		games.loadGameInstances(); // Loads all saved game instances
 
 		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
@@ -192,7 +192,7 @@ public class Main extends Game implements ApplicationListener {
 		Gdx.app.log("", "Main.dispose()");
 		
 		if(networkEngine != null) networkEngine.stop();
-		games.saveGameInstances(Gdx.files.local("games.bin"));
+		games.saveGameInstances();
 		Options.savePreferences();
 		
 		batch.dispose();
