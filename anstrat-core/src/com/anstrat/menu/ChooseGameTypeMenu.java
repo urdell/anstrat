@@ -25,7 +25,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
         Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	//TODO Main.getInstance().setScreen(JoinGameMenu.getInstance());
+            	Main.getInstance().setScreen(InviteMatchMenu.getInstance());
             }
         });
 
