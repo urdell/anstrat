@@ -53,7 +53,7 @@ public class MapLine {
 	
 	public void draw(SpriteBatch batch){
 		
-		TextureRegion line = Assets.getTextureRegion("movement-line");
+		TextureRegion line = Assets.getTextureRegion("movement-arrows");
 		batch.setColor(Color.YELLOW);
 		batch.draw(line, centerX-lineSize/2, centerY-lineSize/2, lineSize/2, lineSize/2, lineSize, lineSize, 1f, 1f, rotation);
 		batch.setColor(Color.WHITE);

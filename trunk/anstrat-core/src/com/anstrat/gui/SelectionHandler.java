@@ -110,6 +110,8 @@ public class SelectionHandler {
 		spawnUnitType = unitType;
 		selectionType = SELECTION_SPAWN;
 		
+		GEngine.getInstance().userInterface.showUnitType(unitType);
+		
 		Map map = State.activeState.map;
 		
 		List<Tile> adjacent = map.getNeighbors(StateUtils.getCurrentPlayerCastle().tileCoordinate);
