@@ -8,4 +8,5 @@ public interface INetworkResponseListener {
 	public void displayNameChangeRejected(String name);
 	public void command(long gameID, int commandNr, Command command);
 	public void gameStarted(long gameID, GameSetup gameSetup);
+	public void playerResigned(long gameID, int playerID);
 }

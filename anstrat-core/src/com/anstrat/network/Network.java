@@ -121,4 +121,8 @@ public class Network implements INetworkCallback {
     public void sendCommand(long gameID, int commandNr, com.anstrat.command.Command command){
     	worker.sendMessage(new NetworkMessage(Command.SEND_COMMAND, gameID, commandNr, command));
     }
+    
+    public void resign(long gameID, int playerID){
+    	worker.sendMessage(new NetworkMessage(Command.RESIGN, gameID, playerID));
+    }
 }

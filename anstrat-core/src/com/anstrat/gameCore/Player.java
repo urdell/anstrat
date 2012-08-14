@@ -81,4 +81,17 @@ public class Player implements Serializable {
 	public static int getRandomGodFromTeam(int team) {
 		return (int)(Math.random() * 2 + 2 * team);
 	}
+	
+	@Override
+	public boolean equals(Object object){
+		if(!(object instanceof Player)) return false;
+		
+		Player other = (Player) object;
+		return playerId == other.playerId;
+	}
+	
+	@Override
+	public int hashCode(){
+		return playerId * 31;
+	}
 }

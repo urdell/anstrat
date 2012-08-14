@@ -74,6 +74,12 @@ public class ServerMessageHandler {
 					gameMessageHandler.command(client, gameID, commandNr, command);
 					break;
 				}
+				case RESIGN: {
+					long gameID = (Long) payload.get(0);
+					int playerID = (Integer) payload.get(1);
+					gameMessageHandler.resign(client, gameID, playerID);
+					break;
+				}
 				
 				// Social messages
 				case INVITE_PLAYER: {

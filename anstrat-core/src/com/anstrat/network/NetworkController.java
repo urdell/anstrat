@@ -7,8 +7,11 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
+import com.anstrat.gameCore.Player;
+import com.anstrat.gui.GEngine;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameSetup;
+import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -73,7 +76,6 @@ public class NetworkController {
 	public void setNetworkLabel(Label label){
 		this.networkLoginLabel = label;
 		label.setText(networkLabelText);
-		System.out.println("LOLOLOLOL");
 	}
 	
 	public void registerNetworkButton(Button button){
@@ -102,6 +104,11 @@ public class NetworkController {
 	
 	public void requestGameUpdate(long gameID, int currentCommandNr){
 		this.network.requestGameUpdate(gameID, currentCommandNr);
+	}
+	
+	public void resign(long gameID){
+		// Send a resign command for the user player
+		this.network.resign(gameID, Main.getInstance().games.getGame(gameID).getUserPlayer().playerId);
 	}
 	
 	// Network listener implementation
@@ -151,6 +158,18 @@ public class NetworkController {
 				else{
 					Gdx.app.log("NetworkController", String.format("Received a command for a game that does not exist. (gameID = %d)"));
 				}
+			}
+
+			@Override
+			public void playerResigned(long gameID, int playerID) {
+				GameInstance game = Main.getInstance().games.getGame(gameID);
+				
+				if(game != null && Main.getInstance().getScreen() instanceof GEngine && GameInstance.activeGame == game){
+					Player player = game.state.players[playerID];
+					Popup.showGenericPopup("Game over", String.format("%s has resigned, you won!", player.getDisplayName()));
+				}
+				
+				Main.getInstance().games.endGame(game);
 			}
 		};
 			
