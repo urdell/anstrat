@@ -26,12 +26,10 @@ public class CustomInputProcessor extends InputAdapter {
 					ComponentFactory.createButton("Yes", new ClickListener() {
 						@Override
 						public void click(Actor actor, float x, float y) {
-							GameInstance.activeGame.resign();
-							Main.getInstance().setScreen(MainMenu.getInstance());
 							Popup.currentPopup.close();
+							GameInstance.activeGame.resign();
 						}
 					})));
-	
 	
 	@Override
 	public boolean keyDown(int keycode) {

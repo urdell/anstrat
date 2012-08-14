@@ -10,7 +10,13 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.geography.Map;
 import com.anstrat.gui.GEngine;
+import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.menu.MainMenu;
+import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * A single game instance, containing a State.
@@ -67,6 +73,22 @@ public class GameInstance implements Serializable{
 	}
 	
 	public void resign(){
+		// Show game ended, if in game 
+		if(Main.getInstance().getScreen() instanceof GEngine){
+			Player user = getUserPlayer();
+			Player winner = state.players[user.playerId == 0 ? 1 : 0];
+			
+			new Popup("Game over", true,
+				new Label(String.format("Player %s has won the game!", winner.getDisplayName()), Assets.SKIN), 
+				ComponentFactory.createButton("OK", new ClickListener() {
+					@Override
+					public void click(Actor actor, float x, float y) {
+						Main.getInstance().setScreen(MainMenu.getInstance());
+						Popup.currentPopup.close();
+					}
+				})).show();
+		}
+		
 		Main.getInstance().games.endGame(this);
 	}
 	

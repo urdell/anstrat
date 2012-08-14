@@ -98,6 +98,12 @@ public class NetworkGameInstance extends GameInstance {
 	}
 	
 	@Override
+	public void resign(){
+		super.resign();
+		Main.getInstance().network.resign(gameID);
+	}
+	
+	@Override
 	public int getTurnNumber(){
 		return this.turnNr;
 	}

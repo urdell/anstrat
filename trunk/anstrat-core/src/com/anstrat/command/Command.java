@@ -35,7 +35,7 @@ public abstract class Command implements Serializable {
 		boolean allowed = playerID == State.activeState.getCurrentPlayer().playerId;
 		
 		if(!allowed){
-			Gdx.app.log("Command", String.format("Refused due to invalid playerID, player %d is not the current player. (Expected player: %d), playerID", playerID, State.activeState.getCurrentPlayer().playerId));
+			Gdx.app.log("Command", String.format("Refused due to invalid playerID, found: '%d', expected: '%d'.", playerID, State.activeState.getCurrentPlayer().playerId));
 		}
 		return allowed;
 	}

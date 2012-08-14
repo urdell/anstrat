@@ -67,8 +67,7 @@ public class MainServer {
 			logger.error("Couldn't create listener socket on port %d.", port);
 		}	
 		
-		while(true){
-			
+		while(!Thread.currentThread().isInterrupted()){
 			try {
 				Socket socket = incomingConnections.accept();
 				connectionManager.addConnection(socket);
@@ -77,5 +76,10 @@ public class MainServer {
 				logger.info("Failed to accept incoming client socket.");
 			}
 		}
+		
+		try{
+			incomingConnections.close();
+		}
+		catch(Exception e){ /* ignore */}
 	}
 }
