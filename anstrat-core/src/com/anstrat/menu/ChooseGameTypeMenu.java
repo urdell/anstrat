@@ -1,7 +1,6 @@
 package com.anstrat.menu;
 
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.Player;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,33 +9,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
-public class NewGameMenu extends MenuScreen {
+public class ChooseGameTypeMenu extends MenuScreen {
+	private static ChooseGameTypeMenu me;
 
-	private static NewGameMenu me;
-
-	private NewGameMenu() {
+	private ChooseGameTypeMenu() {
 		super();
         
-		Button hostButton = ComponentFactory.createNetworkMenuButton("Host Game",new ClickListener() {
+		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(HostGameMenu.getInstance());
+            	//TODO Main.getInstance().setScreen(HostGameMenu.getInstance());
             }
         } );
         
-        Button joinButton = ComponentFactory.createNetworkMenuButton("Join Specific Game",new ClickListener() {
+        Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(JoinGameMenu.getInstance());
+            	//TODO Main.getInstance().setScreen(JoinGameMenu.getInstance());
             }
         });
 
-        Button randomButton = ComponentFactory.createNetworkMenuButton("Join Random Game",new ClickListener() {
+        Button campaignButton = ComponentFactory.createNetworkMenuButton("Campaign",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
         		//Main.getInstance().network.startRandomGameSearch();
-            	int team = Player.getRandomTeam();
-            	Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
+            	//int team = Player.getRandomTeam();
+            	//TODO Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
             }
         } );
         
@@ -80,15 +78,12 @@ public class NewGameMenu extends MenuScreen {
         
         contents.padTop((int) (3*Main.percentHeight));
         contents.defaults().space((int)Main.percentWidth).pad(0).top().center();
-        contents.add("Online").expandX().padBottom(-5);
         contents.row();
-        contents.add(randomButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.add(findMatchButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
-        contents.add(hostButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.add(inviteButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
-        contents.add(joinButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
-        contents.row();
-        contents.add("Offline").expandX().padBottom(-5);
+        contents.add(campaignButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
         contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
@@ -104,9 +99,9 @@ public class NewGameMenu extends MenuScreen {
         contents.add(inner);
 	}
 	
-	public static synchronized NewGameMenu getInstance() {
+	public static synchronized ChooseGameTypeMenu getInstance() {
 		if(me == null){
-			me = new NewGameMenu();
+			me = new ChooseGameTypeMenu();
 		}
 		return me;
 	}
