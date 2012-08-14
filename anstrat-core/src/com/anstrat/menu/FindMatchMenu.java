@@ -2,13 +2,13 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.MapList;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -110,6 +110,10 @@ public class FindMatchMenu extends MenuScreen {
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
 		    public void click(Actor actor,float x,float y ){
+				
+				// TODO: Use chosen settings
+				int team = Player.getRandomTeam();
+				Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
 				
 				Map map = null;
 				if (specificMap == false) {
