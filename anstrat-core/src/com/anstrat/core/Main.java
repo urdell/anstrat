@@ -46,6 +46,9 @@ public class Main extends Game implements ApplicationListener {
 	// Games
 	public GameManager games;
 	
+	//Friends
+	public FriendManager friends;
+	
 	public Music menuMusic;
 	
 	// Input handlers
@@ -108,6 +111,9 @@ public class Main extends Game implements ApplicationListener {
 
 		games = new GameManager(Gdx.files.local("games.bin"));
 		games.loadGameInstances(); // Loads all saved game instances
+		
+		friends = new FriendManager(Gdx.files.local("friends.bin"));
+		friends.loadGameInstances(); //Loads all saved friends
 
 		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
