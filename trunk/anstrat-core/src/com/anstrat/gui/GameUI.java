@@ -9,11 +9,13 @@ import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
+import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
 import com.badlogic.gdx.Gdx;
@@ -65,6 +67,9 @@ public class GameUI extends UI {
 	private Button[] abilityButtons = new Button[MAX_ABILITIES];
 	private Image[] effectImage = new Image[MAX_EFFECTS];
 	private Button captureButton;
+	
+	private BuyUnitPopup[] buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
+	private BuyUnitPopup openBuyUnitPopup;
 
 	public GameUI(OrthographicCamera camera){
 		super(Main.getInstance().batch, camera);
@@ -110,7 +115,7 @@ public class GameUI extends UI {
         buyButton.setClickListener(new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Popup.getBuyUnitPopup().show();
+            	showBuyUnitPopup();
             }
         } );
         helpButton = new Button(new Image(Assets.getTextureRegion("help-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
@@ -344,15 +349,25 @@ public class GameUI extends UI {
 		
 		boolean userCurrentPlayer = GameInstance.activeGame.isUserCurrentPlayer();
 		Assets.SKIN.setEnabled(endTurnButton, userCurrentPlayer);
-		Assets.SKIN.setEnabled(buyButton, userCurrentPlayer);
+		//Assets.SKIN.setEnabled(buyButton, userCurrentPlayer);
 
 		boolean playerControlsAllPlayers = !(game instanceof NetworkGameInstance) && !game.isAiGame();
 		String text = (!playerControlsAllPlayers && userCurrentPlayer) ? "Your turn" : player.getDisplayName();
 		
-		if(!userCurrentPlayer) Popup.getBuyUnitPopup().checkUnitAffordable();
+		if(openBuyUnitPopup != null) openBuyUnitPopup.update();
 		
 		turnDisplay.setText(text);
 		turntable.setColor(player.getColor());
+	}
+	
+	public void showBuyUnitPopup(){
+		int team = GameInstance.activeGame.getUserPlayer().team;
+		
+		if(buyUnitPopups[team] == null){
+			buyUnitPopups[team] = new BuyUnitPopup(UnitType.TEAMS[team]);
+		}
+		
+		(openBuyUnitPopup = buyUnitPopups[team]).show();
 	}
 
 	/**

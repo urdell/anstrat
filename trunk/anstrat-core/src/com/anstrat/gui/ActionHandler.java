@@ -27,7 +27,6 @@ import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
-import com.anstrat.popup.Popup;
 
 
 /**
@@ -68,7 +67,7 @@ public class ActionHandler {
 				
 				// Does this castle belong to the user?
 				if(StateUtils.isControlledByUser(currentPlayerCastle)){
-					Popup.getBuyUnitPopup().show();
+					GEngine.getInstance().userInterface.showBuyUnitPopup();
 				}
 			}
 			

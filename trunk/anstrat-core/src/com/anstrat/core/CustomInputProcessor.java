@@ -73,7 +73,7 @@ public class CustomInputProcessor extends InputAdapter {
 			case Input.Keys.B: {
 				// Only show menu when playing a game
 				if((Main.getInstance().getScreen() instanceof GEngine) && Popup.currentPopup == null){
-					Popup.getBuyUnitPopup().show();
+					GEngine.getInstance().userInterface.showBuyUnitPopup();
 					return true;
 				}
 				return false;
