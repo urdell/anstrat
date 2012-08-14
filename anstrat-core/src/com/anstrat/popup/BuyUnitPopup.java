@@ -34,7 +34,6 @@ public class BuyUnitPopup extends Popup{
 	private Button[] units;
 	private NinePatch[] unitSilhouettes;
 	private UnitType[] types;
-	private Player opener;
 	private ColorTable unitTable;
 	
 	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
@@ -133,12 +132,13 @@ public class BuyUnitPopup extends Popup{
 	/**
 	 * Check if the unit is afforded before showing popup.
 	 */
-	@Override public void show(){
-		opener = GameInstance.activeGame.getUserPlayer();
-		checkUnitAffordable();
+	@Override 
+	public void show(){
+		Player userPlayer = GameInstance.activeGame.getUserPlayer();
+		update();
 		
-		unitTable.setColor(opener.getColor());
-		card.setColor(opener.getColor());
+		unitTable.setColor(userPlayer.getColor());
+		card.setColor(userPlayer.getColor());
 		GEngine.getInstance().userInterface.setVisible(false);
 		
 		super.show();
@@ -154,28 +154,22 @@ public class BuyUnitPopup extends Popup{
 	 */
 	public void selectButton(Button button) {
 		card.setType(types[Arrays.asList(units).indexOf(button)]);
-		checkUnitAffordable();
+		update();
 	}
 	
-	/**
-	 * Disables buy button if unit is too expensive.
-	 * 
-	 * NOTE: Do other things, like graying the unit portrait of all units that can't be bought.
-	 */
-	public void checkUnitAffordable(){
-		if(State.activeState==null || opener==null)
-			return;
+	public void update(){
+		Player userPlayer = GameInstance.activeGame.getUserPlayer();
 		
-		int gold = opener.gold;
-		boolean isPlayerTurn = State.activeState.getCurrentPlayer() == opener;
+		int gold = userPlayer.gold;
+		boolean isPlayerTurn = State.activeState.getCurrentPlayer().equals(userPlayer);
 		
-		//Disable buy button if current unit is not affordable
-		boolean canBuy = gold>=card.type.cost;
+		// Disable buy button if current unit is not affordable
+		boolean canBuy = gold >= card.type.cost;
 		Assets.SKIN.setEnabled(buyButton, canBuy && isPlayerTurn);
 		card.setDisabled(!canBuy);
-		buyButton.visible = canBuy;
+		buyButton.visible = isPlayerTurn;
 		
-		//Mark units that are too expensive.
+		// Mark units that are too expensive.
 		for(int i=0; i<types.length; i++){
 			if(gold<types[i].cost)
 				unitSilhouettes[i].setColor(COLOR_UNAVAILABLE);	//Not enough money

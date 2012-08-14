@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
@@ -38,7 +37,6 @@ public class Popup extends Window {
 	private static Label genericPopupLabel;
 	private static Popup genericPopup;
 	
-	private static BuyUnitPopup[] buyUnitPopups;
 	private static AbilityPopup[] abilityPopups; 
 	public static UnitInfoPopup unitInfoPopup;
 	
@@ -233,12 +231,6 @@ public class Popup extends Window {
 			abilityPopups[i] = new AbilityPopup(PlayerAbilityType.getAbilitiesFromGod(i));
 		}
 		
-		buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
-		for(int i = 0; i < buyUnitPopups.length; i++){
-			UnitType[] team = UnitType.TEAMS[i];
-			buyUnitPopups[i] = new BuyUnitPopup(team);
-		}
-		
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);
 		
@@ -251,11 +243,6 @@ public class Popup extends Window {
 		});
 		
 		genericPopup = new Popup("", genericPopupLabel, genericPopupOK);
-	}
-	
-	public static BuyUnitPopup getBuyUnitPopup(){
-		Player currentPlayer = com.anstrat.gameCore.State.activeState.players[com.anstrat.gameCore.State.activeState.currentPlayerId];
-		return buyUnitPopups[currentPlayer.team];
 	}
 	
 	public static AbilityPopup getAbilityPopup(){
@@ -276,7 +263,6 @@ public class Popup extends Window {
 	
 	public static void disposePopups(){
 		
-		buyUnitPopups = null;
 		abilityPopups = null;
 		overlay = null;
 		gestureHandler = null;
