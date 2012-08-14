@@ -3,6 +3,8 @@ package com.anstrat.menu;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.popup.InvitePopup;
+import com.anstrat.popup.InvitePopup.InvitePopupHandler;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class InviteMatchMenu extends MenuScreen {
 	private static InviteMatchMenu me;
+	private static TextButton friendButton;
 	
 	private static final String generatedMap = "Generated map";
 	private static final String randomServerMap = "Random server map";
@@ -97,6 +100,30 @@ public class InviteMatchMenu extends MenuScreen {
 			
 		});
 		
+		friendButton = ComponentFactory.createButton("No friend :(", new ClickListener() {
+
+			@Override
+			public void click(Actor actor, float x, float y) {
+				
+				
+				Popup popup = new InvitePopup(new InvitePopupHandler() {
+
+					@Override
+					public void friendSelected(String friend) {
+						// TODO something with this friend of ours.
+						Main.getInstance().friends.createFriend(friend);
+						friendButton.setText(friend);
+					}
+					
+				}, "Select or write friend's username");
+				
+				
+			}
+			
+		});
+		
+		
+		
 		final TextField friendName = ComponentFactory.createTextField("Friend's name", false); 
 		
 		settings.defaults().height((int)(Main.percentHeight*10));
@@ -166,6 +193,11 @@ public class InviteMatchMenu extends MenuScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
+		friendButton = null;
 		me = null;
+	}
+	
+	public static void setFriend(String text) {
+		friendButton.setText(text);
 	}
 }
