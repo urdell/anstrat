@@ -72,7 +72,7 @@ public class GBuilding extends GObject {
 	
 	public static TextureRegion getTextureRegion(int type){
 		switch(type){
-		case Building.TYPE_TEMPLE:
+		case Building.TYPE_RUNE:
 			return Assets.getTextureRegion("temple");
 		case Building.TYPE_CASTLE:
 			return Assets.getTextureRegion("castle");

@@ -299,16 +299,27 @@ public class Map implements Serializable{
 		{
 			for(int j=0;j<tiles[i].length;j++)
 			{
+				// 0-1	forest
+				// 2-3	water
+				// 4-5	mountain
+				// 6	runestone
+				// 7-10 field
 				TerrainType type;
-				switch(random.nextInt()%5){
+				switch(random.nextInt()%11){
 				case 0:
+				case 1:
 					type = TerrainType.FOREST;
 					break;
-				case 1:
+				case 2:
+				case 3:
 					type = TerrainType.DEEP_WATER;
 					break;
-				case 2:
+				case 4:
+				case 5:
 					type = TerrainType.MOUNTAIN;
+					break;
+				case 6:
+					type = TerrainType.RUNE;
 					break;
 				default:
 					type = TerrainType.FIELD;

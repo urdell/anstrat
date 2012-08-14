@@ -11,7 +11,7 @@ public class Building implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static final int TYPE_TEMPLE  = 0;
+	public static final int TYPE_RUNE  = 0;
 	public static final int TYPE_VILLAGE = 1;
 	public static final int TYPE_CASTLE  = 2;
 	
@@ -29,10 +29,10 @@ public class Building implements Serializable {
 	public Building(int type, int id, int controllerId)
 	{
 		switch(type) {
-		case TYPE_TEMPLE:
-			typeName = "Temple";
+		case TYPE_RUNE:
+			typeName = "Runestone";
 			goldIncome = 0;
-			manaIncome = 4;
+			manaIncome = 3;
 			captureCost = 1;
 			break;
 		case TYPE_VILLAGE:
