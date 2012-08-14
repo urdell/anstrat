@@ -69,6 +69,18 @@ public class Network implements INetworkCallback {
 					
 					break;
 				}
+				case PLAYER_RESIGNED: {
+					final long gameID = (Long) payload.get(0);
+					final int playerID = (Integer) payload.get(1);
+					
+					Gdx.app.postRunnable(new Runnable() {
+						@Override
+						public void run() {
+							listener.playerResigned(gameID, playerID);
+						}
+					});
+					break;
+				}
 				default: {
 					Gdx.app.log("Network", String.format("Received unknown server command '%s'.", message.getCommand()));
 				}
