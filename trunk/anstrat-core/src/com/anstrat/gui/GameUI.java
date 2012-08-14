@@ -11,10 +11,12 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
+import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
@@ -70,6 +72,9 @@ public class GameUI extends UI {
 	
 	private BuyUnitPopup[] buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
 	private BuyUnitPopup openBuyUnitPopup;
+	
+	private AbilityPopup[] abilityPopups = new AbilityPopup[PlayerAbilityType.GODS.length];
+	private AbilityPopup openAbilityPopup;
 
 	public GameUI(OrthographicCamera camera){
 		super(Main.getInstance().batch, camera);
@@ -130,7 +135,7 @@ public class GameUI extends UI {
         spellButton.setClickListener(new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Popup.getAbilityPopup().show();
+            	showAbilityPopup();
             }
         } );
       
@@ -355,6 +360,7 @@ public class GameUI extends UI {
 		String text = (!playerControlsAllPlayers && userCurrentPlayer) ? "Your turn" : player.getDisplayName();
 		
 		if(openBuyUnitPopup != null) openBuyUnitPopup.update();
+		if(openAbilityPopup != null) openAbilityPopup.update();
 		
 		turnDisplay.setText(text);
 		turntable.setColor(player.getColor());
@@ -370,6 +376,16 @@ public class GameUI extends UI {
 		(openBuyUnitPopup = buyUnitPopups[team]).show();
 	}
 
+	public void showAbilityPopup(){
+		int god = GameInstance.activeGame.getUserPlayer().god;
+		
+		if(abilityPopups[god] == null){
+			abilityPopups[god] = new AbilityPopup(PlayerAbilityType.GODS[god]);
+		}
+		
+		(openAbilityPopup = abilityPopups[god]).show();
+	}
+	
 	/**
 	 * TODO solve in another way.
 	 * @param x the x window coordinate
