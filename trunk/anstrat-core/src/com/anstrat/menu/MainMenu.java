@@ -74,7 +74,7 @@ public class MainMenu extends MenuScreen {
 		Button newGameButton = ComponentFactory.createMenuButton("New Game",new ClickListener() {
         	@Override
         	public void click(Actor actor, float x, float y) {
-        		Main.getInstance().setScreen(NewGameMenu.getInstance());
+        		Main.getInstance().setScreen(ChooseGameTypeMenu.getInstance());
         	}
         });
 
