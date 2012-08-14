@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,6 +53,9 @@ public class CometStrikeAnimation extends Animation {
 		
 	}
 	
+	private static List<TerrainType> unaffectedTerrain = 
+			Arrays.asList(new TerrainType[]{TerrainType.DEEP_WATER, TerrainType.VILLAGE, TerrainType.CASTLE});
+	
 	@Override
 	public void run(float deltaTime) {
 		// Run once
@@ -60,7 +65,7 @@ public class CometStrikeAnimation extends Animation {
 		}
 		
 		if(lifetimeLeft <= 0f){
-			if (!target.tile.terrain.equals(TerrainType.DEEP_WATER)) {
+			if (!unaffectedTerrain.contains(target.tile.terrain)) {
 				target.tile.terrain = TerrainType.CRATER;
 				target.tile.coordinates = target.tile.coordinates; 
 				target.setTexture(TerrainType.CRATER);
@@ -121,6 +126,4 @@ public class CometStrikeAnimation extends Animation {
 		// TODO Auto-generated method stub
 		return Fog.isVisible(target.tile.coordinates,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
-	
-
 }
