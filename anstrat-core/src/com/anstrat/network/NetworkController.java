@@ -9,11 +9,14 @@ import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gui.GEngine;
+import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
@@ -166,7 +169,16 @@ public class NetworkController {
 				
 				if(game != null && Main.getInstance().getScreen() instanceof GEngine && GameInstance.activeGame == game){
 					Player player = game.state.players[playerID];
-					Popup.showGenericPopup("Game over", String.format("%s has resigned, you won!", player.getDisplayName()));
+					
+					new Popup("Game over", true,
+							new Label(String.format("%s has resigned, you won!", player.getDisplayName()), Assets.SKIN), 
+							ComponentFactory.createButton("OK", new ClickListener() {
+								@Override
+								public void click(Actor actor, float x, float y) {
+									Main.getInstance().setScreen(MainMenu.getInstance());
+									Popup.currentPopup.close();
+								}
+							})).show();
 				}
 				
 				Main.getInstance().games.endGame(game);
