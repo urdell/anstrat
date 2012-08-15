@@ -7,7 +7,6 @@ import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GameUI;
 
@@ -61,9 +60,7 @@ public class CaptureCommand extends Command{
 		
 		return super.isAllowed() &&
 					unit != null &&
-					unit.currentAP >= CAPTURE_COST && //Changed for only allowing cap at required AP
-					unit.getUnitType() != UnitType.HAWK &&
-					unit.getUnitType() != UnitType.WOLF &&
+					unit.currentAP >= CAPTURE_COST &&
 					unit.tileCoordinate == captureBuilding.tileCoordinate &&
 					unit.ownerId == playerID &&
 					captureBuilding.controllerId != playerID;
