@@ -349,7 +349,7 @@ public class GameUI extends UI {
 		
 		// if a on a building
 		Building building = State.activeState.map.getBuildingByTile(unit.tileCoordinate);
-		if(building != null && new CaptureCommand(building, unit, State.activeState.getCurrentPlayer()).isAllowed()){
+		if(building != null && new CaptureCommand(building, unit).isAllowed()){
 			captureButton.visible = true;
 		}else{
 			captureButton.visible = false;

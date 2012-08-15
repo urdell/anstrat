@@ -4,7 +4,6 @@ import com.anstrat.animation.CaptureAnimation;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
-import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
@@ -17,13 +16,17 @@ public class CaptureCommand extends Command{
 	private static final int CAPTURE_COST = 4;
 	
 	private int buildingID;	// the building being captured
-	private int playerID;	
 	private int unitID;		// the unit capturing the building
 	
-	public CaptureCommand(Building building, Unit unit, Player player){
+	public CaptureCommand(Building building, Unit unit){
 		buildingID = building.id;
 		unitID = unit.id;
-		playerID = player.playerId;
+	}
+	
+	public CaptureCommand(int playerIndex, Building building, Unit unit){
+		super(playerIndex);
+		buildingID = building.id;
+		unitID = unit.id;
 	}
 	
 	@Override

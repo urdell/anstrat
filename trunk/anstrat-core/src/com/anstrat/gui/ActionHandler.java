@@ -111,7 +111,7 @@ public class ActionHandler {
 			//Building selectedBuilding = gEngine.selectionHandler.selectedBuilding;
 			break;
 		case SelectionHandler.SELECTION_SPAWN:
-			command = new CreateUnitCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
+			command = new CreateUnitCommand(gTile.tile.coordinates, gEngine.selectionHandler.spawnUnitType);
 			if(command.isAllowed())
 				requestConfirm(gTile, null, command, clickedQuadrant);
 			else{
@@ -177,7 +177,7 @@ public class ActionHandler {
 				for (Building building : State.activeState.map.buildingList.values()){
 					if (selectedUnit.tileCoordinate == building.tileCoordinate){
 						if (building.controllerId != player.playerId && selectedUnit.ownerId == player.playerId){
-							c = new CaptureCommand(building, selectedUnit, player);
+							c = new CaptureCommand(building, selectedUnit);
 							
 						}
 					}

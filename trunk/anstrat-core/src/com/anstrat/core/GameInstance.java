@@ -57,7 +57,7 @@ public class GameInstance implements Serializable{
 		if(aiPlayerIDs != null){
 			for(int i : aiPlayerIDs){
 				Player p = state.players[i];
-				p.assignAI(new ScriptAI());
+				p.assignAI(new ScriptAI(p));
 			}
 		}
 		

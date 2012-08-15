@@ -6,7 +6,7 @@ import java.util.List;
 import com.anstrat.command.AttackCommand;
 import com.anstrat.command.CaptureCommand;
 import com.anstrat.command.Command;
-import com.anstrat.command.CommandHandler;
+import com.anstrat.command.CreateUnitCommand;
 import com.anstrat.command.EndTurnCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.gameCore.Building;
@@ -39,41 +39,40 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * 7. End turn
 	 */
 	
-	Player godlikePlayer;
-	int godlikePlayerId;
-	ActionMap actionMap = new ActionMap();
+	private Player godlikeAI;
+	private ActionMap actionMap = new ActionMap();
+	
+	public ScriptAI(Player player){
+		this.godlikeAI = player;
+	}
 	
 	@Override
 	public Command generateNextCommand() {
-		State state = State.activeState;
 		
-		godlikePlayer = state.getCurrentPlayer();
-		godlikePlayerId = godlikePlayer.playerId;
-		
-		//Buy algorithm
+		// Buy algorithm
 		Command createCommand = null;
-		if(godlikePlayer.gold >= UnitType.BERSERKER.cost){
+		if(godlikeAI.gold >= UnitType.BERSERKER.cost){
 			if(getMyUnits().size() < 2){
-				createCommand = CommandHandler.generateCreateCommand(UnitType.BERSERKER);
+				createCommand = generateCreateCommand(UnitType.BERSERKER);
 				if(createCommand != null && createCommand.isAllowed())
 					return createCommand;
 			}
 		}
 			
-		if (godlikePlayer.gold >= UnitType.SWORD.cost){
+		if (godlikeAI.gold >= UnitType.SWORD.cost){
 			if (getMyUnits().size() <= 3 || getMyUnits().size() >= 6 && getMyUnits().size() < 8){
-				createCommand = CommandHandler.generateCreateCommand(UnitType.SWORD);
+				createCommand = generateCreateCommand(UnitType.SWORD);
 			}
 			else if(getMyUnits().size() > 7){
-				createCommand = CommandHandler.generateCreateCommand(UnitType.HAWK);
+				createCommand = generateCreateCommand(UnitType.HAWK);
 			}
 			else {
-				createCommand = CommandHandler.generateCreateCommand(UnitType.AXE_THROWER);
+				createCommand = generateCreateCommand(UnitType.AXE_THROWER);
 			}
 		}
-		if (godlikePlayer.gold >= UnitType.AXE_THROWER.cost)
+		if (godlikeAI.gold >= UnitType.AXE_THROWER.cost)
 			if (getMyUnits().size() > 1 && getMyUnits().size() < 5)
-				createCommand = CommandHandler.generateCreateCommand(UnitType.AXE_THROWER);
+				createCommand = generateCreateCommand(UnitType.AXE_THROWER);
 		if(createCommand != null && createCommand.isAllowed())
 			return createCommand;
 		
@@ -90,7 +89,7 @@ public class ScriptAI implements IArtificialIntelligence {
 						List<Unit> orderToAttack = sortInOrderToAttack(getEnemyUnits(),myUnit);
 						for(Unit enemyUnit : orderToAttack){ 
 							if (Pathfinding.getDistance(myUnit.tileCoordinate,enemyUnit.tileCoordinate) <= unitRange){
-							Command attackCommand = new AttackCommand(myUnit,enemyUnit);
+							Command attackCommand = generateAttackCommand(myUnit, enemyUnit);
 							if(attackCommand.isAllowed())
 								return attackCommand;
 							}
@@ -103,11 +102,9 @@ public class ScriptAI implements IArtificialIntelligence {
 		// Capture Algorithm
 		for(Unit myUnit : getMyUnits()){
 			for (Building buildingsNotOwnedByMe : getBuildingsNotOwnedByMe()){
-				CaptureCommand captureCommand;
 				if(myUnit.tileCoordinate == buildingsNotOwnedByMe.tileCoordinate){
-					captureCommand = new CaptureCommand(buildingsNotOwnedByMe,myUnit,state.getCurrentPlayer());
-					if(captureCommand.isAllowed())
-						return captureCommand;
+					Command captureCommand = generateCaptureCommand(buildingsNotOwnedByMe, myUnit);
+					if(captureCommand.isAllowed()) return captureCommand;
 				}
 			}
 		}
@@ -129,7 +126,7 @@ public class ScriptAI implements IArtificialIntelligence {
 				List<TileCoordinate> walkOrder = sortInCostOrder(chosenCoordinates);
 				if (walkOrder != null){
 					for (TileCoordinate t : walkOrder){
-						moveCommand = new MoveCommand(myUnit, t);
+						moveCommand = generateMoveCommand(myUnit, t);
 						if(moveCommand.isAllowed()){
 							return moveCommand;		
 						}
@@ -146,7 +143,7 @@ public class ScriptAI implements IArtificialIntelligence {
 		Path p1;
 		int longestPathValue = 0;
 		TileCoordinate lastTileInPath = null;
-		MoveCommand moveforNearestBuildingCommand = null;
+		Command moveforNearestBuildingCommand = null;
 		
 		
 		for (Unit myUnit : getMyUnits()){
@@ -177,7 +174,7 @@ public class ScriptAI implements IArtificialIntelligence {
 				}
 			}
 			
-			moveforNearestBuildingCommand = new MoveCommand(myUnit, lastTileInPath);
+			moveforNearestBuildingCommand = generateMoveCommand(myUnit, lastTileInPath);
 			if(moveforNearestBuildingCommand.isAllowed())
 				return moveforNearestBuildingCommand;
 		}
@@ -207,7 +204,8 @@ public class ScriptAI implements IArtificialIntelligence {
 							}
 						}
 					}
-					MoveCommand moveforEnemyBaseCommand = new MoveCommand(myUnit, tileInPathToAimFor);
+					
+					Command moveforEnemyBaseCommand = generateMoveCommand(myUnit, tileInPathToAimFor);
 					if(moveforEnemyBaseCommand.isAllowed())
 						return moveforEnemyBaseCommand;
 				}
@@ -215,7 +213,7 @@ public class ScriptAI implements IArtificialIntelligence {
 		}
 		
 		// Here I, godlikeAI, will be conquering the world leaving it to you to catch up		
-		return new EndTurnCommand();
+		return generateEndTurnCommand();
 	}
 
 
@@ -224,11 +222,11 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * Gives you all the units belonging to you
 	 * @return All units belonging to the current player in an ArrayList
 	 */
-	public List<Unit> getMyUnits (){
+	private List<Unit> getMyUnits (){
 		List<Unit> myUnits = new ArrayList<Unit>();
 		
 		for(Unit u : State.activeState.unitList.values()){
-			if (u.ownerId == godlikePlayerId)
+			if (u.ownerId == godlikeAI.playerId)
 				myUnits.add(u);
 		}
 		return myUnits;
@@ -237,11 +235,11 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * Gives you all the units belonging to your enemy
 	 * @return All units belonging to the other player in an ArrayList
 	 */
-	public List<Unit> getEnemyUnits(){
+	private List<Unit> getEnemyUnits(){
 	List<Unit> enemyUnits = new ArrayList<Unit>();
 		
 		for(Unit u : State.activeState.unitList.values()){
-			if (u.ownerId != godlikePlayerId)
+			if (u.ownerId != godlikeAI.playerId)
 				enemyUnits.add(u);
 		}
 		return enemyUnits;
@@ -251,10 +249,10 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * Gives you all buildings not belonging to you
 	 *@return All buildings i don't own in an ArrayList 
 	 */
-	public List<Building> getBuildingsNotOwnedByMe(){
+	private List<Building> getBuildingsNotOwnedByMe(){
 		List<Building> buildingsNotOwnedByMe = new ArrayList<Building>();
 		for(Building b : State.activeState.map.buildingList.values()){
-			if (b.controllerId != godlikePlayerId)
+			if (b.controllerId != godlikeAI.playerId)
 				buildingsNotOwnedByMe.add(b);
 		}
 		return buildingsNotOwnedByMe;
@@ -263,10 +261,10 @@ public class ScriptAI implements IArtificialIntelligence {
 	/**
 	 * @return All buildings belonging to the enemy in an ArrayList
 	 */
-	public List<Building> getEnemyBuildings(){
+	private List<Building> getEnemyBuildings(){
 		List<Building> enemyBuildings = new ArrayList<Building>();
 		for(Building b : State.activeState.map.buildingList.values()){
-			if (b.controllerId == (godlikePlayerId+1)%2)
+			if (b.controllerId == (godlikeAI.playerId+1)%2)
 				enemyBuildings.add(b);
 		}
 		return enemyBuildings;
@@ -276,7 +274,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * Gives you all buildings which is not yours and you don't have a unit on
 	 * @return ArrayList with buildings not owning nor occupying
 	 */
-	public List<Building> getBuildingsNotOwnedByMeAndNotYetOccupied(){
+	private List<Building> getBuildingsNotOwnedByMeAndNotYetOccupied(){
 		List<Building> buildingsNotOwnedByMe = getBuildingsNotOwnedByMe();
 		
 		for (Building b : getBuildingsNotOwnedByMe()){
@@ -294,7 +292,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	/**
 	 * @ArrayList of tiles which is adjacent to a enemyUnit
 	 */
-	public List<Tile> getAdjacentEnemyTiles(){
+	private List<Tile> getAdjacentEnemyTiles(){
 		List<Tile> nearbyTiles = new ArrayList<Tile>();
 		for(Unit enemyUnit : getEnemyUnits()){  
 			nearbyTiles.addAll(State.activeState.map.getNeighbors(enemyUnit.tileCoordinate));
@@ -308,7 +306,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * @return ArrayList of tiles from which is a unit can make an attack
 	 */
 	
-	public List<Tile> getTilesPossibleForAttacks (int range){
+	private List<Tile> getTilesPossibleForAttacks (int range){
 		List<Tile> TilesPossibleForRangedAttacks = new ArrayList<Tile>();
 		List<Tile> temp = new ArrayList<Tile>();
 		TilesPossibleForRangedAttacks.addAll(getAdjacentEnemyTiles());
@@ -331,7 +329,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * @return A sorted List of my units in the order to attack
 	 */
 	
-	public List<Unit> sortInAttackingOrder(List<Unit> myUnits ){
+	private List<Unit> sortInAttackingOrder(List<Unit> myUnits ){
 		List<Unit> attackOrder = new ArrayList<Unit>();
 		// should sort on AP, lowest first, works but maybe a testcase :( buhu
 		for (Unit u: myUnits){
@@ -354,7 +352,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * @param enemyUnits
 	 * @return A list of enemy units in the order to attack them
 	 */
-	public List<Unit> sortInOrderToAttack(List<Unit> enemyUnits, Unit myUnit){
+	private List<Unit> sortInOrderToAttack(List<Unit> enemyUnits, Unit myUnit){
 		/*
 		 * If both at a distance requiring no movement, hit the one with most HP first given (HP <= ATT)
 				Hit the one with (HP <= ATT) before sort the rest on lowest HP first
@@ -389,7 +387,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	 * @param A list of tiles possible to attack an enemy unit
 	 * @return List of TileCordinatess sorted on the most preferable Tile first in order to reach enemy 
 	 */
-	public List<TileCoordinate> sortInCostOrder(List<TileCoordinate> chosenCoordinates){
+	private List<TileCoordinate> sortInCostOrder(List<TileCoordinate> chosenCoordinates){
 		if (chosenCoordinates == null || chosenCoordinates.size() == 0)
 			return null;
 		List<TileCoordinate> walkOrder = new ArrayList<TileCoordinate>();
@@ -408,7 +406,53 @@ public class ScriptAI implements IArtificialIntelligence {
 		return walkOrder;
 	}
 	
+	private Command generateEndTurnCommand(){
+		return new EndTurnCommand(godlikeAI.playerId);
+	}
+	private Command generateMoveCommand(Unit unit, TileCoordinate tile){
+		return new MoveCommand(godlikeAI.playerId, unit, tile);
+	}
 	
+	private Command generateAttackCommand(Unit attacker, Unit defender){
+		return new AttackCommand(godlikeAI.playerId, attacker, defender);
+	}
+	
+	private Command generateCaptureCommand(Building building, Unit unit){
+		return new CaptureCommand(godlikeAI.playerId, building, unit);
+	}
+	
+	
+	private Command generateCreateCommand(UnitType type){
+		TileCoordinate castleCoordinate = null;
+		if(StateUtils.getCurrentPlayerCastle() == null)
+			return new CreateUnitCommand(godlikeAI.playerId, castleCoordinate, type); // no position -> invalid command.
+		castleCoordinate = StateUtils.getCurrentPlayerCastle().tileCoordinate;
+		
+		// First check if castle position is free
+		// TODO: Check terrain and buildings too?
+		if(StateUtils.getUnitByTile(castleCoordinate) == null){
+			CreateUnitCommand createUnit = new CreateUnitCommand(godlikeAI.playerId, castleCoordinate, type);
+			if(createUnit.isAllowed())
+				return createUnit;
+		}
+		
+		for(Tile t : State.activeState.map.getNeighbors(castleCoordinate)){
+			if(State.activeState.map.isAdjacent(t.coordinates, castleCoordinate))
+				
+			// Check if something's in the way
+			// TODO: Check terrain and buildings too?
+			if(StateUtils.getUnitByTile(t.coordinates) == null){
+				CreateUnitCommand createUnitC = new CreateUnitCommand(godlikeAI.playerId, t.coordinates, type);
+				if(createUnitC.isAllowed()){
+					
+					System.out.println(t.coordinates);
+					return createUnitC;
+				}
+			}
+		}
+		
+		throw new RuntimeException("AI: Failed to generate a create unit command, could not find a free tile.");
+	}
 }
 
 
