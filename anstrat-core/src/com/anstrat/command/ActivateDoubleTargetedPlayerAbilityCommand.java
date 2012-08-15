@@ -6,7 +6,6 @@ import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
-import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.geography.TileCoordinate;
 
 public class ActivateDoubleTargetedPlayerAbilityCommand extends Command {

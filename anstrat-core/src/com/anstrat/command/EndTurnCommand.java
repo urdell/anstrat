@@ -8,6 +8,12 @@ public class EndTurnCommand extends Command{
 	
 	private static final long serialVersionUID = 2L;
 	
+	public EndTurnCommand(){}
+	
+	public EndTurnCommand(int playerIndex){
+		super(playerIndex);
+	}
+	
 	@Override
 	protected void execute() {
 		State.activeState.endTurn();

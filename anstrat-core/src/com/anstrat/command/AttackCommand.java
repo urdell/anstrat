@@ -14,6 +14,12 @@ public class AttackCommand extends Command{
 		defenderId = defender.id;
 	}
 	
+	public AttackCommand(int playerIndex, Unit attacker, Unit defender){
+		super(playerIndex);
+		attackerId = attacker.id;
+		defenderId = defender.id;
+	}
+	
 	@Override
 	protected void execute(){
 		State s = State.activeState;

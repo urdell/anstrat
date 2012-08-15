@@ -2,11 +2,9 @@ package com.anstrat.command;
 
 import com.anstrat.gameCore.CreationHandler;
 import com.anstrat.gameCore.Fog;
-import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.UnitType;
-import com.anstrat.geography.Map;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.geography.TileCoordinate;
@@ -29,7 +27,13 @@ public class CreateUnitCommand extends Command {
 	 * @param unitType The type of the unit to be created
 	 * @param playerId The player in control of the unit
 	 */
-	public CreateUnitCommand(Player player, TileCoordinate tileCoord, UnitType unitType) {
+	public CreateUnitCommand(TileCoordinate tileCoord, UnitType unitType) {
+		this.tileCoord = tileCoord;
+		this.unitType = unitType;
+	}
+	
+	public CreateUnitCommand(int playerIndex, TileCoordinate tileCoord, UnitType unitType) {
+		super(playerIndex);
 		this.tileCoord = tileCoord;
 		this.unitType = unitType;
 	}

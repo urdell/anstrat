@@ -27,6 +27,13 @@ public class MoveCommand extends Command {
 		this.endTile = endTile;
 	}
 	
+	public MoveCommand(int playerIndex, Unit unit, TileCoordinate endTile)
+	{
+		super(playerIndex);
+		this.unitId = unit.id;
+		this.endTile = endTile;
+	}
+	
 	@Override
 	protected void execute() {
 		State state = State.activeState;
