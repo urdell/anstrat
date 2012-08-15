@@ -52,7 +52,7 @@
 		<APReg>5</APReg>
 		<cost>18</cost>
 		<ability1>3</ability1><!-- Shadow image -->
-		<description>The Wolf is incredibly fast. Animals can not capture buildings.</description>
+		<description>The Wolf is incredibly fast.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
 	</UnitType>
@@ -66,7 +66,7 @@
 		<APReg>5</APReg>
 		<cost>12</cost>
 		<ability1>1</ability1><!-- Kamikaze -->
-		<description>Hawks are fast and cheap, and can fly over any terrain. Animals can not capture buildings.</description>
+		<description>Hawks are fast and cheap, and can fly over any terrain.</description>
 		<idleImage>hawk-idle-0001</idleImage>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
