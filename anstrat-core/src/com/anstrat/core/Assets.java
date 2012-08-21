@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public final class Assets {
 
-	public static boolean USE_GENERATED_FONTS = false;
+	public static boolean USE_GENERATED_FONTS = true;
 
 	// TODO: Ugly way of storing two values, but a rewrite of the animation system is required to do this properly
 	private static HashMap<UnitType, Pair<Animation[], boolean[]>> unitAnimations;
@@ -316,112 +316,14 @@ public final class Assets {
 		}
 		
 		return unitAnimations.get(type);
-				
-		// If not already loaded, load
-		/*if(!unitAnimations.containsKey(type)){
-			int numStates = AnimationState.values().length;
-			Animation[] animationsOut = new Animation[numStates];
-			boolean[] isLoopingOut = new boolean[numStates];
-			
-			loadUnitAnimations(type, animationsOut, isLoopingOut);
-			unitAnimations.put(type, new Pair<Animation[], boolean[]>(animationsOut, isLoopingOut));
-		}
-		
-		return unitAnimations.get(type);*/
 	}
 	
 	/**
-	 * Loads all animations for the given unit type
-	 * The indices of the array will contain animations according to the following:
-	 * Animation[GUnit.ANIMATION_*] contains the corresponding animation (see GUnit for available ones)
-	 * or null if none.
-	 * @param unit
-	 * @return
-	 */
-	/*
-	private static void loadUnitAnimations(UnitType type, Animation[] animationsOut, boolean[] isLoopingOut){
-		
-		// Set which animation types should loop
-		isLoopingOut[AnimationState.IDLE.ordinal()] = true;
-		isLoopingOut[AnimationState.WALK.ordinal()] = true;
-		isLoopingOut[AnimationState.ATTACK.ordinal()] = false;
-		isLoopingOut[AnimationState.DEATH.ordinal()] = false;
-		isLoopingOut[AnimationState.ABILITY.ordinal()] = false;
-
-		for(AnimationState state : AnimationState.values()){
-			ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
-			
-			// Search for images following the pattern:
-			// sword-attack-0001, sword-attack-0002 etc till
-			// no further images are found
-			for(int i = 1;;i++){
-				//String name = String.format("%s-%s-%04d", type.toString().toLowerCase().replace("_", ""), state.toString().toLowerCase(), i);
-				String name = String.format("%s-%s-%04d", type.graphicsFolder, state.toString().toLowerCase(), i);
-				AtlasRegion atlasRegion = atlas.findRegion(name);
-				
-				if(atlasRegion == null) break;
-				
-				// Create new region so that it can flipped etc without affecting the texture
-				// region in the atlas
-				TextureRegion region = new TextureRegion(atlasRegion);
-				region.flip(false, true);
-				regions.add(region);
-			}
-			
-			// Does animation exist?
-			if(regions.size() == 0) continue;
-			
-			// Loop animations consisting of a single frame
-			if(regions.size() == 1) isLoopingOut[state.ordinal()] = true;
-			
-			// Create animation
-			animationsOut[state.ordinal()] = new Animation(1f/6f, regions);
-			
-			Gdx.app.log("Assets", String.format("Loaded %s animation for %s consisting of %d frames.", state, type, regions.size()));
-		}
-	}
-	*/
-	
-	/**
-	 * Returns a single named animation
-	 * @param animationName
-	 * @return
+	 * @return a single named animation
 	 */
 	public static synchronized Animation getAnimation(String animationName){	
-		// If not already loaded, load
-		/*if(!namedAnimations.containsKey(animationName)){
-			namedAnimations.put(animationName, loadAnimation(animationName));
-		}
-		
-		return namedAnimations.get(animationName);*/
 		return animationLoader.getAnimation(animationName);
 	}
-	
-	/*
-	private static Animation loadAnimation(String animationName){
-		ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
-		for(int i = 1;;i++){
-			//String name = String.format("%s-%s-%04d", type.toString().toLowerCase().replace("_", ""), state.toString().toLowerCase(), i);
-			String name = String.format("%s-%04d", animationName, i);
-			AtlasRegion atlasRegion = atlas.findRegion(name);
-			
-			// We've added all key frames of the animation
-			if(atlasRegion == null) break;
-			
-			// Create new region so that it can flipped etc without affecting the texture
-			// region in the atlas
-			TextureRegion region = new TextureRegion(atlasRegion);
-			region.flip(false, true);
-			regions.add(region);
-		}
-		
-		if(regions.size() == 0){
-			throw new IllegalArgumentException(String.format("No animation with the name '%s' was found.", animationName));
-		}
-		
-		return new Animation(1f/6f, regions);
-	}
-	*/
 	
 	private static String assetsDirectoryRootPath;
 	public static String getAssetsDirectoryPath(String path){
