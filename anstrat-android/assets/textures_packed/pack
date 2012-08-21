@@ -487,30 +487,23 @@ blood-medium-0001
   orig: 128, 64
   offset: 0, 0
   index: -1
-blood-big-0004
+blood-big-0003
   rotate: false
   xy: 132, 1626
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
-blood-big-0003
+blood-big-0002
   rotate: false
   xy: 262, 1626
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
-blood-big-0002
-  rotate: false
-  xy: 132, 1692
-  size: 128, 64
-  orig: 128, 64
-  offset: 0, 0
-  index: -1
 blood-big-0001
   rotate: false
-  xy: 262, 1692
+  xy: 132, 1692
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
@@ -1144,37 +1137,72 @@ border-thick-white
   orig: 149, 113
   offset: 0, 0
   index: -1
-movement-line
+movement-line-arrows-0009
   rotate: false
   xy: 1850, 762
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-movement-line-arrows
+movement-line-arrows-0008
   rotate: false
   xy: 1850, 892
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-movement-arrows2
+movement-line-arrows-0007
   rotate: false
   xy: 1845, 1028
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-movement-arrows
+movement-line-arrows-0006
   rotate: false
   xy: 1854, 1270
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-symbol
+movement-line-arrows-0005
   rotate: false
   xy: 1646, 1400
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+movement-line-arrows-0004
+  rotate: false
+  xy: 1776, 1400
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+movement-line-arrows-0003
+  rotate: false
+  xy: 1906, 1400
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+movement-line-arrows-0002
+  rotate: false
+  xy: 1132, 1664
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+movement-line-arrows-0001
+  rotate: false
+  xy: 1132, 1794
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-symbol
+  rotate: false
+  xy: 1262, 1664
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
