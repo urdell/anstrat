@@ -15,9 +15,11 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class AnimationLoader {
 	private Map<String, Animation> animations;
+	private Map<String, String> alias;
 	
 	public AnimationLoader(FileHandle file, TextureAtlas atlas){
 		animations = new HashMap<String, Animation>();
+		alias = new HashMap<String, String>();
 		loadAnimationsFromFile(file, atlas);
 	}
 	
@@ -26,11 +28,14 @@ public class AnimationLoader {
 	}
 	
 	public Animation getAnimation(String name){
-		if(!animations.containsKey(name)){
-			throw new IllegalArgumentException(String.format("The animation named '%s' does not exist.", name));
+		String animationName = !animations.containsKey(name) ? alias.get(name) : name; 
+		Animation animation = animations.get(animationName);
+		
+		if(animation == null){
+			throw new IllegalArgumentException(String.format("The animation named '%s' does not exist.", animationName));
 		}
 		
-		return animations.get(name);
+		return animation;
 	}
 	
 	private void loadAnimationsFromFile(FileHandle file, TextureAtlas atlas){
@@ -53,6 +58,13 @@ public class AnimationLoader {
 	private void loadAnimation(Element element, int defaultFPS, TextureAtlas atlas){
 		int fps = element.getInt("fps", defaultFPS);
 		String animationName = element.get("name");
+		String aliasof = element.getAttribute("aliasof", null);
+		
+		if(aliasof != null){
+			// This animation is just another name for another animation
+			alias.put(animationName, aliasof);
+			return;
+		}
 		
 		// Parse frames
 		ArrayList<TextureRegion> keyFrames = new ArrayList<TextureRegion>();
