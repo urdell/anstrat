@@ -173,6 +173,7 @@ public class ConfirmDialog {
 		confirmDialog.rows.add(new APRow(attacker, attacker.getAPCostAttack()));
 		
 		confirmDialog.refreshBounds();
+		GEngine.getInstance().confirmOverlay.showAttack(attacker.tileCoordinate, target.tileCoordinate, attacker.getAPCostAttack());
 		
 		return confirmDialog;
 	}
