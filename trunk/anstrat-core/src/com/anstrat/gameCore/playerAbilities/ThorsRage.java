@@ -35,7 +35,6 @@ public class ThorsRage extends TargetedPlayerAbility {
 	
 	@Override
 	public boolean isAllowed(Player player, TileCoordinate target) {
-		System.out.println("Hej");
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
