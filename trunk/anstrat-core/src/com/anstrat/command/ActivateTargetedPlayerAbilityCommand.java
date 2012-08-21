@@ -43,5 +43,10 @@ public class ActivateTargetedPlayerAbilityCommand extends Command {
 				&& ability instanceof TargetedPlayerAbility
 				&& ((TargetedPlayerAbility)ability).isAllowed(ability.player, target);
 	}
+
+	public String getReason() {
+		// TODO Auto-generated method stub
+		return "Not possible";
+	}
 	
 }

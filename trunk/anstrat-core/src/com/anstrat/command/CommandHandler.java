@@ -27,6 +27,18 @@ public final class CommandHandler {
 				Animation animation = new FullscreenTextAnimation(((CreateUnitCommand) command).getReason());
 				GEngine.getInstance().animationHandler.runParalell(animation);
 			}
+			else if (command instanceof ActivateTargetedPlayerAbilityCommand) { 
+				Animation animation = new FullscreenTextAnimation(((ActivateTargetedPlayerAbilityCommand) command).getReason());
+				GEngine.getInstance().animationHandler.runParalell(animation);
+			}
+			else if ( command instanceof ActivateDoubleTargetedPlayerAbilityCommand) {
+				Animation animation = new FullscreenTextAnimation(((ActivateDoubleTargetedPlayerAbilityCommand) command).getReason());
+				GEngine.getInstance().animationHandler.runParalell(animation);
+			}
+			else if ( command instanceof ActivatePlayerAbilityCommand) {
+				Animation animation = new FullscreenTextAnimation(((ActivatePlayerAbilityCommand) command).getReason());
+				GEngine.getInstance().animationHandler.runParalell(animation);
+			}
 		}
 	}
 	
