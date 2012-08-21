@@ -78,13 +78,13 @@ public class ChainingAxeAnimation extends Animation{
 			if(firstUnit){
 				gAttacker.playAttack();
 			}
-			ge.animationHandler.runParalell(new DefendAnimation(gAttacker, gDefender, impactAnimationTime));
-			
+
 			started = true;
 		}
 		
 		if(!pastImpactAnimation && length - lifetimeLeft > impactAnimationTime){ // Time of impact animation (slightly before actual impact
 			//GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
+			gDefender.playHurt();
 			pastImpactAnimation = true;
 		}
 		

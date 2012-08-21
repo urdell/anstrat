@@ -94,8 +94,6 @@ public class AttackAnimation extends Animation{
 			gDefender.setFacingRight(!facingRight);
 			gAttacker.playAttack();
 			
-			ge.animationHandler.runParalell(new DefendAnimation(gAttacker, gDefender, impactAnimationTime));
-			
 			started = true;
 		}
 		
@@ -117,8 +115,11 @@ public class AttackAnimation extends Animation{
 			
 			//gDefender.healthBar.setValue(healthPercentage);
 			gDefender.healthBar.setHealth(healthPercentage, cl.newDefenderHP);
+			
+			// Hurt and blood animation
 			boolean directionLeft = start.x > target.x;
-			GEngine.getInstance().animationHandler.runParalell(new BloodAnimation(gDefender,directionLeft));
+			GEngine.getInstance().animationHandler.runParalell(new BloodAnimation(gDefender, directionLeft));
+			gDefender.playHurt();
 			
 			if(cl.newDefenderHP <= 0){
 				Vector2 temp = new Vector2(gDefender.getPosition());
