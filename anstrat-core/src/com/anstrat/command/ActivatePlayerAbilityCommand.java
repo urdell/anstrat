@@ -32,5 +32,9 @@ public class ActivatePlayerAbilityCommand extends Command {
 		return super.isAllowed() && ability != null && ability.isAllowed(ability.player);
 		
 	}
+	
+	public String getReason() {
+		return "Not possible";
+	}
 
 }

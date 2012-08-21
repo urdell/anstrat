@@ -39,7 +39,7 @@ public class RemoveEffects extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				targetUnit.ownerId == player.playerId &&
+				!targetUnit.effects.isEmpty() &&
 				Fog.isVisible(target, player.playerId);
 	}
 
