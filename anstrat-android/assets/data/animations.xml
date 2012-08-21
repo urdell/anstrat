@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations fps="6">
-
     <animation name="goblin-walk">
         <frame image="goblin-walk-0001" number="1"/>
         <frame image="goblin-walk-0002" number="2"/>
@@ -56,11 +55,9 @@
         <frame image="shaman-magic-0008" number="8"/>
     </animation>
     <animation name="shaman-attack-effect" fps="9">
-        <frame image="shaman-attack-effect-0001" number="1"/>
+        <frame image="shaman-fireball-0001" number="1"/>
         <frame image="shaman-attack-effect-0002" number="2"/>
-        <frame image="shaman-attack-effect-0003" number="3"/>
-        <frame image="shaman-attack-effect-0004" number="4"/>
-        <frame image="shaman-attack-effect-0005" number="5"/>
+        <frame image="shaman-attack-effect-0001" number="3"/>
     </animation>
     <animation name="swordsman-death">
         <frame image="swordsman-death-0001" number="1" count="2"/>
@@ -131,7 +128,7 @@
         <frame image="berserker-idle-0010" number="10"/>
         <frame image="berserker-idle-0011" number="11"/>
     </animation>
-    <animation name="sword-attack-effect">
+    <animation name="swordsman-attack-effect">
         <frame image="sword-attack-effect-0001" number="1"/>
         <frame image="sword-attack-effect-0002" number="2"/>
         <frame image="sword-attack-effect-0003" number="3"/>
@@ -269,11 +266,9 @@
         <frame image="flag-inplace-black-0003" number="3"/>
         <frame image="flag-inplace-black-0004" number="4"/>
     </animation>
-    <animation name="hammer-attack-effect">
+    <animation name="berserker-attack-effect">
         <frame image="hammer-attack-effect-0001" number="1"/>
         <frame image="hammer-attack-effect-0002" number="2"/>
-        <frame image="hammer-attack-effect-0003" number="3"/>
-        <frame image="hammer-attack-effect-0004" number="4"/>
     </animation>
     <animation name="goblin-death">
         <frame image="goblin-death-0001" number="1" count="2"/>
@@ -351,7 +346,7 @@
         <frame image="shallow-0001" number="1"/>
         <frame image="shallow-0002" number="2"/>
     </animation>
-    <animation name="blood-big" fps="12">
+    <animation name="blood-big" fps="6">
         <frame image="blood-big-0001" number="1"/>
         <frame image="blood-big-0002" number="2"/>
         <frame image="blood-big-0003" number="3"/>
@@ -390,7 +385,7 @@
         <frame image="jotun-attack-0010" number="10"/>
         <frame image="jotun-attack-0011" number="11"/>
     </animation>
-    <animation name="axe-attack-effect" fps="12">
+    <animation name="axethrower-attack-effect">
         <frame image="axe-attack-effect-0001" number="1"/>
         <frame image="axe-attack-effect-0002" number="2"/>
         <frame image="axe-attack-effect-0003" number="3"/>

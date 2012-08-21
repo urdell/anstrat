@@ -10,7 +10,7 @@ public class GenericVisualAnimation extends Animation{
 	Vector2 position;
 	int size;
 
-	public GenericVisualAnimation( com.badlogic.gdx.graphics.g2d.Animation gdxAnimation, Vector2 position, int size ){
+	public GenericVisualAnimation(com.badlogic.gdx.graphics.g2d.Animation gdxAnimation, Vector2 position, int size ){
 		this.gdxAnimation = gdxAnimation;
 		this.position = position;
 		this.size = size;

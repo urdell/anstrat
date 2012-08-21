@@ -16,11 +16,10 @@ public class AttackAnimation extends Animation{
 	/** Time for entire animation */
 	public float attackSpeed = 0.8f; 
 	public float impactTime = 0.5f;
-	public float impactAnimationTime = 0.3f;
+	private String impactAnimationName;
 	public float rangedDelay = 0.6f;
 	
 	private boolean pastImpact = false;
-	private boolean pastImpactAnimation = false;
 	
 	/** Projectile positions */
 	private Vector2 start, current, target;
@@ -37,7 +36,6 @@ public class AttackAnimation extends Animation{
 			case AXE_THROWER: {
 				attackSpeed = 1.5f;
 				impactTime = (attackSpeed + rangedDelay) / 2;
-				impactAnimationTime = impactTime; // start playing exactly when axe hits
 				break;
 			}
 			case GOBLIN_SHAMAN: // Fall through
@@ -45,18 +43,17 @@ public class AttackAnimation extends Animation{
 				rangedDelay = 0.3f;
 				attackSpeed = 1.2f;
 				impactTime = 1f;
-				impactAnimationTime = impactTime; // start playing exactly when fireball hits
 				break;
 			}
 			case WOLF: {
 				attackSpeed = 0.8f;
-				impactAnimationTime = 0.1f;
 				break;
 			}
 		}
 		
 		this.length = attackSpeed;
 		this.lifetimeLeft = length;
+		this.impactAnimationName = String.format("%s-attack-effect", cl.attacker.getUnitType().graphicsFolder);
 		
 		GEngine ge = GEngine.getInstance();
 		start = ge.getMap().getTile(cl.attacker.tileCoordinate).getCenter();
@@ -89,7 +86,7 @@ public class AttackAnimation extends Animation{
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;
 			
-			boolean facingRight = cl.attacker.tileCoordinate.x < cl.defender.tileCoordinate.x;
+			boolean facingRight = cl.attacker.tileCoordinate.x <= cl.defender.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
 			gDefender.setFacingRight(!facingRight);
 			gAttacker.playAttack();
@@ -97,12 +94,10 @@ public class AttackAnimation extends Animation{
 			started = true;
 		}
 		
-		if(!pastImpactAnimation && length - lifetimeLeft > impactAnimationTime){ // Time of impact animation (slightly before actual impact
-			//GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
-			pastImpactAnimation = true;
-		}
-		
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
+			// Start impact animation
+			GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
+			
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
 			FloatingTextAnimation animation = new FloatingTextAnimation(cl.defender.tileCoordinate, String.valueOf(cl.attackDamage), Color.RED);
@@ -126,6 +121,7 @@ public class AttackAnimation extends Animation{
 				ge.animationHandler.runParalell(new DeathAnimation(cl.defender, 
 						temp.sub(gAttacker.getPosition()).nor()));
 			}
+			
 			pastImpact = true;
 		}
 
@@ -166,7 +162,7 @@ public class AttackAnimation extends Animation{
 				region = Assets.getAnimation("shaman-fireball").getKeyFrame(animationTimePassed, true);
 			}
 			
-			// Draw impact effect
+			// Draw projectile
 			if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
 		}
 		

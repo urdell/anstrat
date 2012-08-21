@@ -72,9 +72,9 @@ public class ChainingAxeAnimation extends Animation{
 				gAttacker.healthBar.currentAP = sourceUnit.currentAP;
 			}
 			
-			boolean facingRight = sourceUnit.tileCoordinate.x < targetUnit.tileCoordinate.x;
+			boolean facingRight = sourceUnit.tileCoordinate.x <= targetUnit.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
-			gDefender.setFacingRight(!facingRight);
+			
 			if(firstUnit){
 				gAttacker.playAttack();
 			}
@@ -113,7 +113,6 @@ public class ChainingAxeAnimation extends Animation{
 		}
 
 		// Update projectile position
-		// Throwing axe
 		float timeTaken = attackSpeed - lifetimeLeft;
 		float amtOffset = (timeTaken - rangedDelay) / (impactTime - rangedDelay);
 		current.set(start.x + xoffset * amtOffset, start.y + yoffset * amtOffset);
@@ -138,7 +137,7 @@ public class ChainingAxeAnimation extends Animation{
 			if(animationTimePassed > rangedDelay){
 				TextureRegion region = null;
 				region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
-				// Draw impact effect
+				// Draw projectile animation
 				if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
 			}
 		}
