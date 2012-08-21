@@ -1074,6 +1074,13 @@ confirm-ability
   orig: 512, 130
   offset: 0, 0
   index: -1
+background
+  rotate: false
+  xy: 1132, 1664
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 BottomSmallPanel
   rotate: false
   xy: 618, 1924
@@ -1174,77 +1181,77 @@ movement-line-arrows-0003
   index: -1
 movement-line-arrows-0002
   rotate: false
-  xy: 1132, 1664
+  xy: 1390, 1664
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 movement-line-arrows-0001
   rotate: false
-  xy: 1132, 1794
+  xy: 1390, 1794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-symbol
   rotate: false
-  xy: 1262, 1664
+  xy: 1646, 1532
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0008
   rotate: false
-  xy: 1392, 1664
+  xy: 1776, 1532
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0007
   rotate: false
-  xy: 1262, 1794
+  xy: 1906, 1532
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0006
   rotate: false
-  xy: 1392, 1794
+  xy: 1646, 1662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0005
   rotate: false
-  xy: 1646, 1532
+  xy: 1646, 1792
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0004
   rotate: false
-  xy: 1776, 1532
+  xy: 1776, 1662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0003
   rotate: false
-  xy: 1906, 1532
+  xy: 1906, 1662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0002
   rotate: false
-  xy: 1646, 1662
+  xy: 1776, 1792
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 attack-line-0001
   rotate: false
-  xy: 1646, 1792
+  xy: 1906, 1792
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

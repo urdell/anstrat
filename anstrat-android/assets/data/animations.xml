@@ -176,6 +176,16 @@
         <frame image="movement-line-arrows-0008" number="8"/>
         <frame image="movement-line-arrows-0009" number="9"/>
     </animation>
+    <animation name="attack-line">
+        <frame image="attack-line-0001" number="1"/>
+        <frame image="attack-line-0002" number="2"/>
+        <frame image="attack-line-0003" number="3"/>
+        <frame image="attack-line-0004" number="4"/>
+        <frame image="attack-line-0005" number="5"/>
+        <frame image="attack-line-0006" number="6"/>
+        <frame image="attack-line-0007" number="7"/>
+        <frame image="attack-line-0008" number="8"/>
+    </animation>
     <animation name="axethrower-attack">
         <frame image="axethrower-attack-0001" number="1" count="2"/>
         <frame image="axethrower-attack-0002" number="2"/>
