@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GUnit extends GObject {
 	
-	public enum AnimationState { IDLE, SPECIAL_IDLE, WALK, ATTACK, DEATH, ABILITY, CUSTOM }
+	public enum AnimationState { IDLE, SPECIAL_IDLE, WALK, ATTACK, HURT, DEATH, ABILITY, CUSTOM }
 	
 	private Animation[] animations;
 	private boolean animationLooping[];
@@ -212,6 +212,11 @@ public class GUnit extends GObject {
 	public void playWalk(){
 		animationTime = 0;
 		animationState = AnimationState.WALK;
+	}
+	
+	public void playHurt(){
+		animationTime = 0;
+		animationState = AnimationState.HURT;
 	}
 	
 	public void setFacingRight(boolean facingRight){

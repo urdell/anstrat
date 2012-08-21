@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations fps="6">
-    <animation name="shaman-death">
-        <frame image="shaman-death-0001" number="1" count="2"/>
-        <frame image="shaman-death-0002" number="2" count="2"/>
-        <frame image="shaman-death-0003" number="3" count="10"/>
-    </animation>
+
     <animation name="goblin-walk">
         <frame image="goblin-walk-0001" number="1"/>
         <frame image="goblin-walk-0002" number="2"/>
@@ -12,19 +8,12 @@
         <frame image="goblin-walk-0004" number="4"/>
     </animation>
     <animation name="fallen-death">
-        <frame image="fallen-death-0001" number="1" count="2"/>
-	<frame image="fallen-death-0002" number="2" count="2"/>
-	<frame image="fallen-death-0003" number="3" count="10"/>
+    <frame image="fallen-death-0001" number="1" count="2"/>
+	   <frame image="fallen-death-0002" number="2" count="2"/>
+	   <frame image="fallen-death-0003" number="3" count="10"/>
     </animation>
-    <animation name="shaman-magic">
-        <frame image="shaman-magic-0001" number="1"/>
-        <frame image="shaman-magic-0002" number="2" count="2"/>
-        <frame image="shaman-magic-0003" number="3"/>
-        <frame image="shaman-magic-0004" number="4"/>
-        <frame image="shaman-magic-0005" number="5" count="12"/>
-        <frame image="shaman-magic-0006" number="6"/>
-        <frame image="shaman-magic-0007" number="7"/>
-        <frame image="shaman-magic-0008" number="8"/>
+    <animation name="fallen-hurt">
+        <frame image="fallen-death-0001" number="1" count="2"/>
     </animation>
     <animation name="flag-goingdown-red">
         <frame image="flag-goingdown-red-0001" number="1"/>
@@ -48,6 +37,24 @@
         <frame image="fallen-idle-0010" number="10"/>
         <frame image="fallen-idle-0011" number="11"/>
     </animation>
+    <animation name="shaman-death">
+        <frame image="shaman-death-0001" number="1" count="2"/>
+        <frame image="shaman-death-0002" number="2" count="2"/>
+        <frame image="shaman-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="shaman-hurt">
+        <frame image="shaman-death-0001" number="1" count="2"/>
+    </animation>
+    <animation name="shaman-magic">
+        <frame image="shaman-magic-0001" number="1"/>
+        <frame image="shaman-magic-0002" number="2" count="2"/>
+        <frame image="shaman-magic-0003" number="3"/>
+        <frame image="shaman-magic-0004" number="4"/>
+        <frame image="shaman-magic-0005" number="5" count="12"/>
+        <frame image="shaman-magic-0006" number="6"/>
+        <frame image="shaman-magic-0007" number="7"/>
+        <frame image="shaman-magic-0008" number="8"/>
+    </animation>
     <animation name="shaman-attack-effect" fps="9">
         <frame image="shaman-attack-effect-0001" number="1"/>
         <frame image="shaman-attack-effect-0002" number="2"/>
@@ -58,7 +65,10 @@
     <animation name="swordsman-death">
         <frame image="swordsman-death-0001" number="1" count="2"/>
         <frame image="swordsman-death-0002" number="2" count="2"/>
-	<frame image="swordsman-death-0003" number="3" count="10"/>
+	   <frame image="swordsman-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="swordsman-hurt">
+        <frame image="swordsman-death-0001" number="1" count="2"/>
     </animation>
     <animation name="shaman-heal">
         <frame image="shaman-heal-0001" number="1"/>
@@ -78,6 +88,9 @@
 	<frame image="jotun-death-0002" number="2" count="2"/>
 	<frame image="jotun-death-0003" number="3" count="10"/>
     </animation>
+    <animation name="jotun-hurt">
+        <frame image="jotun-death-0001" number="1" count="2"/>
+    </animation>
     <animation name="water-deep">
         <frame image="water-deep-0001" number="1"/>
     </animation>
@@ -95,6 +108,9 @@
         <frame image="axethrower-death-0001" number="1" count="2"/>
         <frame image="axethrower-death-0002" number="2" count="2"/>
         <frame image="axethrower-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="axethrower-hurt">
+        <frame image="axethrower-death-0001" number="1" count="2"/>
     </animation>
     <animation name="wolf-attack-effect">
         <frame image="wolf-attack-effect-0001" number="1"/>
@@ -170,10 +186,16 @@
         <frame image="hawk-death-0002" number="2" count="2"/>
         <frame image="hawk-death-0003" number="3" count="10"/>
     </animation>
+    <animation name="hawk-hurt">
+        <frame image="hawk-death-0001" number="1" count="2"/>
+    </animation>
     <animation name="troll-death">
         <frame image="troll-death-0001" number="1" count="2"/>
-	<frame image="troll-death-0002" number="2" count="2"/>
-	<frame image="troll-death-0003" number="3" count="10"/>
+	   <frame image="troll-death-0002" number="2" count="2"/>
+	   <frame image="troll-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="troll-hurt">
+        <frame image="troll-death-0001" number="1" count="2"/>
     </animation>
     <animation name="wolf-idle">
         <frame image="wolf-idle-0001" number="1"/>
@@ -247,6 +269,9 @@
 	<frame image="goblin-death-0002" number="2" count="2"/>
 	<frame image="goblin-death-0003" number="3" count="10"/>
     </animation>
+    <animation name="goblin-hurt">
+        <frame image="goblin-death-0001" number="1" count="2"/>
+    </animation>
     <animation name="wolf-attack" fps="9">
         <frame image="wolf-attack-0001" number="1" count="3"/>
         <frame image="wolf-attack-0002" number="2"/>
@@ -293,6 +318,9 @@
         <frame image="valkyrie-death-0001" number="1" count="2"/>
 	<frame image="valkyrie-death-0002" number="2" count="2"/>
 	<frame image="valkyrie-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="valkyrie-hurt">
+        <frame image="valkyrie-death-0001" number="1" count="2"/>
     </animation>
     <animation name="target-heal" fps="9">
         <frame image="target-heal-0001" number="1"/>
@@ -366,7 +394,9 @@
         <frame image="berserker-death-0001" number="1" count="2"/>
         <frame image="berserker-death-0002" number="2" count="2"/>
 	   <frame image="berserker-death-0003" number="3" count="10"/>
-
+    </animation>
+    <animation name="berserker-hurt">
+        <frame image="berserker-death-0001" number="1" count="2"/>
     </animation>
     <animation name="meteorimpact" fps="3">
         <frame image="meteorimpact-0001" number="1"/>
@@ -424,6 +454,9 @@
         <frame image="wolf-death-0002" number="2" count="2"/>
 	<frame image="wolf-death-0003" number="3" count="10"/>
     </animation>
+    <animation name="wolf-hurt">
+        <frame image="wolf-death-0001" number="1" count="2"/>
+    </animation>
     <animation name="lightning" fps="6">
         <frame image="lightning-0001" number="1"/>
         <frame image="lightning-0002" number="2"/>
@@ -452,6 +485,9 @@
         <frame image="elf-death-0001" number="1" count="2"/>
 	<frame image="elf-death-0002" number="2" count="2"/>
 	<frame image="elf-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="elf-hurt">
+        <frame image="elf-death-0001" number="1" count="2"/>
     </animation>
     <animation name="flag-inplace-red">
         <frame image="flag-inplace-red-0001" number="1"/>

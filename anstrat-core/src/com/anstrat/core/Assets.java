@@ -309,6 +309,7 @@ public final class Assets {
 			isLoopingOut[AnimationState.WALK.ordinal()] = true;
 			isLoopingOut[AnimationState.ATTACK.ordinal()] = false;
 			isLoopingOut[AnimationState.DEATH.ordinal()] = false;
+			isLoopingOut[AnimationState.HURT.ordinal()] = false;
 			isLoopingOut[AnimationState.ABILITY.ordinal()] = false;
 			
 			unitAnimations.put(type, new Pair<Animation[], boolean[]>(animationsOut, isLoopingOut));

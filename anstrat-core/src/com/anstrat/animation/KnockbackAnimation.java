@@ -85,8 +85,6 @@ public class KnockbackAnimation extends Animation {
 			gDefender.setFacingRight(!facingRight);
 			gAttacker.playAttack();
 			
-			
-			ge.animationHandler.runParalell(new DefendAnimation(gAttacker, gDefender, impactAnimationTime));
 			ge.animationHandler.enqueue(new KnockbackEffectAnimation(cl));
 			started = true;
 		}
@@ -94,6 +92,7 @@ public class KnockbackAnimation extends Animation {
 		if(!pastImpactAnimation && length - lifetimeLeft > impactAnimationTime){ // Time of impact animation (slightly before actual impact
 			//GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
 			pastImpactAnimation = true;
+			gDefender.playHurt();
 		}
 		
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
