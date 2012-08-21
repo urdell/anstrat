@@ -166,6 +166,17 @@
         <frame image="flag-inplace-blue-0003" number="3"/>
         <frame image="flag-inplace-blue-0004" number="4"/>
     </animation>
+    <animation name="movement-line-arrows" fps="13">
+        <frame image="movement-line-arrows-0001" number="1"/>
+        <frame image="movement-line-arrows-0002" number="2"/>
+        <frame image="movement-line-arrows-0003" number="3"/>
+        <frame image="movement-line-arrows-0004" number="4"/>
+        <frame image="movement-line-arrows-0005" number="5"/>
+        <frame image="movement-line-arrows-0006" number="6"/>
+        <frame image="movement-line-arrows-0007" number="7"/>
+        <frame image="movement-line-arrows-0008" number="8"/>
+        <frame image="movement-line-arrows-0009" number="9"/>
+    </animation>
     <animation name="axethrower-attack">
         <frame image="axethrower-attack-0001" number="1" count="2"/>
         <frame image="axethrower-attack-0002" number="2"/>
@@ -344,7 +355,6 @@
         <frame image="blood-big-0001" number="1"/>
         <frame image="blood-big-0002" number="2"/>
         <frame image="blood-big-0003" number="3"/>
-        <frame image="blood-big-0004" number="4"/>
     </animation>
     <animation name="wolf-walk" fps="12">
         <frame image="wolf-walk-0001" number="1"/>
