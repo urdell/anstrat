@@ -80,7 +80,7 @@ public class KnockbackAnimation extends Animation {
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;
 			
-			boolean facingRight = cl.attacker.tileCoordinate.x < cl.defender.tileCoordinate.x;
+			boolean facingRight = cl.attacker.tileCoordinate.x <= cl.defender.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
 			gDefender.setFacingRight(!facingRight);
 			gAttacker.playAttack();
