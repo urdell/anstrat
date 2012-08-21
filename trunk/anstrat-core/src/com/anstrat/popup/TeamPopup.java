@@ -33,19 +33,21 @@ public class TeamPopup extends Popup{
 	
 	private Button okButton;
 	private Button[] gods;
-	private Label god, team;
+	private Label godLabel, teamLabel;
 	private Button[] teams;
 	private NinePatch[] godSilhouettes;
 	private NinePatch[] teamSilhouettes;
 	private ColorTable godTable;
 	private ColorTable teamTable;
 	
-	public static int selectedGod = 0;
-	public static int selectedTeam = 0;
+	private  int selectedGod = 0;
+	private  int selectedTeam = 0;
 	
-	public TeamPopup(String title) {
+	private TeamPopupListener listener;
+	
+	public TeamPopup(int god, int team, String title, TeamPopupListener teamPopupListener) {
 		super(title);
-		
+		this.listener = teamPopupListener;
 		okButton = ComponentFactory.createButton("Ok!", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		gods = new Button[4];
@@ -96,33 +98,32 @@ public class TeamPopup extends Popup{
 		teamTable.add(teams[0]);
 		teamTable.add(teams[1]);
 		
-		god = new Label(Assets.SKIN);
-		team = new Label(Assets.SKIN);
+		godLabel = new Label(Assets.SKIN);
+		teamLabel = new Label(Assets.SKIN);
 		
 		//this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
 		this.add(godTable).width(Gdx.graphics.getWidth()).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
 		this.row();
-		this.add(god).expandX().fillX();
+		this.add(godLabel).expandX().fillX();
 		this.row();
 		this.add(teamTable).width(Gdx.graphics.getWidth()).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
 		this.row();
-		this.add(team).expandX().fillX();
+		this.add(teamLabel).expandX().fillX();
 		this.row();
 		this.add().expand().uniform();
 		this.row();
 		this.add(okButton).width(Gdx.graphics.getWidth()).expandY().bottom();
 		
-		selectButton(gods[0]);
-		selectButton(teams[0]);
-		
-		
+		selectButton(gods[god]);
+		selectButton(teams[team]);
 	}
 	
 	private void selectButton(Button actor) {
+		
 		for(int i = 0; i < gods.length; i++) {
 			if (gods[i].equals(actor)) {
 				selectedGod = i;
-				god.setText(getGodName(i));
+				godLabel.setText(getGodName(i));
 				return;
 			}
 		}
@@ -130,11 +131,11 @@ public class TeamPopup extends Popup{
 		for (int i = 0; i < teams.length; i++) {
 			if (teams[i].equals(actor)) {
 				selectedTeam = i;
-				team.setText(getTeamName(i));
+				teamLabel.setText(getTeamName(i));
 				return;
 			}
 		}
-		
+		listener.onChosen(selectedGod, selectedTeam);
 	}
 	
 	private String getGodName(int god) {
@@ -173,5 +174,7 @@ public class TeamPopup extends Popup{
 		super.draw(batch, parentAlpha);
 	}
 	
-	
+	public static interface TeamPopupListener {
+		public void onChosen(int god, int team);
+	}
 }

@@ -9,7 +9,6 @@ import java.util.Random;
 
 import com.anstrat.core.NetworkGameInstance.NetworkPlayer;
 import com.anstrat.gameCore.Player;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -28,8 +27,8 @@ public class GameManager {
 		this.gamesFile = gamesFile;
 	}
 	
-	public GameInstance createAIGame(Map map, Integer... aiPlayerIds){
-		GameInstance gi = createHotseatGame(map);
+	public GameInstance createAIGame(Map map, int player1god, int player1team, Integer... aiPlayerIds){
+		GameInstance gi = createHotseatGame(map, player1god, player1team, Player.getRandomGod(), Player.getRandomTeam());
 		gi.setAIPlayers(aiPlayerIds);
 		return gi;
 	}
@@ -38,20 +37,16 @@ public class GameManager {
 	 * @param map a map or null to generate a random map
 	 * @return
 	 */
-	public GameInstance createHotseatGame(Map map){
-		return createHotseatGame(map, 2);
+	public GameInstance createHotseatGame(Map map, int player1god, int player1team, int player2god, int player2team){
+		return createHotseatGame(map, 2, new int[]{player1god, player2god}, new int[]{player1team, player2team});
 	}
 	
-	public GameInstance createHotseatGame(Map map, int numPlayers){
+	public GameInstance createHotseatGame(Map map, int numPlayers, int[] gods, int[] teams){
 		
 		Player[] players = new Player[numPlayers];
-		int team = 0;
 		
 		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(i, "Player " + i, team, Player.getRandomGod());
-			
-			// Toggle team
-			team = (team + 1) % UnitType.TEAMS.length;
+			players[i] = new Player(i, "Player " + i, teams[i], gods[i]);
 		}
 		
 		// If no map given, create a random one

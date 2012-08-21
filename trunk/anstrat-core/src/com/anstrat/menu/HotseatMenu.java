@@ -3,8 +3,6 @@ package com.anstrat.menu;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.popup.InvitePopup;
-import com.anstrat.popup.InvitePopup.InvitePopupHandler;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -18,21 +16,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
-public class InviteMatchMenu extends MenuScreen {
-	private static InviteMatchMenu me;
-	private static TextButton friendButton;
+public class HotseatMenu extends MenuScreen {
+	private static HotseatMenu me;
 	
-	public static int god = TeamPopup.GOD_ODIN, team = TeamPopup.TEAM_VV;
+	public static int player1god = TeamPopup.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = TeamPopup.GOD_HEL, player2team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;
-	private boolean randomCustomMap = true;
 	private boolean randomServerdMap = false;
+	private boolean randomCustomMap = false;
 	
-	private InviteMatchMenu(){
+	private HotseatMenu(){
         
-		Table settings = new Table(Assets.SKIN);
-		settings.setBackground(Assets.SKIN.getPatch("single-border"));
+		Table map = new Table(Assets.SKIN);
+		map.setBackground(Assets.SKIN.getPatch("single-border"));
 		
 		//TextField timeLimit = ComponentFactory.createTextField("Time limit (in minutes)", false);
 		
@@ -99,51 +96,11 @@ public class InviteMatchMenu extends MenuScreen {
 				randomCustomMap = false;
 				randomServerdMap = false;
 				mapLabel.setText("Generated map");
+				
 			}
 			
 		});
 		
-		Button god = ComponentFactory.createButton("God and team", new ClickListener() {
-
-			@Override
-			public void click(Actor actor, float x, float y) {
-				Popup popup = new TeamPopup(InviteMatchMenu.god, InviteMatchMenu.team, "Select your team and god", new TeamPopupListener() {
-
-					@Override
-					public void onChosen(int godChosen, int teamChosen) {
-						InviteMatchMenu.god = godChosen;
-						InviteMatchMenu.team = teamChosen;
-					}
-					
-				});
-				
-				popup.show();
-			}
-			
-		});
-		
-		friendButton = ComponentFactory.createButton("No friend :(", new ClickListener() {
-
-			@Override
-			public void click(Actor actor, float x, float y) {
-				
-				
-				Popup popup = new InvitePopup(new InvitePopupHandler() {
-
-					@Override
-					public void friendSelected(String friend) {
-						// TODO something with this friend of ours.
-						Main.getInstance().friends.createFriend(friend);
-						Main.getInstance().friends.saveFriends();
-						friendButton.setText(friend);
-					}
-					
-				}, "Select or write friend's username");
-				popup.show();
-				
-			}
-			
-		});
 		
 		Table mapTable1 = new Table();
 		mapTable1.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
@@ -153,35 +110,83 @@ public class InviteMatchMenu extends MenuScreen {
 		mapTable2.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
 		mapTable2.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
 		
-		settings.defaults().height((int)(Main.percentHeight*10));
-		settings.add("Find Match");
-		settings.row();
-		settings.add(mapTable1);
-		settings.row();
-		settings.add(mapTable2);
-		settings.row();
-		settings.add(mapLabel).center();
-		settings.row();
-		settings.add(friendButton).fillX().expandX();
-		settings.row();
-		settings.add(fog).fillX().expandX();
-		settings.row();
-		settings.add(god).fillX().expandX();
+		map.defaults().height((int)(Main.percentHeight*10));
+		map.add(mapTable1);
+		map.row();
+		map.add(mapTable2);
+		map.row();
+		map.add(mapLabel).center();
+		
+		Table player1table = new Table(); 
+		Table player2table = new Table();
+		
+		player1table.setBackground(Assets.SKIN.getPatch("single-border"));
+		player2table.setBackground(Assets.SKIN.getPatch("single-border"));
+		
+		final TextButton player1nameButton = new TextButton("Player 1", Assets.SKIN);
+		final TextButton player2nameButton = new TextButton("Player 2", Assets.SKIN);
+		TextButton player1teamButton = new TextButton("God and Team", Assets.SKIN);
+		player1teamButton.setClickListener(new ClickListener() {
+
+			@Override
+			public void click(Actor actor, float x, float y) {
+				Popup popup = new TeamPopup(HotseatMenu.player1god, HotseatMenu.player1team, "Select "+player1nameButton.getText()+"'s god and team", new TeamPopupListener(){
+
+					@Override
+					public void onChosen(int god, int team) {
+						HotseatMenu.player1god = god;
+						HotseatMenu.player1team = team;
+					}
+					
+				});
+				
+				popup.show();
+				
+			}
+			
+		});
+		TextButton player2teamButton = new TextButton("God and Team", Assets.SKIN);
+		player2teamButton.setClickListener(new ClickListener() {
+
+			@Override
+			public void click(Actor actor, float x, float y) {
+				Popup popup = new TeamPopup(HotseatMenu.player2god, HotseatMenu.player2team, "Select "+player2nameButton.getText()+"'s god and team", new TeamPopupListener(){
+
+					@Override
+					public void onChosen(int god, int team) {
+						HotseatMenu.player2god = god;
+						HotseatMenu.player2team = team;
+					}
+					
+				});
+				popup.show();
+			}
+			
+		});
+		
+		player1table.defaults().height((int)(Main.percentHeight*10));
+		player1table.add(player1nameButton).fillX().expandX();
+		player1table.row();
+		player1table.add(player1teamButton).fillX().expandX();
+		
+		player2table.defaults().height((int)(Main.percentHeight*10));
+		player2table.add(player2nameButton).fillX().expandX();
+		player2table.row();
+		player2table.add(player2teamButton).fillX().expandX();
 		        
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
 		    public void click(Actor actor,float x,float y ){
-				
 				if (generatedMap) {
 					Main.getInstance().games.createHotseatGame(null, HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 				}
 				else if (randomServerdMap) {
 					String[] maps = Assets.getMapList(false, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(HotseatMenu.getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 				}
 				else if (randomCustomMap) {
 					String[] maps = Assets.getMapList(true, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(HotseatMenu.getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 				}
 				else if (specificMap) { //specific map
 					String mapName = mapLabel.getText().toString();
@@ -194,30 +199,29 @@ public class InviteMatchMenu extends MenuScreen {
 		
 		contents.padTop((int) (3*Main.percentHeight)).center();
 		contents.defaults().space((int)Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
-		contents.add(settings);
+		contents.add(map);
+		contents.row();
+		contents.add(player1table);
+		contents.row();
+		contents.add(player2table);
 		contents.row();
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*1.3));
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
-		contents.add(centerLogin);
+		contents.add(centerLogin).bottom();
 	}
 	
-	public static synchronized InviteMatchMenu getInstance() {
+	public static String getRandom(String... strings) {
+		int amount = strings.length;
+		double random = Math.random();
+		return strings[(int)(amount*random)];
+	}
+	
+	public static synchronized HotseatMenu getInstance() {
 		if(me == null){
-			me = new InviteMatchMenu();
+			me = new HotseatMenu();
 		}
 		return me;
-	}
-	
-	@Override
-	public void dispose() {
-		super.dispose();
-		friendButton = null;
-		me = null;
-	}
-	
-	public static void setFriend(String text) {
-		friendButton.setText(text);
 	}
 }

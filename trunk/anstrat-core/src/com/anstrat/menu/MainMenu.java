@@ -245,12 +245,12 @@ public class MainMenu extends MenuScreen {
 						map = Assets.loadMap(mapName);
 					}
 					
-			        if(versusAI == true){
+			        /*if(versusAI == true){
 			        	Main.getInstance().games.createAIGame(map, 1).showGame(true);
 			        }
 			        else{
 			        	Main.getInstance().games.createHotseatGame(map).showGame(true);
-			        }
+			        }*/
 				}
 			}, true, "Choose map", mapNames);
 			return mapsPopup;

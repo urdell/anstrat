@@ -31,7 +31,6 @@ public class Player implements Serializable {
 	public static final Color[] secondaryColor = {new Color(0f, 0f, 0.3f, 1f), new Color(0.3f, 0f, 0f, 1f),
 													new Color(0f, 0f, 0f, 0f), new Color(0f, 0f, 0f, 0f)};
 	
-	public final int team;
 	private String displayedName;
 	
 	public final int playerId;
@@ -41,6 +40,7 @@ public class Player implements Serializable {
 	public int mana = 10;
 	
 	public final int god;
+	public final int team;
 	
 	public boolean[][] visibleTiles;
 	
