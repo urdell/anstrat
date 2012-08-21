@@ -29,6 +29,9 @@ public class State implements Serializable{
 	
 	private static final long serialVersionUID = 2L;
 	
+	public static final int MAX_GOLD = 999;
+	public static final int MAX_MANA = 50;
+	
 	public static State activeState;
 	
 	public final Map map;
@@ -146,6 +149,10 @@ public class State implements Serializable{
 		getIncome(currentPlayerId, tempIncome);
 		player.gold += tempIncome[0];
 		player.mana += tempIncome[1];
+		
+		// Keep gold and mana within max bounds
+		if(player.gold > MAX_GOLD) player.gold = MAX_GOLD;
+		if(player.mana > MAX_MANA) player.mana = MAX_MANA;
 		
 		// Update turn information
 		turnNr++;
