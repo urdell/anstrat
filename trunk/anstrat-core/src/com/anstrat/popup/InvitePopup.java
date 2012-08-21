@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 
 public class InvitePopup extends Popup {
 	private TextButton ok;
@@ -29,13 +30,30 @@ public class InvitePopup extends Popup {
 	        }
 	    });
 		Assets.SKIN.setEnabled(ok, false);
-		
-		friendlist = new FriendList(textField);
+		textField = ComponentFactory.createTextField("", false);
+		textField.setTextFieldListener(new TextFieldListener() {
+
+			@Override
+			public void keyTyped(TextField textField, char key) {
+				if(textField.getText().equals("")) {
+					Assets.SKIN.setEnabled(ok, false);
+				}
+				else {
+					Assets.SKIN.setEnabled(ok, true);
+				}
+				
+			}
+			
+		});
+		friendlist = new FriendList(textField, ok);
 		friendlist.setFriends(Main.getInstance().friends.getFriends());
 		
 		TextButton cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		add(friendlist).maxHeight((int)(50*Main.percentHeight));
+		row();
+		add(textField).expandX().fillX();
+		row();
 		add(new Row(ok, cancel));
 	}
 	

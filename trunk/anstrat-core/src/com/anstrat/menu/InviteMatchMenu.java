@@ -8,13 +8,14 @@ import com.anstrat.popup.InvitePopup.InvitePopupHandler;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
+import com.anstrat.popup.TeamPopup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Align;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class InviteMatchMenu extends MenuScreen {
@@ -90,12 +91,11 @@ public class InviteMatchMenu extends MenuScreen {
 			
 		});
 		
-		Button god = ComponentFactory.createButton("God", new ClickListener() {
+		Button god = ComponentFactory.createButton("God and team", new ClickListener() {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
-				// TODO select god
-				
+				Popup.teamPopup.show();
 			}
 			
 		});
@@ -112,33 +112,37 @@ public class InviteMatchMenu extends MenuScreen {
 					public void friendSelected(String friend) {
 						// TODO something with this friend of ours.
 						Main.getInstance().friends.createFriend(friend);
+						Main.getInstance().friends.saveFriends();
 						friendButton.setText(friend);
 					}
 					
 				}, "Select or write friend's username");
-				
+				popup.show();
 				
 			}
 			
 		});
 		
+		Table mapTable1 = new Table();
+		mapTable1.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		mapTable1.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
 		
-		
-		final TextField friendName = ComponentFactory.createTextField("Friend's name", false); 
+		Table mapTable2 = new Table();
+		mapTable2.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		mapTable2.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
 		
 		settings.defaults().height((int)(Main.percentHeight*10));
 		settings.add("Find Match");
 		settings.row();
-		settings.row();
 		settings.add("Choose map:");
 		settings.row();
-		settings.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
-		settings.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		settings.add(mapTable1);
 		settings.row();
-		settings.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
-		settings.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		settings.add(mapTable2);
 		settings.row();
-		settings.add(mapLabel).fillX().expandX();
+		settings.add(mapLabel).center();
+		settings.row();
+		settings.add(friendButton).fillX().expandX();
 		settings.row();
 		settings.add(fog).fillX().expandX();
 		settings.row();
@@ -148,7 +152,7 @@ public class InviteMatchMenu extends MenuScreen {
 			@Override
 		    public void click(Actor actor,float x,float y ){
 				
-				String friend = friendName.getMessageText();
+				String friend = friendButton.getText().toString();
 				//TODO is friend existing? If so, go ahead, else inform user that friend is not existing
 				
 				if (specificMap == false) {
