@@ -54,13 +54,25 @@ public class CustomInputProcessor extends InputAdapter {
 				}
 				else if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.BACKSPACE && Gdx.app.getType() == ApplicationType.Desktop)) {
 					if(screen instanceof GEngine){
-						if(GEngine.getInstance().selectionHandler.selectionType == SelectionHandler.SELECTION_SPAWN){
-							GEngine.getInstance().selectionHandler.deselect();
-							GEngine.getInstance().highlighter.clearHighlights();
+						GEngine engine = GEngine.getInstance();
+						
+						if(engine.selectionHandler.selectionType != SelectionHandler.SELECTION_EMPTY){
+							// If a confirm dialog is open, cancel that
+							if(engine.actionHandler.showingConfirmDialog){
+								engine.actionHandler.confirmCancelPress();
+							}
+							else{
+								// Cancel selection
+								engine.selectionHandler.deselect();
+								engine.highlighter.clearHighlights();
+							}
+							
 							return true;
 						}
-						Main.getInstance().games.saveGameInstances();
 					}
+					
+					// We're leaving the game, save the state
+					Main.getInstance().games.saveGameInstances();
 					Main.getInstance().popScreen();
 					return true;
 				}
@@ -81,7 +93,18 @@ public class CustomInputProcessor extends InputAdapter {
 			case Input.Keys.R: {
 				if(Main.getInstance().getScreen() instanceof GEngine){
 					resignPopup.show();
+					return true;
 				}
+				
+				return false;
+			}
+			case Input.Keys.ENTER: {
+				if(Main.getInstance().getScreen() instanceof GEngine){
+					GEngine.getInstance().actionHandler.endTurnPress();
+					return true;
+				}
+				
+				return false;
 			}
 			case Input.Keys.H: {
 				UI gameUI = GEngine.getInstance().userInterface;
