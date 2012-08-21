@@ -2,11 +2,12 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.Player;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
+import com.anstrat.popup.TeamPopup;
+import com.anstrat.popup.TeamPopup.TeamPopupListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -18,10 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class FindMatchMenu extends MenuScreen {
 	private static FindMatchMenu me;
 	
-	private static final String generatedMap = "Generated";
-	private static final String randomServerMap = "Random";
+	
+	public static int god = TeamPopup.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
+	private boolean randomMap = false;
+	private boolean generatedMap = false;
 	
 	private FindMatchMenu(){
         
@@ -46,6 +49,8 @@ public class FindMatchMenu extends MenuScreen {
 						@Override
 						public void mapSelected(String map){
 							specificMap = true;
+							generatedMap = false;
+							randomMap = false;
 							mapLabel.setText(map);
 						}
 					}, false, "Choose specific map", Assets.getMapList(false, true));
@@ -55,21 +60,25 @@ public class FindMatchMenu extends MenuScreen {
 			}
 			
 		});
-		Button mapServerRandom = ComponentFactory.createButton(randomServerMap, new ClickListener() {
+		Button mapServerRandom = ComponentFactory.createButton("Random", new ClickListener() {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
 				specificMap = false;
+				generatedMap = false;
+				randomMap = true;
 				mapLabel.setText("Random map");
 				
 			}
 			
 		});
-		Button mapGenerate = ComponentFactory.createButton(generatedMap, new ClickListener() {
+		Button mapGenerate = ComponentFactory.createButton("Generated", new ClickListener() {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
 				specificMap = false;
+				generatedMap = true;
+				randomMap = false;
 				mapLabel.setText("Generated map");
 				
 			}
@@ -80,8 +89,17 @@ public class FindMatchMenu extends MenuScreen {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
-				Popup.teamPopup.show();
+				Popup popup = new TeamPopup(FindMatchMenu.god, FindMatchMenu.team, "Select your team and god", new TeamPopupListener() {
+
+					@Override
+					public void onChosen(int godChosen, int teamChosen) {
+						InviteMatchMenu.god = godChosen;
+						InviteMatchMenu.team = teamChosen;
+					}
+					
+				});
 				
+				popup.show();
 			}
 			
 		});
@@ -93,9 +111,6 @@ public class FindMatchMenu extends MenuScreen {
 		
 		settings.defaults().height((int)(Main.percentHeight*10));
 		settings.add("Find Match");
-		settings.row();
-		settings.row();
-		settings.add("Choose map:");
 		settings.row();
 		settings.add(mapTable);
 		settings.row();
@@ -109,23 +124,17 @@ public class FindMatchMenu extends MenuScreen {
 			@Override
 		    public void click(Actor actor,float x,float y ){
 				
-				// TODO: Use chosen settings
-				int team = Player.getRandomTeam();
-				Main.getInstance().network.findRandomGame(team, Player.getRandomGod());
-				
-				if (specificMap == false) {
-					if (mapLabel.getText().toString().equals(generatedMap)) {
-
-		    			//TODO Main.getInstance().network.hostGameRandom(10, 10, 604800000l, name.getText(), password.getText());
-					}
-					else if (mapLabel.getText().toString().equals(randomServerMap)) {
-						//TODO host game
-					}
+				if (generatedMap) {
+					Main.getInstance().games.createHotseatGame(null, HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 				}
-				else { //specific map
+				else if (randomMap) {
+					String[] maps = Assets.getMapList(false, true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(HotseatMenu.getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+				}
+				else if (specificMap){ //specific map
 					String mapName = mapLabel.getText().toString();
-					//TODO host game specific map
 					
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 				}
 		   }
 		} );

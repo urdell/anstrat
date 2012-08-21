@@ -2,7 +2,6 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
@@ -42,6 +41,8 @@ public class ChooseGameTypeMenu extends MenuScreen {
         	@Override
             public void click(Actor actor, float x, float y){
         		
+        		Main.getInstance().setScreen(HotseatMenu.getInstance());
+        		/*
         		MainMenu.versusAI = false;
         		Popup popup = MainMenu.getInstance().getMapsPopup();
         		
@@ -52,11 +53,11 @@ public class ChooseGameTypeMenu extends MenuScreen {
         		else{
         			// No maps found, create game with a random map
         			Main.getInstance().games.createHotseatGame(null).showGame(true);
-        		}
+        		}*/
             }
         });
         		
-        Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
+        /*Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
             	MainMenu.versusAI = true;
@@ -71,7 +72,9 @@ public class ChooseGameTypeMenu extends MenuScreen {
         			Main.getInstance().games.createAIGame(null, 1).showGame(true);
         		}
             }
+            
         });
+        */
         
 
         Label login = ComponentFactory.createLoginLabel();
@@ -85,7 +88,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
         contents.row();
         contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
-        contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+       // contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
         
         Table inner = new Table();
