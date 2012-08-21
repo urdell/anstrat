@@ -6,6 +6,7 @@
         <frame image="goblin-walk-0003" number="3"/>
         <frame image="goblin-walk-0004" number="4"/>
     </animation>
+    <animation name="goblin-attack-effect" aliasof="shaman-attack-effect"/>
     <animation name="fallen-death">
     <frame image="fallen-death-0001" number="1" count="2"/>
 	   <frame image="fallen-death-0002" number="2" count="2"/>
@@ -81,10 +82,11 @@
         <frame image="goblin-attack-0003" number="3" count="3"/>
     </animation>
     <animation name="jotun-death">
-        <frame image="jotun-death-0001" number="1" count="2"/>
-	<frame image="jotun-death-0002" number="2" count="2"/>
-	<frame image="jotun-death-0003" number="3" count="10"/>
+       <frame image="jotun-death-0001" number="1" count="2"/>
+	   <frame image="jotun-death-0002" number="2" count="2"/>
+	   <frame image="jotun-death-0003" number="3" count="10"/>
     </animation>
+    <animation name="jotun-attack-effect" aliasof="swordsman-attack-effect"/>
     <animation name="jotun-hurt">
         <frame image="jotun-death-0001" number="1" count="2"/>
     </animation>
@@ -205,6 +207,7 @@
     <animation name="troll-hurt">
         <frame image="troll-death-0001" number="1" count="2"/>
     </animation>
+    <animation name="troll-attack-effect" aliasof="berserker-attack-effect"/>
     <animation name="wolf-idle">
         <frame image="wolf-idle-0001" number="1"/>
         <frame image="wolf-idle-0002" number="2"/>
@@ -328,6 +331,7 @@
     <animation name="valkyrie-hurt">
         <frame image="valkyrie-death-0001" number="1" count="2"/>
     </animation>
+    <animation name="valkyrie-attack-effect" aliasof="hawk-attack-effect"/>
     <animation name="target-heal" fps="9">
         <frame image="target-heal-0001" number="1"/>
         <frame image="target-heal-0002" number="2"/>
@@ -553,12 +557,14 @@
         <frame image="blood-medium-0003" number="3"/>
         <frame image="blood-medium-0004" number="4"/>
     </animation>
+    <animation name="fallen-attack-effect" aliasof="swordsman-attack-effect"/>
     <animation name="fallen-walk" fps="4">
         <frame image="fallen-walk-0001" number="1"/>
         <frame image="fallen-walk-0002" number="2"/>
         <frame image="fallen-walk-0003" number="3"/>
         <frame image="fallen-walk-0004" number="4"/>
     </animation>
+    <animation name="elf-attack-effect" aliasof="axethrower-attack-effect"/>
     <animation name="elf-walk" fps="9">
         <frame image="elf-walk-0001" number="1"/>
         <frame image="elf-walk-0002" number="2"/>
