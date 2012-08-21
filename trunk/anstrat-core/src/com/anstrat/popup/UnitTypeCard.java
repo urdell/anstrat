@@ -4,6 +4,7 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GUnit;
+import com.anstrat.gui.DamageModificationIcon;
 import com.anstrat.guiComponent.ColorTable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -71,9 +72,13 @@ public class UnitTypeCard extends ColorTable {
 		this.row();
 		
 		Table outer2 = new Table();
+		//outer2.debug();
 		outer2.defaults().left();
 		outer2.add(costIcon).size(iconSize).padRight((int)(Main.percentHeight));
 		outer2.add(cost);
+		
+		outer2.add(new DamageModificationIcon());//.size(10, 10);//.fill(false, false);
+		outer2.add(new DamageModificationIcon()).size(10, 10).fill(false, false);
 		outer2.add().expandX().fillX();
 		
 		this.add(outer2);
