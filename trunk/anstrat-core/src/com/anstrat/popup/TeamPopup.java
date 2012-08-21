@@ -3,6 +3,7 @@ package com.anstrat.popup;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
@@ -22,11 +23,6 @@ public class TeamPopup extends Popup{
 	public static final String BUY_TEXT = "Buy";
 	public static final String CANCEL_TEXT = "Cancel";
 	public static final Color  COLOR_UNAVAILABLE = Color.DARK_GRAY;
-	
-	public static final int GOD_ODIN = 0;
-	public static final int GOD_THOR = 1;
-	public static final int GOD_LOKI = 2;
-	public static final int GOD_HEL = 3;
 	
 	public static final int TEAM_VV = 0;
 	public static final int TEAM_DD = 1;
@@ -124,6 +120,7 @@ public class TeamPopup extends Popup{
 			if (gods[i].equals(actor)) {
 				selectedGod = i;
 				godLabel.setText(getGodName(i));
+				listener.onChosen(selectedGod, selectedTeam);
 				return;
 			}
 		}
@@ -132,20 +129,21 @@ public class TeamPopup extends Popup{
 			if (teams[i].equals(actor)) {
 				selectedTeam = i;
 				teamLabel.setText(getTeamName(i));
+				listener.onChosen(selectedGod, selectedTeam);
 				return;
 			}
 		}
-		listener.onChosen(selectedGod, selectedTeam);
+		
 	}
 	
 	private String getGodName(int god) {
-		if(god == GOD_ODIN)
+		if(god == PlayerAbilityType.GOD_ODIN)
 			return "Odin";
-		if(god == GOD_THOR)
+		if(god == PlayerAbilityType.GOD_THOR)
 			return "Thor";
-		if(god == GOD_LOKI)
+		if(god == PlayerAbilityType.GOD_LOKI)
 			return "Loki";
-		if(god == GOD_HEL)
+		if(god == PlayerAbilityType.GOD_HEL)
 			return "Hel";
 		
 		return "";

@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
@@ -19,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class HotseatMenu extends MenuScreen {
 	private static HotseatMenu me;
 	
-	public static int player1god = TeamPopup.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = TeamPopup.GOD_HEL, player2team = TeamPopup.TEAM_VV;
+	public static int player1god = PlayerAbilityType.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = PlayerAbilityType.GOD_HEL, player2team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;
