@@ -1,5 +1,8 @@
 package com.anstrat.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.DamageModification;
@@ -13,13 +16,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 
 public class DamageModificationIcon extends Widget{
 
+	int number;
+	TextureRegion portrait;
+	
 	public DamageModificationIcon(UnitType source, UnitType target){
-		int number = DamageModification.getAttackModifierAsPercent(source, target);
+		number = DamageModification.getAttackModifierAsPercent(source, target);
+		portrait = Assets.getTextureRegion(target.portrait);
 	}
 	public DamageModificationIcon(){
-		int number = 125;
+		number = 125;
+		portrait = Assets.getTextureRegion("bigguyportrait");
 	}
-	
+	public static List<DamageModificationIcon> getAllDamageIcons(UnitType source){
+		List<DamageModificationIcon> list = new ArrayList<DamageModificationIcon>();
+		for(UnitType target : UnitType.values()){
+			if(DamageModification.getAttackModifierAsPercent(source, target) != 100){
+				list.add(new DamageModificationIcon(source, target));
+			}
+		}	
+		return list;
+	}
 	
 	@Override
 	public float getPrefWidth(){
@@ -33,9 +49,8 @@ public class DamageModificationIcon extends Widget{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
 		validate();
-		TextureRegion tr = Assets.getTextureRegion("cancel");
-		batch.draw(tr, x, y, width, height);
-		FancyNumbers.drawNumber(112, x, y+height/10, height/3, false, batch);
+		batch.draw(portrait, x, y, width, height);
+		FancyNumbers.drawNumberPercent(number, x, y+height/50, height/3, false, batch);
 	}
 
 }
