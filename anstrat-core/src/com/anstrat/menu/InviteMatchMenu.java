@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.InvitePopup;
 import com.anstrat.popup.InvitePopup.InvitePopupHandler;
@@ -22,7 +23,7 @@ public class InviteMatchMenu extends MenuScreen {
 	private static InviteMatchMenu me;
 	private static TextButton friendButton;
 	
-	public static int god = TeamPopup.GOD_ODIN, team = TeamPopup.TEAM_VV;
+	public static int god = PlayerAbilityType.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;

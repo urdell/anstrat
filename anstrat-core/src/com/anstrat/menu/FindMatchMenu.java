@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
@@ -20,7 +21,7 @@ public class FindMatchMenu extends MenuScreen {
 	private static FindMatchMenu me;
 	
 	
-	public static int god = TeamPopup.GOD_ODIN, team = TeamPopup.TEAM_VV;
+	public static int god = PlayerAbilityType.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean randomMap = false;
@@ -93,8 +94,9 @@ public class FindMatchMenu extends MenuScreen {
 
 					@Override
 					public void onChosen(int godChosen, int teamChosen) {
-						InviteMatchMenu.god = godChosen;
-						InviteMatchMenu.team = teamChosen;
+						System.out.println("hej findmatchmenu someting");
+						FindMatchMenu.god = godChosen;
+						FindMatchMenu.team = teamChosen;
 					}
 					
 				});
