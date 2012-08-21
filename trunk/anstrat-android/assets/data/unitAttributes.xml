@@ -123,7 +123,7 @@
 		<ability1>4</ability1><!-- Magic Spear -->
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>valkyrieportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Fallen Warrior</name>
@@ -137,7 +137,7 @@
 		<ability1>11</ability1><!-- Dark Ritual -->
 		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>fallenportrait</portrait>
 		<movementSpeed>1</movementSpeed>
 	</UnitType>
 	<UnitType>
@@ -152,7 +152,7 @@
 		<ability1>12</ability1><!-- Poison -->
 		<description>The Dark Elf is a poweful and mobile unit.</description>
 		<idleImage>elf-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>elfportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Goblin Shaman</name>
@@ -166,7 +166,7 @@
 		<ability1>8</ability1><!-- AP Heal -->
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>goblinportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Jotun</name>
@@ -180,7 +180,7 @@
 		<ability1>9</ability1><!-- Throw Ice -->
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>jotunportrait</portrait>
 	</UnitType>
 	<UnitType>
 		<name>Troll</name>
@@ -200,6 +200,6 @@
 		<terrainPenaltySnowmountain>4</terrainPenaltySnowmountain>
 		<description>The Troll is the only unit with a passive regeneration ability. It can also climb mountains and have no terrain penalty in forests.</description>
 		<idleImage>troll-idle-0001</idleImage>
-		<portrait>bigguyportrait</portrait>
+		<portrait>trollportrait</portrait>
 	</UnitType>
 </UnitTypes>
