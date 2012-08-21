@@ -37,6 +37,8 @@ public class Popup extends Window {
 	
 	public static UnitInfoPopup unitInfoPopup;
 	
+	public static TeamPopup teamPopup;
+	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
 		@Override
 		public void click(Actor actor, float x, float y) {
@@ -221,6 +223,7 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
+		teamPopup = new TeamPopup("Select your god and team");
 		
 		genericPopupLabel = new Label("", Assets.SKIN);
 		genericPopupLabel.setWrap(true);

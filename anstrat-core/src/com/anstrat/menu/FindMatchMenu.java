@@ -18,8 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class FindMatchMenu extends MenuScreen {
 	private static FindMatchMenu me;
 	
-	private static final String generatedMap = "Generated map";
-	private static final String randomServerMap = "Random map";
+	private static final String generatedMap = "Generated";
+	private static final String randomServerMap = "Random";
 	
 	private boolean specificMap = false;
 	
@@ -76,16 +76,20 @@ public class FindMatchMenu extends MenuScreen {
 			
 		});
 		
-		Button god = ComponentFactory.createButton("God", new ClickListener() {
+		Button god = ComponentFactory.createButton("God and team", new ClickListener() {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
-				// TODO select god
+				Popup.teamPopup.show();
 				
 			}
 			
 		});
 		
+		Table mapTable = new Table();
+		mapTable.add(mapSpec).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
+		mapTable.add(mapServerRandom).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
+		mapTable.add(mapGenerate).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
 		
 		settings.defaults().height((int)(Main.percentHeight*10));
 		settings.add("Find Match");
@@ -93,9 +97,7 @@ public class FindMatchMenu extends MenuScreen {
 		settings.row();
 		settings.add("Choose map:");
 		settings.row();
-		settings.add(mapSpec).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
-		settings.add(mapServerRandom).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
-		settings.add(mapGenerate).size((int)(Main.percentWidth*25), (int)(Main.percentHeight*10));
+		settings.add(mapTable);
 		settings.row();
 		settings.add(mapLabel).fillX().expandX();
 		settings.row();

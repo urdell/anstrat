@@ -29,14 +29,14 @@ public class ChooseGameTypeMenu extends MenuScreen {
             }
         });
 
-        Button campaignButton = ComponentFactory.createNetworkMenuButton("Campaign",new ClickListener() {
+        /*Button campaignButton = ComponentFactory.createNetworkMenuButton("Campaign",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
         		//Main.getInstance().network.startRandomGameSearch();
             	//int team = Player.getRandomTeam();
             	//TODO Main.getInstance().network.findRandomGame(team, Player.getRandomGodFromTeam(team));
             }
-        } );
+        } ); */
         
         Button hotseatButton = ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
         	@Override
@@ -82,8 +82,6 @@ public class ChooseGameTypeMenu extends MenuScreen {
         contents.add(findMatchButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
         contents.add(inviteButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
-        contents.row();
-        contents.add(campaignButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
         contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();

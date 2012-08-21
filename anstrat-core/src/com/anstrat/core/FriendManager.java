@@ -33,11 +33,11 @@ public class FriendManager {
 		friendsList.clear();
 	}
 	
-	public void saveFriendsInstance(){
+	public void saveFriends(){
 		Serialization.writeObject(new FriendList(friendsList), friendsFile);
 	}
 	
-	public void loadGameInstances(){
+	public void loadFriends(){
 		Object obj = Serialization.readObject(friendsFile);
 		
 		if(obj == null){

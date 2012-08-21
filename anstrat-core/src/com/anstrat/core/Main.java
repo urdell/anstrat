@@ -113,7 +113,7 @@ public class Main extends Game implements ApplicationListener {
 		games.loadGameInstances(); // Loads all saved game instances
 		
 		friends = new FriendManager(Gdx.files.local("friends.bin"));
-		friends.loadGameInstances(); //Loads all saved friends
+		friends.loadFriends(); //Loads all saved friends
 
 		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
@@ -199,6 +199,7 @@ public class Main extends Game implements ApplicationListener {
 		
 		if(networkEngine != null) networkEngine.stop();
 		games.saveGameInstances();
+		friends.saveFriends();
 		Options.savePreferences();
 		
 		batch.dispose();
