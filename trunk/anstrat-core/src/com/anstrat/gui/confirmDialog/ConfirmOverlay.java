@@ -30,11 +30,13 @@ public class ConfirmOverlay {
 	 * Contains X, Y, cost
 	 */
 	public List<Vector3> checkpoints = new LinkedList<Vector3>();
+	public Color checkpointTint = Color.WHITE;
 	public boolean showHelpfulText = true;
 	
 	public void showMove(TileCoordinate startPos, Path path){
 		GMap gMap = GEngine.getInstance().map;
 		
+		checkpointTint = Color.YELLOW;
 		lines.clear();
 		checkpoints.clear();
 		TileCoordinate lastCoordinate = startPos;
@@ -50,11 +52,23 @@ public class ConfirmOverlay {
 			checkpoints.add(newCheckpoint);
 			lastCoordinate = currentCoordinate;
 		}
+	}
+	
+	public void showAttack(TileCoordinate startPos, TileCoordinate targetPos, int attackCost){
+		GMap gMap = GEngine.getInstance().map;
 		
+		checkpointTint = Color.RED;
+		lines.clear();
+		checkpoints.clear();
+		lines.add(new MapLine(gMap.getTile(startPos), gMap.getTile(targetPos), 1));
+		Vector2 checkpointPosition = gMap.getTile(targetPos).getCenter();
+		Vector3 newCheckpoint = new Vector3(checkpointPosition.x, checkpointPosition.y, attackCost);
+		checkpoints.add(newCheckpoint);
 	}
 	
 	public void clear(){
 		lines.clear();
+		checkpoints.clear();
 	}
 	
 	/**
@@ -76,7 +90,7 @@ public class ConfirmOverlay {
 		
 		for(Vector3 checkpoint : checkpoints){
 			TextureRegion number = Assets.getTextureRegion("ap-"+(int)checkpoint.z);
-			batch.setColor(Color.YELLOW);
+			batch.setColor(checkpointTint);
 			batch.draw( circle, checkpoint.x-checkpointSize/2, checkpoint.y-checkpointSize/2, checkpointSize, checkpointSize);
 			batch.setColor(Color.toFloatBits(0.4f, 1f, 1f, 1f));
 			batch.draw( number, checkpoint.x-numberSize/2, checkpoint.y-numberSize/2+numberSize, numberSize, -numberSize); // flip upside down and compensate position		

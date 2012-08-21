@@ -142,7 +142,7 @@ public class Map implements Serializable{
 	 * @return
 	 */
 	public int getAdjacentOrientation(TileCoordinate origin, TileCoordinate target){
-		int result = -1;
+		int result = NOT_ADJACENT;
 		
 		if(!GEngine.FLAT_TILE_ORIENTATION){
 			origin = flatToPointy(new TileCoordinate(origin));
@@ -178,7 +178,7 @@ public class Map implements Serializable{
 				result = ADJACENT_NE;
 		}
 		
-		if(result != -1 && !GEngine.FLAT_TILE_ORIENTATION){
+		if(result != NOT_ADJACENT && !GEngine.FLAT_TILE_ORIENTATION){
 			result = FLAT_TO_POINTY[result];
 		}
 		
