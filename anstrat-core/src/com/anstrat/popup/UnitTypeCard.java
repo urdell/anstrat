@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
  */
 public class UnitTypeCard extends ColorTable {
 	private Label name, cost, description, attack,hp,ap;
+	private Table damageModifierTable;
 	private Image image;
 	public UnitType type;
 	
@@ -77,8 +78,15 @@ public class UnitTypeCard extends ColorTable {
 		outer2.add(costIcon).size(iconSize).padRight((int)(Main.percentHeight));
 		outer2.add(cost);
 		
-		outer2.add(new DamageModificationIcon());//.size(10, 10);//.fill(false, false);
-		outer2.add(new DamageModificationIcon()).size(10, 10).fill(false, false);
+		damageModifierTable = new Table();
+		outer2.add(damageModifierTable);
+		
+		
+		for(DamageModificationIcon damageIcon : DamageModificationIcon.getAllDamageIcons(type)){
+			damageModifierTable.add(damageIcon);
+		}
+		
+		//outer2.add(new DamageModificationIcon());//.size(10, 10);//.fill(false, false);
 		outer2.add().expandX().fillX();
 		
 		this.add(outer2);
@@ -102,5 +110,11 @@ public class UnitTypeCard extends ColorTable {
 		attack.setText(String.valueOf(type.attack));
 		hp.setText(String.valueOf(type.maxHP));
 		ap.setText(String.format("%d (%d)", type.maxAP, type.APReg));
+		
+		damageModifierTable.clear();
+		for(DamageModificationIcon damageIcon : DamageModificationIcon.getAllDamageIcons(type)){
+			damageModifierTable.add(damageIcon);
+		}
+		
 	}
 } 

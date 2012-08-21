@@ -39,7 +39,8 @@ public class FancyNumbers {
 	
 	/**
 	 * Tint before using
-	 * @param number
+	 * Does improper drawing when abobe 1000
+	 * @param number 0 <= number <= 999
 	 * @param x
 	 * @param y
 	 * @param size
@@ -47,7 +48,7 @@ public class FancyNumbers {
 	 * @param batch
 	 */
 	public static void drawNumber(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
-		int hundreds = number/100;
+		int hundreds = number/100%10;
 		int tens = number/10%10;
 		int ones = number%10;
 		
@@ -73,4 +74,31 @@ public class FancyNumbers {
 		
 		
 	}
+	/**
+	 * Automatically tints to green or red
+	 * @param number 10 <= number <= 999
+	 * @param x
+	 * @param y
+	 * @param size
+	 * @param flipped
+	 * @param batch
+	 */
+	public static void drawNumberPercent(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
+		TextureRegion percentRegion = Assets.getTextureRegion("percent");
+		float percentXIncrement = 3*sideIncrement; //default fit for 100
+		if(number < 100){
+			batch.setColor(Color.RED);
+			percentXIncrement = 2*sideIncrement;
+		}
+		if(number > 100){
+			batch.setColor(Color.GREEN);
+			percentXIncrement = 3*sideIncrement;
+		}
+		drawNumber(number, x, y, size, flipped, batch);
+		batch.draw(percentRegion, x+size*percentXIncrement, y, size, 	// if flipped, invert height
+				flipped ? -size : size);
+		
+		batch.setColor(Color.WHITE);
+	}
+	
 }
