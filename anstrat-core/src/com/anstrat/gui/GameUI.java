@@ -160,7 +160,9 @@ public class GameUI extends UI {
             }
         } );
         for(int i=0; i<MAX_ABILITIES; i++){
-        	abilityButtons[i] = new Button(new Image(Assets.getTextureRegion("Ok-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
+        	//abilityButtons[i] = new Button(new Image(Assets.getTextureRegion("Ok-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
+        	abilityButtons[i] = new Button(new AbilityButton(), Assets.SKIN.getStyle("image", ButtonStyle.class));
+        	
         	final int abilityIndex = i;
         	abilityButtons[i].setClickListener(new ClickListener() {
                 @Override
@@ -339,9 +341,16 @@ public class GameUI extends UI {
 		if(unit.ownerId == GameInstance.activeGame.getUserPlayer().playerId){
 			for(Ability a : unit.getAbilities()){
 				Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
-				if(actor instanceof Image){
+				if(actor instanceof Image){  // to be removed
 					((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
 				}
+				if(actor instanceof AbilityButton){
+					((AbilityButton) actor).setAbility(unit, a);
+				}
+				
+				//abilityButtons[nrShownAbilities].clear();
+				//abilityButtons[nrShownAbilities].add(new AbilityButton(unit, a));
+				
 				abilityButtons[nrShownAbilities].visible = true;
 				nrShownAbilities++;
 			}

@@ -14,7 +14,7 @@ public abstract class Ability implements Serializable {
 	
 	public final String name;
 	public final String description;
-	protected final int apCost;
+	public final int apCost;
 	
 	public Ability(String name, String description, int apCost){
 		this.name = name;
