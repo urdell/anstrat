@@ -53,6 +53,16 @@ public class DatabaseSchema {
 					"command BYTEA, " +
 					"FOREIGN KEY(gameID) REFERENCES Games(id), " +
 					"PRIMARY KEY(gameID, commandNr))");
+			
+			// Invites
+			s.executeUpdate("CREATE TABLE Invites(" +
+					"id BIGSERIAL PRIMARY KEY, " +
+					"senderID BIGSERIAL, " +
+					"receiverID BIGSERIAL, " +
+					"gameOptions BYTEA, " +
+					"FOREIGN KEY(senderID) REFERENCES Games(id), " +
+					"FOREIGN KEY(receiverID) REFERENCES Users(id))");
+			
 			// Turns
 			/*
 			s.executeUpdate("CREATE TABLE Turns(" +
@@ -106,6 +116,8 @@ public class DatabaseSchema {
 			s.executeUpdate("DROP TABLE IF EXISTS Games");
 			s.executeUpdate("DROP TABLE IF EXISTS Users");
 			s.executeUpdate("DROP TABLE IF EXISTS DefaultMaps");
+			s.executeUpdate("DROP TABLE IF EXISTS Commands");
+			s.executeUpdate("DROP TABLE IF EXISTS Invites");
 			s.close();
 			
 		} catch (SQLException e) {

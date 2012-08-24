@@ -20,7 +20,8 @@ public class NetworkMessage implements Serializable, Comparable<NetworkMessage> 
 		SET_DISPLAY_NAME,
 		REQUEST_GAME_UPDATE, 
 		REQUEST_RANDOM_GAME,
-		INVITE_PLAYER,
+		INVITE_PLAYER_NAME,
+		INVITE_PLAYER_ID,
 		ANSWER_INVITE,
 		RESIGN,
 		
