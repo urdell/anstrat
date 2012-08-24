@@ -23,7 +23,7 @@ public class Knockback extends TargetedAbility {
 	
 	public Knockback() {
 		super("Knockback", "Makes an attack knocking the enemy back if possible", AP_COST, RANGE);
-		
+		iconName = "knockback-button";
 	}
 
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {

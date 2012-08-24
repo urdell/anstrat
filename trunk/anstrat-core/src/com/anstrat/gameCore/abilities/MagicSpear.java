@@ -24,6 +24,7 @@ public class MagicSpear extends TargetedAbility {
 	
 	public MagicSpear(){
 		super("Magic Spear","Uses a magic spear to attack from range",AP_COST, RANGE);
+		iconName = "spear-button";
 	}
 	
 	

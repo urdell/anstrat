@@ -23,6 +23,7 @@ public class Poison extends TargetedAbility{
 	
 	public Poison() {
 		super("Poison", "Fires a poisonous arrow that reduces the targets damage for the next round", AP_COST, RANGE);
+		iconName = "poison-button";
 	}
 
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {

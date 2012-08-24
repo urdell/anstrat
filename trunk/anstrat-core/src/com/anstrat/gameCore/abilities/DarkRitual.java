@@ -20,6 +20,7 @@ public class DarkRitual extends Ability{
 	
 	public DarkRitual() {
 		super("Dark Ritual", "Performs a dark ritual in which they offer their life for AP-loss to adjacent enemy units", 0);
+		iconName = "suicide-button";
 	}
 
 	/**

@@ -21,6 +21,7 @@ public class Heal extends TargetedAbility {
 	
 	public Heal(){
 		super("Heal", "Heal target unit " + HEAL_AMOUNT + " hp.", AP_COST, RANGE);
+		iconName = "heal-button";
 	}
 
 	@Override

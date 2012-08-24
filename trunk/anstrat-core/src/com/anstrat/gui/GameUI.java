@@ -131,7 +131,7 @@ public class GameUI extends UI {
             }
         } );
         
-        spellButton = new Button(new Image(Assets.getTextureRegion("mana")), Assets.SKIN.getStyle("image", ButtonStyle.class));
+        spellButton = new Button(new Image(Assets.getTextureRegion("magic-button")), Assets.SKIN.getStyle("image", ButtonStyle.class));
         spellButton.setClickListener(new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
@@ -337,23 +337,22 @@ public class GameUI extends UI {
 		}
 		nrShownAbilities=0;
 		
-		// Only show ability buttons if the unit belongs to the current user
-		if(unit.ownerId == GameInstance.activeGame.getUserPlayer().playerId){
-			for(Ability a : unit.getAbilities()){
-				Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
-				if(actor instanceof Image){  // to be removed
-					((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
-				}
-				if(actor instanceof AbilityButton){
-					((AbilityButton) actor).setAbility(unit, a);
-				}
-				
-				//abilityButtons[nrShownAbilities].clear();
-				//abilityButtons[nrShownAbilities].add(new AbilityButton(unit, a));
-				
-				abilityButtons[nrShownAbilities].visible = true;
-				nrShownAbilities++;
+		//if(){
+		for(Ability a : unit.getAbilities()){
+			Actor actor = (abilityButtons[nrShownAbilities].getActors().get(0));
+			if(actor instanceof Image){  // to be removed
+				((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setRegion(Assets.getTextureRegion(a.getIconName(unit)));
 			}
+			if(actor instanceof AbilityButton){
+				((AbilityButton) actor).setAbility(unit, a);
+				((AbilityButton) actor).updateIsAllowed();
+			}
+			
+			//abilityButtons[nrShownAbilities].clear();
+			//abilityButtons[nrShownAbilities].add(new AbilityButton(unit, a));
+			
+			abilityButtons[nrShownAbilities].visible = true;
+			nrShownAbilities++;
 		}
 		
 		// if a on a building

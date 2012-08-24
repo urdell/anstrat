@@ -22,6 +22,7 @@ public class ShadowImage extends TargetedAbility {
 	
 	public ShadowImage(){
 		super("ShadowImage","Creates an shadow image that makes a lifesteal attack",AP_COST, RANGE);
+		iconName = "lifesteal-button";
 	}
 	
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {

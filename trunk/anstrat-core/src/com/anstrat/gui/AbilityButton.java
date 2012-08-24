@@ -3,11 +3,14 @@ package com.anstrat.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.DamageModification;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +28,7 @@ public class AbilityButton extends Table{
 	TextureRegion image;
 	Unit unit = null;
 	Ability ability = null;
+	boolean isAllowed = false; // Stores this boolean for performance
 	
 	public AbilityButton(Unit unit, Ability ability){
 		setAbility(unit, ability);
@@ -36,7 +40,7 @@ public class AbilityButton extends Table{
 	}
 	
 	public void setAbility(Unit unit, Ability ability){
-		image = Assets.getTextureRegion(unit.getUnitType().portrait);
+		image = Assets.getTextureRegion(ability.iconName);
 		this.unit = unit;
 		this.ability = ability;
 	}
@@ -50,21 +54,38 @@ public class AbilityButton extends Table{
 		return Gdx.graphics.getWidth()*0.30f;
 	}
 	
+	public void updateIsAllowed(){
+		if(unit.ownerId != GameInstance.activeGame.getUserPlayer().playerId){
+			isAllowed = false;
+		}
+		else if(ability instanceof TargetedAbility){
+			isAllowed = !((TargetedAbility) ability).getValidTiles(unit).isEmpty();
+		} 
+		else{
+			isAllowed = ability.isAllowed(unit);
+		}
+	}
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
 		validate();
 		batch.setColor(Color.WHITE);
-		if( GEngine.getInstance().selectionHandler.selectionType == SelectionHandler.SELECTION_TARGETED_ABILITY ){ // TODO more checks for this specific ability.
+		SelectionHandler selectionHandler = GEngine.getInstance().selectionHandler;
+		ActionHandler actionHandler = GEngine.getInstance().actionHandler;
+		if( (selectionHandler.selectionType == SelectionHandler.SELECTION_TARGETED_ABILITY &&
+				selectionHandler.selectedTargetedAbility == ability)
+			|| (actionHandler.showingConfirmDialog && actionHandler.confirmCommand instanceof ActivateAbilityCommand)){ // TODO more checks for this specific ability.
 			batch.setColor(Color.YELLOW);
 		}
-		if(!ability.isAllowed(unit)){
+		if(!isAllowed){
 			batch.setColor(Color.GRAY);
 		}
 		
 		batch.draw(image, x, y, width, height);
 
 		if(unit != null && ability != null){
-			FancyNumbers.drawNumber(ability.apCost, x, y+height/50, height/3, false, batch);
+			batch.setColor(Assets.apTextColor);
+			FancyNumbers.drawNumber(ability.apCost, x+height/6, y+height*0.22f, height/2.8f, false, batch);
 		
 		}
 		batch.setColor(Color.WHITE);

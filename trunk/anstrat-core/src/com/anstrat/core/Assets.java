@@ -60,6 +60,7 @@ public final class Assets {
 	public static Texture[] unitTeamIndicators;
 	private static TextureAtlas atlas;
 	private static AnimationLoader animationLoader;
+	public static Color apTextColor = new Color(0.4f, 1f, 1f, 1f);
 	
 	public static void load(){
 		Gdx.app.log("Assets", "load()");

@@ -29,6 +29,7 @@ public class ThrowIce extends TargetedAbility{
 
 	public ThrowIce(){
 		super("Throwing Ice block","Throws a Ice block which will cause AoE damage in adjacent Tiles",AP_COST, RANGE);
+		iconName = "throw-ice-button";
 	}
 	
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {

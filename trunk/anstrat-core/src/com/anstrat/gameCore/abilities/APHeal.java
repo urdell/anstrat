@@ -21,6 +21,7 @@ public class APHeal extends TargetedAbility{
 	
 	public APHeal(){
 		super("AP-Regenaration", "Restore "  + AP_HEAL + " of target units AP.", AP_COST, RANGE);
+		iconName = "ap-heal-button";
 	}
 
 	@Override

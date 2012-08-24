@@ -27,6 +27,7 @@ public class LeapAttack extends TargetedAbility{
 
 		public LeapAttack(){
 			super("Leap Attack","Making a leap-attack, jumping over the enemy and finishes with a dashing blow for extra damage",AP_COST, RANGE);
+			iconName = "leap-button";
 		}
 		
 		public boolean isAllowed(Unit source, TileCoordinate coordinates) {

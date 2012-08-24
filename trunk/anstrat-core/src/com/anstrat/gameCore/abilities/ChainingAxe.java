@@ -26,6 +26,7 @@ public class ChainingAxe extends TargetedAbility {
 
 	public ChainingAxe(){
 		super("Chaining Axe","Throws a magic axe jumping between up to 4 adjacent enemies, damage is reduced by for each succesive hit",AP_COST, RANGE);
+		iconName = "chainaxe-button";
 	}
 	
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
