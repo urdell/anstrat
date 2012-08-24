@@ -11,6 +11,7 @@ import com.anstrat.gameCore.Player;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.menu.MainMenu;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
@@ -109,8 +110,8 @@ public class NetworkController {
 		network.sendCommand(gameID, commandNr, command);
 	}
 	
-	public void findRandomGame(int team, int god){
-		this.network.requestRandomGame(team, god);
+	public void findRandomGame(GameOptions options){
+		this.network.requestRandomGame(options);
 	}
 	
 	public void requestGameUpdate(long gameID, int currentCommandNr){

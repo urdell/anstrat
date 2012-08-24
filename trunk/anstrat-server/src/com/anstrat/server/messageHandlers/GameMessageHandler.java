@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 import com.anstrat.command.Command;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.server.IConnectionManager;
@@ -63,11 +64,11 @@ public class GameMessageHandler {
 		}
 	}
 	
-	public void requestRandomGame(InetSocketAddress client, int team, int god){
+	public void requestRandomGame(InetSocketAddress client, GameOptions options){
 		Long userID = loginCheck(client);
 		if(userID == null) return;
 		
-		GameSetup game = matcher.addUserToQueue(userID, team, god);
+		GameSetup game = matcher.addUserToQueue(userID, options.team, options.god);
 		
 		// Create game
 		if(game != null){

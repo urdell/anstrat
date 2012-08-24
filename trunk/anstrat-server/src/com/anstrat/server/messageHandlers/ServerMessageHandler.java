@@ -5,9 +5,10 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 import com.anstrat.command.Command;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.NetworkMessage;
-import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.DependencyInjector.Inject;
+import com.anstrat.server.util.Logger;
 
 /**
  * The main network message handler, retrieves the message content and then delegates it to: <br>
@@ -62,9 +63,8 @@ public class ServerMessageHandler {
 					break;
 				}
 				case REQUEST_RANDOM_GAME: {
-					int team = (Integer) payload.get(0);
-					int god = (Integer) payload.get(1);
-					gameMessageHandler.requestRandomGame(client, team, god);
+					GameOptions options = (GameOptions) payload.get(0);
+					gameMessageHandler.requestRandomGame(client, options);
 					break;
 				}
 				case SEND_COMMAND: {
