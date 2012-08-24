@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GTile;
 
@@ -295,7 +297,103 @@ public class Map implements Serializable{
 	}
 	
 	private void randomizeMap(Random random){
-		for(int i=0;i<tiles.length;i++)
+		
+		int totTiles = tiles.length*tiles[0].length;
+		//These are the min values for each terraintype. Total should not be more than 1
+		//P.S. make sure you dont place impassable terrain values too high
+		double mDeepWater = 0.05, mWater = 0.05, mForest = 0.1, 
+				mField = 0.2, mMountain = 0.05, mVulcano = 0;
+		//Min number of tiles for each terrain
+		int nDeepWater = (int) (mDeepWater*totTiles), nWater = (int) (mWater*totTiles),
+				nForest = (int) (mForest*totTiles), nField = (int) (mField*totTiles),
+				nMountain = (int) (mMountain*totTiles), nVulcano = (int) (mVulcano*totTiles);
+		
+		int totLeft = totTiles - (nDeepWater+nWater+nForest+nField+nMountain+nVulcano);
+		//These are the likeliness they appear more than their min value.
+		double rDeepWater = 0.1, rWater = 0.1, rForest = 0.2, rMountain = 0.1, rVulcano= 0.03;
+		double rField = 1-(rDeepWater+rWater+rForest+rMountain+rVulcano); //takes what's left
+				
+		//deciding how much of each terrain there will be
+		rDeepWater *=random.nextDouble(); rWater *= random.nextDouble(); 
+		rForest *= random.nextDouble(); rMountain *= random.nextDouble(); 
+		rVulcano *= random.nextDouble(); rField *= random.nextDouble();
+		double rTot = rDeepWater+rWater+rForest+rMountain+rVulcano+rField;
+		rDeepWater = rDeepWater / rTot; rWater = rWater/rTot; rForest = rForest/rTot;
+		rMountain = rMountain/rTot; rVulcano = rVulcano/rTot;
+		nDeepWater += (int) (rDeepWater*totLeft);
+		nWater += (int) (rWater*totLeft);
+		nForest += (int) (rForest*totLeft);
+		nMountain += (int) (rMountain*totLeft);
+		nVulcano += (int) (rVulcano*totLeft);
+		
+		nField = totTiles-(nDeepWater+nWater+nForest+nMountain+nVulcano);
+		
+		HashMap<TerrainType, Integer> terrains = new HashMap<TerrainType, Integer>();
+		terrains.put(TerrainType.DEEP_WATER, nDeepWater);
+		terrains.put(TerrainType.FIELD, nField);
+		terrains.put(TerrainType.SHALLOW_WATER, nWater);
+		terrains.put(TerrainType.FOREST, nForest);
+		terrains.put(TerrainType.VOLCANO, nVulcano);
+		terrains.put(TerrainType.MOUNTAIN, nMountain);
+		
+		//time to place the tiles
+		
+		double neighbourModifier = 0.1;
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles[i].length; j++) {
+				TerrainType type = null;
+				double r = random.nextDouble();
+				if (i > 0 && j > 0) {
+					//neighbouring tile's terraintypes, 
+					//affects the chance of current tile to have same terraintype
+					TerrainType t1 = tiles[i-1][j-1].terrain;
+					TerrainType t2 = tiles[i-1][j].terrain;
+					TerrainType t3 = tiles[i][j-1].terrain;
+					
+					if (r < neighbourModifier) {
+						type = t1;
+					}
+					else if (r < 2*neighbourModifier) {
+						type = t2;
+					}
+					else if (r < 3*neighbourModifier) {
+						type = t3;
+					}
+					else {
+						type = getRandomTerrainType(terrains, totTiles, random);
+					}
+				}
+				else if (i > 0) { //first row
+					if(r < neighbourModifier) {
+						type  = tiles[i-1][j].terrain;
+					}
+					else {
+						type = getRandomTerrainType(terrains, totTiles, random);
+					}
+				}
+				else if (j > 0) { //first column
+					if (r < neighbourModifier) {
+						type = tiles[i][j-1].terrain;
+					}
+					else {
+						type = getRandomTerrainType(terrains, totTiles, random);
+					}
+				}
+				else { //first tile
+					type = getRandomTerrainType(terrains, totTiles, random);
+				}
+				totTiles--;
+				terrains.put(type, terrains.get(type)-1);
+				tiles[i][j] = new Tile(new TileCoordinate(i,j),type);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		/*for(int i=0;i<tiles.length;i++)
 		{
 			for(int j=0;j<tiles[i].length;j++)
 			{
@@ -343,12 +441,13 @@ public class Map implements Serializable{
 					break;
 				default:
 					type = TerrainType.FIELD;
-					*/
+					//
 				}
 				tiles[i][j] = new Tile(new TileCoordinate(i,j),type);
 			}
+			
 		}
-		
+		*/
 		// Place villages in random locations
 		int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
 		for(int i=0; i<nrVillages; i++){
@@ -368,7 +467,50 @@ public class Map implements Serializable{
 		TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
 		tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
 		tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
-		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
+		
 		setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
+		
+		Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
+		unit.tileCoordinate = castle1pos;
+
+		for(Building b : buildingList.values()) {
+			if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
+				buildingList.clear();
+				unit = null;
+				randomizeMap(random);
+				break;
+			}
+		}
+		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
 	}
+	
+	private TerrainType getRandomTerrainType(HashMap<TerrainType, Integer> terrains, int totTiles, Random random) {
+		
+		TerrainType type;
+		
+		int r = random.nextInt(totTiles+1);
+		int total = terrains.get(TerrainType.VOLCANO);
+		if (r < total) {
+			type = TerrainType.VOLCANO;
+		}
+		else if (r < (total += (int)terrains.get(TerrainType.SHALLOW_WATER))) {
+			type = TerrainType.SHALLOW_WATER;
+		}
+		else if (r < (total += (int)terrains.get(TerrainType.DEEP_WATER))) {
+			type = TerrainType.DEEP_WATER;
+		}
+		else if (r < (total += (int)terrains.get(TerrainType.FOREST))) {
+			type = TerrainType.FOREST;
+		}
+		else if (r < (total += (int)terrains.get(TerrainType.MOUNTAIN))) {
+			type = TerrainType.MOUNTAIN;
+		}
+		else {
+			type = TerrainType.FIELD;
+		}
+		
+		return type;
+	}
+	
+	
 }
