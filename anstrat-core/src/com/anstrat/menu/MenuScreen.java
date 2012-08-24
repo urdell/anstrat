@@ -83,6 +83,7 @@ public abstract class MenuScreen implements Screen {
 		stage.act(delta);
 		uiCamera.apply(Gdx.graphics.getGL10());
 		stage.draw();
+		Table.drawDebug(stage);
 	}
 	
 	public void drawBackground() {

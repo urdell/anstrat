@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class HotseatMenu extends MenuScreen {
 	private static HotseatMenu me;
 	
-	public static int player1god = PlayerAbilityType.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = PlayerAbilityType.GOD_HEL, player2team = TeamPopup.TEAM_VV;
+	public int player1god = PlayerAbilityType.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = PlayerAbilityType.GOD_HEL, player2team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;
@@ -131,12 +131,12 @@ public class HotseatMenu extends MenuScreen {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
-				Popup popup = new TeamPopup(HotseatMenu.player1god, HotseatMenu.player1team, "Select "+player1nameButton.getText()+"'s god and team", new TeamPopupListener(){
+				Popup popup = new TeamPopup(player1god, player1team, "Select "+player1nameButton.getText()+"'s god and team", new TeamPopupListener(){
 
 					@Override
 					public void onChosen(int god, int team) {
-						HotseatMenu.player1god = god;
-						HotseatMenu.player1team = team;
+						player1god = god;
+						player1team = team;
 					}
 					
 				});
@@ -151,12 +151,12 @@ public class HotseatMenu extends MenuScreen {
 
 			@Override
 			public void click(Actor actor, float x, float y) {
-				Popup popup = new TeamPopup(HotseatMenu.player2god, HotseatMenu.player2team, "Select "+player2nameButton.getText()+"'s god and team", new TeamPopupListener(){
+				Popup popup = new TeamPopup(player2god, player2team, "Select "+player2nameButton.getText()+"'s god and team", new TeamPopupListener(){
 
 					@Override
 					public void onChosen(int god, int team) {
-						HotseatMenu.player2god = god;
-						HotseatMenu.player2team = team;
+						player2god = god;
+						player2team = team;
 					}
 					
 				});
@@ -179,20 +179,20 @@ public class HotseatMenu extends MenuScreen {
 			@Override
 		    public void click(Actor actor,float x,float y ){
 				if (generatedMap) {
-					Main.getInstance().games.createHotseatGame(null, HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(null, player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (randomServerdMap) {
 					String[] maps = Assets.getMapList(false, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (randomCustomMap) {
 					String[] maps = Assets.getMapList(true, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (specificMap) { //specific map
 					String mapName = mapLabel.getText().toString();
 					
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), player1god, player1team, player2god, player2team).showGame(true);
 				}
 		   }
 		} );
