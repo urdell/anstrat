@@ -104,14 +104,14 @@ public class HotseatMenu extends MenuScreen {
 		
 		
 		Table mapTable1 = new Table();
-		mapTable1.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
-		mapTable1.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		mapTable1.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
+		mapTable1.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
 		
 		Table mapTable2 = new Table();
-		mapTable2.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
-		mapTable2.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*10));
+		mapTable2.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
+		mapTable2.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
 		
-		map.defaults().height((int)(Main.percentHeight*10));
+		map.defaults().height((int)(Main.percentHeight*8));
 		map.add(mapTable1);
 		map.row();
 		map.add(mapTable2);
@@ -165,12 +165,12 @@ public class HotseatMenu extends MenuScreen {
 			
 		});
 		
-		player1table.defaults().height((int)(Main.percentHeight*10));
+		player1table.defaults().height((int)(Main.percentHeight*8));
 		player1table.add(player1nameButton).fillX().expandX();
 		player1table.row();
 		player1table.add(player1teamButton).fillX().expandX();
 		
-		player2table.defaults().height((int)(Main.percentHeight*10));
+		player2table.defaults().height((int)(Main.percentHeight*8));
 		player2table.add(player2nameButton).fillX().expandX();
 		player2table.row();
 		player2table.add(player2teamButton).fillX().expandX();
@@ -206,7 +206,9 @@ public class HotseatMenu extends MenuScreen {
 		contents.row();
 		contents.add(player2table);
 		contents.row();
-		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*1.3));
+		contents.add(fog);
+		contents.row();
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*0.3));
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
