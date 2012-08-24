@@ -335,22 +335,26 @@ public class DatabaseManager implements IDatabaseService {
 	}
 
 	@Override
-	public boolean createInvite(long senderID, long receiverID, GameOptions options) {
+	public Long createInvite(long senderID, long receiverID, GameOptions options) {
 		Connection conn = null;
 		PreparedStatement insert = null;
+		ResultSet idnr = null;
 		
 		try{
 			byte[] serializedGameOptions = Serialization.serialize(options);
 			conn = context.getConnection();
 			
-			insert = conn.prepareStatement("INSERT INTO Invites(senderID, receiverID, gameOptions, status) VALUES(?, ?, ?, ?)");
+			insert = conn.prepareStatement("INSERT INTO Invites(senderID, receiverID, gameOptions, status) VALUES(?, ?, ?, ?) RETURNING id");
 			insert.setLong(1, senderID);
 			insert.setLong(2, receiverID);
 			insert.setBytes(3, serializedGameOptions);
 			insert.setString(4, Invite.Status.PENDING.toString());
-			insert.executeUpdate();
+			idnr = insert.executeQuery();
 			
-			return true;
+			// Retrieve the auto generated id
+			idnr.next();
+			long inviteID = idnr.getLong("id");
+			return inviteID;
 		}
 		catch(SQLException e){
 			logger.exception(e, "SQLException when creating invite.");
@@ -358,9 +362,10 @@ public class DatabaseManager implements IDatabaseService {
 		finally{
 			closeStmt(insert);
 			closeConn(conn);
+			closeResSet(idnr);
 		}
 		
-		return false;
+		return null;
 	}
 
 	@Override

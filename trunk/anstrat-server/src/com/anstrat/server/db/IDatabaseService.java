@@ -19,7 +19,7 @@ public interface IDatabaseService {
 	DisplayNameChangeResponse setDisplayName(long userID, String name);
 	Player[] getPlayers(long gameID);
 	Command[] getCommands(long gameID, int greaterThanOrEqualToCommandNr);
-	boolean createInvite(long senderID, long receiverID, GameOptions options);
+	Long createInvite(long senderID, long receiverID, GameOptions options);
 	
 	/** Returns the invites associated with a user, where the user is either the sender or receiver. */
 	Invite[] getInvites(long userID);
