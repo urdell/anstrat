@@ -114,13 +114,14 @@ public class DatabaseSchema {
 		try {
 			c = context.getConnection();
 			s = c.createStatement();
-			s.executeUpdate("DROP TABLE IF EXISTS PlaysIn");
-			s.executeUpdate("DROP TABLE IF EXISTS Turns");
-			s.executeUpdate("DROP TABLE IF EXISTS Games");
-			s.executeUpdate("DROP TABLE IF EXISTS Users");
-			s.executeUpdate("DROP TABLE IF EXISTS DefaultMaps");
-			s.executeUpdate("DROP TABLE IF EXISTS Commands");
-			s.executeUpdate("DROP TABLE IF EXISTS Invites");
+			s.executeUpdate("DROP TABLE IF EXISTS PlaysIn CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS Turns CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS Games CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS Users CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS DefaultMaps CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS Commands CASCADE");
+			s.executeUpdate("DROP TABLE IF EXISTS Invites CASCADE");
+			s.executeUpdate("DROP TYPE IF EXISTS InviteStatus");
 			s.close();
 			
 		} catch (SQLException e) {
