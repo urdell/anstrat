@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 public class InviteMatchMenu extends MenuScreen {
 	private static InviteMatchMenu me;
 	private TextButton friendButton;
+	private String invitedFriend;
 	
 	private int god = PlayerAbilityType.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	private MapSelecter mapSelecter;
@@ -59,6 +60,7 @@ public class InviteMatchMenu extends MenuScreen {
 						Main.getInstance().friends.createFriend(friend);
 						Main.getInstance().friends.saveFriends();
 						friendButton.setText(friend);
+						invitedFriend = friend;
 					}
 					
 				}, "Select or write friend's username");
@@ -80,29 +82,11 @@ public class InviteMatchMenu extends MenuScreen {
 			@Override
 		    public void click(Actor actor,float x,float y ){
 				
-				int mapChoice = mapSelecter.getMapSelection();
-				
-				switch(mapSelecter.getMapSelection()){
-					case GameOptions.MAP_GENERATED: {
-						//Main.getInstance().games.createHotseatGame(null, HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
-						break;
-					}
-					case GameOptions.MAP_RANDOM: {
-						String[] maps = Assets.getMapList(false, true);
-						//Main.getInstance().games.createHotseatGame(Assets.loadMap(HotseatMenu.getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
-						break;
-					}
-					case GameOptions.MAP_SPECIFIC: {
-						String mapName = mapSelecter.getMapName();
-						
-						//Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
-						break;
-					}
-					default: {
-						// No map set, potentially show error message
-						break;
-					}
-				}
+				Main.getInstance().network.invitePlayer(invitedFriend, new GameOptions(
+						god, 
+						team, 
+						mapSelecter.getMapSelection(), 
+						mapSelecter.getMapName()));
 		   }
 		});
 		

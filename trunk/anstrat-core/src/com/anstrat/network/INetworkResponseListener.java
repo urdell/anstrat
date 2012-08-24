@@ -9,4 +9,5 @@ public interface INetworkResponseListener {
 	public void command(long gameID, int commandNr, Command command);
 	public void gameStarted(long gameID, GameSetup gameSetup);
 	public void playerResigned(long gameID, int playerID);
+	public void inviteRequest(long inviteId, String sourceId, GameSetup gameSetup);
 }
