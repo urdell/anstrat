@@ -24,6 +24,7 @@ public abstract class MenuScreen implements Screen {
 	private OrthographicCamera uiCamera;
 	protected Stage stage;
 	protected Table contents;
+	protected static Actor flag;
     
 	/**
 	 * Constructor
@@ -35,16 +36,9 @@ public abstract class MenuScreen implements Screen {
 		
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, Main.getInstance().batch);
 		stage.setCamera(uiCamera);
-		
-		contents = new Table(Assets.SKIN);
-		setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        contents.top().center();
-        contents.setBackground(new NinePatch(Assets.getTextureRegion("MenuBackground")));
-        
-        stage.addActor(contents);
         
         // Flag animation
-		stage.addActor(new Actor(){
+		flag = new Actor(){
 			private float flagAnimationStateTime;
 			private Animation flagAnimation = Assets.getAnimation("flag-inplace-black");
 			
@@ -60,9 +54,16 @@ public abstract class MenuScreen implements Screen {
 			public Actor hit(float x, float y) {
 				return null;
 			}
-		});
+		};
 		
+		stage.addActor(flag);
 		
+		contents = new Table(Assets.SKIN);
+		setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        contents.top().center();
+        //contents.setBackground(new NinePatch(Assets.getTextureRegion("MenuBackground")));
+        
+        stage.addActor(contents);
 	}
 	
 	public void setBounds(float x, float y, float width, float height){
@@ -78,9 +79,17 @@ public abstract class MenuScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
+		drawBackground();
 		stage.act(delta);
 		uiCamera.apply(Gdx.graphics.getGL10());
 		stage.draw();
+	}
+	
+	public void drawBackground() {
+		Main.getInstance().batch.begin();
+		Main.getInstance().batch.draw(Assets.getTextureRegion("MenuBackground"), 0, 0, 
+				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Main.getInstance().batch.end();
 	}
 
 	@Override

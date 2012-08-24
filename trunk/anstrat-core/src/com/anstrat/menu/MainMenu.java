@@ -148,7 +148,7 @@ public class MainMenu extends MenuScreen {
         scrollTable.width = empty.getImageWidth();
         scrollTable.height = empty.getImageHeight();
         
-        
+        contents.addActor(flag);
 	}
 	
 	public static synchronized MainMenu getInstance() {
