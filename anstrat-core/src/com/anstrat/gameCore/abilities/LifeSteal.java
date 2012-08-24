@@ -15,6 +15,7 @@ public class LifeSteal extends TargetedAbility {
 	
 	public LifeSteal(){
 		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);
+		iconName = "lifesteal-button";
 	}
 	
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {

@@ -92,7 +92,7 @@ public class ConfirmOverlay {
 			TextureRegion number = Assets.getTextureRegion("ap-"+(int)checkpoint.z);
 			batch.setColor(checkpointTint);
 			batch.draw( circle, checkpoint.x-checkpointSize/2, checkpoint.y-checkpointSize/2, checkpointSize, checkpointSize);
-			batch.setColor(Color.toFloatBits(0.4f, 1f, 1f, 1f));
+			batch.setColor(Assets.apTextColor);
 			batch.draw( number, checkpoint.x-numberSize/2, checkpoint.y-numberSize/2+numberSize, numberSize, -numberSize); // flip upside down and compensate position		
 		}
 		batch.setColor(Color.WHITE);

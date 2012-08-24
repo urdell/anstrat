@@ -13,6 +13,7 @@ public abstract class Ability implements Serializable {
 	private static final long serialVersionUID = 3L;
 	
 	public final String name;
+	public String iconName = "empty-button";
 	public final String description;
 	public final int apCost;
 	

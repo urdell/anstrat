@@ -13,7 +13,7 @@ public class GFog {
 	public static void drawFog(SpriteBatch batch){
 		GMap gMap = GEngine.getInstance().getMap();	
 		if(gMap.map.fogEnabled){
-			batch.setColor(Color.toFloatBits(1f, 1f, 1f, 0.65f));
+			batch.setColor(Color.toFloatBits(1f, 1f, 1f, 0.50f));
 			TextureRegion fogTexture = Assets.getTextureRegion("fogofwar");
 			
 			for(GTile[] row : gMap.tiles){

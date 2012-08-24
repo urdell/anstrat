@@ -22,7 +22,8 @@ public class Kamikaze extends TargetedAbility {
 	private static final int RANGE = 1;
 
 	public Kamikaze(){
-		super("Kamikaze","Making a suicideÁttack dealing additional damage",AP_COST, RANGE);
+		super("Kamikaze","Making a suicideattack dealing additional damage",AP_COST, RANGE);
+		iconName = "kamikaze-button";
 	}
 	
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
