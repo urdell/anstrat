@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -13,18 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public class MapSelecter extends Table {
 	
-	public static final int NONE = 0;
-	public static final int SPECIFIC_MAP = 1;
-	public static final int GENERATED_MAP = 2;
-	public static final int RANDOM_MAP = 3;
-	
-	private int mapSelection = NONE;
+	private int mapSelection;
 	private Label mapLabel;
 	
-	public MapSelecter(){
+	public MapSelecter(final boolean includeDefaultMaps, final boolean includePlayerMaps){
 		
 		mapLabel = new Label(Assets.SKIN);
-		mapLabel.setText("No map chosen");
+		mapLabel.setText("Random map");
+		mapSelection = GameOptions.MAP_RANDOM;
 		
 		Button mapSpecific = ComponentFactory.createButton("Specific", new ClickListener() {
 			@Override
@@ -32,10 +29,10 @@ public class MapSelecter extends Table {
 				Popup popup = new MapsPopup(new MapsPopupHandler() {
 						@Override
 						public void mapSelected(String map){
-							mapSelection = SPECIFIC_MAP;
+							mapSelection = GameOptions.MAP_SPECIFIC;
 							mapLabel.setText(map);
 						}
-					}, false, "Choose specific map", Assets.getMapList(true, true));
+					}, false, "Choose specific map", Assets.getMapList(includePlayerMaps, includeDefaultMaps));
         		
         		popup.show();	
 			}
@@ -44,15 +41,15 @@ public class MapSelecter extends Table {
 		Button mapRandom = ComponentFactory.createButton("Random", new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {
-				mapSelection = RANDOM_MAP;
-				mapLabel.setText("Random custom map");
+				mapSelection = GameOptions.MAP_RANDOM;
+				mapLabel.setText("Random map");
 			}	
 		});
 		
 		Button mapGenerated = ComponentFactory.createButton("Generated", new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {
-				mapSelection = GENERATED_MAP;
+				mapSelection = GameOptions.MAP_GENERATED;
 				mapLabel.setText("Generated map");
 			}
 		});

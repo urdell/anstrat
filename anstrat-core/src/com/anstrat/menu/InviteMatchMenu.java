@@ -4,6 +4,7 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.popup.InvitePopup;
 import com.anstrat.popup.InvitePopup.InvitePopupHandler;
 import com.anstrat.popup.Popup;
@@ -27,7 +28,7 @@ public class InviteMatchMenu extends MenuScreen {
 		Table settings = new Table(Assets.SKIN);
 		settings.setBackground(Assets.SKIN.getPatch("single-border"));
 		
-		mapSelecter = new MapSelecter();
+		mapSelecter = new MapSelecter(true, true);
 
 		CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
@@ -67,7 +68,7 @@ public class InviteMatchMenu extends MenuScreen {
 		
 		settings.add("Invite friend");
 		settings.row();
-		settings.add(new MapSelecter()).fillX().expandX();
+		settings.add(mapSelecter).fillX().expandX();
 		settings.row();
 		settings.add(friendButton).height(BUTTON_HEIGHT).fillX().expandX();
 		settings.row();
@@ -82,16 +83,16 @@ public class InviteMatchMenu extends MenuScreen {
 				int mapChoice = mapSelecter.getMapSelection();
 				
 				switch(mapSelecter.getMapSelection()){
-					case MapSelecter.GENERATED_MAP: {
+					case GameOptions.MAP_GENERATED: {
 						//Main.getInstance().games.createHotseatGame(null, HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 						break;
 					}
-					case MapSelecter.RANDOM_MAP: {
+					case GameOptions.MAP_RANDOM: {
 						String[] maps = Assets.getMapList(false, true);
 						//Main.getInstance().games.createHotseatGame(Assets.loadMap(HotseatMenu.getRandom(maps)), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);
 						break;
 					}
-					case MapSelecter.SPECIFIC_MAP: {
+					case GameOptions.MAP_SPECIFIC: {
 						String mapName = mapSelecter.getMapName();
 						
 						//Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), HotseatMenu.player1god, HotseatMenu.player1team, HotseatMenu.player2god, HotseatMenu.player2team).showGame(true);

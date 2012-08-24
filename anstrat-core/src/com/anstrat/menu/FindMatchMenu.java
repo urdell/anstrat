@@ -4,6 +4,7 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
 import com.anstrat.popup.TeamPopup.TeamPopupListener;
@@ -24,7 +25,7 @@ public class FindMatchMenu extends MenuScreen {
 	private FindMatchMenu(){
 		Table settings = new Table(Assets.SKIN);
 		settings.setBackground(Assets.SKIN.getPatch("single-border"));
-		mapSelecter = new MapSelecter();
+		mapSelecter = new MapSelecter(true, false);
 		
 		CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
@@ -56,7 +57,11 @@ public class FindMatchMenu extends MenuScreen {
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
 		    public void click(Actor actor,float x,float y ){
-				
+				Main.getInstance().network.findRandomGame(new GameOptions(
+						god, 
+						team, 
+						mapSelecter.getMapSelection(), 
+						mapSelecter.getMapName()));
 			}
 		});
 		

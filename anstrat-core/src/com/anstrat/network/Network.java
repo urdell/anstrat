@@ -1,10 +1,7 @@
 package com.anstrat.network;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.anstrat.network.NetworkWorker.INetworkCallback;
-import com.anstrat.network.protocol.GameSetup;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
 import com.badlogic.gdx.Gdx;
@@ -14,9 +11,11 @@ public class Network implements INetworkCallback {
 
 	private INetworkResponseListener listener;
 	private NetworkUserManager worker;
+	private NetworkMessageParser parser;
 	
 	public Network(String host, int port, FileHandle storedLoginFile){
 		this.worker = new NetworkUserManager(new GameSocket(host, port), this, storedLoginFile);
+		this.parser = new NetworkMessageParser();
 	}
 	
 	public void setListener(INetworkResponseListener listener){
@@ -40,62 +39,19 @@ public class Network implements INetworkCallback {
 	}
 	
 	@Override
-	public void messageReceived(NetworkMessage message) {
-		Command networkCommand = message.getCommand();
-		final List<Serializable> payload = message.getPayload();
+	public void messageReceived(final NetworkMessage message) {
+		if(listener == null){
+			Gdx.app.log("Network", String.format("Received message %s but no listener has been set, message ignored.", message.getCommand()));
+			return;
+		}
 		
-		try{
-			switch(networkCommand){
-				case GAME_STARTED: {
-					final long gameID = (Long) payload.get(0);
-					final GameSetup game = (GameSetup) payload.get(1);
-					
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run(){
-							listener.gameStarted(gameID, game);
-						}
-					});
-					
-					break;
-				}
-				case SEND_COMMAND: {
-					final long gameID = (Long) payload.get(0);
-					final int commandNr = (Integer) payload.get(1);
-					final com.anstrat.command.Command command = (com.anstrat.command.Command) payload.get(2);
-					
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							listener.command(gameID, commandNr, command);
-						}
-					});
-					
-					break;
-				}
-				case PLAYER_RESIGNED: {
-					final long gameID = (Long) payload.get(0);
-					final int playerID = (Integer) payload.get(1);
-					
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							listener.playerResigned(gameID, playerID);
-						}
-					});
-					break;
-				}
-				default: {
-					Gdx.app.log("Network", String.format("Received unknown server command '%s'.", message.getCommand()));
-				}
+		// Delegate parsing of messages
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				parser.parseMessage(message, listener);
 			}
-		}
-		catch(ClassCastException e){
-			Gdx.app.log("Network", String.format("Unexpected payload type in message '%s'. Reason: '%s'.", networkCommand, e.getMessage()));
-		}
-		catch(IndexOutOfBoundsException e){
-			Gdx.app.log("Network", String.format("Missing payload in message '%s'. Reason: '%s'.", networkCommand, e.getMessage()));
-		}
+		});
 	}
 	
 	public void start(){
@@ -130,8 +86,8 @@ public class Network implements INetworkCallback {
     	worker.sendMessage(new NetworkMessage(Command.REQUEST_GAME_UPDATE, gameID, currentCommandNr));
     }
     
-    public void requestRandomGame(int team, int god){
-    	worker.sendMessage(new NetworkMessage(Command.REQUEST_RANDOM_GAME, team, god));
+    public void requestRandomGame(GameOptions options){
+    	worker.sendMessage(new NetworkMessage(Command.REQUEST_RANDOM_GAME, options));
     }
     
     public void sendCommand(long gameID, int commandNr, com.anstrat.command.Command command){
