@@ -18,6 +18,10 @@ public class SocialMessageHandler {
 		
 	}
 	
+	public void invitePlayer(InetSocketAddress client, long playerID){
+		
+	}
+	
 	public void answerInvite(InetSocketAddress client, long inviteID){
 		
 	}

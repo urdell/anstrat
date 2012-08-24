@@ -82,9 +82,14 @@ public class ServerMessageHandler {
 				}
 				
 				// Social messages
-				case INVITE_PLAYER: {
+				case INVITE_PLAYER_NAME: {
 					String name = (String) payload.get(0);
 					socialMessageHandler.invitePlayer(client, name);
+					break;
+				}
+				case INVITE_PLAYER_ID: {
+					long playerId = (Integer) payload.get(0);
+					socialMessageHandler.invitePlayer(client, playerId);
 					break;
 				}
 				case ANSWER_INVITE: {
