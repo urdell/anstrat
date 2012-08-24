@@ -36,11 +36,9 @@ public class Unit implements Serializable {
 	public boolean isAlive = true;
 	
 	/**
-	 * Constructs a unit given the type and ownerID
-	 * @param type the type of unit, see {@link Unit}.TYPE_* for types
-	 * @param ownerId the owner player, 0 = player 1, 1 = player 2 etc
+	 * for testing purposes
 	 */
-	public Unit(UnitType type, int ownerID)
+	public Unit(UnitType type, int ownerID, int customID)
 	{
 		this.type = type;
 		currentHP = type.maxHP;
@@ -59,7 +57,11 @@ public class Unit implements Serializable {
 		attacksThisTurn = 0;		
 		tileCoordinate = null;
 		this.ownerId = ownerID;
-		this.id = State.activeState.nextUnitId++; //get the next free id, and increment next id.
+		this.id = customID; 
+	}
+	public Unit(UnitType type, int ownerID)
+	{
+		this(type, ownerID, State.activeState.nextUnitId++);//get the next free id, and increment next id.
 	}
 	
 	// TODO: Added getters for unit attributes, since they might be modified in the future by individual units

@@ -74,6 +74,16 @@ public final class Pathfinding {
 		return new Path(calc(null, startPos, endPos, null));
 	}
 	
+	/**
+	 * 
+	 * @param startPos
+	 * @param endPos
+	 * @return the Path to the given endPos.
+	 */
+	public static Path getPath(TileCoordinate startPos, TileCoordinate endPos, Map map){
+		return new Path(calc(map, null, startPos, endPos, null));
+	}
+	
 	
 	
 	/**
@@ -106,12 +116,23 @@ public final class Pathfinding {
 	 * @param target target tile.
 	 * @return A list of all tiles in the path. In order.
 	 */
+	public static Path getUnitPath(Unit unit, TileCoordinate target, Map map)
+	{
+		return new Path(calc(map, unit, null, target, null));
+	}
+	
+	/**
+	 * Returns the path from a unit to the specified target tile.
+	 * @param unit The start point.
+	 * @param target target tile.
+	 * @return A list of all tiles in the path. In order.
+	 */
 	public static Path updateActionMapMoves(Unit unit, ActionMap targetMoveStorage)
 	{
 		return new Path(calc(unit, null, null, targetMoveStorage));
 	}
 	
-
+	
 	/**
 	 * Uses Dijkstra's algorithm to calculate paths/unit ranges.
 	 * 
@@ -122,9 +143,23 @@ public final class Pathfinding {
 	 */
 	private static List<TileCoordinate> calc(Unit unit, TileCoordinate start, TileCoordinate target, ActionMap targetMoveStorage)
 	{
+		return calc(null, unit, start, target, targetMoveStorage);
+	}
+	
+	/**
+	 * Uses Dijkstra's algorithm to calculate paths/unit ranges.
+	 * 
+	 * @param unit
+	 * @param start
+	 * @param target
+	 * @return
+	 */
+	private static List<TileCoordinate> calc(Map map, Unit unit, TileCoordinate start, TileCoordinate target, ActionMap targetMoveStorage)
+	{
 		final HashMap<TileCoordinate, Integer> distances = new HashMap<TileCoordinate, Integer>();
 		HashMap<TileCoordinate, TileCoordinate> previous = new HashMap<TileCoordinate, TileCoordinate>();
 		ArrayList<TileCoordinate> visited = new ArrayList<TileCoordinate>();
+		
 		
 		//Keep unsettled nodes in a priority queue so we can easily get the closest.
 		PriorityQueue<TileCoordinate> unsettled = new PriorityQueue<TileCoordinate>(6, new Comparator<TileCoordinate>(){
@@ -134,13 +169,13 @@ public final class Pathfinding {
 	    });
 		boolean isRange = unit!=null && target==null;
 		boolean isPath  = target!=null;
-		
+		boolean isNoState = map != null;
 		//If calculating from unit, let its tile be the source.
 		TileCoordinate source = unit!=null ? unit.tileCoordinate : start;
-		Map map = State.activeState.map;
-		
+		if (!isNoState)
+			map = State.activeState.map;
 		// Return null if invalid path
-		if(isPath && (StateUtils.getUnitByTile(target)!=null || target.equals(source)))
+		if(isPath && !isNoState && (StateUtils.getUnitByTile(target)!=null || target.equals(source)))
 			return null;
 		
 		//Add starting tile
@@ -160,7 +195,9 @@ public final class Pathfinding {
 			//Add neighbors
 			for(Tile neighbor : map.getNeighbors(closest))
 			{
-				Unit unitOnNeighbor = StateUtils.getUnitByTile(neighbor.coordinates);
+				Unit unitOnNeighbor = null;
+				if (!isNoState) 
+					unitOnNeighbor = StateUtils.getUnitByTile(neighbor.coordinates);
 				int terrainPenalty = unit != null ? unit.getUnitType().getTerrainPenalty(neighbor.terrain) : Integer.MAX_VALUE;
 				int distance = Math.max(notNull(distances.get(closest)) + terrainPenalty, terrainPenalty);
 				
