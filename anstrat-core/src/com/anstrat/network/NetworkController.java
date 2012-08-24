@@ -14,6 +14,7 @@ import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.popup.Popup;
+import com.anstrat.popup.TutorialPopup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -113,6 +114,12 @@ public class NetworkController {
 	public void findRandomGame(GameOptions options){
 		this.network.requestRandomGame(options);
 	}
+	public void invitePlayer(long playerID, GameOptions options){
+		this.network.invitePlayerByID(playerID, options);
+	}
+	public void invitePlayer(String playerName, GameOptions options){
+		this.network.invitePlayerByName(playerName, options);
+	}
 	
 	public void requestGameUpdate(long gameID, int currentCommandNr){
 		this.network.requestGameUpdate(gameID, currentCommandNr);
@@ -146,6 +153,13 @@ public class NetworkController {
 						gameSetup.map, 
 						gameSetup.randomSeed);
 				MainMenu.getInstance().updateGamesList();
+			}
+			
+			@Override
+			public void inviteRequest(long inviteId, String sourceName, GameSetup gameSetup) {
+				new TutorialPopup().show();
+				// TODO proper handling
+				
 			}
 			
 			@Override
