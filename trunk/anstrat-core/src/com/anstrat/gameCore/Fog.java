@@ -58,6 +58,9 @@ public class Fog {
 	}
 	
 	public static boolean isVisible(TileCoordinate tile, int playerId) {
+		if(State.activeState.map.tiles[tile.x][tile.y].visible == null ||
+				!State.activeState.map.fogEnabled) 
+			return true;
 		return State.activeState.map.tiles[tile.x][tile.y].visible[playerId] > 0;
 	}
 }
