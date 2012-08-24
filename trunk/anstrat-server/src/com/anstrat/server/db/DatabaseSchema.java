@@ -55,12 +55,15 @@ public class DatabaseSchema {
 					"PRIMARY KEY(gameID, commandNr))");
 			
 			// Invites
+			s.executeUpdate("CREATE TYPE InviteStatus AS ENUM('PENDING', 'ACCEPTED', 'REJECTED')");
 			s.executeUpdate("CREATE TABLE Invites(" +
 					"id BIGSERIAL PRIMARY KEY, " +
 					"senderID BIGSERIAL, " +
 					"receiverID BIGSERIAL, " +
 					"gameOptions BYTEA, " +
-					"FOREIGN KEY(senderID) REFERENCES Games(id), " +
+					"status InviteStatus, " +
+					"gameID BIGSERIAL, " +
+					"FOREIGN KEY(senderID) REFERENCES Users(id), " +
 					"FOREIGN KEY(receiverID) REFERENCES Users(id))");
 			
 			// Turns

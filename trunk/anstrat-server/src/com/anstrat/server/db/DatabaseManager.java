@@ -5,12 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.postgresql.util.PGobject;
+
 import com.anstrat.command.Command;
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
+import com.anstrat.network.protocol.Invite;
 import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
@@ -74,7 +79,7 @@ public class DatabaseManager implements IDatabaseService {
 		
 		try{
 			conn = context.getConnection();
-			pst = conn.prepareStatement("SELECT * FROM USERS WHERE id = ANY(?)");
+			pst = conn.prepareStatement("SELECT * FROM Users WHERE id = ANY(?)");
 			pst.setArray(1, conn.createArrayOf("integer", Longs.asList(userIDs).toArray()));
 			rs = pst.executeQuery();
 			
@@ -98,6 +103,49 @@ public class DatabaseManager implements IDatabaseService {
 		
 		// An error occurred.
 		return map;
+	}
+	
+	@Override
+	public User getUser(long userID) {		
+		Map<Long, User> users = getUsers(userID);
+		return users.get(userID);
+	}
+
+	@Override
+	public User getUser(String displayName) {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("SELECT * FROM Users WHERE displayName = ANY(?)");
+			pst.setString(1, displayName);
+			rs = pst.executeQuery();
+			
+			// Retrieve result
+			if(rs.next()){
+				long userID = rs.getLong("id");
+				String queryDisplayName = rs.getString("displayName");
+				byte[] encryptedPassword = rs.getBytes("password");
+				
+				return new User(userID, queryDisplayName, encryptedPassword);
+			}
+			else{
+				return null;
+			}
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when retrieving user by displayName '%s'.", displayName);
+		}
+		finally{
+			closeResSet(rs);
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return null;
 	}
 
 	@Override
@@ -284,6 +332,110 @@ public class DatabaseManager implements IDatabaseService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public boolean createInvite(long senderID, long receiverID, GameOptions options) {
+		Connection conn = null;
+		PreparedStatement insert = null;
+		
+		try{
+			byte[] serializedGameOptions = Serialization.serialize(options);
+			conn = context.getConnection();
+			
+			insert = conn.prepareStatement("INSERT INTO Invites(senderID, receiverID, gameOptions, status) VALUES(?, ?, ?, ?)");
+			insert.setLong(1, senderID);
+			insert.setLong(2, receiverID);
+			insert.setBytes(3, serializedGameOptions);
+			insert.setString(4, Invite.Status.PENDING.toString());
+			insert.executeUpdate();
+			
+			return true;
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when creating invite.");
+		}
+		finally{
+			closeStmt(insert);
+			closeConn(conn);
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Invite[] getInvites(long userID){
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		ArrayList<Invite> invites = new ArrayList<Invite>();
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("SELECT * FROM Invites WHERE senderID = ? OR receiverID = ?");
+			pst.setLong(1, userID);
+			pst.setLong(2, userID);
+			
+			rs = pst.executeQuery();
+			
+			// Retrieve result
+			while(rs.next()){
+				long senderID = rs.getLong("senderID");
+				long receiverID = rs.getLong("receiverID");
+				Invite.Status status = Invite.Status.valueOf(((PGobject) rs.getObject("status")).getValue());
+				Long gameID = rs.getLong("gameID");
+				GameOptions options = Serialization.deserialize(rs.getBytes("gameOptions"));
+				invites.add(new Invite(senderID, receiverID, status, gameID, options));		
+			}
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when retrieving invites for user '%d'.", userID);
+		}
+		finally{
+			closeResSet(rs);
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		return invites.toArray(new Invite[invites.size()]);
+	}
+
+	@Override
+	public Invite getInvite(long inviteID) {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("SELECT * FROM Invites WHERE id = ?");
+			pst.setLong(1,  inviteID);
+			rs = pst.executeQuery();
+			
+			// Retrieve result
+			if(rs.next()){
+				long senderID = rs.getLong("senderID");
+				long receiverID = rs.getLong("receiverID");
+				Invite.Status status = Invite.Status.valueOf(((PGobject) rs.getObject("status")).getValue());
+				Long gameID = rs.getLong("gameID");
+				GameOptions options = Serialization.deserialize(rs.getBytes("gameOptions"));
+				return new Invite(senderID, receiverID, status, gameID, options);
+			}
+			else{
+				return null;
+			}
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when retrieving invite by inviteID '%d'.", inviteID);
+		}
+		finally{
+			closeResSet(rs);
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return null;
 	}
 	
 	// Helpers
