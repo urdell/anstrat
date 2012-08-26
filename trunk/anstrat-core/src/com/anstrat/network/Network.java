@@ -98,10 +98,10 @@ public class Network implements INetworkCallback {
     	worker.sendMessage(new NetworkMessage(Command.RESIGN, gameID, playerID));
     }
     
-    public void invitePlayerByName(String invitedPlayer, GameOptions options){
-    	worker.sendMessage(new NetworkMessage(Command.INVITE_PLAYER_NAME, invitedPlayer, options));
+    public void invitePlayerByName(String playerName, GameOptions options){
+    	worker.sendMessage(new NetworkMessage(Command.INVITE_PLAYER_NAME, playerName, options));
     }
-    public void invitePlayerByID(long invitedPlayerID, GameOptions options){
-    	worker.sendMessage(new NetworkMessage(Command.INVITE_PLAYER_ID, invitedPlayerID, options));
+    public void invitePlayerByID(long userID, GameOptions options){
+    	worker.sendMessage(new NetworkMessage(Command.INVITE_PLAYER_ID, userID, options));
     }
 }

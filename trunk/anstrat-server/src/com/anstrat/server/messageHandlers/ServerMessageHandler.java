@@ -88,8 +88,8 @@ public class ServerMessageHandler {
 					break;
 				}
 				case INVITE_PLAYER_ID: {
-					long playerId = (Integer) payload.get(0);
-					socialMessageHandler.invitePlayer(client, playerId);
+					long userID = (Integer) payload.get(0);
+					socialMessageHandler.invitePlayer(client, userID);
 					break;
 				}
 				case ANSWER_INVITE: {
