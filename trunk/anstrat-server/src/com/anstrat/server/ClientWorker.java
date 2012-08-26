@@ -58,17 +58,20 @@ public class ClientWorker implements Runnable {
     	return source;
     }
     
-    public synchronized void sendMessage(NetworkMessage message){
-    	if(socket.isClosed()) return;
+    public synchronized boolean sendMessage(NetworkMessage message){
+    	if(socket.isClosed()) return false;
     	
     	try{
     		out.writeObject(message);
     		logger.info("Sent '%s' to %s.", message.getCommand(), source);
+    		return true;
     	}
     	catch(IOException ioe){
     		logger.info("Failed to send a '%s' message to %s.", message.getCommand(), source);
     		close(ioe);
     	}
+    	
+    	return false;
     }
     
     /**
