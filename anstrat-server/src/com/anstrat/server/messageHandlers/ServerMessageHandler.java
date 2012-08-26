@@ -84,17 +84,26 @@ public class ServerMessageHandler {
 				// Social messages
 				case INVITE_PLAYER_NAME: {
 					String name = (String) payload.get(0);
-					socialMessageHandler.invitePlayer(client, name);
+					GameOptions options = (GameOptions) payload.get(1);
+					socialMessageHandler.invitePlayer(client, name, options);
 					break;
 				}
 				case INVITE_PLAYER_ID: {
 					long userID = (Integer) payload.get(0);
-					socialMessageHandler.invitePlayer(client, userID);
+					GameOptions options = (GameOptions) payload.get(1);
+					socialMessageHandler.invitePlayer(client, userID, options);
 					break;
 				}
-				case ANSWER_INVITE: {
+				case INVITE_ACCEPT: {
 					long inviteID = (Long) payload.get(0);
-					socialMessageHandler.answerInvite(client, inviteID);
+					int team = (Integer) payload.get(1);
+					int god = (Integer) payload.get(2);
+					socialMessageHandler.inviteAccept(client, inviteID, team, god);
+					break;
+				}
+				case INVITE_DECLINE: {
+					long inviteID = (Long) payload.get(0);
+					socialMessageHandler.inviteDecline(client, inviteID);
 					break;
 				}
 				default: {

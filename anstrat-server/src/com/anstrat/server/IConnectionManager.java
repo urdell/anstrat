@@ -7,8 +7,8 @@ import com.anstrat.network.protocol.NetworkMessage;
 
 public interface IConnectionManager {
 	void addConnection(Socket socket);
-	void sendMessage(InetSocketAddress address, NetworkMessage message);
-	void sendMessage(long userID, NetworkMessage message);
+	boolean sendMessage(InetSocketAddress address, NetworkMessage message);
+	boolean sendMessage(long userID, NetworkMessage message);
 	void linkUserToAddress(long userID, InetSocketAddress address);
 	
 	/**

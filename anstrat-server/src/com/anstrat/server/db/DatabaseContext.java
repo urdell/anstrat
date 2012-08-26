@@ -25,7 +25,7 @@ public class DatabaseContext {
     		int port = Integer.parseInt(getProperty(p, "db.port"));
     		String databaseURL = String.format("//%s:%d/%s", host, port, database);
     		
-    		connectionString = String.format("jdbc:%s:%s", "postgresql", databaseURL);
+    		connectionString = String.format("jdbc:postgresql:%s", databaseURL);
     		databaseUser = getProperty(p, "db.user");
     		databasePassword = getProperty(p, "db.password");
     	} 

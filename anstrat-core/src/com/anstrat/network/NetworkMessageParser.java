@@ -3,6 +3,7 @@ package com.anstrat.network;
 import java.io.Serializable;
 import java.util.List;
 
+import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
@@ -16,25 +17,58 @@ public class NetworkMessageParser {
 		
 		try{
 			switch(networkCommand){
+			
+				// Game messages
 				case GAME_STARTED: {
-					final long gameID = (Long) payload.get(0);
-					final GameSetup game = (GameSetup) payload.get(1);
+					long gameID = (Long) payload.get(0);
+					GameSetup game = (GameSetup) payload.get(1);
 					listener.gameStarted(gameID, game);
 					
 					break;
 				}
 				case SEND_COMMAND: {
-					final long gameID = (Long) payload.get(0);
-					final int commandNr = (Integer) payload.get(1);
-					final com.anstrat.command.Command command = (com.anstrat.command.Command) payload.get(2);
+					long gameID = (Long) payload.get(0);
+					int commandNr = (Integer) payload.get(1);
+					com.anstrat.command.Command command = (com.anstrat.command.Command) payload.get(2);
 					listener.command(gameID, commandNr, command);
 					
 					break;
 				}
 				case PLAYER_RESIGNED: {
-					final long gameID = (Long) payload.get(0);
-					final int playerID = (Integer) payload.get(1);
+					long gameID = (Long) payload.get(0);
+					int playerID = (Integer) payload.get(1);
 					listener.playerResigned(gameID, playerID);
+					
+					break;
+				}
+				
+				// Social messages
+				case INVITE_PENDING: {
+					long inviteID = (Long) payload.get(0);
+					String receiverName = (String) payload.get(1);
+					GameOptions options = (GameOptions) payload.get(2);
+					listener.invitePending(inviteID, receiverName, options);
+					
+					break;
+				}
+				case INVITE_FAILED: {
+					String reason = (String) payload.get(0);
+					listener.inviteFailed(reason);
+					
+					break;
+				}
+				case INVITE_REQUEST: {
+					long inviteID = (Long) payload.get(0);
+					String senderName = (String) payload.get(1);
+					GameOptions options = (GameOptions) payload.get(2);
+					listener.inviteRequest(inviteID, senderName, options);
+					
+					break;
+				}
+				case INVITE_COMPLETED: {
+					long inviteID = (Long) payload.get(0);
+					boolean accept = (Boolean) payload.get(1);
+					listener.inviteCompleted(inviteID, accept);
 					
 					break;
 				}

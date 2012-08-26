@@ -22,7 +22,8 @@ public class NetworkMessage implements Serializable, Comparable<NetworkMessage> 
 		REQUEST_RANDOM_GAME,
 		INVITE_PLAYER_NAME,
 		INVITE_PLAYER_ID,
-		ANSWER_INVITE,
+		INVITE_ACCEPT,
+		INVITE_DECLINE,
 		RESIGN,
 		
 		// Server -> Client
@@ -35,6 +36,7 @@ public class NetworkMessage implements Serializable, Comparable<NetworkMessage> 
 		INVITE_REQUEST,
 		INVITE_PENDING,
 		INVITE_FAILED,
+		INVITE_COMPLETED,
 		PLAYER_RESIGNED,
 		
 		// Server <-> Client

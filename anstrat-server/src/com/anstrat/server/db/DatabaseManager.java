@@ -15,7 +15,7 @@ import org.postgresql.util.PGobject;
 import com.anstrat.command.Command;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
-import com.anstrat.network.protocol.Invite;
+import com.anstrat.server.db.Invite.Status;
 import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
 import com.anstrat.server.util.Password;
@@ -276,6 +276,12 @@ public class DatabaseManager implements IDatabaseService {
 	}
 	
 	@Override
+	public GameSetup getGame(long gameID) {
+		// TODO: Implement
+		throw new UnsupportedOperationException("Not implemented yet.");
+	}
+	
+	@Override
 	public DisplayNameChangeResponse setDisplayName(long userID, String name){
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -335,7 +341,7 @@ public class DatabaseManager implements IDatabaseService {
 	}
 
 	@Override
-	public Long createInvite(long senderID, long receiverID, GameOptions options) {
+	public Invite createInvite(long senderID, long receiverID, GameOptions options) {
 		Connection conn = null;
 		PreparedStatement insert = null;
 		ResultSet idnr = null;
@@ -354,7 +360,8 @@ public class DatabaseManager implements IDatabaseService {
 			// Retrieve the auto generated id
 			idnr.next();
 			long inviteID = idnr.getLong("id");
-			return inviteID;
+			
+			return new Invite(inviteID, senderID, receiverID, Invite.Status.PENDING, null, options);
 		}
 		catch(SQLException e){
 			logger.exception(e, "SQLException when creating invite.");
@@ -385,12 +392,13 @@ public class DatabaseManager implements IDatabaseService {
 			
 			// Retrieve result
 			while(rs.next()){
+				long inviteID = rs.getLong("id");
 				long senderID = rs.getLong("senderID");
 				long receiverID = rs.getLong("receiverID");
 				Invite.Status status = Invite.Status.valueOf(((PGobject) rs.getObject("status")).getValue());
 				Long gameID = rs.getLong("gameID");
 				GameOptions options = Serialization.deserialize(rs.getBytes("gameOptions"));
-				invites.add(new Invite(senderID, receiverID, status, gameID, options));		
+				invites.add(new Invite(inviteID, senderID, receiverID, status, gameID, options));		
 			}
 		}
 		catch(SQLException e){
@@ -414,7 +422,7 @@ public class DatabaseManager implements IDatabaseService {
 		try{
 			conn = context.getConnection();
 			pst = conn.prepareStatement("SELECT * FROM Invites WHERE id = ?");
-			pst.setLong(1,  inviteID);
+			pst.setLong(1, inviteID);
 			rs = pst.executeQuery();
 			
 			// Retrieve result
@@ -424,7 +432,7 @@ public class DatabaseManager implements IDatabaseService {
 				Invite.Status status = Invite.Status.valueOf(((PGobject) rs.getObject("status")).getValue());
 				Long gameID = rs.getLong("gameID");
 				GameOptions options = Serialization.deserialize(rs.getBytes("gameOptions"));
-				return new Invite(senderID, receiverID, status, gameID, options);
+				return new Invite(inviteID, senderID, receiverID, status, gameID, options);
 			}
 			else{
 				return null;
@@ -441,6 +449,40 @@ public class DatabaseManager implements IDatabaseService {
 		
 		// An error occurred.
 		return null;
+	}
+	
+	@Override
+	public boolean updateInvite(long inviteID, Status inviteStatus, Long gameID) {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("UPDATE Invites SET status = ?, gameID = ? WHERE id = ?");
+			pst.setString(1, inviteStatus.toString());
+			pst.setLong(2, gameID);
+			pst.setLong(3, inviteID);
+			pst.executeUpdate();
+			return true;
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when updating invite by inviteID '%d'.", inviteID);
+		}
+		finally{
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return false;
+	}
+	
+	@Override
+	public boolean removeInvites(long... inviteIDs) {
+		//if(inviteIDs.length == 0) return true;
+		
+		// TODO: Implement
+		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 	
 	// Helpers

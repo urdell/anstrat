@@ -49,27 +49,31 @@ public class ConnectionManager implements IConnectionManager {
 	}
 
 	@Override
-	public void sendMessage(InetSocketAddress address, NetworkMessage message) {
+	public boolean sendMessage(InetSocketAddress address, NetworkMessage message) {
 		ClientWorker worker = this.connections.get(address);
 		
 		if(worker != null){
-			worker.sendMessage(message);
+			return worker.sendMessage(message);
 		}
 		else{
 			logger.info("Could not send %s to %s, client is not connected", message.getCommand(), address);
 		}
+		
+		return false;
 	}
 
 	@Override
-	public void sendMessage(long userID, NetworkMessage message) {
+	public boolean sendMessage(long userID, NetworkMessage message) {
 		InetSocketAddress client = this.authenticatedConnections.get(userID);
 		
 		if(client != null){
-			sendMessage(client, message);
+			return sendMessage(client, message);
 		}
 		else{
 			logger.info("Could not send %s to user '%d', could not determine client address.", message.getCommand(), userID);
 		}
+		
+		return false;
 	}
 
 	@Override

@@ -158,7 +158,7 @@ public class NetworkController {
 			}
 			
 			@Override
-			public void inviteRequest(long inviteId, String sourceName, GameSetup gameSetup) {
+			public void inviteRequest(long inviteID, String senderName, GameOptions options) {
 				new TutorialPopup().show();
 				// TODO proper handling
 				
@@ -207,6 +207,25 @@ public class NetworkController {
 				}
 				
 				Main.getInstance().games.endGame(game);
+			}
+
+			@Override
+			public void inviteCompleted(long inviteID, boolean accept) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void invitePending(long inviteID,
+					String receiverDisplayName, GameOptions options) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void inviteFailed(String reason) {
+				// TODO Auto-generated method stub
+				
 			}
 		};
 			
