@@ -3,8 +3,9 @@ package com.anstrat.server.messageHandlers;
 import java.net.InetSocketAddress;
 
 import com.anstrat.server.IConnectionManager;
-import com.anstrat.server.util.Logger;
+import com.anstrat.server.db.IDatabaseService;
 import com.anstrat.server.util.DependencyInjector.Inject;
+import com.anstrat.server.util.Logger;
 
 public class SocialMessageHandler {
 	
@@ -14,11 +15,14 @@ public class SocialMessageHandler {
 	@Inject
 	private IConnectionManager connectionManager;
 	
+	@Inject
+	private IDatabaseService database;
+	
 	public void invitePlayer(InetSocketAddress client, String name){
 		
 	}
 	
-	public void invitePlayer(InetSocketAddress client, long playerID){
+	public void invitePlayer(InetSocketAddress client, long userID){
 		
 	}
 	

@@ -114,9 +114,11 @@ public class NetworkController {
 	public void findRandomGame(GameOptions options){
 		this.network.requestRandomGame(options);
 	}
-	public void invitePlayer(long playerID, GameOptions options){
-		this.network.invitePlayerByID(playerID, options);
+	
+	public void invitePlayer(long userID, GameOptions options){
+		this.network.invitePlayerByID(userID, options);
 	}
+	
 	public void invitePlayer(String playerName, GameOptions options){
 		this.network.invitePlayerByName(playerName, options);
 	}
