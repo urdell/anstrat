@@ -11,6 +11,8 @@ import java.util.IllegalFormatException;
 
 public class Logger {
 	
+	private enum Level {INFO, WARN, ERROR};
+	
 	private static final String LOG_DIRECTORY = "logs";
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM 'kl' HH:mm");
 	
@@ -37,18 +39,32 @@ public class Logger {
 		}
 	}
 	
-	public synchronized void log(String message, String level, Object... formatArgs){
+	private synchronized void logln(String message, Level level, Object... formatArgs){
 		if(formatArgs.length > 0){
+			// Don't crash the application if there's an error in the log message format
 			try{
 				message = String.format(message, formatArgs);
 			}
 			catch(IllegalFormatException e){
-				
+				level = Level.ERROR;
+				message = "Error in log message String.format() args: '" + e.getMessage() + "'.";
 			}
-			
 		}
 		
-		message = String.format("[%s:%s][%s] %s", level, Thread.currentThread().getName(), dateFormat.format(new Date()), message);
+		// Get the source file and line number
+		StackTraceElement element = Thread.currentThread().getStackTrace()[3];
+		
+		// Remove the package names
+		String[] split = element.getClassName().split("\\.");
+		String simpleClassName = split[split.length - 1];
+		
+		message = String.format("[%s][%s][%s:%s:%d] %s\n", 
+				level,
+				dateFormat.format(new Date()),
+				Thread.currentThread().getName(), 
+				simpleClassName, 
+				element.getLineNumber(), 
+				message);
 		
 		// Log to console
 		System.out.print(message);
@@ -69,24 +85,20 @@ public class Logger {
 			}
 		}
 	}
-	
-	public void logln(String message, String level, Object... formatArgs){
-		log(message+"\n", level, formatArgs);
-	}
-	
+
 	public void info(String message, Object... args){
-		logln(message, "INFO", args);
+		logln(message, Level.INFO, args);
 	}
 	
 	public void warning(String message, Object... args){
-		logln(message, "WARN", args);
+		logln(message, Level.WARN, args);
 	}
 	
 	public void error(String message, Object... args){
-		logln(message, "ERROR", args);
+		logln(message, Level.ERROR, args);
 	}
 	
 	public void exception(Throwable t, String message, Object... args){
-		logln(String.format("%s : %s", message, t.getMessage()), "ERROR", args);
+		logln(String.format("%s : %s", message, t.getMessage()), Level.ERROR, args);
 	}
 }
