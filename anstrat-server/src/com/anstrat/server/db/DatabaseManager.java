@@ -119,7 +119,7 @@ public class DatabaseManager implements IDatabaseService {
 		
 		try{
 			conn = context.getConnection();
-			pst = conn.prepareStatement("SELECT * FROM Users WHERE displayName = ANY(?)");
+			pst = conn.prepareStatement("SELECT * FROM Users WHERE displayName = ?");
 			pst.setString(1, displayName);
 			rs = pst.executeQuery();
 			
@@ -479,7 +479,7 @@ public class DatabaseManager implements IDatabaseService {
 	
 	@Override
 	public boolean removeInvites(long... inviteIDs) {
-		//if(inviteIDs.length == 0) return true;
+		if(inviteIDs.length == 0) return true;
 		
 		// TODO: Implement
 		throw new UnsupportedOperationException("Not implemented yet.");

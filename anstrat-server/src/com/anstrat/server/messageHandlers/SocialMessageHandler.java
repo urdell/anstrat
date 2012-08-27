@@ -137,7 +137,7 @@ public class SocialMessageHandler {
 		}
 		else{
 			logger.info("%s attempted to invite user with name '%s', but that user does not exist.", client, name);
-			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, String.format("The user named '%s' does not exist.", name)));
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, String.format("A user named '%s' does not exist.", name)));
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class SocialMessageHandler {
 		}
 		else{
 			logger.info("%s attempted to invite user with id '%d', but that user does not exist.", client, userID);
-			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, String.format("The user with id '%d' does not exist.", userID)));
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, String.format("A user with id '%d' does not exist.", userID)));
 		}
 	}
 	
