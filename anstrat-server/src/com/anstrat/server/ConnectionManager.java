@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.anstrat.network.protocol.NetworkMessage;
+import com.anstrat.server.db.User;
 import com.anstrat.server.events.ClientAuthenticatedEvent;
 import com.anstrat.server.events.ClientConnectedEvent;
 import com.anstrat.server.events.ClientDisconnectedEvent;
@@ -77,10 +78,10 @@ public class ConnectionManager implements IConnectionManager {
 	}
 
 	@Override
-	public void linkUserToAddress(long userID, InetSocketAddress address) {
-		this.authenticatedConnections.forcePut(userID, address);
-		logger.info("Authenticated %s as user '%d'.", address, userID);
-		Event.post(new ClientAuthenticatedEvent(address, userID));
+	public void linkUserToAddress(User user, InetSocketAddress address) {
+		this.authenticatedConnections.forcePut(user.getUserID(), address);
+		logger.info("Authenticated %s, userID = %d, name = '%s'.", address, user.getUserID(), user.getDisplayedName());
+		Event.post(new ClientAuthenticatedEvent(address, user.getUserID()));
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class AuthMessageHandler {
 		boolean userPasswordMatches = user == null || Password.authenticate(password, user.getEncryptedPassword());
 		
 		if(userExists && userPasswordMatches){
-			connectionManager.linkUserToAddress(userID, client);
+			connectionManager.linkUserToAddress(user, client);
 			connectionManager.sendMessage(client, new NetworkMessage(Command.ACCEPT_LOGIN, userID));
 		}
 		else{
@@ -50,7 +50,7 @@ public class AuthMessageHandler {
 		String password = Password.generateRandomAlphaNumericPassword(64);
 		User user = database.createUser(password);
 		
-		connectionManager.linkUserToAddress(user.getUserID(), client);
+		connectionManager.linkUserToAddress(user, client);
 		connectionManager.sendMessage(client, new NetworkMessage(Command.USER_CREDENTIALS, user.getUserID(), password));
 	}
 	
@@ -79,6 +79,7 @@ public class AuthMessageHandler {
 		switch(response){
 			case SUCCESS: {
 				connectionManager.sendMessage(client, new NetworkMessage(Command.DISPLAY_NAME_CHANGED, name));
+				logger.info("%s changed name to '%s'.", client, name);
 				return;
 			}
 			case FAIL_NAME_EXISTS: {
