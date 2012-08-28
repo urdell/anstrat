@@ -13,7 +13,7 @@ public class TutorialPopup extends Popup{
 	int nrClicks = 0;
 	
 	public TutorialPopup(){
-		
+		drawOverlay = false;
 		tutorialImage = Assets.getTextureRegion("tutorialImage1");
 		
 		this.setClickListener(new ClickListener() {
@@ -38,9 +38,9 @@ public class TutorialPopup extends Popup{
 	}
 	
 	@Override
-	public void resize(int width, int height) {
-		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
+	public void resize(int width, int height){
+		// Force popup to take up the whole window
+		this.size(width, height);
+		super.resize(width, height);
 	}
 }
