@@ -25,7 +25,7 @@ public class TutorialPopup extends Popup{
 	        		tutorialImage = Assets.getTextureRegion("tutorialImage2");
 	        		break;
 	        	case 2:
-	        		Popup.currentPopup.close();
+	        		Popup.getCurrentPopup().close();
 	        		nrClicks = 0;
 	        	}
 	        	

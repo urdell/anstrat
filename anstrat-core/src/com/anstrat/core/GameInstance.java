@@ -84,7 +84,7 @@ public class GameInstance implements Serializable{
 					@Override
 					public void click(Actor actor, float x, float y) {
 						Main.getInstance().setScreen(MainMenu.getInstance());
-						Popup.currentPopup.close();
+						Popup.getCurrentPopup().close();
 					}
 				})).show();
 		}

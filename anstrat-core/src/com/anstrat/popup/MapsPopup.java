@@ -29,7 +29,7 @@ public class MapsPopup extends Popup {
 	        @Override
 	        public void click(Actor actor,float x,float y ){
 	        	returnSelection();
-				Popup.currentPopup.close();
+				Popup.getCurrentPopup().close();
 	        }
 	    });
 		Assets.SKIN.setEnabled(ok, false);

@@ -60,18 +60,19 @@ public class NetworkController {
 				
 				// Update login label to reflect the new status
 				String displayName = userDisplayName != null ? userDisplayName : "Unnamed" + network.getUserID();
-				networkLabelText = String.format("Logged in as: %s", displayName);
-				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
+				setNetworkLabelText(String.format("Logged in as: %s", displayName));
 			}
 		});
 		
 		this.network.setConnectionLostCallback(new Runnable() {
 			@Override
 			public void run() {
+				// Disable all network buttons
 				for(Button b : networkButtons){
 					Assets.SKIN.setEnabled(b, false);
 				}
 				
+				setNetworkLabelText("Not connected.");
 				networkLabelText = "Not connected.";
 				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
 			}
@@ -82,6 +83,7 @@ public class NetworkController {
 			public void run() {
 				// Clear all saved games
 				Main.getInstance().games.clear();
+				MainMenu.getInstance().updateGamesList();
 			}
 		});
 	}
@@ -91,8 +93,14 @@ public class NetworkController {
 		label.setText(networkLabelText);
 	}
 	
+	private void setNetworkLabelText(String text){
+		networkLabelText = text;
+		if(networkLoginLabel != null) networkLoginLabel.setText(text);
+	}
+	
 	public void registerNetworkButton(Button button){
 		this.networkButtons.add(button);
+		Assets.SKIN.setEnabled(button, network.isLoggedIn());
 	}
 	
 	// Debug
@@ -101,7 +109,6 @@ public class NetworkController {
 	}
 	
 	// UI actions
-	// TODO: Add ui actions that invoke methods on com.anstrat.network.Network
 	
 	public long getGlobalUserID(){
 		return network.getUserID();
@@ -201,7 +208,7 @@ public class NetworkController {
 								@Override
 								public void click(Actor actor, float x, float y) {
 									Main.getInstance().setScreen(MainMenu.getInstance());
-									Popup.currentPopup.close();
+									Popup.getCurrentPopup().close();
 								}
 							})).show();
 				}
@@ -224,8 +231,7 @@ public class NetworkController {
 
 			@Override
 			public void inviteFailed(String reason) {
-				// TODO Auto-generated method stub
-				
+				Gdx.app.log("NetworkController", "Invite failed due to: " + reason);
 			}
 		};
 			

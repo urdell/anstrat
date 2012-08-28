@@ -254,6 +254,10 @@ public class Main extends Game implements ApplicationListener {
 			Gdx.app.error("Main", "Tried to pop with an empty screen stack.");
 	}
 	
+	public void addProcessor(int index, InputProcessor ip){
+		inputMultiplexer.addProcessor(index, ip);
+	}
+	
 	public void addProcessor(InputProcessor ip){
 		inputMultiplexer.addProcessor(ip);
 	}

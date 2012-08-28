@@ -32,8 +32,8 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		setCallback(new NetworkWorker.INetworkCallback() {
 			@Override
 			public void messageReceived(NetworkMessage message) {
+
 				// Intercept authentication messages
-				
 				List<Serializable> payload = message.getPayload();
 				Command command = message.getCommand();
 				
@@ -127,6 +127,10 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 				outgoing.add(new NetworkMessage(Command.LOGIN, user.userID, user.password));
 			}
 		}
+	}
+	
+	public boolean isLoggedIn(){
+		return loggedIn;
 	}
 	
 	public void resetLogin(){
