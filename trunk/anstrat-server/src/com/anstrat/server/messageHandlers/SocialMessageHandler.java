@@ -130,6 +130,11 @@ public class SocialMessageHandler {
 	}
 	
 	public void invitePlayer(InetSocketAddress client, String name, GameOptions options){
+		if(name == null){
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, "Name cannot be null."));
+			return;
+		}
+		
 		User user = db.getUser(name);
 		
 		if(user != null){
