@@ -21,6 +21,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 	private boolean loggedIn;
 	private Object lock = new Object();
 	private Runnable loginCallback, connectionLostCallback;
+	private INetworkResponseListener listener;
 	
 	// Messages waiting for register/login to succeed
 	private Queue<NetworkMessage> pending = new LinkedList<NetworkMessage>();
@@ -57,7 +58,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						String password = (String) payload.get(1);
 						
 						synchronized(lock){
-							user = new User(userID, password);
+							user = new User(userID, password, null);
 						}
 						
 						user.toFile(storedLoginFile);
@@ -67,6 +68,41 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						
 						break;
 					
+					}
+					case DISPLAY_NAME_CHANGED: {
+						final String name = (String) payload.get(0);
+						
+						synchronized(lock){
+							user = new User(user.userID, user.password, name);
+						}
+						
+						user.toFile(storedLoginFile);
+						Gdx.app.log("NetworkUserManager", String.format("Received new display name '%s' from server.", name));
+						
+						if(listener != null){
+							Gdx.app.postRunnable(new Runnable() {
+								@Override
+								public void run() {
+									listener.displayNameChanged(name);
+								}
+							});
+						}
+						
+						break;
+					}
+					case DISPLAY_NAME_CHANGE_REJECTED: {
+						final String reason = (String) payload.get(0);
+						
+						if(listener != null){
+							Gdx.app.postRunnable(new Runnable() {
+								@Override
+								public void run() {
+									listener.displayNameChangeRejected(reason);
+								}
+							});
+						}
+						
+						break;
 					}
 					default: {
 						// Delegate all other commands
@@ -80,6 +116,10 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		socket.addListener(this);
 		user = User.fromFile(storedLoginFile);
 		System.out.println(user);
+	}
+	
+	public void setListener(INetworkResponseListener listener){
+		this.listener = listener;
 	}
 
 	public void setOnLoggedInCallback(Runnable callback){

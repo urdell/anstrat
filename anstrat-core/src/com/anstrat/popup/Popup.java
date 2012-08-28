@@ -139,9 +139,9 @@ public class Popup extends Window {
 	}
 	
 	public void resize(int width, int height) {
-		System.out.println("Lol");
 		overlay.setSize(width, height);
 		pack();
+		layout();
 		
 		stack.height = stack.getPrefHeight();
 		stack.width = stack.getPrefWidth();

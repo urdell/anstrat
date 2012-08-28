@@ -20,14 +20,15 @@ public class Network implements INetworkCallback {
 	
 	public void setListener(INetworkResponseListener listener){
 		this.listener = listener;
+		this.worker.setListener(listener);
 	}
 	
 	public boolean isLoggedIn(){
 		return worker.isLoggedIn();
 	}
     
-	public long getUserID(){
-		return worker.getUser().userID;
+	public User getUser(){
+		return worker.getUser();
 	}
 	
 	public void setLoginCallback(Runnable callback){
