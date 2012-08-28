@@ -7,7 +7,6 @@ import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -75,7 +74,6 @@ public class TeamPopup extends Popup{
 		}
 		
 		int unitWidth = (int)(Main.percentWidth*100/6*1.3);
-		int pad = (int)(-unitWidth*0.15);
 		
 		// The silhouettes of the purchasable units
 		godTable = new ColorTable(Color.BLUE);
@@ -83,8 +81,8 @@ public class TeamPopup extends Popup{
 		NinePatch tableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
 		godTable.setBackground(tableBackgroundPatch);
 		teamTable.setBackground(tableBackgroundPatch);
-		godTable.defaults().size(unitWidth).padLeft(pad).padRight(pad);
-		teamTable.defaults().size(unitWidth).padLeft(pad).padRight(pad);
+		godTable.defaults().size(unitWidth);
+		teamTable.defaults().size(unitWidth);
 		
 		godTable.add(gods[0]);
 		godTable.add(gods[1]);
@@ -98,17 +96,16 @@ public class TeamPopup extends Popup{
 		teamLabel = new Label(Assets.SKIN);
 		
 		//this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
-		this.add(godTable).width(Gdx.graphics.getWidth()).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
+		this.add(godTable).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
 		this.row();
-		this.add(godLabel).expandX().fillX();
+		this.add(godLabel);
 		this.row();
-		this.add(teamTable).width(Gdx.graphics.getWidth()).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
+		this.add(teamTable).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
 		this.row();
-		this.add(teamLabel).expandX().fillX();
+		this.add(teamLabel);
+		//this.add().expand().uniform();
 		this.row();
-		this.add().expand().uniform();
-		this.row();
-		this.add(okButton).width(Gdx.graphics.getWidth()).expandY().bottom();
+		this.add(okButton).bottom().padTop(25);
 		
 		selectButton(gods[god]);
 		selectButton(teams[team]);
@@ -156,14 +153,6 @@ public class TeamPopup extends Popup{
 			return "Dreadful Douchebags";
 		
 		return "";
-	}
-
-	@Override
-	public void resize(int width, int height){
-		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
-		this.x = this.y = 0;
 	}
 	
 	@Override
