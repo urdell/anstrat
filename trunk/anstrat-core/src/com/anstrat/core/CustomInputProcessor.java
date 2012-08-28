@@ -26,7 +26,7 @@ public class CustomInputProcessor extends InputAdapter {
 					ComponentFactory.createButton("Yes", new ClickListener() {
 						@Override
 						public void click(Actor actor, float x, float y) {
-							Popup.currentPopup.close();
+							Popup.getCurrentPopup().close();
 							GameInstance.activeGame.resign();
 						}
 					})));
@@ -38,11 +38,12 @@ public class CustomInputProcessor extends InputAdapter {
 			case Input.Keys.BACKSPACE:	// Fall through
 			case Input.Keys.BACK: {
 				Screen screen = Main.getInstance().getScreen();
-				if (Popup.currentPopup != null && (Popup.currentPopup.handlesBackspace || (Popup.currentPopup.textFieldSelected() && keycode==Input.Keys.BACKSPACE))) {
+				Popup currentPopup = Popup.getCurrentPopup();
+				if (currentPopup != null && (currentPopup.handlesBackspace || (currentPopup.textFieldSelected() && keycode==Input.Keys.BACKSPACE))) {
 					return true;
 				}
-				else if (Popup.currentPopup != null && (!Popup.currentPopup.textFieldSelected() || keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE)) {
-					Popup.currentPopup.close();
+				else if (currentPopup != null && (!currentPopup.textFieldSelected() || keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE)) {
+					currentPopup.close();
 					return true;
 				}
 				else if (screen instanceof MainMenu) {
@@ -84,7 +85,7 @@ public class CustomInputProcessor extends InputAdapter {
 			case Input.Keys.MENU: // Fall through
 			case Input.Keys.B: {
 				// Only show menu when playing a game
-				if((Main.getInstance().getScreen() instanceof GEngine) && Popup.currentPopup == null){
+				if((Main.getInstance().getScreen() instanceof GEngine) && Popup.getCurrentPopup() == null){
 					GEngine.getInstance().userInterface.showBuyUnitPopup();
 					return true;
 				}

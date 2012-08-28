@@ -1,6 +1,6 @@
 package com.anstrat.popup;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -25,35 +27,24 @@ public class Popup extends Window {
 	
 	public static final int WIDTH = (int)(90*Main.percentWidth);
 	
-	public static Popup currentPopup = null;
-	private static ArrayList<Popup> popupQueue;
 	private static PopupGestureHandler gestureHandler;
 	private static PopupInputMultiplexer inputMultiplexer;
 	private static Stage stage;
+	private static Stack stack;
 	protected static Sprite overlay;
-	
-	private static Label genericPopupLabel;
-	private static Popup genericPopup;
 	
 	public static UnitInfoPopup unitInfoPopup;
 	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
 		@Override
 		public void click(Actor actor, float x, float y) {
-			Popup.currentPopup.close();
+			getCurrentPopup().close();
 		}
 	};
 	
 	public boolean handlesBackspace = false;
 	public boolean drawOverlay = true;
 
-	/**
-	 * 
-	 * @param handler
-	 * @param title
-	 * @param handlesBackspace
-	 * @param actors
-	 */
 	public Popup(String title, boolean handlesBackspace, Actor... actors) {
 		this(title, actors);
 		this.handlesBackspace = handlesBackspace;
@@ -63,12 +54,6 @@ public class Popup extends Window {
 		this("", actors);
 	}
 	
-	/**
-	 * 
-	 * @param handler
-	 * @param title Popup window title.
-	 * @param actors Elements to put in the popup.
-	 */
 	public Popup(String title, Actor... actors) {
 		super(Assets.SKIN);
 		this.setTitle(title);
@@ -85,9 +70,8 @@ public class Popup extends Window {
 		return stage.getKeyboardFocus() instanceof TextField;
 	}
 	
-	/**
-	 * Adds a actors to the popup
-	 * @param actors Actors to add
+	/** 
+	 * Sets the actors of this popup.
 	 */
 	public void setComponents(Actor... actors){
 	    this.clear();
@@ -98,9 +82,8 @@ public class Popup extends Window {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Cell add (Actor actor) {
-		//setListeners(actor);
 		row();
-		Cell cell = super.add(actor).width(WIDTH).center();
+		Cell cell = super.add(actor).width(WIDTH).center().expandX().fillX();
 		if(actor instanceof TextButton)
 			cell.height((int)Main.percentHeight*8);
 		else if(actor instanceof Label)
@@ -108,90 +91,47 @@ public class Popup extends Window {
 		return cell;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public Cell add (Actor actor, int height){
-		return add(actor).height(height);
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public Cell add(Actor actor, int height, int width) {
-		return super.add(actor).width(width).center();
-	}
-	
-	/**
-	 * Sets an {@link Actor}'s listener depending on the {@link Actor} type
-	 * @param actor
-	 */
-	/*
-	private void setListeners(Actor actor){
-		if(actor instanceof TextField)
-			((TextField)actor).setTextFieldListener(tl);
-		else if(actor instanceof Button)
-			((Button)actor).setClickListener(cl);
-		else if(actor instanceof Row)
-			((Row)actor).setListeners(cl, tl);
-	}
-	*/
-	/**
-	 * Clears all text inputs in the popup
-	 */
+	/** Clears all text inputs in the popup. */
 	public void clearInputs(){
-		for(Actor a : this.children)
-			if(a instanceof TextField)
-				((TextField)a).setText("");
+		for(Actor a : this.children){
+			if(a instanceof TextField) ((TextField)a).setText("");
+		}
 	}
 	
 	/**
-	 * Sets popup as current, or if there already is one, adds it to the queue of waiting popups
+	 * Shows the popup, on top of any other popups present.
 	 */
 	public void show(){
-		if(currentPopup==null){
-			gestureHandler.setOverridesInput(true);
-			inputMultiplexer.setOverridesInput(true);
-			this.showInit();
-		}
-		else
-			popupQueue.add(this);
+		// Take control of all input
+		gestureHandler.setOverridesInput(true);
+		inputMultiplexer.setOverridesInput(true);
 		
-		inputMultiplexer.addProcessor(stage);
-	}
-	
-	/**
-	 * Set stuff before being shown.
-	 */
-	private void showInit(){
-		currentPopup = this;
+		stack.addActor(this);
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		stage.addActor(this);
 		stage.unfocusAll();
 	}
-
+	
 	/**
 	 * Close the popup
 	 */
 	public void close(){
-		if(currentPopup==this){
-			stage.removeActor(this);
-			if(popupQueue.isEmpty()){
-				//Last Popup gone - return control
-				gestureHandler.setOverridesInput(false);
-				inputMultiplexer.setOverridesInput(false);
-				currentPopup = null;
-			}
-			else{
-				popupQueue.remove(0).showInit();
-			}
-		}
-		else
-			popupQueue.remove(this);
+		stack.removeActor(this);
 		
-		inputMultiplexer.removeProcessor(stage);
+		if(stack.getActors().isEmpty()){
+			// Last Popup gone - return control
+			gestureHandler.setOverridesInput(false);
+			inputMultiplexer.setOverridesInput(false);
+		}
+		
+		stage.unfocusAll();
 		Gdx.input.setOnscreenKeyboardVisible(false);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		if(drawOverlay) overlay.draw(batch);
+		
+		// Only let the currently active popup draw the overlay
+		if(drawOverlay && getCurrentPopup() == this) overlay.draw(batch);
 		super.draw(batch, parentAlpha);
 		
 		// Only actually draws debug if it's enabled on the table layout
@@ -199,20 +139,30 @@ public class Popup extends Window {
 	}
 	
 	public void resize(int width, int height) {
+		System.out.println("Lol");
 		overlay.setSize(width, height);
 		pack();
-		x = (width - this.width)/2;
-		y = (height - this.height)/2;
+		
+		stack.height = stack.getPrefHeight();
+		stack.width = stack.getPrefWidth();
+		stack.x = (width - stack.width) / 2f;
+		stack.y = (height - stack.height) / 2f;
 	}
 	
 	public static void initPopups(Stage stage){
 		gestureHandler = new PopupGestureHandler();
 		inputMultiplexer = new PopupInputMultiplexer();
-		Main.getInstance().gestureMultiplexer.addProcessor(gestureHandler);
-		Main.getInstance().addProcessor(inputMultiplexer);
+		inputMultiplexer.addProcessor(stage);
 		
-		popupQueue = new ArrayList<Popup>();
+		// Add processors in front of all other processors
+		Main.getInstance().gestureMultiplexer.addProcessor(0, gestureHandler);
+		Main.getInstance().addProcessor(0, inputMultiplexer);
+		
+		//popupQueue = new ArrayList<Popup>();
 		Popup.stage = stage;
+		
+		Popup.stack = new Stack();
+		stage.addActor(Popup.stack);
 		
 		overlay = new Sprite(Assets.WHITE);
 		
@@ -221,38 +171,31 @@ public class Popup extends Window {
 		overlay.setColor(bcolor);
 		
 		unitInfoPopup = new UnitInfoPopup();
-		
-		genericPopupLabel = new Label("", Assets.SKIN);
-		genericPopupLabel.setWrap(true);
-		
-		TextButton genericPopupOK = ComponentFactory.createButton("Ok", null);
-		genericPopupOK.setClickListener(new ClickListener() {
-			@Override
-			public void click(Actor actor, float x, float y) {
-				Popup.currentPopup.close();
-			}
-		});
-		
-		genericPopup = new Popup("", genericPopupLabel, genericPopupOK);
 	}
 	
 	/**
 	 * Shows a generic {@link Popup}
-	 * @param message The message to be shown
 	 */
 	public static void showGenericPopup(String title, String message){
-		genericPopup.setTitle(title);
-		genericPopupLabel.setText(message);
-		genericPopup.layout();
-		genericPopup.show();
+		Button ok = ComponentFactory.createButton("Ok", POPUP_CLOSE_BUTTON_HANDLER);
+		Label label = new Label(message, Assets.SKIN);
+		label.setWrap(true);
+		
+		Popup p = new Popup(title);
+		p.add(label).expandY();
+		p.add(ok);
+		p.show();
 	}
 	
 	public static void disposePopups(){
 		overlay = null;
 		gestureHandler = null;
-		currentPopup = null;
-		genericPopup = null;
-		genericPopupLabel = null;
 		unitInfoPopup = null;
+	}
+	
+	public static Popup getCurrentPopup(){
+		List<Actor> actors = stack.getActors();
+		int size = actors.size();
+		return size == 0 ? null : (Popup) actors.get(size - 1);
 	}
 }

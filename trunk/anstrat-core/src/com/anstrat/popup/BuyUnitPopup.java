@@ -39,7 +39,7 @@ public class BuyUnitPopup extends Popup{
 	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void click(Actor actor, float x, float y) {
-			BuyUnitPopup popup = (BuyUnitPopup) Popup.currentPopup;
+			BuyUnitPopup popup = (BuyUnitPopup) Popup.getCurrentPopup();
 			UnitType type = popup.card.type;
 			Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
 			GEngine.getInstance().selectionHandler.selectSpawn(type);
@@ -117,10 +117,9 @@ public class BuyUnitPopup extends Popup{
 	
 	@Override
 	public void resize(int width, int height){
-		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
-		this.x = this.y = 0;
+		// Force popup to take up the whole window
+		this.size(width, height);
+		super.resize(width, height);
 	}
 	
 	@Override

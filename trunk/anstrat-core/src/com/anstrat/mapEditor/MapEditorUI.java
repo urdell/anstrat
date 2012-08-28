@@ -232,8 +232,8 @@ public class MapEditorUI extends UI {
 				String mapName = saveMapTextfield.getText();
 				if(mapName.length() > 0){
 					MapEditor.getInstance().saveMap(mapName);
-					Popup.currentPopup.clearInputs();
-					Popup.currentPopup.close();
+					Popup.getCurrentPopup().clearInputs();
+					Popup.getCurrentPopup().close();
 				}
 			}
 		});
@@ -291,7 +291,7 @@ public class MapEditorUI extends UI {
 				int mapWidth = Map.MIN_SIZE + (int)(scroll1.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
     			int mapHeight = Map.MIN_SIZE + (int)(scroll2.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
     			MapEditor.getInstance().actionHandler.createNewMap(mapWidth, mapHeight);
-				Popup.currentPopup.close();
+				Popup.getCurrentPopup().close();
 			}
 		});
 		

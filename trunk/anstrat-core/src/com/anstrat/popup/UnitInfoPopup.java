@@ -89,7 +89,7 @@ public class UnitInfoPopup extends Popup {
 		this.setClickListener(new ClickListener() {
 	        @Override
 	        public void click(Actor actor,float x,float y ){
-	        	Popup.currentPopup.close();
+	        	Popup.getCurrentPopup().close();
 	        }
 		});
 	}

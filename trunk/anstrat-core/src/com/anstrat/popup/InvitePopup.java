@@ -5,50 +5,40 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.FriendList;
 import com.anstrat.guiComponent.Row;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 
 public class InvitePopup extends Popup {
-	private TextButton ok;
 	private TextField textField;
-	private FriendList friendlist;
 	private InvitePopupHandler handler;
 	
 	public InvitePopup(InvitePopupHandler handler, String title) {
 		super(title);
 		this.handler = handler;
 		
-		ok = ComponentFactory.createButton("Ok", new ClickListener() {
+		final Button ok = ComponentFactory.createButton("Ok", new ClickListener() {
 	        @Override
 	        public void click(Actor actor,float x,float y ){
 	        	returnSelection();
-				Popup.currentPopup.close();
+				Popup.getCurrentPopup().close();
 	        }
 	    });
 		Assets.SKIN.setEnabled(ok, false);
 		textField = ComponentFactory.createTextField("", false);
 		textField.setTextFieldListener(new TextFieldListener() {
-
 			@Override
 			public void keyTyped(TextField textField, char key) {
-				if(textField.getText().equals("")) {
-					Assets.SKIN.setEnabled(ok, false);
-				}
-				else {
-					Assets.SKIN.setEnabled(ok, true);
-				}
-				
+				Assets.SKIN.setEnabled(ok, !textField.getText().equals(""));
 			}
-			
 		});
-		friendlist = new FriendList(textField, ok);
+		
+		FriendList friendlist = new FriendList(textField, ok);
 		friendlist.setFriends(Main.getInstance().friends.getFriends());
 		
-		TextButton cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		Button cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		add(friendlist).maxHeight((int)(50*Main.percentHeight));
 		row();
@@ -57,19 +47,8 @@ public class InvitePopup extends Popup {
 		add(new Row(ok, cancel));
 	}
 	
-	/**
-	 * Check if anything is selected, if so enable ok button.
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		//if(ok.touchable==false && maplist.getSelected()!=null) Assets.SKIN.setEnabled(ok, true);
-		super.draw(batch, parentAlpha);
-	}
-
-	/**
-	 * Return selected entry directly to popup handler.
-	 */
-	public void returnSelection(){
+	// Return selected entry directly to popup handler.
+	private void returnSelection(){
 		if (textField.getText() != null && !textField.getText().toString().equals(""))
 			handler.friendSelected(textField.getText());
 	}

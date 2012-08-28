@@ -238,7 +238,7 @@ public class MainMenu extends MenuScreen {
 					Map map = null;
 					
 					if(mapName.equalsIgnoreCase("RANDOM")){
-						MapsPopup popup = (MapsPopup)Popup.currentPopup;
+						MapsPopup popup = (MapsPopup) Popup.getCurrentPopup();
 						map = new Map(popup.randWidth,popup.randHeight,new Random());
 					}
 					else{

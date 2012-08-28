@@ -41,7 +41,7 @@ public class AbilityPopup extends Popup {
 	private static final ClickListener CAST_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void click(Actor actor, float x, float y) {
-			AbilityPopup popup = (AbilityPopup) Popup.currentPopup;
+			AbilityPopup popup = (AbilityPopup) Popup.getCurrentPopup();
 			PlayerAbilityType type = popup.card.type;
 			PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
 			Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
@@ -56,7 +56,7 @@ public class AbilityPopup extends Popup {
 				CommandHandler.execute(command);
 			}
 
-			Popup.currentPopup.close();
+			Popup.getCurrentPopup().close();
 		}
 	};
 	

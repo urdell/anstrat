@@ -129,7 +129,7 @@ public class AccountMenu extends MenuScreen {
 				
 				//Main.getInstance().network.login(username, password);
 				
-				Popup.currentPopup.close();
+				Popup.getCurrentPopup().close();
 				am.clearInputs();
 				am.connectingPopup.show();
 			}
@@ -157,7 +157,7 @@ public class AccountMenu extends MenuScreen {
 				System.out.println("Sending register request "+username+":"+password+":"+displayed);
 				//Main.getInstance().network.register(username, password, displayed);
 				
-				Popup.currentPopup.close();
+				Popup.getCurrentPopup().close();
 				am.clearInputs();
 				am.connectingPopup.show();
 			}
