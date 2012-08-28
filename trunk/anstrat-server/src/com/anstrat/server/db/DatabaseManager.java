@@ -350,7 +350,7 @@ public class DatabaseManager implements IDatabaseService {
 			byte[] serializedGameOptions = Serialization.serialize(options);
 			conn = context.getConnection();
 			
-			insert = conn.prepareStatement("INSERT INTO Invites(senderID, receiverID, gameOptions, status) VALUES(?, ?, ?, ?) RETURNING id");
+			insert = conn.prepareStatement("INSERT INTO Invites(senderID, receiverID, gameOptions, status) VALUES(?, ?, ?, ?::InviteStatus) RETURNING id");
 			insert.setLong(1, senderID);
 			insert.setLong(2, receiverID);
 			insert.setBytes(3, serializedGameOptions);
