@@ -13,6 +13,7 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
+import com.anstrat.popup.DisplayNameChangePopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
 import com.badlogic.gdx.Gdx;
@@ -33,7 +34,6 @@ public class NetworkController {
 	
 	private Label networkLoginLabel;
 	private String networkLabelText = "Not connected.";
-	private String userDisplayName;
 	
 	public NetworkController(final Network network){
 		this.network = network;
@@ -59,8 +59,7 @@ public class NetworkController {
 				}
 				
 				// Update login label to reflect the new status
-				String displayName = userDisplayName != null ? userDisplayName : "Unnamed" + network.getUserID();
-				setNetworkLabelText(String.format("Logged in as: %s", displayName));
+				setNetworkLabelText(String.format("Logged in as: %s", network.getUser().displayName));
 			}
 		});
 		
@@ -110,8 +109,8 @@ public class NetworkController {
 	
 	// UI actions
 	
-	public long getGlobalUserID(){
-		return network.getUserID();
+	public User getUser(){
+		return network.getUser();
 	}
 	
 	public void sendCommand(long gameID, int commandNr, com.anstrat.command.Command command){
@@ -132,6 +131,10 @@ public class NetworkController {
 	
 	public void requestGameUpdate(long gameID, int currentCommandNr){
 		this.network.requestGameUpdate(gameID, currentCommandNr);
+	}
+	
+	public void setDisplayName(String name){
+		this.network.setDisplayName(name);
 	}
 	
 	public void resign(long gameID){
@@ -173,14 +176,20 @@ public class NetworkController {
 			
 			@Override
 			public void displayNameChanged(String name) {
-				// TODO Auto-generated method stub
+				setNetworkLabelText(String.format("Logged in as: %s", name));
 				
+				Popup p = Popup.getCurrentPopup();
+				if(p instanceof DisplayNameChangePopup){
+					((DisplayNameChangePopup) p).nameChanged(name);
+				}
 			}
 			
 			@Override
-			public void displayNameChangeRejected(String name) {
-				// TODO Auto-generated method stub
-				
+			public void displayNameChangeRejected(String reason) {
+				Popup p = Popup.getCurrentPopup();
+				if(p instanceof DisplayNameChangePopup){
+					((DisplayNameChangePopup) p).nameChangeError(reason);
+				}
 			}
 			
 			@Override

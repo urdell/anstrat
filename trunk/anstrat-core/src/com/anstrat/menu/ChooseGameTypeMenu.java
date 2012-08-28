@@ -2,6 +2,8 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.popup.DisplayNameChangePopup;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
@@ -17,14 +19,14 @@ public class ChooseGameTypeMenu extends MenuScreen {
 		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(FindMatchMenu.getInstance());
+            	showIfUserNamed(FindMatchMenu.getInstance());
             }
         } );
         
         Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(InviteMatchMenu.getInstance());
+            	showIfUserNamed(InviteMatchMenu.getInstance());
             }
         });
 
@@ -98,6 +100,21 @@ public class ChooseGameTypeMenu extends MenuScreen {
         contents.add().fillY().expandY();
         contents.row();
         contents.add(inner);
+	}
+	
+	private void showIfUserNamed(final Screen screen){
+    	if(Main.getInstance().network.getUser().usingDefaultName){
+    		// Force user to choose a name
+    		new DisplayNameChangePopup(new Runnable() {
+				public void run() {
+					Main.getInstance().setScreen(screen);
+				}
+			}).show();
+    	}
+    	else{
+    		// Show directly
+    		Main.getInstance().setScreen(screen);
+    	}
 	}
 	
 	public static synchronized ChooseGameTypeMenu getInstance() {

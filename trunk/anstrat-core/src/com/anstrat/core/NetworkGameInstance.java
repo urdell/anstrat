@@ -83,7 +83,7 @@ public class NetworkGameInstance extends GameInstance {
 	
 	@Override
 	public Player getUserPlayer(){
-		long globalUserID = Main.getInstance().network.getGlobalUserID();
+		long globalUserID = Main.getInstance().network.getUser().userID;
 		
 		for(Player player : state.players){
 			NetworkPlayer networkPlayer = (NetworkPlayer) player;
