@@ -11,6 +11,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GTile;
+import com.badlogic.gdx.Gdx;
 
 /**
  * The class that holds information about the map, including all the tiles and the size etc.
@@ -60,8 +61,9 @@ public class Map implements Serializable{
 	 */
 	public Map(int xSize, int ySize, Random random){
 		this(xSize, ySize);
-		
-		randomizeMap(random);
+		if (xSize > 15 || ySize > 15)
+			Gdx.app.log("Map", "Warning: Big map, may take a long time to generate (bad o(n2)-algorithms)");
+		while (!randomizeFairMap(random));
 		name = "Random";
 	}
 	
@@ -296,13 +298,120 @@ public class Map implements Serializable{
 		else return 0;
 	}
 	
-	private void randomizeMap(Random random){
+	private boolean randomizeFairMap(Random random) {
+		
+		int x = tiles.length;
+		int y = tiles[0].length;
+		if (x%2 == 1 || y%2 == 1) {
+			Gdx.app.log("Map", "Varning: Generating map with odd numbers of x and/or y coordinates: Will likely result in unfair map");
+		}
+		//The different parts of the map, first equals fourth, but mirrored, and second equals third but mirrored. Therefore the map will be fair. The castles will be placed in first and fourth. 
+		//[first][second]
+		//[third][fourth]
+		Tile[][] first = new Tile[x/2][y/2];
+		randomizeTerrain(random, first);
+		Tile[][] second = new Tile[x-first.length][y-first[0].length];
+		randomizeTerrain(random, second);
+		Tile[][] third = mirror(second);
+		Tile[][] fourth = mirror(first);
+		placeOutTiles(first, 0,0);
+		placeOutTiles(second, first.length,0);
+		placeOutTiles(third, 0,first[0].length);
+		placeOutTiles(fourth, third.length,second[0].length);
+		
+		// Place villages in random locations
+				int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
+				for(int i=0; i<nrVillages; i++){
+					int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
+					int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
+					setBuilding(
+							new TileCoordinate(rx, ry), 
+							new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+				}
+				
+				int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;
+				if(distanceFromBorder >= tiles.length)
+					distanceFromBorder = tiles.length - 1;
+				if(distanceFromBorder >= tiles[0].length)
+					distanceFromBorder = tiles[0].length - 1;
+				TileCoordinate castle1pos = new TileCoordinate(0+distanceFromBorder, 0+distanceFromBorder);
+				TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
+				tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
+				tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
+				
+				setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
+				
+				Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
+				unit.tileCoordinate = castle1pos;
+
+				for(Building b : buildingList.values()) {
+					if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
+						buildingList.clear();
+						unit = null;
+						return false;
+					}
+				}
+				setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
+				return true;
+	}
+	
+	/*private void randomizeMap(Random random){
+		
+		randomizeTerrain(random, this.tiles);
+		
+		
+		// Place villages in random locations
+		int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
+		for(int i=0; i<nrVillages; i++){
+			int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
+			int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
+			setBuilding(
+					new TileCoordinate(rx, ry), 
+					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+		}
+		
+		int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;
+		if(distanceFromBorder >= tiles.length)
+			distanceFromBorder = tiles.length - 1;
+		if(distanceFromBorder >= tiles[0].length)
+			distanceFromBorder = tiles[0].length - 1;
+		TileCoordinate castle1pos = new TileCoordinate(0+distanceFromBorder, 0+distanceFromBorder);
+		TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
+		tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
+		tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
+		
+		setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
+		
+		Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
+		unit.tileCoordinate = castle1pos;
+
+		for(Building b : buildingList.values()) {
+			if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
+				buildingList.clear();
+				unit = null;
+				randomizeMap(random);
+				break;
+			}
+		}
+		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
+	}
+	*/
+	
+	private void placeOutTiles(Tile[][] t, int startx, int starty) {
+		for(int i = 0; i < t.length; i++) {
+			for(int j = 0; j < t[0].length; j++) {
+				tiles[startx+i][starty+j] = new Tile(new TileCoordinate(startx+i, starty+j), t[i][j].terrain);
+			}
+		}
+	}
+	
+	private void randomizeTerrain(Random random, Tile[][] tiles) {
 		
 		int totTiles = tiles.length*tiles[0].length;
 		//These are the min values for each terraintype. Total should not be more than 1
-		//P.S. make sure you dont place impassable terrain values too high
+		//P.S. make sure you dont set impassable terrain values too high
 		double mDeepWater = 0.05, mWater = 0.05, mForest = 0.1, 
-				mField = 0.2, mMountain = 0.05, mVulcano = 0;
+				mField = 0.2, mMountain = 0.05, mVulcano = 0.0;
 		//Min number of tiles for each terrain
 		int nDeepWater = (int) (mDeepWater*totTiles), nWater = (int) (mWater*totTiles),
 				nForest = (int) (mForest*totTiles), nField = (int) (mField*totTiles),
@@ -310,7 +419,7 @@ public class Map implements Serializable{
 		
 		int totLeft = totTiles - (nDeepWater+nWater+nForest+nField+nMountain+nVulcano);
 		//These are the likeliness they appear more than their min value.
-		double rDeepWater = 0.1, rWater = 0.1, rForest = 0.2, rMountain = 0.1, rVulcano= 0.03;
+		double rDeepWater = 0.1, rWater = 0.1, rForest = 0.2, rMountain = 0.12, rVulcano= 0.02;
 		double rField = 1-(rDeepWater+rWater+rForest+rMountain+rVulcano); //takes what's left
 				
 		//deciding how much of each terrain there will be
@@ -336,11 +445,9 @@ public class Map implements Serializable{
 		terrains.put(TerrainType.VOLCANO, nVulcano);
 		terrains.put(TerrainType.MOUNTAIN, nMountain);
 		
-		//time to place the tiles
-		
 		double neighbourModifier = 0.1;
 		for(int i = 0; i < tiles.length; i++) {
-			for(int j = 0; j < tiles[i].length; j++) {
+			for(int j = 0; j < tiles[0].length; j++) {
 				TerrainType type = null;
 				double r = random.nextDouble();
 				if (i > 0 && j > 0) {
@@ -387,101 +494,19 @@ public class Map implements Serializable{
 				tiles[i][j] = new Tile(new TileCoordinate(i,j),type);
 			}
 		}
+	}
+	
+	private Tile[][] mirror(Tile[][] tiles) {
 		
-		
-		
-		
-		
-		
-		/*for(int i=0;i<tiles.length;i++)
-		{
-			for(int j=0;j<tiles[i].length;j++)
-			{
-				// 0-1	forest
-				// 2-3	water
-				// 4-5	mountain
-				// 6	runestone
-				// 7-10 field
-				TerrainType type;
-				switch(random.nextInt()%11){
-				case 0:
-				case 1:
-					type = TerrainType.FOREST;
-					break;
-				case 2:
-				case 3:
-					type = TerrainType.DEEP_WATER;
-					break;
-				case 4:
-				case 5:
-					type = TerrainType.MOUNTAIN;
-					break;
-				case 6:
-					type = TerrainType.RUNE;
-					break;
-				default:
-					type = TerrainType.FIELD;
-				/*case 0:
-					type = TerrainType.FOREST;
-					break;
-				case 1:
-					type = TerrainType.DEEP_WATER;
-					break;
-				case 2:
-					type = TerrainType.SNOW;
-					break;
-				case 3:
-					type = TerrainType.FIELD;
-					break;
-				case 4:
-					if(random.nextInt()%10 == 1)
-						type = TerrainType.VOLCANO;
-					else
-						type = TerrainType.MOUNTAIN;
-					break;
-				default:
-					type = TerrainType.FIELD;
-					//
-				}
-				tiles[i][j] = new Tile(new TileCoordinate(i,j),type);
-			}
-			
-		}
-		*/
-		// Place villages in random locations
-		int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
-		for(int i=0; i<nrVillages; i++){
-			int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
-			int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
-			setBuilding(
-					new TileCoordinate(rx, ry), 
-					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
-		}
-		
-		int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;
-		if(distanceFromBorder >= tiles.length)
-			distanceFromBorder = tiles.length - 1;
-		if(distanceFromBorder >= tiles[0].length)
-			distanceFromBorder = tiles[0].length - 1;
-		TileCoordinate castle1pos = new TileCoordinate(0+distanceFromBorder, 0+distanceFromBorder);
-		TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
-		tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
-		tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
-		
-		setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
-		
-		Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
-		unit.tileCoordinate = castle1pos;
-
-		for(Building b : buildingList.values()) {
-			if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
-				buildingList.clear();
-				unit = null;
-				randomizeMap(random);
-				break;
+		int x = tiles.length;
+		int y = tiles[0].length;
+		Tile[][] ret = new Tile[x][y];
+		for(int i = 0; i < x; i++) {
+			for(int j = 0; j < y; j++) {
+				ret[x-i-1][y-j-1] = tiles [i][j];
 			}
 		}
-		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
+		return ret;
 	}
 	
 	private TerrainType getRandomTerrainType(HashMap<TerrainType, Integer> terrains, int totTiles, Random random) {
