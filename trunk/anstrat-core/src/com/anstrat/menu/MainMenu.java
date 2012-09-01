@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Layout;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -32,6 +33,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
+import com.esotericsoftware.tablelayout.Cell;
 
 /**
  * The class handling the first menu that shows up when the user starts the application.
@@ -47,6 +50,7 @@ public class MainMenu extends MenuScreen {
 	
 	public static MapsPopup mapsPopup;
 	public static String HOTSEAT = "Hotseat", INTERNET = "Internet";
+	public Button invitedButton;
 	
 	public static boolean versusAI = false;
 	
@@ -84,6 +88,14 @@ public class MainMenu extends MenuScreen {
             	Main.getInstance().setScreen(MapEditor.getInstance());
             }
         });
+        
+        invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
+            @Override
+            public void click(Actor actor,float x,float y ){
+            	Main.getInstance().setScreen(MapEditor.getInstance());
+            }
+        });
+        Main.getInstance().invites.registerInviteButton(invitedButton);
         
         NinePatch emp = Assets.SKIN.getPatch("empty");
         TextButton ver = new TextButton(" "+Main.version,
@@ -136,9 +148,10 @@ public class MainMenu extends MenuScreen {
         contents.add(empty).fill().expandY().padBottom((int)(Main.percentHeight*10)).padTop((int)(Main.percentHeight*5));
         
         Table inner2 = new Table();
-        inner2.add(ComponentFactory.createLoginLabel()).center();
+        inner2.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
+        inner2.add(invitedButton).height(buttonHeight).width(buttonHeight).align(TableLayout.RIGHT);
         contents.row();
-        contents.add(inner2);
+        contents.add(inner2).fillX();
         
         contents.layout();
         Vector2 gameListPos = new Vector2();
