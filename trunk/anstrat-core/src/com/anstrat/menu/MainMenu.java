@@ -92,7 +92,7 @@ public class MainMenu extends MenuScreen {
         invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
             @Override
             public void click(Actor actor,float x,float y ){
-            	Main.getInstance().setScreen(MapEditor.getInstance());
+            	Main.getInstance().setScreen(InvitesMenu.getInstance());
             }
         });
         Main.getInstance().invites.registerInviteButton(invitedButton);
