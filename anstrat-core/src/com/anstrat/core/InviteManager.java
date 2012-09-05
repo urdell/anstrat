@@ -56,6 +56,13 @@ public class InviteManager {
 		
 	}
 	
+	public List<Invite> getInvites(){
+		return invites;
+	}
+	public List<Invite> getSentInvites(){
+		return outgoingInvites;
+	}
+	
 	private void updateButton(){
 		if(inviteButton != null){
 			inviteButton.visible = ( !invites.isEmpty() || !outgoingInvites.isEmpty() );
