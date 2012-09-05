@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import com.anstrat.ai.AIRunner;
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
@@ -51,8 +52,6 @@ public class Main extends Game implements ApplicationListener {
 	
 	//Friends
 	public FriendManager friends;
-	
-	public Music menuMusic;
 	
 	// Input handlers
 	private final InputMultiplexer inputMultiplexer;
@@ -102,7 +101,7 @@ public class Main extends Game implements ApplicationListener {
 		percentHeight = ((float)Gdx.graphics.getHeight())/100f;
 		
 		// Music
-		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("music/vikingstitle.mp3"));
+		AudioAssets.load();
 		
 		// Load from file
 		Assets.load();													// Textures, fonts
@@ -217,7 +216,7 @@ public class Main extends Game implements ApplicationListener {
 		}
 		
 		Assets.dispose();
-		menuMusic.dispose();
+		AudioAssets.dispose();
 		Popup.disposePopups();
 		overlayStage.dispose();
 		
@@ -245,10 +244,8 @@ public class Main extends Game implements ApplicationListener {
 			// menuMusic.setLooping(false);
 		}
 		else if(screen instanceof MainMenu){
-			menuMusic.setLooping(true);
-			
-			if(!menuMusic.isPlaying() && Options.soundOn){
-				menuMusic.play();
+			if(!AudioAssets.menuMusic.isPlaying() && Options.soundOn){
+				AudioAssets.menuMusic.play();
 			}
 		}
 	}

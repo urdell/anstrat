@@ -2,6 +2,7 @@ package com.anstrat.menu;
 
 import java.util.Random;
 
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
@@ -19,7 +20,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Layout;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -34,7 +34,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
-import com.esotericsoftware.tablelayout.Cell;
 
 /**
  * The class handling the first menu that shows up when the user starts the application.
@@ -68,9 +67,9 @@ public class MainMenu extends MenuScreen {
 			@Override
 			public void click(Actor actor, float x, float y) {
 				if(Options.soundOn = !Options.soundOn)
-					Main.getInstance().menuMusic.play();
+					AudioAssets.menuMusic.play();
 				else
-					Main.getInstance().menuMusic.pause();
+					AudioAssets.menuMusic.pause();
 			}
 			
 		});
