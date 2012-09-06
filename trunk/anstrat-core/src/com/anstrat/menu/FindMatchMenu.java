@@ -27,7 +27,7 @@ public class FindMatchMenu extends MenuScreen {
 		settings.setBackground(Assets.SKIN.getPatch("single-border"));
 		mapSelecter = new MapSelecter(true, false);
 		
-		CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
+		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
 		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
@@ -60,6 +60,7 @@ public class FindMatchMenu extends MenuScreen {
 				Main.getInstance().network.findRandomGame(new GameOptions(
 						god, 
 						team, 
+						fog.isChecked(),
 						mapSelecter.getMapSelection(), 
 						mapSelecter.getMapName()));
 			}

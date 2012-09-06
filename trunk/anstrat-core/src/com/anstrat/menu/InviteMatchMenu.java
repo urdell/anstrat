@@ -31,7 +31,7 @@ public class InviteMatchMenu extends MenuScreen {
 		
 		mapSelecter = new MapSelecter(true, true);
 
-		CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
+		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 				
 		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
@@ -84,7 +84,8 @@ public class InviteMatchMenu extends MenuScreen {
 				
 				Main.getInstance().network.invitePlayer(invitedFriend, new GameOptions(
 						god, 
-						team, 
+						team,
+						fog.isChecked(),
 						mapSelecter.getMapSelection(), 
 						mapSelecter.getMapName()));
 		   }

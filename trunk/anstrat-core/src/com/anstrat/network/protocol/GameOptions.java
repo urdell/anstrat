@@ -13,15 +13,18 @@ public class GameOptions implements Serializable {
 	public final int god;
 	public final int team;
 	
+	public final boolean fog;
+	
 	/** One of {@link MAP_SPECIFIC}, {@link MAP_GENERATED} or {@link MAP_RANDOM} */
 	public final int mapChoice;
 	
 	/** The associated map name if map choice is set to {@link SPECIFIC_MAP} */
 	public final String mapName;
 
-	public GameOptions(int god, int team, int mapChoice, String mapName) {
+	public GameOptions(int god, int team, boolean fog, int mapChoice, String mapName) {
 		this.god = god;
 		this.team = team;
+		this.fog = fog;
 		this.mapChoice = mapChoice;
 		this.mapName = mapName;
 	}
