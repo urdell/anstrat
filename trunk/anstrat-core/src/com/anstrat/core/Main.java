@@ -24,7 +24,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -100,7 +99,7 @@ public class Main extends Game implements ApplicationListener {
 		percentWidth = ((float)Gdx.graphics.getWidth())/100f;
 		percentHeight = ((float)Gdx.graphics.getHeight())/100f;
 		
-		// Music
+		// Music 
 		AudioAssets.load();
 		
 		// Load from file
@@ -244,8 +243,8 @@ public class Main extends Game implements ApplicationListener {
 			// menuMusic.setLooping(false);
 		}
 		else if(screen instanceof MainMenu){
-			if(!AudioAssets.menuMusic.isPlaying() && Options.soundOn){
-				AudioAssets.menuMusic.play();
+			if(!AudioAssets.getMusic("vikingstitle").isPlaying() && Options.soundOn){
+				AudioAssets.getMusic("vikingstitle").play();
 			}
 		}
 	}
