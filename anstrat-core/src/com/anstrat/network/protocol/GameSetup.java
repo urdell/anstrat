@@ -13,13 +13,6 @@ public class GameSetup implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public transient static final int gametype_small_random = 1;
-	public transient static final int gametype_medium_random = 2;
-	public transient static final int gametype_large_random = 3;
-	public transient static final int gametype_small_premade = 4;
-	public transient static final int gametype_medium_premade = 5;
-	public transient static final int gametype_large_premade = 6;
-	
 	public final Map map;
 	public final long randomSeed;
 	public final Player[] players;
