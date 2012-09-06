@@ -21,7 +21,9 @@ public interface IDatabaseService {
 	Command[] getCommands(long gameID, int greaterThanOrEqualToCommandNr);
 	Invite createInvite(long senderID, long receiverID, GameOptions options);
 	boolean updateInvite(long inviteID, Invite.Status inviteStatus, Long gameID);
-	boolean removeInvites(long... inviteIDs);
+	
+	/** @return the number of deleted invites. */
+	int removeInvites(long... inviteIDs);
 	
 	/** Returns the invites associated with a user, where the user is either the sender or receiver. */
 	Invite[] getInvites(long userID);

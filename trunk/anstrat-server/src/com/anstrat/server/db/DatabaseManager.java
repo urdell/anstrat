@@ -244,7 +244,7 @@ public class DatabaseManager implements IDatabaseService {
 			long gameID = idnr.getLong("id");
 
 			// Create batch of player inserts
-			 insertPlayer = conn.prepareStatement("INSERT INTO PlaysIn(gameID, userID, playerIndex, team, god) VALUES(?, ?, ?, ?, ?)");
+			insertPlayer = conn.prepareStatement("INSERT INTO PlaysIn(gameID, userID, playerIndex, team, god) VALUES(?, ?, ?, ?, ?)");
 
 			for(int i = 0; i < game.players.length; i++){
 				GameSetup.Player player = game.players[i];
@@ -277,8 +277,69 @@ public class DatabaseManager implements IDatabaseService {
 	
 	@Override
 	public GameSetup getGame(long gameID) {
-		// TODO: Implement
-		throw new UnsupportedOperationException("Not implemented yet.");
+		Connection conn = null;
+		PreparedStatement pst_game = null;
+		PreparedStatement pst_players = null;
+		ResultSet rs_game = null;
+		ResultSet rs_players = null;
+		
+		try{
+			conn = context.getConnection();
+			
+			pst_game = conn.prepareStatement("SELECT * FROM Games WHERE id = ?");
+			pst_game.setLong(1, gameID);
+			rs_game = pst_game.executeQuery();
+			
+			// Retrieve result
+			if(rs_game.next()){
+				com.anstrat.geography.Map map = Serialization.deserialize(rs_game.getBytes("map"));
+				long randomSeed = rs_game.getLong("randomSeed");
+				
+				// Get players
+				pst_players = conn.prepareStatement("SELECT userID, god, team, playerIndex, displayName FROM Users u JOIN PlaysIn p ON u.id = p.userID WHERE gameID = ?");
+				pst_players.setLong(1, gameID);
+				rs_players = pst_players.executeQuery();
+				
+				List<GameSetup.Player> playersFromDB = new ArrayList<GameSetup.Player>();
+				List<Integer> playerIndex = new ArrayList<Integer>();
+				
+				while(rs_players.next()){
+					long userID = rs_players.getLong("userID");
+					int team = rs_players.getInt("team");
+					int god = rs_players.getInt("god");
+					int index = rs_players.getInt("playerIndex");
+					String displayName = rs_players.getString("displayName");
+					
+					playerIndex.add(index);
+					playersFromDB.add(new GameSetup.Player(userID, team, god, displayName));
+				}
+				
+				// Create array with players, where the index corresponds to the actual playerIndex,
+				// rather than in the order they were returned by the database
+				GameSetup.Player[] players = new GameSetup.Player[playersFromDB.size()];
+				for(int i = 0; i < playersFromDB.size(); i++){
+					players[playerIndex.get(i)] = playersFromDB.get(i);
+				}
+				
+				return new GameSetup(map, randomSeed, players);
+			}
+			else{
+				return null;
+			}
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when retrieving game with gameID '%d'.", gameID);
+		}
+		finally{
+			closeResSet(rs_game);
+			closeResSet(rs_players);
+			closeStmt(pst_game);
+			closeStmt(pst_players);
+			closeConn(conn);
+		}
+		
+		// An error occurred.
+		return null;
 	}
 	
 	@Override
@@ -478,11 +539,27 @@ public class DatabaseManager implements IDatabaseService {
 	}
 	
 	@Override
-	public boolean removeInvites(long... inviteIDs) {
-		if(inviteIDs.length == 0) return true;
+	public int removeInvites(long... inviteIDs) {
+		if(inviteIDs.length == 0) return 0;
 		
-		// TODO: Implement
-		throw new UnsupportedOperationException("Not implemented yet.");
+		Connection conn = null;
+		PreparedStatement pst = null;
+		
+		try{
+			conn = context.getConnection();
+			pst = conn.prepareStatement("DELETE FROM Invites WHERE id IN (?)");
+			pst.setArray(1, conn.createArrayOf("integer", Longs.asList(inviteIDs).toArray()));
+			return pst.executeUpdate();
+		}
+		catch(SQLException e){
+			logger.exception(e, "SQLException when deleting invites: [%s].", Joiner.on(", ").join(Longs.asList(inviteIDs)));
+		}
+		finally{
+			closeStmt(pst);
+			closeConn(conn);
+		}
+		
+		return -1;
 	}
 	
 	// Helpers
