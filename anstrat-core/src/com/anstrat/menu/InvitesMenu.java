@@ -15,7 +15,7 @@ public class InvitesMenu extends MenuScreen{
 		contents.row();
 		if(Main.getInstance().invites.getInvites().isEmpty()){
 			//If there are no invites - add a dummy invite for testing
-			Main.getInstance().invites.recievedInvite(1337, "Dummy invite sender", new GameOptions(1, 1, 1, "Dummy map"));
+			Main.getInstance().invites.recievedInvite(1337, "Dummy invite sender", new GameOptions(1, 1, true, 1, "Dummy map"));
 		}
 		for(Invite invite : Main.getInstance().invites.getInvites()){
 			contents.add(new InviteRow(invite)).fillX();
