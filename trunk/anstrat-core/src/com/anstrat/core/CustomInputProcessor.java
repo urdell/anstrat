@@ -70,11 +70,14 @@ public class CustomInputProcessor extends InputAdapter {
 							
 							return true;
 						}
+						
+						// We're leaving the game, save the state
+						Main.getInstance().games.saveGameInstances();
+						Main.getInstance().setScreen(MainMenu.getInstance());
 					}
+					else	//Not ingame - go back one screen
+						Main.getInstance().popScreen();
 					
-					// We're leaving the game, save the state
-					Main.getInstance().games.saveGameInstances();
-					Main.getInstance().popScreen();
 					return true;
 				}
 				else {
