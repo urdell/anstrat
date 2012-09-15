@@ -37,7 +37,7 @@ public class MapList extends Table {
 	private ClickListener mapClick = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
-        	setSelected((Table)event.getListenerActor());	//actor
+        	setSelected((Table)event.getListenerActor());
         	expandRandom(false);
         }
 	};
@@ -172,23 +172,23 @@ public class MapList extends Table {
 		
 		if(expand){
 			Table innerTable = new Table();
-			innerTable.setWidth((int)(random.getWidth()/3f));
-			innerTable.setHeight((int)(8f*Main.percentHeight));
+			innerTable.setWidth(random.getWidth()/3f);
+			innerTable.setHeight(8f*Main.percentHeight);
 			innerTable.add(randX);
 			innerTable.add(randY);
 			
 			random.row();
-			random.add("GENERATE MAP").height((int)(Main.percentHeight*4f));
+			random.add("GENERATE MAP").height(Main.percentHeight*4f);
 			random.row();
 			random.add(innerTable);
 			random.row();
-			random.add(randomError).height((int)(Main.percentHeight*4f));
+			random.add(randomError).height(Main.percentHeight*4f);
 			
-			list.getCell(random).height((int)(Main.percentHeight*28f));
+			list.getCell(random).height(Main.percentHeight*28f);
 		} else {
 			random.row().center();
-			random.add("GENERATE MAP").height((int)(Main.percentHeight*4f));
-			list.getCell(random).height((int)(Main.percentHeight*10f));
+			random.add("GENERATE MAP").height(Main.percentHeight*4f);
+			list.getCell(random).height(Main.percentHeight*10f);
 		}
 		list.layout();
 	}
@@ -209,7 +209,7 @@ public class MapList extends Table {
 		
 		Table table = new Table(Assets.SKIN);
 		table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
-		table.defaults().left().height((int)(4*Main.percentHeight));
+		table.defaults().left().height(4*Main.percentHeight);
 		table.add(nameLabel).fillX().expandX();
 		table.add(sizeLabel);
 		

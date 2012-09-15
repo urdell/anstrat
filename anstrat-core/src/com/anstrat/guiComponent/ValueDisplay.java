@@ -51,8 +51,8 @@ public class ValueDisplay extends Table {
 			bar.setColors(Color.GREEN, new Color(0f, 0.3f, 0f, 1f), Color.GRAY);
 		}
 		
-		this.add(icon).size((int)(3f*Main.percentHeight)).padRight((int)(2f*Main.percentWidth));
-		this.add(usesBar ? bar : label).expandX().fillX().height((int)(3f*Main.percentHeight));
+		this.add(icon).size(3f*Main.percentHeight).padRight(2f*Main.percentWidth);
+		this.add(usesBar ? bar : label).expandX().fillX().height(3f*Main.percentHeight);
 	}
 	
 	// Returns null if the value isn't currently applicable (for example the name of a unit if no unit is selected)

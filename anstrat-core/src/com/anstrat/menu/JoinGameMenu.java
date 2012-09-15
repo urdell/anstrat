@@ -24,7 +24,7 @@ public class JoinGameMenu extends MenuScreen {
 		password = ComponentFactory.createTextField("Game Password", true);
 		Table settings = new Table(Assets.SKIN);
         settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
-        settings.defaults().height((int)(Main.percentHeight*10));
+        settings.defaults().height(Main.percentHeight*10f);
         settings.add("Name:");
         settings.add(name).fillX().expandX();
         settings.row();
@@ -42,7 +42,7 @@ public class JoinGameMenu extends MenuScreen {
             }
         });
 		
-		contents.padTop((int) (3*Main.percentHeight));
+		contents.padTop(3f*Main.percentHeight);
 		contents.defaults().space(5).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(settings);
 		contents.row();

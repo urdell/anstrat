@@ -81,8 +81,8 @@ public class ChooseGameTypeMenu extends MenuScreen {
 
         Label login = ComponentFactory.createLoginLabel();
         
-        contents.padTop((int) (3*Main.percentHeight));
-        contents.defaults().space((int)Main.percentWidth).pad(0).top().center();
+        contents.padTop(3f*Main.percentHeight);
+        contents.defaults().space(Main.percentWidth).pad(0).top().center();
         contents.row();
         contents.add(findMatchButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();

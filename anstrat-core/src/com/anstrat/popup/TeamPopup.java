@@ -57,7 +57,6 @@ public class TeamPopup extends Popup{
 			gods[i].addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-			        //selectButton((Button)actor);
 					selectButton((Button)event.getListenerActor());
 			    }
 			});
@@ -70,7 +69,6 @@ public class TeamPopup extends Popup{
 			teams[i].addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-			        //selectButton((Button)actor);
 					selectButton((Button)event.getListenerActor());
 			    }
 			});
@@ -99,11 +97,11 @@ public class TeamPopup extends Popup{
 		teamLabel = new Label("",Assets.SKIN);
 		
 		//this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
-		this.add(godTable).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
+		this.add(godTable).padTop(-tableBackgroundPatch.getTopHeight()/3f);
 		this.row();
 		this.add(godLabel);
 		this.row();
-		this.add(teamTable).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));
+		this.add(teamTable).padTop(-tableBackgroundPatch.getTopHeight()/3f);
 		this.row();
 		this.add(teamLabel);
 		//this.add().expand().uniform();

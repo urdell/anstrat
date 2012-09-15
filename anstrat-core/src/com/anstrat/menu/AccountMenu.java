@@ -62,8 +62,8 @@ public class AccountMenu extends MenuScreen {
         
         Label login = ComponentFactory.createLoginLabel();
         
-        contents.padTop((int) (3*Main.percentHeight));
-        contents.defaults().space((int)(2*Main.percentWidth)).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.padTop(3f*Main.percentHeight);
+        contents.defaults().space(2f*Main.percentWidth).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         
         contents.add(fastLoginButton);
         contents.row();

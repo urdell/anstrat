@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -44,24 +45,24 @@ public class UnitTypeCard extends ColorTable {
 		Image attackIcon = new Image(Assets.getTextureRegion("sword"));
 		Image costIcon = new Image(Assets.getTextureRegion("gold"));
 		
-		int imageSize = (int)(Main.percentWidth*40);
-		int iconSize = (int)(Main.percentHeight*5);
+		float imageSize = Main.percentWidth*40f;
+		float iconSize = Main.percentHeight*5f;
 		
 		this.top().left();
 		this.defaults().expandX().fillX();
 		
 		Table outer1 = new Table();
-		outer1.add(image).left().size(imageSize).padRight((int)(Main.percentHeight));
+		outer1.add(image).left().size(imageSize).padRight(Main.percentHeight);
 		
 		Table inner = new Table();
 		inner.defaults().left();
-		inner.add(attackIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(attackIcon).size(iconSize).padRight(Main.percentHeight);
 		inner.add(attack);
 		inner.row();
-		inner.add(apIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(apIcon).size(iconSize).padRight(Main.percentHeight);
 		inner.add(ap);
 		inner.row();
-		inner.add(hpIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		inner.add(hpIcon).size(iconSize).padRight(Main.percentHeight);
 		inner.add(hp);
 		
 		outer1.add(inner).left();
@@ -77,7 +78,7 @@ public class UnitTypeCard extends ColorTable {
 		Table outer2 = new Table();
 		//outer2.debug();
 		outer2.defaults().left();
-		outer2.add(costIcon).size(iconSize).padRight((int)(Main.percentHeight));
+		outer2.add(costIcon).size(iconSize).padRight(Main.percentHeight);
 		outer2.add(cost);
 		
 		damageModifierTable = new Table();

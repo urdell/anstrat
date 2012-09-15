@@ -40,7 +40,7 @@ public class InvitePopup extends Popup {
 		
 		Button cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
-		add(friendlist).maxHeight((int)(50*Main.percentHeight));
+		add(friendlist).maxHeight(50f*Main.percentHeight);
 		row();
 		add(textField).expandX().fillX();
 		row();

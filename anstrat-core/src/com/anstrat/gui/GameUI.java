@@ -218,9 +218,9 @@ public class GameUI extends UI {
 		lastWidth = width;
 		lastHeight = height;
 		
-		float bph = Main.percentHeight*20f;//hp*4;
+		float bph = Main.percentHeight*20f;
 		float pad = 2f;
-		float tph = Main.percentHeight*10f;//hp*2;
+		float tph = Main.percentHeight*10f;
 		
 		//Top panel
 		topPanel.setBounds(0, height - tph, width, tph);

@@ -318,7 +318,7 @@ public class MapEditorUI extends UI {
 		panelTable.clear();
 		panelTable.setVisible(show);
 		if(show && contents!=null){
-			panelTable.add(contents).fill().pad((int)Main.percentHeight);
+			panelTable.add(contents).fill().pad(Main.percentHeight);
 			panelTable.setHeight(contents.getPrefHeight());
 		}
 	}
