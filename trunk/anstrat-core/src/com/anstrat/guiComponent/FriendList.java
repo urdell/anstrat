@@ -52,12 +52,13 @@ public class FriendList extends Table {
 					
 				});
 				list.row();
-				list.add(button).fillX().expandX().height((int)(10*Main.percentHeight));
+				list.add(button).fillX().expandX().height(10f*Main.percentHeight);
 			}
 		}
 		
-		ScrollPane scroll = new ScrollPane(list);	//flickscrollpane
+		ScrollPane scroll = new ScrollPane(list);
 		scroll.setScrollingDisabled(true, false);
+		scroll.setFlickScroll(true);
 		this.add(scroll).fill().expand();
 	}
 	

@@ -109,14 +109,14 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		
 		
 		Table mapTable1 = new Table();
-		mapTable1.add(mapSpec).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
-		mapTable1.add(mapServerRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
+		mapTable1.add(mapSpec).size(Main.percentWidth*37f, Main.percentHeight*8f);
+		mapTable1.add(mapServerRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
 		
 		Table mapTable2 = new Table();
-		mapTable2.add(mapGenerate).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
-		mapTable2.add(mapCustomRandom).size((int)(Main.percentWidth*37), (int)(Main.percentHeight*8));
+		mapTable2.add(mapGenerate).size(Main.percentWidth*37f, Main.percentHeight*8f);
+		mapTable2.add(mapCustomRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
 		
-		map.defaults().height((int)(Main.percentHeight*8));
+		map.defaults().height(Main.percentHeight*8f);
 		map.add(mapTable1);
 		map.row();
 		map.add(mapTable2);
@@ -143,11 +143,8 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 						player1god = god;
 						player1team = team;
 					}
-					
 				});
-				
 				popup.show();
-				
 			}
 			
 		});
@@ -163,19 +160,17 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 						player2god = god;
 						player2team = team;
 					}
-					
 				});
 				popup.show();
 			}
-			
 		});
 		
-		player1table.defaults().height((int)(Main.percentHeight*8));
+		player1table.defaults().height(Main.percentHeight*8f);
 		player1table.add(player1nameButton).fillX().expandX();
 		player1table.row();
 		player1table.add(player1teamButton).fillX().expandX();
 		
-		player2table.defaults().height((int)(Main.percentHeight*8));
+		player2table.defaults().height(Main.percentHeight*8f);
 		player2table.add(player2nameButton).fillX().expandX();
 		player2table.row();
 		player2table.add(player2teamButton).fillX().expandX();
@@ -203,8 +198,8 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		} );
 		
 		
-		contents.padTop((int) (3*Main.percentHeight)).center();
-		contents.defaults().space((int)Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
+		contents.padTop(3f*Main.percentHeight).center();
+		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(map);
 		contents.row();
 		contents.add(player1table);
@@ -213,7 +208,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		contents.row();
 		contents.add(fog);
 		contents.row();
-		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*0.3));
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());

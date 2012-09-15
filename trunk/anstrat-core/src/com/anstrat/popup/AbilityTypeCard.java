@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class AbilityTypeCard extends Table {
@@ -44,11 +45,11 @@ public class AbilityTypeCard extends Table {
 		//statDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_ATTACK)
 		Image costIcon = new Image(Assets.getTextureRegion("mana"));
 		
-		int imageHeight = Gdx.graphics.getHeight()/5;
-		int imageWidth = Gdx.graphics.getWidth()/3;
+		float imageHeight = Gdx.graphics.getHeight()/5f;
+		float imageWidth = Gdx.graphics.getWidth()/3f;
 		
 		this.defaults().top();
-		this.add(name).center().padTop((int)(-3*Main.percentHeight)).padBottom((int)(-2*Main.percentHeight));
+		this.add(name).center().padTop(-3f*Main.percentHeight).padBottom(-2f*Main.percentHeight);
 		this.row();
 		this.add(image).left().width(imageWidth).height(imageHeight);
 		this.row();
@@ -57,10 +58,10 @@ public class AbilityTypeCard extends Table {
 		
 		Table inner = new Table();
 		inner.defaults().left();
-		inner.add(costIcon).height((int)(3*Main.percentHeight)).width((int)(6*Main.percentWidth));
+		inner.add(costIcon).height(3f*Main.percentHeight).width(6f*Main.percentWidth);
 		inner.add(cost);
 		
-		this.add(inner).left().height((int)(3*Main.percentHeight));
+		this.add(inner).left().height(3f*Main.percentHeight);
 	}
 	
 	public void setSize(float width, float height){

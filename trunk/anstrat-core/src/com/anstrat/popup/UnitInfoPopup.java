@@ -51,7 +51,7 @@ public class UnitInfoPopup extends Popup {
 		abilityTable = new Table(Assets.SKIN);
 
 		this.pad(MARGIN);
-		this.defaults().top().left().padBottom((int)(5*Main.percentHeight));
+		this.defaults().top().left().padBottom(5f*Main.percentHeight);
 		
 		Table outer = new Table();
 		
@@ -65,7 +65,7 @@ public class UnitInfoPopup extends Popup {
 		inner1.row();
 		inner1.add(ap);
 		
-		outer.add(inner1).padRight((int)(8*Main.percentWidth));
+		outer.add(inner1).padRight(8f*Main.percentWidth);
 		
 		Table inner2 = new Table();
 		inner2.defaults().top().left();
@@ -117,7 +117,7 @@ public class UnitInfoPopup extends Popup {
 			Label description = new Label(" -" + effect.description, Assets.SKIN);
 			
 			Table inner = new Table();
-			inner.add(icon).height((int)(3*Main.percentHeight)).width((int)(5*Main.percentWidth)).padRight((int)(Main.percentWidth));
+			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
 			inner.add(name).expandX().fillX();
 
 			effectsTable.add(inner);
@@ -140,7 +140,7 @@ public class UnitInfoPopup extends Popup {
 			Label description = new Label(" -" + ability.description, Assets.SKIN);
 			
 			Table inner = new Table();
-			inner.add(icon).height((int)(3*Main.percentHeight)).width((int)(5*Main.percentWidth)).padRight((int)(Main.percentWidth));
+			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
 			inner.add(name).expandX().fillX();
 
 			abilityTable.add(inner);

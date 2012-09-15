@@ -93,10 +93,10 @@ public class InviteMatchMenu extends MenuScreen {
 		});
 		
 		contents.padTop((int) (3*Main.percentHeight)).center();
-		contents.defaults().center().space((int)Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
+		contents.defaults().center().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(settings);
 		contents.row();
-		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*1.3));
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*1.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());

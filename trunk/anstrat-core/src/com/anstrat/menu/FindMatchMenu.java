@@ -68,11 +68,11 @@ public class FindMatchMenu extends MenuScreen {
 			}
 		});
 		
-		contents.padTop((int) (3*Main.percentHeight)).center();
-		contents.defaults().space((int)Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
+		contents.padTop(3f*Main.percentHeight).center();
+		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(settings);
 		contents.row();
-		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom((int) (BUTTON_HEIGHT*1.3));
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*1.3f);
 		contents.row();
 		contents.add().expandY();
 		contents.row();

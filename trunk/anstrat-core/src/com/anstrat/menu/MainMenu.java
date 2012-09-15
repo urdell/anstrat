@@ -142,7 +142,7 @@ public class MainMenu extends MenuScreen {
         contents.row();
         contents.add(mapEditorButton).height(buttonHeight).width(buttonWidth);
         contents.row();
-        contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);		//scrolltable - empty
+        contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);
         
         Table footer = new Table();
         footer.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
@@ -354,7 +354,7 @@ public class MainMenu extends MenuScreen {
     	outer.add(inner2).expandX().fillX();
     	
     	table.add(outer).expandX().fillX().padLeft(Main.percentHeight);
-    	table.add(cancel).pad((int)(3+Main.percentWidth)).height(7f*Main.percentHeight).width(7f*Main.percentHeight).bottom().right();
+    	table.add(cancel).pad(3f+Main.percentWidth).height(7f*Main.percentHeight).width(7f*Main.percentHeight).bottom().right();
     	
     	table.addListener(new ClickListener() {
 	        @Override
