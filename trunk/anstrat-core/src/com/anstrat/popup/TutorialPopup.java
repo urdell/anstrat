@@ -4,8 +4,8 @@ import com.anstrat.core.Assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class TutorialPopup extends Popup{
 
@@ -16,9 +16,9 @@ public class TutorialPopup extends Popup{
 		drawOverlay = false;
 		tutorialImage = Assets.getTextureRegion("tutorialImage1");
 		
-		this.setClickListener(new ClickListener() {
-	        @Override
-	        public void click(Actor actor,float x,float y ){
+		this.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 	        	nrClicks++;
 	        	switch(nrClicks){
 	        	case 1:
@@ -28,8 +28,7 @@ public class TutorialPopup extends Popup{
 	        		Popup.getCurrentPopup().close();
 	        		nrClicks = 0;
 	        	}
-	        	
-	        }
+			}
 		});
 	}
 	
@@ -38,7 +37,7 @@ public class TutorialPopup extends Popup{
 	}
 	
 	@Override
-	public void resize(int width, int height){
+	public void resize(float width, float height){
 		// Force popup to take up the whole window
 		this.size(width, height);
 		super.resize(width, height);

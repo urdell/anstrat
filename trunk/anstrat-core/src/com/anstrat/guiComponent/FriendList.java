@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class FriendList extends Table {
 	
@@ -24,7 +25,7 @@ public class FriendList extends Table {
 		super(Assets.SKIN);
 		this.textField = textField;
 		this.okButton = button;
-		this.setBackground(Assets.SKIN.getPatch("single-border"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 	}
 	
 	/**
@@ -41,10 +42,10 @@ public class FriendList extends Table {
 			//Table map = formatMap(mapPath);
 			final TextButton button = new TextButton(friend, Assets.SKIN);
 			if(friend != null){
-				button.setClickListener(new ClickListener() {
+				button.addListener(new ClickListener() {
 
 					@Override
-					public void click(Actor actor, float x, float y) {
+					public void clicked(InputEvent event, float x, float y) {
 						textField.setText(button.getText().toString());
 						Assets.SKIN.setEnabled(okButton, true);
 					}
@@ -55,7 +56,7 @@ public class FriendList extends Table {
 			}
 		}
 		
-		FlickScrollPane scroll = new FlickScrollPane(list);
+		ScrollPane scroll = new ScrollPane(list);	//flickscrollpane
 		scroll.setScrollingDisabled(true, false);
 		this.add(scroll).fill().expand();
 	}

@@ -3,19 +3,18 @@ package com.anstrat.menu;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Invite;
 import com.anstrat.core.Main;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class InviteRow extends Table{
 
 	
 	public InviteRow(){
-		this.setBackground(new NinePatch(Assets.getTextureRegion("mana")));
+		this.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("mana"))));
 	}
 	public InviteRow(final Invite invite){
 		Label topText = new Label("From:", Assets.SKIN);
@@ -28,10 +27,10 @@ public class InviteRow extends Table{
 		
 		add(textTable).expandX();
 		
-		this.setBackground(new NinePatch(Assets.getTextureRegion("sword")));
-		setClickListener(new ClickListener() {
+		this.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("sword"))));
+		addListener(new ClickListener() {
 	        @Override
-	        public void click(Actor actor, float x, float y){
+	        public void clicked(InputEvent event, float x, float y) {
 	        	Main.getInstance().setScreen(new ViewInviteMenu(invite));
 	        }
 		});

@@ -5,14 +5,16 @@ import java.util.HashMap;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class MapList extends Table {
 	
@@ -28,14 +30,14 @@ public class MapList extends Table {
 	
 	private ClickListener closeRandom = new ClickListener() {
         @Override
-        public void click(Actor actor,float x,float y ){
+        public void clicked(InputEvent event, float x, float y) {
         	expandRandom(false);
         }
 	};
 	private ClickListener mapClick = new ClickListener() {
         @Override
-        public void click(Actor actor,float x,float y ){
-        	setSelected((Table)actor);
+        public void clicked(InputEvent event, float x, float y) {
+        	setSelected((Table)event.getListenerActor());	//actor
         	expandRandom(false);
         }
 	};
@@ -44,7 +46,7 @@ public class MapList extends Table {
 		super(Assets.SKIN);
 		
 		this.okButton = okButton;
-		this.setBackground(Assets.SKIN.getPatch("single-border"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 	}
 	
 	/**
@@ -61,9 +63,9 @@ public class MapList extends Table {
 		list.top();
 		
 		if(withRandom){
-			randomError = new Label(Assets.SKIN);
+			randomError = new Label("",Assets.SKIN);
 			random = new Table(Assets.SKIN);
-			random.setBackground(Assets.SKIN.getPatch("single-border"));
+			random.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 			TextFieldListener tl = new TextFieldListener() {
 		    	@Override
 				public void keyTyped (TextField textField, char key) {
@@ -92,9 +94,9 @@ public class MapList extends Table {
 			randY = ComponentFactory.createTextField("Height", false);
 			randY.setTextFieldListener(tl);
 
-			random.setClickListener(new ClickListener() {
+			random.addListener(new ClickListener() {
 		        @Override
-		        public void click(Actor actor,float x,float y ){
+		        public void clicked(InputEvent event, float x, float y) {
 	        		setSelected(random);
 		        	expandRandom(true);
 		        }
@@ -105,22 +107,24 @@ public class MapList extends Table {
 			tableMap.put(random, "RANDOM");
 		}
 
-		list.setClickListener(closeRandom);
+		list.addListener(closeRandom);
 		
 		//MAPS
 		for(String mapPath : filenames){
 			Table map = formatMap(mapPath);
 			
 			if(map != null){
-				map.setClickListener(mapClick);
+				map.addListener(mapClick);
+				map.setTouchable(Touchable.enabled);
 				list.row();
-				list.add(map).fillX().expandX().height((int)(10*Main.percentHeight));
+				list.add(map).fillX().expandX().height(10f*Main.percentHeight);
 				tableMap.put(map, mapPath);
 			}
 		}
 		
-		FlickScrollPane scroll = new FlickScrollPane(list);
+		ScrollPane scroll = new ScrollPane(list);
 		scroll.setScrollingDisabled(true, false);
+		scroll.setFlickScroll(true);
 		this.add(scroll).fill().expand();
 	}
 	
@@ -149,10 +153,10 @@ public class MapList extends Table {
 	public void setSelected(Table t){
 		
 		if(selected != null){
-			selected.setBackground(Assets.SKIN.getPatch("single-border"));
+			selected.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		}
 		
-		t.setBackground(Assets.SKIN.getPatch("double-border"));
+		t.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
 		selected = t;
 		
 		Assets.SKIN.setEnabled(okButton, true);
@@ -167,7 +171,9 @@ public class MapList extends Table {
 		random.clear();
 		
 		if(expand){
-			Table innerTable = new Table().width((int)(random.width/3f)).height((int)(8f*Main.percentHeight));
+			Table innerTable = new Table();
+			innerTable.setWidth((int)(random.getWidth()/3f));
+			innerTable.setHeight((int)(8f*Main.percentHeight));
 			innerTable.add(randX);
 			innerTable.add(randY);
 			
@@ -202,7 +208,7 @@ public class MapList extends Table {
 		Label sizeLabel = new Label(String.format("%dx%d", map.getXSize(), map.getYSize()), Assets.SKIN);
 		
 		Table table = new Table(Assets.SKIN);
-		table.setBackground(Assets.SKIN.getPatch("single-border"));
+		table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		table.defaults().left().height((int)(4*Main.percentHeight));
 		table.add(nameLabel).fillX().expandX();
 		table.add(sizeLabel);

@@ -5,11 +5,11 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.FriendList;
 import com.anstrat.guiComponent.Row;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class InvitePopup extends Popup {
 	private TextField textField;
@@ -20,8 +20,8 @@ public class InvitePopup extends Popup {
 		this.handler = handler;
 		
 		final Button ok = ComponentFactory.createButton("Ok", new ClickListener() {
-	        @Override
-	        public void click(Actor actor,float x,float y ){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 	        	returnSelection();
 				Popup.getCurrentPopup().close();
 	        }

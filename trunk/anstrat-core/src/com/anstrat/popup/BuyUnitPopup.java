@@ -16,12 +16,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class BuyUnitPopup extends Popup{
 	
@@ -38,7 +40,7 @@ public class BuyUnitPopup extends Popup{
 	
 	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
 		@Override
-		public void click(Actor actor, float x, float y) {
+		public void clicked(InputEvent event, float x, float y) {
 			BuyUnitPopup popup = (BuyUnitPopup) Popup.getCurrentPopup();
 			UnitType type = popup.card.type;
 			Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
@@ -48,6 +50,7 @@ public class BuyUnitPopup extends Popup{
 	};
 	
 	public BuyUnitPopup(UnitType... types) {
+		this.setMovable(false);
 		this.types = types;
 		this.drawOverlay = false;
 		
@@ -60,23 +63,23 @@ public class BuyUnitPopup extends Popup{
 		
 		for(int i=0; i<units.length; i++){
 			unitSilhouettes[i] = new NinePatch(GUnit.getTextureRegion(types[i]));
-			units[i] = new Button(new Image(unitSilhouettes[i]), Assets.SKIN.getStyle("image",ButtonStyle.class));
-			units[i].setClickListener(new ClickListener() {
+			units[i] = new Button(new Image(unitSilhouettes[i]), Assets.SKIN.get("image",ButtonStyle.class));
+			units[i].addListener(new ClickListener() {
 				@Override
-			    public void click(Actor actor,float x,float y ){
-			        selectButton((Button)actor);
+				public void clicked(InputEvent event, float x, float y) {
+			        selectButton((Button)event.getListenerActor());
 			    }
 			});
 		}
 		
-		int unitWidth = (int)(Main.percentWidth*100/6*1.3);
-		int pad = (int)(-unitWidth*0.15);
+		float unitWidth = Main.percentWidth*100f/6f*1.3f;
+		float unitPad   = -unitWidth*0.15f;
 		
 		// The silhouettes of the purchasable units
 		unitTable = new ColorTable(Color.BLUE);
-		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
-		unitTable.setBackground(unitTableBackgroundPatch);
-		unitTable.defaults().size(unitWidth).padLeft(pad).padRight(pad);
+		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-down");
+		unitTable.setBackground(new NinePatchDrawable(unitTableBackgroundPatch));
+		unitTable.defaults().size(unitWidth).padLeft(unitPad).padRight(unitPad);
 		
 		// Don't ask me why it has to be this order...
 		unitTable.add(units[0]);
@@ -88,37 +91,39 @@ public class BuyUnitPopup extends Popup{
 		
 		// The buy and close buttons
 		Table buttonTable = new Table(Assets.SKIN);
-		buttonTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
+		buttonTable.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("BottomLargePanel"))));
 		
-		int buttonHeight = (int)(Main.percentHeight*15);
+		float buttonHeight = Main.percentHeight*15f;
 		
-		buttonTable.right();
+		buttonTable.align(Align.right);
 		buttonTable.defaults().size(buttonHeight);
 		buttonTable.add(buyButton);
 		buttonTable.add(buttonCancel);
 		
 		// Put all components together into the main table
-		int cardW = (int)(Main.percentWidth*85);
-		int cardH = (int)(Main.percentHeight*60);
+		float cardW = Main.percentWidth*85f;
+		float cardH = Main.percentHeight*60f;
 		
-		this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
-		this.add(unitTable).width(Gdx.graphics.getWidth()).padTop((int)(-unitTableBackgroundPatch.getTopHeight()/3));
+		float space = (Gdx.graphics.getHeight() - cardH - unitWidth - buttonHeight - unitTableBackgroundPatch.getBottomHeight()) / 2f;
+		
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty"))); // Overrides the default background with an empty one
+		this.top().add(unitTable).width(Gdx.graphics.getWidth());
 		this.row();
-		this.add().expand().uniform();
+		this.add().height(space).uniform();	//space
 		this.row();
 		this.add(card).height(cardH).width(cardW);
 		this.row();
-		this.add().expand().uniform();
+		this.add().uniform();				//space
 		this.row();
-		this.add(buttonTable).height(buttonHeight).width(Gdx.graphics.getWidth()).expandY().bottom();
+		this.add(buttonTable).height(buttonHeight).width(Gdx.graphics.getWidth()).align(Align.bottom);
 		
 		selectButton(units[0]);
 	}
 	
 	@Override
-	public void resize(int width, int height){
+	public void resize(float width, float height){
 		// Force popup to take up the whole window
-		this.size(width, height);
+		this.setSize(width, height);
 		super.resize(width, height);
 	}
 	
@@ -166,7 +171,7 @@ public class BuyUnitPopup extends Popup{
 		boolean canBuy = gold >= card.type.cost;
 		Assets.SKIN.setEnabled(buyButton, canBuy && isPlayerTurn);
 		card.setDisabled(!canBuy);
-		buyButton.visible = isPlayerTurn;
+		buyButton.setVisible(isPlayerTurn);
 		
 		// Mark units that are too expensive.
 		for(int i=0; i<types.length; i++){

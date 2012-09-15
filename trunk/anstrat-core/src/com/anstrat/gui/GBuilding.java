@@ -127,12 +127,12 @@ public class GBuilding extends GObject {
 		
 		// The offsets depends on where the flag pole is positioned in relation to the center of the building texture
 		if(building.type == Building.TYPE_CASTLE){
-			this.flagX = sprite.getOriginX() + sprite.getX() + 27f; 
-			this.flagY = sprite.getOriginY() + sprite.getY() - 5f;
+			this.flagX = sprite.getOriginX() + sprite.getX() + 27f;
+			this.flagY = sprite.getOriginY() + sprite.getY() - 80f;	//- 5f
 		}
 		else if(building.type == Building.TYPE_VILLAGE){
 			this.flagX = sprite.getOriginX() + sprite.getX() + 33f;
-			this.flagY = sprite.getOriginY() + sprite.getY() + 3f;
+			this.flagY = sprite.getOriginY() + sprite.getY() - 93f;	//+ 3f
 		}
 	}
 

@@ -24,7 +24,7 @@ public class TransitionEffect extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		float alpha = overlay.getColor().a - Gdx.graphics.getDeltaTime()*speed;
 		if(alpha < 0){
-			this.stage.removeActor(this);
+			this.remove();
 			return;
 		}
 		overlay.setColor(0f, 0f, 0f, alpha);
@@ -32,7 +32,7 @@ public class TransitionEffect extends Actor {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
+	public Actor hit(float x, float y, boolean touchable) {
 		return null;
 	}
 }

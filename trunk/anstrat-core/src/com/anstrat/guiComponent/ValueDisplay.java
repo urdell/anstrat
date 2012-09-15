@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ValueDisplay extends Table {
 	public int valueType;
@@ -38,7 +38,6 @@ public class ValueDisplay extends Table {
 	public ValueDisplay(int valueType){
 		super();
 		this.valueType = valueType;
-		TableLayout layout = this.getTableLayout();
 		
 		icon = new Image(getValueTexture(valueType));
 		
@@ -52,8 +51,8 @@ public class ValueDisplay extends Table {
 			bar.setColors(Color.GREEN, new Color(0f, 0.3f, 0f, 1f), Color.GRAY);
 		}
 		
-		layout.add(icon).size((int)(3f*Main.percentHeight)).padRight((int)(2f*Main.percentWidth));
-		layout.add(usesBar ? bar : label).expandX().fillX().height((int)(3f*Main.percentHeight));
+		this.add(icon).size((int)(3f*Main.percentHeight)).padRight((int)(2f*Main.percentWidth));
+		this.add(usesBar ? bar : label).expandX().fillX().height((int)(3f*Main.percentHeight));
 	}
 	
 	// Returns null if the value isn't currently applicable (for example the name of a unit if no unit is selected)
@@ -127,9 +126,9 @@ public class ValueDisplay extends Table {
 		}
 		if(valueType == VALUE_UNIT_ATTACK){  // The attack value display has different icons depending on unit range.
 			 if(unit.getMaxAttackRange() == 1)
-				 icon.setRegion(Assets.getTextureRegion("sword"));
+				 icon.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("sword")));
 			 else
-				 icon.setRegion(Assets.getTextureRegion("bow"));
+				 icon.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("bow")));
 		}
 	}
 	

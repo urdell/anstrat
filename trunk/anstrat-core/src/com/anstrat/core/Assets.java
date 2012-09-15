@@ -167,47 +167,80 @@ public final class Assets {
 
 	private static void loadSkin(){
 		SKIN = new Skin();
-		SKIN.addResource ("default-font", Assets.STANDARD_FONT); 
-		SKIN.addResource ("menu-font", Assets.MENU_FONT);
-		SKIN.addResource ("ui-font", Assets.UI_FONT);
-		SKIN.addResource ("single-border", new NinePatch(Assets.getTextureRegion("border-thin"),15,15,15,15));
+		SKIN.add("default-font", Assets.STANDARD_FONT); 
+		SKIN.add("menu-font", Assets.MENU_FONT);
+		SKIN.add("ui-font", Assets.UI_FONT);
+		SKIN.add("single-border", new NinePatch(Assets.getTextureRegion("border-thin"),15,15,15,15));
 		NinePatch singleBorderWhite = new NinePatch(Assets.getTextureRegion("border-thin-white"),15,15,15,15);
-		SKIN.addResource ("single-border-white", singleBorderWhite);
+		SKIN.add("single-border-white", singleBorderWhite);
 		TextureRegion line = Assets.getTextureRegion("white-line-hard");
-		SKIN.addResource ("line-border", new NinePatch(
+		SKIN.add("line-border", new NinePatch(
 				null,line,null,
 				null,null,null,
 				null,line,null));
 		
 		TextureRegion singleBorderWhiteBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thin-white"), 15, 15, 15, 15);
 		
-		SKIN.addResource ("line-border-thin", new NinePatch(
+		SKIN.add("line-border-thin", new NinePatch(
 				null,null,null,
 				null,null,null,
 				null,singleBorderWhiteBottomCenter,null));
-		SKIN.addResource ("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
+		SKIN.add("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
 		NinePatch borderThick = new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20);
 		
-		SKIN.addResource ("double-border", borderThick);
+		SKIN.add("double-border", borderThick);
 		
 		TextureRegion borderThickBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
 		TextureRegion borderThickTopCenter = NinePatchUtils.getTopCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
 		
-		SKIN.addResource ("border-thick-updown", new NinePatch(
+		SKIN.add("border-thick-updown", new NinePatch(
 				null,borderThickTopCenter,null,
 				null,null,null,
 				null,borderThickBottomCenter,null));
-		SKIN.addResource ("button-up", new NinePatch(Assets.getTextureRegion("button-available")));
-		SKIN.addResource ("button-down", new NinePatch(Assets.getTextureRegion("button-pressed")));
-		SKIN.addResource ("button-disabled", new NinePatch(Assets.getTextureRegion("button-unavailable")));
-		SKIN.addResource ("check-on", new TextureRegion(Assets.getTextureRegion("check-on")));
-		SKIN.addResource ("check-off", new TextureRegion(Assets.getTextureRegion("check-off")));
+		SKIN.add("border-thick-down", new NinePatch(
+				null,null,null,
+				null,null,null,
+				null,borderThickBottomCenter,null));
+		SKIN.add("button-up", new NinePatch(Assets.getTextureRegion("button-available")));
+		SKIN.add("button-down", new NinePatch(Assets.getTextureRegion("button-pressed")));
+		SKIN.add("button-disabled", new NinePatch(Assets.getTextureRegion("button-unavailable")));
+		SKIN.add("check-on", new TextureRegion(Assets.getTextureRegion("check-on")));
+		SKIN.add("check-off", new TextureRegion(Assets.getTextureRegion("check-off")));
 		
+		
+		Pixmap map = new Pixmap(1, 1, Format.RGB565);
+		map.setColor(Color.WHITE);
+		map.fill();
+		Texture one = new Texture(map);
+		
+		Pixmap map2 = new Pixmap(1, 1, Format.RGB565);
+		map2.setColor(new Color(0f, 0f, 0f, 0f));
+		map2.fill();
+		TextureRegion wh = new TextureRegion(new Texture(map));
+
 		NinePatch np = new NinePatch(Assets.WHITE,8,8,8,8);
 		np.setColor(new Color(0f, 0f, 0f, 0f));
-		SKIN.addResource ("empty-down", np);
+		SKIN.add("empty-down", np);
 		
-		SKIN.setTexture(new Texture(Gdx.files.internal("skin.png")));
+		NinePatch np3 = new NinePatch(one,0,0,0,0);
+		np3.setColor(new Color(0f, 0f, 0f, 0f));
+		SKIN.add("empty", np3);
+		
+		NinePatch np2 = new NinePatch(one,0,0,0,0);
+		np2.setColor(Color.BLACK);
+		SKIN.add("black", np2);
+		
+		SKIN.add("cursor", new NinePatch(		//TODO UIFIX
+				null,null,null,
+				null,wh,null,
+				null,null,null));
+		
+		SKIN.add("selection", new TextureRegion(wh));
+		SKIN.add("white", Color.WHITE);
+		SKIN.add("black", Color.BLACK);
+		SKIN.add("light-gray",Color.LIGHT_GRAY);
+		
+		//SKIN.setTexture(new Texture(Gdx.files.internal("skin.png")));
 		SKIN.load(Gdx.files.internal("data/skin.json"));
 	}
 	

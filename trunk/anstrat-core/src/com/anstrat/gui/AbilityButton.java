@@ -1,22 +1,17 @@
 package com.anstrat.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
-import com.anstrat.gameCore.DamageModification;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
 /**
@@ -25,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
  * Designed to dynamically change its displayed ability without need for creating new instances.
  */
 public class AbilityButton extends Table{
+	
 	TextureRegion image;
 	Unit unit = null;
 	Ability ability = null;
@@ -32,11 +28,11 @@ public class AbilityButton extends Table{
 	
 	public AbilityButton(Unit unit, Ability ability){
 		setAbility(unit, ability);
-		touchable = true;
+		setTouchable(Touchable.enabled);
 	}
 	public AbilityButton(){
 		image = Assets.getTextureRegion("cancel");
-		touchable = true;
+		setTouchable(Touchable.enabled);
 	}
 	
 	public void setAbility(Unit unit, Ability ability){
@@ -81,11 +77,11 @@ public class AbilityButton extends Table{
 			batch.setColor(Color.GRAY);
 		}
 		
-		batch.draw(image, x, y, width, height);
+		batch.draw(image, getX(), getY(), getWidth(), getHeight());
 
 		if(unit != null && ability != null){
 			batch.setColor(Assets.apTextColor);
-			FancyNumbers.drawNumber(ability.apCost, x+height/6, y+height*0.22f, height/2.8f, false, batch);
+			FancyNumbers.drawNumber(ability.apCost, getX()+getHeight()/6, getY()+getHeight()*0.22f, getHeight()/2.8f, false, batch);
 		
 		}
 		batch.setColor(Color.WHITE);

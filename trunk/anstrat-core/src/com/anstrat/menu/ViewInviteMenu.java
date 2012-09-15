@@ -3,9 +3,9 @@ package com.anstrat.menu;
 import com.anstrat.core.Invite;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class ViewInviteMenu extends MenuScreen{
 		
 		Button respondButton = ComponentFactory.createMenuButton("Ugly response to this game",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(MainMenu.getInstance());
             	Main.getInstance().network.acceptInvite(inviteId, 1, 1);
             }

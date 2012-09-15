@@ -15,12 +15,11 @@ import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameSetup;
 import com.anstrat.popup.DisplayNameChangePopup;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.TutorialPopup;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * Converts UI actions to network commands and vice-versa.<br>
@@ -215,7 +214,7 @@ public class NetworkController {
 							new Label(String.format("%s has resigned, you won!", player.getDisplayName()), Assets.SKIN), 
 							ComponentFactory.createButton("OK", new ClickListener() {
 								@Override
-								public void click(Actor actor, float x, float y) {
+								public void clicked(InputEvent event, float x, float y) {
 									Main.getInstance().setScreen(MainMenu.getInstance());
 									Popup.getCurrentPopup().close();
 								}

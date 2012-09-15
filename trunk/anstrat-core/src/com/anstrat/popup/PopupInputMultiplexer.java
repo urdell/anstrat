@@ -51,11 +51,11 @@ public class PopupInputMultiplexer extends InputMultiplexer {
 		return overridesInput;
 	}
 
-	@Override
+	/*@Override	//TODO UIFIX
 	public boolean touchMoved(int x, int y) {
 		super.touchMoved(x, y);
 		return overridesInput;
-	}
+	}*/
 
 	@Override
 	public boolean scrolled(int amount) {

@@ -6,11 +6,11 @@ import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MapSelecter extends Table {
 	
@@ -19,13 +19,12 @@ public class MapSelecter extends Table {
 	
 	public MapSelecter(final boolean includeDefaultMaps, final boolean includePlayerMaps){
 		
-		mapLabel = new Label(Assets.SKIN);
-		mapLabel.setText("Random map");
+		mapLabel = new Label("Random map",Assets.SKIN);
 		mapSelection = GameOptions.MAP_RANDOM;
 		
 		Button mapSpecific = ComponentFactory.createButton("Specific", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new MapsPopup(new MapsPopupHandler() {
 						@Override
 						public void mapSelected(String map){
@@ -40,7 +39,7 @@ public class MapSelecter extends Table {
 		
 		Button mapRandom = ComponentFactory.createButton("Random", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				mapSelection = GameOptions.MAP_RANDOM;
 				mapLabel.setText("Random map");
 			}	
@@ -48,7 +47,7 @@ public class MapSelecter extends Table {
 		
 		Button mapGenerated = ComponentFactory.createButton("Generated", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				mapSelection = GameOptions.MAP_GENERATED;
 				mapLabel.setText("Generated map");
 			}

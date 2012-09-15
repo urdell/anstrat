@@ -65,8 +65,8 @@ public class InviteManager {
 	
 	private void updateButton(){
 		if(inviteButton != null){
-			inviteButton.visible = ( !invites.isEmpty() || !outgoingInvites.isEmpty() );
-			inviteButton.visible = true; //TODO remove after finished with testing
+			inviteButton.setVisible(( !invites.isEmpty() || !outgoingInvites.isEmpty() ));
+			inviteButton.setVisible(true); //TODO remove after finished with testing
 		}
 	}
 	

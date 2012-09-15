@@ -15,13 +15,14 @@ import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Align;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 /**
  * Skeleton class for ability popup.
@@ -40,7 +41,7 @@ public class AbilityPopup extends Popup {
 
 	private static final ClickListener CAST_BUTTON_LISTENER = new ClickListener() {
 		@Override
-		public void click(Actor actor, float x, float y) {
+		public void clicked(InputEvent event, float x, float y) {
 			AbilityPopup popup = (AbilityPopup) Popup.getCurrentPopup();
 			PlayerAbilityType type = popup.card.type;
 			PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
@@ -72,19 +73,19 @@ public class AbilityPopup extends Popup {
 			final int b = i;
 			//TODO 
 			tempImage = new Image();
-			abilities[i] = new Button(tempImage, Assets.SKIN.getStyle("default", ButtonStyle.class));
+			abilities[i] = new Button(tempImage, Assets.SKIN.get("default", ButtonStyle.class));
 			tempImage.setFillParent(true);
-			tempImage.setAlign(Align.CENTER);
-			abilities[i].setClickListener(new ClickListener() {
+			tempImage.setAlign(Align.center);
+			abilities[i].addListener(new ClickListener() {
 				@Override
-			    public void click(Actor actor,float x,float y ){
+				public void clicked(InputEvent event, float x, float y) {
 			        selectButton(b);
 			    }
 			});
 		}
 		selectButton(0);
 		
-		this.setBackground(Assets.SKIN.getPatch("empty"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty")));
 		
 		for(Button ib : abilities) {
 			this.addActor(ib);
@@ -110,7 +111,7 @@ public class AbilityPopup extends Popup {
 		selectedButton = abilities[button];
 		selectedButton.setChecked(true);
 		card.setType(types[button]);
-		card.setSize(card.width, card.height);
+		card.setSize(card.getWidth(), card.getHeight());
 		update();
 	}
 	
@@ -129,50 +130,33 @@ public class AbilityPopup extends Popup {
 		// Mark other abilities that are too expensive.
 		for(int i=0; i<types.length; i++){
 			if(mana<types[i].manaCost)
-				abilities[i].setStyle(Assets.SKIN.getStyle("default-disabled", ButtonStyle.class));
+				abilities[i].setStyle(Assets.SKIN.get("default-disabled", ButtonStyle.class));
 			else
-				abilities[i].setStyle(Assets.SKIN.getStyle("default", ButtonStyle.class));
+				abilities[i].setStyle(Assets.SKIN.get("default", ButtonStyle.class));
 		}
 	}
 	
-	public void resize(int width, int height){
+	@Override
+	public void resize(float width, float height){
 		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
-		this.x = this.y = 0;
+		this.setBounds(0, 0, width, height);
 		
 		float buttonHeight = height/8f;
 		float buttonWidth = buttonHeight;//width/4f;
 
-		float cardWidth = width-2*buttonWidth - 4*Main.percentWidth;//width/2f;
-		float cardHeight = 3*width/4f;
+		float cardWidth = width-2f*buttonWidth - 4f*Main.percentWidth;//width/2f;
+		float cardHeight = 3f*width/4f;
 		
-		cast.x = (float) (0.25*buttonWidth);
-		cast.y = (float) (buttonHeight);
-		cast.width = buttonWidth*1.5f;
-		cast.height = buttonHeight;
+		cast.setBounds(0.25f*buttonWidth, buttonHeight, buttonWidth*1.5f, buttonHeight);
+		cancel.setBounds(width-1.75f*buttonWidth, buttonHeight, buttonWidth*1.5f, buttonHeight);
+		card.setBounds((width-cardWidth)/2f - 2f*Main.percentWidth, 2.25f*buttonHeight-Main.percentHeight, cardWidth+4f*Main.percentWidth, cardHeight+2f*Main.percentHeight);
 		
-		cancel.x = (float) (width-1.75*buttonWidth);
-		cancel.y = (float) (buttonHeight);
-		cancel.width = buttonWidth*1.5f;
-		cancel.height = buttonHeight;
-		
-		card.x = (width-cardWidth)/2 - 2*Main.percentWidth;//width/4-2*Main.percentWidth;
-		card.y = (float) (2.25*buttonHeight)-Main.percentHeight;
-		card.setSize(cardWidth+4*Main.percentWidth, cardHeight+2*Main.percentHeight);
-		
-		if(abilities.length > 0) {
-			abilities[0].x = 0;
-			abilities[0].y = (float) (3*buttonHeight);
-		}
-		if(abilities.length > 1) {
-			abilities[1].x = 0;
-			abilities[1].y = (float) (4.5*buttonHeight);
-		}
-		if(abilities.length > 2) {
-			abilities[2].x = (float) (0.6*buttonWidth);
-			abilities[2].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		}
+		if(abilities.length > 0)
+			abilities[0].setPosition(0, 3f*buttonHeight);
+		if(abilities.length > 1)
+			abilities[1].setPosition(0, 4.5f*buttonHeight);
+		if(abilities.length > 2)
+			abilities[2].setPosition(0.6f*buttonWidth, card.getY()+card.getHeight());
 		/*
 		abilities[3].x = (float) (width-1.6*buttonWidth);
 		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
@@ -185,8 +169,7 @@ public class AbilityPopup extends Popup {
 		abilities[5].y = (float) (3*buttonHeight);
 		*/
 		for(Button ability : abilities){
-			ability.width = buttonWidth;
-			ability.height = buttonHeight;
+			ability.setSize(buttonWidth, buttonHeight);
 		}
 		this.layout();
 	}

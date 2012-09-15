@@ -58,7 +58,7 @@ public class CustomGestureDetector extends GestureAdapter implements InputProces
 	}
 	
 	@Override
-	public boolean longPress(int x, int y){
+	public boolean longPress(float x, float y){
 		// Suppress the original long press event, and fire it to our listeners manually
 		return true;
 	}
@@ -104,11 +104,6 @@ public class CustomGestureDetector extends GestureAdapter implements InputProces
 	}
 
 	@Override
-	public boolean touchMoved(int x, int y) {
-		return detector.touchMoved(x, y);
-	}
-
-	@Override
 	public boolean scrolled(int amount) {
 		return detector.scrolled(amount);
 	}
@@ -116,5 +111,10 @@ public class CustomGestureDetector extends GestureAdapter implements InputProces
 	@Override
 	public boolean keyDown(int keycode) {
 		return detector.keyDown(keycode);
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return detector.mouseMoved(screenX, screenY);
 	}
 }

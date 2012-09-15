@@ -1,4 +1,4 @@
-package com.anstrat.gui;
+/*package com.anstrat.gui;	//TODO UIFIX
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
@@ -50,15 +50,15 @@ private Actor widget;
 
         public SnapScrollPane (Label[] labels) {
                 this(null, null, labels);
-        }
+        }*/
 
         /** @param widget May be null. */
-        public SnapScrollPane (Actor widget, Label[] labels) {
+        /*public SnapScrollPane (Actor widget, Label[] labels) {
                 this(widget, null, labels);
-        }
+        }*/
 
         /** @param widget May be null. */
-        public SnapScrollPane (Actor widget, String name, Label[] labels) {
+        /*public SnapScrollPane (Actor widget, String name, Label[] labels) {
                 super(name);
                 this.widget = widget;
                 if (widget != null) setWidget(widget);
@@ -109,8 +109,8 @@ private Actor widget;
                         }
                 });
 
-                width = 150;
-                height = 150;
+                setWidth(150);
+                setHeight(150);
         }
 
         void clamp () {
@@ -185,19 +185,19 @@ private Actor widget;
                         widgetWidth = layout.getPrefWidth();
                         widgetHeight = layout.getPrefHeight();
                 } else {
-                        widgetWidth = widget.width;
-                        widgetHeight = widget.height;
+                        widgetWidth = widget.getWidth();
+                        widgetHeight = widget.getHeight();
                 }
 
                 // Figure out if we need horizontal/vertical scrollbars,
-                scrollX = !disableX && (widgetWidth > width || forceOverscrollX);
-                scrollY = !disableY && (widgetHeight > height || forceOverscrollY);
+                scrollX = !disableX && (widgetWidth > getWidth() || forceOverscrollX);
+                scrollY = !disableY && (widgetHeight > getHeight() || forceOverscrollY);
 
                 // If the widget is smaller than the available space, make it take up the available space.
-                widget.width = disableX ? width : Math.max(width, widgetWidth);
-                widget.height = disableY ? height : Math.max(height, widgetHeight);
+                widget.setWidth(disableX ? getWidth() : Math.max(getWidth(), widgetWidth));
+                widget.setHeight(disableY ? getHeight() : Math.max(getHeight(), widgetHeight));
 
-                maxX = widget.width - width;
+                maxX = widget.getWidth() - getWidth();
                 
                 if(!hack)
         		{
@@ -206,7 +206,7 @@ private Actor widget;
         			System.out.println("Hack successful.");
         		}
                 
-                maxY = widget.height - height;
+                maxY = widget.getHeight() - getHeight();
         }
 
         @Override
@@ -219,20 +219,20 @@ private Actor widget;
                 applyTransform(batch);
 
                 // Calculate the widget position depending on the scroll state and available widget area.
-                widget.y = (int)(scrollY ? amountY : maxY) - widget.height + height;
+                widget.y = (int)(scrollY ? amountY : maxY) - widget.getHeight() + getHeight();
                 widget.x = -(int)(scrollX ? amountX : 0);
                 if (widget instanceof Cullable) {
-                        widgetCullingArea.x = -widget.x;
-                        widgetCullingArea.y = -widget.y;
-                        widgetCullingArea.width = width;
-                        widgetCullingArea.height = height;
+                        widgetCullingArea.x = -widget.getX();
+                        widgetCullingArea.y = -widget.getY();
+                        widgetCullingArea.width = getWidth();
+                        widgetCullingArea.height = getHeight();
                         ((Cullable)widget).setCullingArea(widgetCullingArea);
                 }
 
                 // Caculate the scissor bounds based on the batch transform, the available widget area and the camera transform. We need to
                 // project those to screen coordinates for OpenGL ES to consume.
-                widgetAreaBounds.set(0, 0, width, height);
-                ScissorStack.calculateScissors(stage.getCamera(), batch.getTransformMatrix(), widgetAreaBounds, scissorBounds);
+                widgetAreaBounds.set(0, 0, getWidth(), getHeight());
+                ScissorStack.calculateScissors(getStage().getCamera(), batch.getTransformMatrix(), widgetAreaBounds, scissorBounds);
 
                 // Enable scissors for widget area and draw the widget.
                 if (ScissorStack.pushScissors(scissorBounds)) {
@@ -282,19 +282,19 @@ private Actor widget;
 
         public void setScrollX (float pixels) {
                 this.amountX = pixels;
-        }
+        }*/
 
         /** Returns the x scroll position in pixels. */
-        public float getScrollX () {
+        /*public float getScrollX () {
                 return amountX;
         }
 
         public void setScrollY (float pixels) {
                 amountY = pixels;
-        }
+        }*/
 
         /** Returns the y scroll position in pixels. */
-        public float getScrollY () {
+        /*public float getScrollY () {
                 return amountY;
         }
 
@@ -312,21 +312,21 @@ private Actor widget;
 
         public void setScrollPercentY (float percentY) {
                 amountY = maxY * percentY;
-        }
+        }*/
 
         /** Returns the maximum scroll value in the x direction. */
-        public float getMaxX () {
+        /*public float getMaxX () {
                 return maxX;
-        }
+        }*/
 
         /** Returns the maximum scroll value in the y direction. */
-        public float getMaxY () {
+        /*public float getMaxY () {
                 return maxY;
-        }
+        }*/
 
         /** Sets the {@link Actor} embedded in this scroll pane.
          * @param widget May be null. */
-        public void setWidget (Actor widget) {
+        /*public void setWidget (Actor widget) {
                 if (widget == null) throw new IllegalArgumentException("widget cannot be null.");
                 if (this.widget != null) super.removeActor(this.widget);
                 this.widget = widget;
@@ -349,7 +349,7 @@ private Actor widget;
                 throw new UnsupportedOperationException("Use FlickScrollPane#setWidget.");
         }
 
-        public void removeActor (Actor actor) {
+        public boolean removeActor (Actor actor) {
                 throw new UnsupportedOperationException("Use ScrollPane#setWidget(null).");
         }
 
@@ -402,49 +402,49 @@ private Actor widget;
         }
 
         public Actor hit (float x, float y) {
-                if (x > 0 && x < width && y > 0 && y < height) return super.hit(x, y);
+                if (x > 0 && x < getWidth() && y > 0 && y < getHeight()) return super.hit(x, y);
                 return null;
-        }
+        }*/
 
         /** If true, the widget can be scrolled slightly past its bounds and will animate back to its bounds when scrolling is stopped.
          * Default is true. */
-        public void setOverscroll (boolean overscroll) {
+        /*public void setOverscroll (boolean overscroll) {
                 this.overscroll = overscroll;
-        }
+        }*/
 
         /** Sets the overscroll distance in pixels and the speed it returns to the widgets bounds in seconds. Default is 50, 30, 200. */
-        public void setupOverscroll (float distance, float speedMin, float speedMax) {
+        /*public void setupOverscroll (float distance, float speedMin, float speedMax) {
                 overscrollDistance = distance;
                 overscrollSpeedMin = speedMin;
                 overscrollSpeedMax = speedMax;
-        }
+        }*/
 
         /** Forces the enabling of overscrolling in a direction, even if the contents do not exceed the bounds in that direction. */
-        public void setForceOverscroll (boolean x, boolean y) {
+        /*public void setForceOverscroll (boolean x, boolean y) {
                 forceOverscrollX = x;
                 forceOverscrollY = y;
-        }
+        }*/
 
         /** Sets the amount of time in seconds that a fling will continue to scroll. Default is 1. */
-        public void setFlingTime (float flingTime) {
+        /*public void setFlingTime (float flingTime) {
                 this.flingTime = flingTime;
-        }
+        }*/
 
         /** If true, only pressing and dragging on empty space in the FlickScrollPane will cause a scroll and widgets receive touch down
          * events as normal. If false, pressing and dragging anywhere will trigger a scroll and widgets will only receive touch down
          * events if pressed and released without dragging. Default is false. */
-        public void setEmptySpaceOnlyScroll (boolean emptySpaceOnlyScroll) {
+        /*public void setEmptySpaceOnlyScroll (boolean emptySpaceOnlyScroll) {
                 this.emptySpaceOnlyScroll = emptySpaceOnlyScroll;
-        }
+        }*/
 
         /** Disables scrolling in a direction. The widget will be sized to the FlickScrollPane in the disabled direction. */
-        public void setScrollingDisabled (boolean x, boolean y) {
+        /*public void setScrollingDisabled (boolean x, boolean y) {
                 disableX = x;
                 disableY = y;
-        }
+        }*/
 
         /** Prevents scrolling out of the widget's bounds. Default is true. */
-        public void setClamp (boolean clamp) {
+        /*public void setClamp (boolean clamp) {
                 this.clamp = clamp;
         }
-}
+}*/

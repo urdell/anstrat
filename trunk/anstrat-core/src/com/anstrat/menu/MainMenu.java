@@ -15,25 +15,24 @@ import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * The class handling the first menu that shows up when the user starts the application.
@@ -49,23 +48,25 @@ public class MainMenu extends MenuScreen {
 	
 	public static MapsPopup mapsPopup;
 	public static String HOTSEAT = "Hotseat", INTERNET = "Internet";
-	public Button invitedButton;
 	
 	public static boolean versusAI = false;
 	
-	private Table scrollTable, gamesList;
-	private FlickScrollPane scroll;
+	private Table gamesList;
 	
 	private MainMenu() {
 		super();
 		
 		//Change to classic sound on/off icon later.
-		CheckBoxStyle cbst = new CheckBoxStyle(Assets.getTextureRegion("sound-off"),Assets.getTextureRegion("sound-on"),Assets.MENU_FONT,Color.WHITE);
+		CheckBoxStyle cbst = new CheckBoxStyle(
+				new TextureRegionDrawable(Assets.getTextureRegion("sound-off")),
+				new TextureRegionDrawable(Assets.getTextureRegion("sound-on")),
+				Assets.MENU_FONT,
+				Color.WHITE);
 		CheckBox muteButton = new CheckBox("", cbst);
 		muteButton.setChecked(Options.soundOn);
-		muteButton.setClickListener(new ClickListener() {
+		muteButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				if(Options.soundOn = !Options.soundOn)
 					AudioAssets.getMusic("vikingstitle").play();
 				else
@@ -76,90 +77,81 @@ public class MainMenu extends MenuScreen {
 
 		Button newGameButton = ComponentFactory.createMenuButton("New Game",new ClickListener() {
         	@Override
-        	public void click(Actor actor, float x, float y) {
+        	public void clicked(InputEvent event, float x, float y) {
         		Main.getInstance().setScreen(ChooseGameTypeMenu.getInstance());
         	}
         });
 
         Button mapEditorButton = ComponentFactory.createMenuButton("Map Editor",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(MapEditor.getInstance());
             }
         });
         
-        invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
+        Button invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(InvitesMenu.getInstance());
             }
         });
         Main.getInstance().invites.registerInviteButton(invitedButton);
         
-        NinePatch emp = Assets.SKIN.getPatch("empty");
-        TextButton ver = new TextButton(" "+Main.version,
-        		new TextButtonStyle(emp,emp,emp,0f,0f,0f,0f,Assets.UI_FONT,Color.WHITE,Color.LIGHT_GRAY,Color.WHITE));
-        ver.setClickListener(new ClickListener() {
+        NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
+        TextButtonStyle tbst = new TextButtonStyle(emp,emp,emp);
+        tbst.fontColor = tbst.checkedFontColor = Color.WHITE;
+        tbst.downFontColor = Color.LIGHT_GRAY;
+        tbst.font = Assets.UI_FONT;
+        TextButton ver = new TextButton(" "+Main.version, tbst);
+        		
+        ver.addListener(new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(DebugMenu.getInstance());
             }
         });
 
         gamesList = new Table(Assets.SKIN);
         updateGamesList();
+        
+        ScrollPaneStyle spst = new ScrollPaneStyle(emp,emp,emp,emp,emp); 	//First one is  background
 
-		scroll = new FlickScrollPane(gamesList);
+        ScrollPane scroll = new ScrollPane(gamesList, spst);
 		scroll.setScrollingDisabled(true, false);
-		scrollTable = new Table();
-		scrollTable.top();
-		scrollTable.add(scroll).fill().expand();
+		scroll.setFlickScroll(true);
 		
-		Image empty = new Image(Assets.SKIN.getPatch("empty"));
-		
-		int logoWidth = (int)(Main.percentWidth*55);
-		
-        int buttonWidth  = BUTTON_WIDTH;
-        int buttonHeight = BUTTON_HEIGHT;
-        contents.addActor(scrollTable);
+		float logoWidth = Main.percentWidth*55f;
+	    float buttonWidth  = BUTTON_WIDTH;
+        float buttonHeight = BUTTON_HEIGHT;
 
-        // Background with hole
-        Image transBack = new Image(Assets.getTextureRegion("MenuBackground-transparent"));
-        contents.addActor(transBack);
-        transBack.x = transBack.y = 0;
-        transBack.height = Gdx.graphics.getHeight();
-        transBack.width = Gdx.graphics.getWidth();
+        // Background with hole		-- temp removed
+        //Image transBack = new Image(Assets.getTextureRegion("MenuBackground-transparent"));
+        //contents.addActor(transBack);
+        //transBack.setBounds(0, 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth());
         
-        contents.defaults().space((int)Main.percentHeight).top().center();
+        contents.defaults().space(Main.percentHeight).top().center();
         
-        Table inner1 = new Table();
-        inner1.add(ver).uniform().top().left();
-        inner1.add(new Image(Assets.getTextureRegion("logo"))).height((int)(logoWidth/2.8f)).width(logoWidth).center().padTop((int)(Main.percentHeight*7));
-        inner1.add(muteButton).top().right().uniform().width((int)((Main.percentWidth*100-logoWidth)/2)).padTop((int)(Main.percentHeight*3));
+        Table header = new Table();
+        header.add(ver).uniform().top().left();
+        header.add(new Image(Assets.getTextureRegion("logo"))).height(logoWidth/2.8f).width(logoWidth).center().padTop(Main.percentHeight*7f);
+        header.add(muteButton).top().right().uniform().width((Main.percentWidth*100f-logoWidth)/2f).padTop(Main.percentHeight*3f);
         
-        contents.add(inner1);
+        contents.add(header);
         contents.row();
         contents.add(newGameButton).height(buttonHeight).width(buttonWidth);
-        
         contents.row();
         contents.add(mapEditorButton).height(buttonHeight).width(buttonWidth);
         contents.row();
-        contents.add(empty).fill().expandY().padBottom((int)(Main.percentHeight*10)).padTop((int)(Main.percentHeight*5));
+        contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);		//scrolltable - empty
         
-        Table inner2 = new Table();
-        inner2.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
-        inner2.add(invitedButton).height(buttonHeight).width(buttonHeight).align(TableLayout.RIGHT);
+        Table footer = new Table();
+        footer.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
+        footer.add(invitedButton).height(buttonHeight).width(buttonHeight).align(Align.right);
+        
         contents.row();
-        contents.add(inner2).fillX();
+        contents.add(footer).fillX();
         
         contents.layout();
-        Vector2 gameListPos = new Vector2();
-        Widget.toScreenCoordinates(empty, gameListPos);
-        scrollTable.x = gameListPos.x;
-        scrollTable.y = gameListPos.y;
-        scrollTable.width = empty.getImageWidth();
-        scrollTable.height = empty.getImageHeight();
-        
         contents.addActor(flag);
 	}
 	
@@ -193,11 +185,10 @@ public class MainMenu extends MenuScreen {
 		if(Main.getInstance().getScreen() != this) return;
 		
 		gamesList.clear();
-		gamesList.top();
-		gamesList.setFillParent(true);
+		gamesList.align(Align.top);
 		
-		int height = (int)(Main.percentHeight*4);
-		int paddingTop = (int)(Main.percentHeight*4);
+		float height     = Main.percentHeight*4f;
+		float paddingTop = 0f;//Main.percentHeight*4f;
 		
 		// Game instances
 		Table current = new Table(Assets.SKIN);
@@ -210,7 +201,7 @@ public class MainMenu extends MenuScreen {
         for(final GameInstance gi : Main.getInstance().games.getActiveGames()){    	
         	Table table = gi.isUserCurrentPlayer() ? current : waiting;
         	table.row();
-        	table.add(gameInstanceToTable(gi)).fillX().expandX().height((int)(17*Main.percentHeight));
+        	table.add(gameInstanceToTable(gi)).fillX().expandX().height(17f*Main.percentHeight);
         }
 		
         // Game requests
@@ -223,21 +214,21 @@ public class MainMenu extends MenuScreen {
         	requests.add(gameRequestToTable(request)).fillX().expandX().height((int)(17*Main.percentHeight));
         }
         */
-        if(current.getActors().size() > 1){
+        if(current.getChildren().size > 1){
      		gamesList.add(current).fillX().expandX();
          	gamesList.row();
         }
         
-        if(waiting.getActors().size() > 1){
+        if(waiting.getChildren().size > 1){
          	gamesList.add(waiting).fillX().expandX();
          	gamesList.row();
         }
         
-        if(requests.getActors().size() > 1){
+        if(requests.getChildren().size > 1){
         	gamesList.add(requests).fillX().expandX();
         }
-        
-        gamesList.padBottom((int)(Main.percentHeight*5));
+        	
+        //gamesList.padBottom(Main.percentHeight*5f);
 	}
 	
 	public Popup getMapsPopup() {
@@ -308,11 +299,11 @@ public class MainMenu extends MenuScreen {
 
     	Label map = new Label(String.format("'%s'", instance.state.map.name), Assets.SKIN);
     	Label mapSize = new Label(String.format("%dx%d", instance.state.map.getXSize(), instance.state.map.getYSize()), Assets.SKIN);
-    	Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.getStyle("image-toggle", ButtonStyle.class));
+    	Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.get("image-toggle", ButtonStyle.class));
     	
-    	cancel.setClickListener(new ClickListener() {
+    	cancel.addListener(new ClickListener() {
 	        @Override
-	        public void click(Actor actor,float x,float y ){
+	        public void clicked(InputEvent event, float x, float y) {
 	        	instance.resign();
 	        	updateGamesList();
 	        }
@@ -341,12 +332,12 @@ public class MainMenu extends MenuScreen {
     	Label players = new Label(opponent, Assets.SKIN);
     	
     	Table table = new Table(Assets.SKIN);
-    	table.setBackground(Assets.SKIN.getPatch("line-border-thin"));
-    	table.left().pad((int)(2*Main.percentWidth));
+    	table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("line-border-thin")));
+    	table.left().pad(2f*Main.percentWidth);
     	table.defaults().left().fillX().expandX();
     	
     	Table outer = new Table();
-    	outer.defaults().left().height((int)(4*Main.percentHeight));
+    	outer.defaults().left().height(4f*Main.percentHeight);
     	outer.add(players);
     	outer.row();
     	
@@ -362,12 +353,12 @@ public class MainMenu extends MenuScreen {
     	outer.row();
     	outer.add(inner2).expandX().fillX();
     	
-    	table.add(outer).expandX().fillX().padLeft((int)(Main.percentHeight));
-    	table.add(cancel).pad((int)(3+Main.percentWidth)).height((int)(7*Main.percentHeight)).width((int)(7*Main.percentHeight)).bottom().right();
+    	table.add(outer).expandX().fillX().padLeft(Main.percentHeight);
+    	table.add(cancel).pad((int)(3+Main.percentWidth)).height(7f*Main.percentHeight).width(7f*Main.percentHeight).bottom().right();
     	
-    	table.setClickListener(new ClickListener() {
+    	table.addListener(new ClickListener() {
 	        @Override
-	        public void click(Actor actor, float x, float y){
+	        public void clicked(InputEvent event, float x, float y) {
 	        	instance.showGame(false);
 	        }
 		});

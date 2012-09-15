@@ -64,10 +64,10 @@ public class ParentedGBar extends GBar {
 				
 				if(!isVertical){
 					fontX = barTopLeftCache.x - bounds.width;
-					fontY = barTopLeftCache.y - bounds.height / 2f + height * scaleY / 2f;
+					fontY = barTopLeftCache.y - bounds.height / 2f + getHeight() * getScaleY() / 2f;
 				}
 				else{
-					fontX = barTopLeftCache.x - bounds.width / 2f + height * scaleY / 2f;
+					fontX = barTopLeftCache.x - bounds.width / 2f + getHeight() * getScaleY() / 2f;
 					fontY = barTopLeftCache.y - bounds.height;
 				}
 				
@@ -76,8 +76,8 @@ public class ParentedGBar extends GBar {
 			}
 			
 			float h = (float)Math.sin(Math.toRadians(30));
-			float hexX = isVertical ? barTopLeftCache.x + height * scaleX / 2f : barTopLeftCache.x - h * 12;
-			float hexY = isVertical ? barTopLeftCache.y - HEXAGON_SIDE_LENGTH / 2f : barTopLeftCache.y + height * scaleY / 2f;
+			float hexX = isVertical ? barTopLeftCache.x + getHeight() * getScaleX() / 2f : barTopLeftCache.x - h * 12;
+			float hexY = isVertical ? barTopLeftCache.y - HEXAGON_SIDE_LENGTH / 2f : barTopLeftCache.y + getHeight() * getScaleY() / 2f;
 			
 			// Render hexagon icon
 			GL10 gl = Gdx.gl10;
@@ -99,12 +99,12 @@ public class ParentedGBar extends GBar {
 	}
 	
 	public void update(){
-		float centeringOffsetX = (-(isVertical ? height : width) / 2f) * scaleX;
-		float centeringOffsetY = (-(isVertical ? width : height) / 2f) * scaleY;
-		this.x = originParent.getX() + originParent.getOriginX() + xRelativeOrigin + centeringOffsetX;
-		this.y = originParent.getY() + originParent.getOriginY() + yRelativeOrigin + centeringOffsetY;
+		float centeringOffsetX = (-(isVertical ? getHeight() : getWidth()) / 2f) * getScaleX();
+		float centeringOffsetY = (-(isVertical ? getWidth() : getHeight()) / 2f) * getScaleY();
+		this.setX(originParent.getX() + originParent.getOriginX() + xRelativeOrigin + centeringOffsetX);
+		this.setY(originParent.getY() + originParent.getOriginY() + yRelativeOrigin + centeringOffsetY);
 		
-		update(x, y);
+		update(getX(), getY());
 		barTopLeftCache = getBarTopLeftCoordinates();
 	}
 	

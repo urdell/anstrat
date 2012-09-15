@@ -3,7 +3,6 @@ package com.anstrat.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class UI extends Stage{
@@ -15,7 +14,7 @@ public abstract class UI extends Stage{
 		super.setCamera(camera);
 	}
 	
-	public void resize(int width, int height){
+	public void resize(float width, float height){
 		super.setViewport(width, height, true);
 	}
 	
@@ -25,13 +24,6 @@ public abstract class UI extends Stage{
 		if(visible) super.draw();
 	}
 	
-	public void setBounds(Actor actor, float x, float y, float width, float height){
-		actor. x = x;
-		actor.y = y;
-		actor.width = width;
-		actor.height = height;
-	}
-	
 	/**
 	 * TODO: Go through all elements and check automatically
 	 * @param x the x window coordinate
@@ -39,7 +31,7 @@ public abstract class UI extends Stage{
 	 * @param count
 	 * @return If it hit any interface element
 	 */
-	abstract public boolean tap(int x, int y, int count);
+	abstract public boolean tap(float x, float y, int count, int button);
 	
 	public boolean isVisible(){
 		return visible;

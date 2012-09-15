@@ -4,11 +4,11 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.DisplayNameChangePopup;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ChooseGameTypeMenu extends MenuScreen {
 	private static ChooseGameTypeMenu me;
@@ -18,14 +18,14 @@ public class ChooseGameTypeMenu extends MenuScreen {
         
 		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	showIfUserNamed(FindMatchMenu.getInstance());
             }
         } );
         
         Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	showIfUserNamed(InviteMatchMenu.getInstance());
             }
         });
@@ -41,7 +41,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
         
         Button hotseatButton = ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
         	@Override
-            public void click(Actor actor, float x, float y){
+        	public void clicked(InputEvent event, float x, float y) {
         		
         		Main.getInstance().setScreen(HotseatMenu.getInstance());
         		/*

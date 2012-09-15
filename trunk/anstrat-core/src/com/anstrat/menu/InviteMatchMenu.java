@@ -10,12 +10,13 @@ import com.anstrat.popup.InvitePopup.InvitePopupHandler;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
 import com.anstrat.popup.TeamPopup.TeamPopupListener;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class InviteMatchMenu extends MenuScreen {
 	private static InviteMatchMenu me;
@@ -27,7 +28,7 @@ public class InviteMatchMenu extends MenuScreen {
 	
 	private InviteMatchMenu(){        
 		Table settings = new Table(Assets.SKIN);
-		settings.setBackground(Assets.SKIN.getPatch("single-border"));
+		settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		mapSelecter = new MapSelecter(true, true);
 
@@ -36,7 +37,7 @@ public class InviteMatchMenu extends MenuScreen {
 				
 		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new TeamPopup(god, team, "Select your team and god", new TeamPopupListener() {
 
 					@Override
@@ -52,7 +53,7 @@ public class InviteMatchMenu extends MenuScreen {
 		
 		friendButton = ComponentFactory.createButton("No friend :(", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new InvitePopup(new InvitePopupHandler() {
 					@Override
 					public void friendSelected(String friend) {
@@ -80,7 +81,7 @@ public class InviteMatchMenu extends MenuScreen {
 		        
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
-		    public void click(Actor actor,float x,float y ){
+			public void clicked(InputEvent event, float x, float y) {
 				
 				Main.getInstance().network.invitePlayer(invitedFriend, new GameOptions(
 						god, 

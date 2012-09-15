@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class ConfirmDialog {
 
@@ -68,7 +69,7 @@ public class ConfirmDialog {
 			y = Gdx.graphics.getHeight()-distanceToEdge;
 		}
 		colorTable = new ColorTable(new Color(75/255f, 40/255f, 28/255f, 1f)); //brown wood
-		colorTable.setBackground(Assets.SKIN.getPatch("single-border"));
+		colorTable.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		refreshBounds();
 	}
@@ -112,10 +113,10 @@ public class ConfirmDialog {
 	public void refreshBounds(){
 		okBounds = new Rectangle(x, y-getHeight(), 2*ConfirmRow.ROW_HEIGHT, 2*ConfirmRow.ROW_HEIGHT);
 		cancelBounds = new Rectangle(x+2*ConfirmRow.ROW_HEIGHT, y-getHeight(), 2*ConfirmRow.ROW_HEIGHT, 2*ConfirmRow.ROW_HEIGHT);
-		colorTable.x = x-backgroundMargin;
-		colorTable.y = y-getHeight()-backgroundMargin;
-		colorTable.width = getWidth()+2*backgroundMargin;
-		colorTable.height = getHeight()+2*backgroundMargin;
+		colorTable.setX(x-backgroundMargin);
+		colorTable.setY(y-getHeight()-backgroundMargin);
+		colorTable.setWidth(getWidth()+2*backgroundMargin);
+		colorTable.setHeight(getHeight()+2*backgroundMargin);
 		dialogBounds = new Rectangle(x, y-getHeight(), getWidth(), getHeight());
 	}
 	

@@ -30,7 +30,7 @@ public class GBar extends Widget {
 		// Bar width
 		this.barWidth = barWidth;
 		this.barHeight = barHeight;
-		this.scaleX = this.scaleY = scale;
+		this.setScale(scale);
 		
 		bar = new Sprite(Assets.WHITE);
 		bar.setBounds(0f, 0f, barWidth, barHeight);
@@ -39,14 +39,15 @@ public class GBar extends Widget {
 		background.setBounds(0f, 0f, barWidth, barHeight);
 		
 		outline = new Sprite(Assets.WHITE);
-		outline.setBounds(0f, 0f, barWidth + (2f * outlineWidth) / scaleX, barHeight + (2f * outlineWidth) / scaleY);
+		outline.setBounds(0f, 0f, barWidth + (2f * outlineWidth) / this.getScaleX(), barHeight + (2f * outlineWidth) / this.getScaleY());
 		
 		bar.setScale(scale);
 		background.setScale(scale);
 		outline.setScale(scale);
 		
-		this.width = outline.getWidth();
-		this.height = outline.getHeight();
+		this.setWidth(outline.getWidth());
+		this.setHeight(outline.getHeight());
+		
 		
 		setColors(Color.GREEN, new Color(0f, 0.3f, 0f, 1f), Color.BLACK);
 	}
@@ -78,7 +79,7 @@ public class GBar extends Widget {
 	@Override
 	public void layout() {
 		update();
-		if(this.parent != null) super.layout();
+		if(this.getParent() != null) super.layout();
 	}
 	
 	/**
@@ -87,8 +88,8 @@ public class GBar extends Widget {
 	 */
 	protected void update(float x, float y){
 		
-		float outlineWidthX = outlineWidth * scaleX;
-		float outlineWidthY = outlineWidth * scaleY;
+		float outlineWidthX = outlineWidth * this.getScaleX();
+		float outlineWidthY = outlineWidth * this.getScaleY();
 		
 		// Update bar position
 		background.setPosition(x + outlineWidthX, y + outlineWidthY);
@@ -97,7 +98,7 @@ public class GBar extends Widget {
 		// Update bar value
 		float currentBarWidth = isVertical ? barHeight : barWidth * value;
 		float currentBarHeight = isVertical ? barWidth * value : barHeight;
-		bar.setBounds(x + outlineWidthX, (isVertical ? y + (1 - value) * barWidth * scaleY : y) + outlineWidthY, currentBarWidth, currentBarHeight);
+		bar.setBounds(x + outlineWidthX, (isVertical ? y + (1 - value) * barWidth * this.getScaleY() : y) + outlineWidthY, currentBarWidth, currentBarHeight);
 	}
 	
 	/**
@@ -118,23 +119,27 @@ public class GBar extends Widget {
 
 		// Size of bar will be set in update(), as it depends on the current value
 		background.setSize(flag ? barHeight : barWidth, flag ? barWidth : barHeight);
-		outline.setSize(flag ? height : width, flag ? width : height);
+		//outline.setSize(flag ? height : width, flag ? width : height);
+		outline.setSize(flag ? getHeight() : getWidth(), flag ? getWidth() : getHeight());
 		
 		update();
 	}
 	
 	public float getHeight(){
-		return this.height;
+		return super.getHeight();
 	}
 	
 	public float getWidth(){
-		return this.width;
+		return super.getWidth();
 	}
 	
 	/** Updates the position and size of the bar, call this when the position of its parent has changed */
 	public void update(){
-		Vector2 pos = new Vector2(0,0);
-		toScreenCoordinates(this, pos);
-		update(pos.x, pos.y);
+		Vector2 aa = new Vector2(this.getX()+this.getOriginX(),this.getY()+this.getOriginY());
+		//this.stageToScreenCoordinates(aa);
+		this.localToStageCoordinates(aa);
+		update(aa.x, aa.y);
+		
+		System.out.println("COORD: "+aa.x +","+ aa.y);
 	}
 }

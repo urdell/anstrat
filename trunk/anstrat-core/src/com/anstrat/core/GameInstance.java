@@ -14,9 +14,9 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * A single game instance, containing a State.
@@ -82,7 +82,7 @@ public class GameInstance implements Serializable{
 				new Label(String.format("Player %s has won the game!", winner.getDisplayName()), Assets.SKIN), 
 				ComponentFactory.createButton("OK", new ClickListener() {
 					@Override
-					public void click(Actor actor, float x, float y) {
+					public void clicked(InputEvent event, float x, float y) {
 						Main.getInstance().setScreen(MainMenu.getInstance());
 						Popup.getCurrentPopup().close();
 					}
