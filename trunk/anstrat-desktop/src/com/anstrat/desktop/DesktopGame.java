@@ -18,6 +18,7 @@ public class DesktopGame {
 	public static final Dimension HTC_TATTOO = new Dimension(320, 240);
 	public static final Dimension GALAXY_S = new Dimension(800, 480);
 	public static final Dimension GALAXY_S2 = new Dimension(800, 480);
+	public static final Dimension GALAXY_TAB = new Dimension(1280, 800);
 	public static final Dimension Desktop = new Dimension(600, 360);
 	public static final Dimension Xperia_S = new Dimension(1280, 720);
 	
