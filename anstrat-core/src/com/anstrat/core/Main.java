@@ -26,7 +26,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -144,7 +143,8 @@ public class Main extends Game implements ApplicationListener {
 		FileHandle iconFile = Gdx.files.internal("icon.png");
 		
 		if(iconFile.exists()){
-			Gdx.graphics.setIcon(new Pixmap[]{new Pixmap(iconFile)});
+			//Gdx.graphics.setIcon(new Pixmap[]{new Pixmap(iconFile)});		//FIXFIXNEWGDX
+			
 		}
 		else{
 			Gdx.app.log("Main", String.format("Warning: Could not find app icon '%s'.", iconFile));

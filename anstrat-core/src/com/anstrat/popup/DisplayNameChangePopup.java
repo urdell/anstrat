@@ -7,12 +7,12 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DisplayNameChangePopup extends Popup {
 	
@@ -39,8 +39,8 @@ public class DisplayNameChangePopup extends Popup {
 		});
 		
 		ok = ComponentFactory.createButton("Ok", new ClickListener() {
-	        @Override
-	        public void click(Actor actor, float x, float y){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 	        	setPending(true);
 	        	Assets.SKIN.setEnabled(ok, false);
 	        	Main.getInstance().network.setDisplayName(textField.getText());
@@ -49,8 +49,8 @@ public class DisplayNameChangePopup extends Popup {
 		Assets.SKIN.setEnabled(ok, false);
 		
 		Button cancel = ComponentFactory.createButton("Cancel", new ClickListener() {
-	        @Override
-	        public void click(Actor actor, float x, float y){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 	        	setPending(false);
 	        	Popup.getCurrentPopup().close();
 	        }

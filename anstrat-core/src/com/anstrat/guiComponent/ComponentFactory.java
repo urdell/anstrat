@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ComponentFactory {
 	
@@ -36,39 +37,40 @@ public class ComponentFactory {
 		return createMenuButton(caption, Assets.MENU_FONT, cl);
 	}
 	public static TextButton createMenuButton(String caption, BitmapFont font, ClickListener cl){
-		TextButtonStyle style = Assets.SKIN.getStyle("menu", TextButtonStyle.class);
+		TextButtonStyle style = Assets.SKIN.get("menu", TextButtonStyle.class);
 		style.font = font;
 		TextButton button = new TextButton(caption, style);
 		if(cl!=null)
-			button.setClickListener(cl);
+			button.addListener(cl);
 		return button;
 	}
 	public static TextButton createButton(String caption, ClickListener cl){
 		TextButton temp = createButton(caption);
-		temp.setClickListener(cl);
+		temp.addListener(cl);
 		return temp;
 	}
 	public static TextButton createButton(String caption){
-		return new TextButton(caption, Assets.SKIN.getStyle(TextButtonStyle.class));
+		return new TextButton(caption, Assets.SKIN.get(TextButtonStyle.class));
 	}
 	public static Button createButton(TextureRegion image, String style){
-		Button temp = new Button(Assets.SKIN.getStyle(style, ButtonStyle.class));
+		Button temp = new Button(Assets.SKIN.get(style, ButtonStyle.class));
 		//temp.set
 		return temp;
 	}
 	public static Button createButton(TextureRegion image, ClickListener cl){
-		Button temp = new Button(image);
-		temp.setClickListener(cl);
+		Button temp = new Button(new TextureRegionDrawable(image));
+		temp.addListener(cl);
 		return temp;
 	}
 	public static Button createButton(TextureRegion image, String style, ClickListener cl){
-		Button temp = new Button(new Image(image), Assets.SKIN.getStyle(style, ButtonStyle.class));
-		temp.setClickListener(cl);
+		Button temp = new Button(new Image(image), Assets.SKIN.get(style, ButtonStyle.class));
+		temp.addListener(cl);
 		return temp;
 	}
 	
 	public static TextField createTextField(String messageText, boolean isPassword){
-		TextField tf = new TextField("", messageText, Assets.SKIN.getStyle(TextFieldStyle.class));
+		TextField tf = new TextField("", Assets.SKIN.get(TextFieldStyle.class));
+		tf.setMessageText(messageText);
 		tf.setPasswordMode(isPassword);
 		tf.setPasswordCharacter('*');
 		tf.setTextFieldListener(tl);
@@ -76,7 +78,7 @@ public class ComponentFactory {
 	}
 	
 	public static CheckBox createCheckBox(String messageText){
-		CheckBox tf = new CheckBox(messageText, Assets.SKIN.getStyle(CheckBoxStyle.class));
+		CheckBox tf = new CheckBox(messageText, Assets.SKIN.get(CheckBoxStyle.class));
 		return tf;
 	}
 	
@@ -89,7 +91,7 @@ public class ComponentFactory {
 	private static Label networkLabel;
 	public static synchronized Label createLoginLabel(){
 		if(networkLabel == null){
-			networkLabel = new Label(Assets.SKIN);
+			networkLabel = new Label("",Assets.SKIN);
 			Main.getInstance().network.setNetworkLabel(networkLabel);
 		}
 		

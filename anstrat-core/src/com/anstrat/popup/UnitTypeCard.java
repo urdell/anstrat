@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * A "card" displaying unit summary
@@ -26,7 +28,7 @@ public class UnitTypeCard extends ColorTable {
 	public UnitTypeCard(UnitType type){
 		super(new Color(0f, 0f, 0.8f, 1f));
 
-		this.setBackground(Assets.SKIN.getPatch("double-border"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
 		
 		this.type = type;
 		name = new Label(type.name, Assets.SKIN);
@@ -93,8 +95,8 @@ public class UnitTypeCard extends ColorTable {
 	}
 	
 	@Override
-	public Actor hit(float x, float y) {
-		return x > 0 && x < width && y > 0 && y < height ? this : null;
+	public Actor hit(float x, float y, boolean touchable) {
+		return x > 0 && x < getWidth() && y > 0 && y < getHeight() ? this : null;
 	}
 	
 	public void setDisabled(boolean disabled){
@@ -106,7 +108,7 @@ public class UnitTypeCard extends ColorTable {
 		name.setText(type.name);
 		cost.setText(String.valueOf(type.cost));
 		description.setText(type.description);
-		image.setRegion(GUnit.getUnitPortrait(type));
+		image.setDrawable(new TextureRegionDrawable(GUnit.getUnitPortrait(type)));
 		attack.setText(String.valueOf(type.attack));
 		hp.setText(String.valueOf(type.maxHP));
 		ap.setText(String.format("%d (%d)", type.maxAP, type.APReg));

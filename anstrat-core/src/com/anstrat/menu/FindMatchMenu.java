@@ -9,11 +9,13 @@ import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
 import com.anstrat.popup.TeamPopup.TeamPopupListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class FindMatchMenu extends MenuScreen {
 	private static FindMatchMenu me;
@@ -24,7 +26,7 @@ public class FindMatchMenu extends MenuScreen {
 	
 	private FindMatchMenu(){
 		Table settings = new Table(Assets.SKIN);
-		settings.setBackground(Assets.SKIN.getPatch("single-border"));
+		settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		mapSelecter = new MapSelecter(true, false);
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
@@ -32,7 +34,7 @@ public class FindMatchMenu extends MenuScreen {
 		
 		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new TeamPopup(god, team, "Select your team and god", new TeamPopupListener() {
 					@Override
 					public void onChosen(int godChosen, int teamChosen) {
@@ -56,7 +58,7 @@ public class FindMatchMenu extends MenuScreen {
 		        
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
-		    public void click(Actor actor,float x,float y ){
+			public void clicked(InputEvent event, float x, float y) {
 				Main.getInstance().network.findRandomGame(new GameOptions(
 						god, 
 						team, 

@@ -6,12 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 /**
  * @author Kalle
@@ -51,7 +50,7 @@ public abstract class MenuScreen implements Screen {
 			}
 
 			@Override
-			public Actor hit(float x, float y) {
+			public Actor hit(float x, float y, boolean touchable) {
 				return null;
 			}
 		};
@@ -67,10 +66,10 @@ public abstract class MenuScreen implements Screen {
 	}
 	
 	public void setBounds(float x, float y, float width, float height){
-		contents.width = width;
-        contents.height = height;
-        contents.x = x;
-        contents.y = y;
+		contents.setWidth(width);
+        contents.setHeight(height);
+        contents.setX(x);
+        contents.setY(y);
 	}
 	
 	public boolean textFieldSelected(){

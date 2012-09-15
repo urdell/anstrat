@@ -8,7 +8,6 @@ import com.anstrat.geography.Map;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GTile;
-import com.anstrat.gui.SnapScrollPane;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
@@ -20,16 +19,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MapEditorUI extends UI {
 
@@ -39,7 +40,7 @@ public class MapEditorUI extends UI {
 	public Popup popupLoadMap,	popupSaveMap, popupChangeOwner, popupNewMap, popupClearMap;
 
 	private Table permanentTable;
-	private int size;
+	private float size;
 	public Table tblChangeOwner, panelTable;
 	public TextButton changeOwner0, changeOwner1, changeOwnerNone;
 	
@@ -51,11 +52,11 @@ public class MapEditorUI extends UI {
 		 */
 		TerrainType[] terrainTypes = TerrainType.values();
 		updateSize(Gdx.graphics.getWidth());
-		int bsize = (int)(size/1.2);
-		int padding = (int)(size-bsize);
+		float bsize = size/1.2f;
+		float padding = size-bsize;
 		ClickListener clHidePanel = new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	showPanel(null,false);
             }
         };
@@ -65,12 +66,12 @@ public class MapEditorUI extends UI {
 		 * BUILDING BUTTONS
 		 */
 		final Table buildingsTable = new Table();
-		buildingsTable.padTop((int)((size-bsize)/2));
+		buildingsTable.padTop((size-bsize)/2f);
 		buildingsTable.defaults().center().space(padding);
 		
 		Button village = ComponentFactory.createButton(Assets.getTextureRegion("village"), "image", new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	MapEditor.getInstance().actionHandler.select(Building.TYPE_VILLAGE);
             }
         });
@@ -78,12 +79,12 @@ public class MapEditorUI extends UI {
 
         Button castle = ComponentFactory.createButton(Assets.getTextureRegion("castle"), "image", new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	MapEditor.getInstance().actionHandler.select(Building.TYPE_CASTLE);
             }
         });
         buildingsTable.add(castle).size(bsize);
-        buildingsTable.height(size);
+        buildingsTable.setHeight(size);
 		
 		
 		/**
@@ -91,7 +92,7 @@ public class MapEditorUI extends UI {
 		 */
 		final Table terrainTable = new Table();
 		
-		terrainTable.padTop((int)((size-bsize)/2)).padBottom((int)((size-bsize)/2)).center();
+		terrainTable.padTop((size-bsize)/2f).padBottom((size-bsize)/2f).center();
 		terrainTable.defaults().space(padding);
 		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
@@ -99,7 +100,7 @@ public class MapEditorUI extends UI {
 				continue;
 			Button button = ComponentFactory.createButton(GTile.getTextures(t)[0], "image", new ClickListener() {
 		        @Override
-		        public void click(Actor actor,float x,float y ){
+		        public void clicked(InputEvent event, float x, float y) {
 		        	MapEditor.getInstance().actionHandler.select(t);
 		        }
 		    });
@@ -115,14 +116,14 @@ public class MapEditorUI extends UI {
 		final Table tblClearMap = new Table(Assets.SKIN);
 		ClickListener clClearMap = new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	MapEditor.getInstance().actionHandler.clearMap();
             	showPanel(null, false);
             }
         };
         
 		Table tblClearMapInner = new Table();
-		tblClearMapInner.defaults().minSize(1).height(bsize);
+		tblClearMapInner.defaults().minSize(1f).height(bsize);
 		tblClearMapInner.add(ComponentFactory.createButton("Ok", clClearMap));
 		tblClearMapInner.add(ComponentFactory.createButton("Cancel", clHidePanel));
 		
@@ -148,38 +149,38 @@ public class MapEditorUI extends UI {
 		 * PERMANENT BUTTONS
 		 */
 		permanentTable = new Table(Assets.SKIN);
-		permanentTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
+		permanentTable.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("BottomLargePanel"))));
 		
         ttImg = new Image(Assets.getTextureRegion("terrain-button"));
-		terrainToggle = new Button(ttImg, Assets.SKIN.getStyle("image", ButtonStyle.class));
-		terrainToggle.setClickListener( new ClickListener() {
+		terrainToggle = new Button(ttImg, Assets.SKIN.get("image", ButtonStyle.class));
+		terrainToggle.addListener( new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
-            	showPanel(terrainTable,terrainTable.parent==null);
+            public void clicked(InputEvent event, float x, float y) {
+            	showPanel(terrainTable,terrainTable.getParent()==null);
             }
         } );
 		
 		btImg = new Image(Assets.getTextureRegion("building-button"));
-		buildingsToggle = new Button(btImg, Assets.SKIN.getStyle("image", ButtonStyle.class));
-		buildingsToggle.setClickListener( new ClickListener() {
+		buildingsToggle = new Button(btImg, Assets.SKIN.get("image", ButtonStyle.class));
+		buildingsToggle.addListener( new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
-            	showPanel(buildingsTable,buildingsTable.parent==null);
+            public void clicked(InputEvent event, float x, float y) {
+            	showPanel(buildingsTable,buildingsTable.getParent()==null);
             }
         } );
 		
 		clearButton = ComponentFactory.createButton(Assets.getTextureRegion("cancel"),
 				new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
-            	showPanel(tblClearMap,tblClearMap.parent==null);
+            public void clicked(InputEvent event, float x, float y) {
+            	showPanel(tblClearMap,tblClearMap.getParent()==null);
             }
         });
 		
 		loadButton = ComponentFactory.createButton(Assets.getTextureRegion("open-button"), "image",
 				new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
     			popupLoadMap = getMapsPopup();
     			if (popupLoadMap != null) {
     				popupLoadMap.show();
@@ -193,14 +194,14 @@ public class MapEditorUI extends UI {
 		saveButton = ComponentFactory.createButton(Assets.getTextureRegion("save-button"), "image",
 				new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	popupSaveMap.show();
             }
         });
 		
 		newButton = ComponentFactory.createButton("NEW", new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	popupNewMap.show();
             }
         });
@@ -213,8 +214,8 @@ public class MapEditorUI extends UI {
 		 */
 		panelTable = new Table();
 		panelTable.center();
-		panelTable.setBackground(new NinePatch(Assets.getTextureRegion("BottomLargePanel")));
-		panelTable.visible = false;
+		panelTable.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("BottomLargePanel"))));
+		panelTable.setVisible(false);
 		addActor(panelTable);
 		
 		
@@ -228,7 +229,7 @@ public class MapEditorUI extends UI {
 		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
 		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				String mapName = saveMapTextfield.getText();
 				if(mapName.length() > 0){
 					MapEditor.getInstance().saveMap(mapName);
@@ -264,16 +265,16 @@ public class MapEditorUI extends UI {
 		    table2.add(label).center().padTop(5).padBottom(5);label.getStyle().fontColor = Color.BLUE;
 		    labels2[i-Map.MIN_SIZE]= label; 
 		}
-		
+		/*
 		final SnapScrollPane scroll1 = new SnapScrollPane(table1, labels1);
 		final SnapScrollPane scroll2 = new SnapScrollPane(table2, labels2);
 
 		Table flickTable1 = new Table();
 		flickTable1.add(scroll1).fill().expand();
-		flickTable1.setBackground(Assets.SKIN.getPatch("single-border"));
+		flickTable1.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		Table flickTable2 = new Table();
 		flickTable2.add(scroll2).fill().expand();
-		flickTable2.setBackground(Assets.SKIN.getPatch("single-border"));
+		flickTable2.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 			
 		Table flickTable = new Table(Assets.SKIN);
 		flickTable.defaults().height((int)(Main.percentHeight*12f));
@@ -287,7 +288,7 @@ public class MapEditorUI extends UI {
 		popupNewMap = new Popup("New map");
 		Button newMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				int mapWidth = Map.MIN_SIZE + (int)(scroll1.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
     			int mapHeight = Map.MIN_SIZE + (int)(scroll2.getScrollPercentY()*(Map.MAX_SIZE-Map.MIN_SIZE));
     			MapEditor.getInstance().actionHandler.createNewMap(mapWidth, mapHeight);
@@ -297,10 +298,11 @@ public class MapEditorUI extends UI {
 		
 		popupNewMap.setComponents(flickTable,
 		        new Row(newMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
+		        */
 	}
 	
 	private void updateSize(float width) {
-		size = (int)(width / 6f);
+		size = width / 6f;
 	}
 
 	public void showChangeOwner(){
@@ -314,44 +316,38 @@ public class MapEditorUI extends UI {
 	 */
 	public void showPanel(Table contents, boolean show){ //TODO Add animation sliding panel up or down.
 		panelTable.clear();
-		panelTable.visible = show;
+		panelTable.setVisible(show);
 		if(show && contents!=null){
 			panelTable.add(contents).fill().pad((int)Main.percentHeight);
-			panelTable.height = contents.getPrefHeight();
+			panelTable.setHeight(contents.getPrefHeight());
 		}
 	}
 	
 	/**
 	 * @return The height of the UI
 	 */
-	public int getHeight(){
-		return (int)( (panelTable.visible) ? (panelTable.y+panelTable.height) : permanentTable.height );
+	public float getHeight(){
+		return ( (panelTable.isVisible()) ? (panelTable.getY()+panelTable.getHeight()) : permanentTable.getHeight() );
 	}
 	
  	@Override
-	public void resize(int width, int height){
+	public void resize(float width, float height){
 		super.resize(width, height);
 		updateSize(width);
 		
-		permanentTable.height((int)(size*1.05)).left().bottom();
+		permanentTable.setHeight(size*1.05f);
+		permanentTable.left().bottom();
 		permanentTable.defaults().size(size);
 		permanentTable.add(clearButton);
 		permanentTable.add(terrainToggle);
 		permanentTable.add(buildingsToggle);
 		permanentTable.add(loadButton);
 		permanentTable.add(saveButton);
-		permanentTable.add(newButton).height((int)(size/1.2f));
-		
+		permanentTable.add(newButton).height(size/1.2f);
 		permanentTable.pack();
-		
-		permanentTable.y = permanentTable.x = 0;
-		permanentTable.width = width;
-		permanentTable.height = size*1.05f;
-		
-		panelTable.y = permanentTable.height - 0.05f*size; 
-		panelTable.x = 0;
-		panelTable.width  = width;
-		panelTable.height = permanentTable.height;
+		permanentTable.setBounds(0, 0, width, size*1.05f);
+
+		panelTable.setBounds(0, permanentTable.getHeight() - 0.05f*size, width, permanentTable.getHeight());
 	}
  	
  	/**
@@ -359,16 +355,16 @@ public class MapEditorUI extends UI {
  	 * @param isTerrain Did the user click on a terrain button?
  	 */
  	public void changeSelectionType(boolean isTerrain){
- 		int bsize = (int)(size / 1.2);
+ 		float bsize = size / 1.2f;
  		if(isTerrain){
-	   		ttImg.setRegion(GTile.getTextures((TerrainType)MapEditor.getInstance().actionHandler.selected)[0]);
-	   		btImg.setRegion(Assets.getTextureRegion("building-button"));
+	   		ttImg.setDrawable(new TextureRegionDrawable(GTile.getTextures((TerrainType)MapEditor.getInstance().actionHandler.selected)[0]));
+	   		btImg.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("building-button")));
 	   		terrainToggle.size(bsize, bsize);
 	   		buildingsToggle.size(size, size);
  		}
  		else{
-       		btImg.setRegion(GBuilding.getTextureRegion((Integer)MapEditor.getInstance().actionHandler.selected));
-       		ttImg.setRegion(Assets.getTextureRegion("terrain-button"));
+       		btImg.setDrawable(new TextureRegionDrawable(GBuilding.getTextureRegion((Integer)MapEditor.getInstance().actionHandler.selected)));
+       		ttImg.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("terrain-button")));
 	   		terrainToggle.size(size, size);
 	   		buildingsToggle.size(bsize, bsize);
  		}
@@ -379,7 +375,7 @@ public class MapEditorUI extends UI {
 	/**
 	 * Did the tap hit the UI? 
 	 */
-	public boolean tap(int x, int y, int count){
+	public boolean tap(float x, float y, int count, int button){
 		if(y >= Gdx.graphics.getHeight()-this.getHeight())
 			return true;
 		return false;
@@ -404,7 +400,7 @@ public class MapEditorUI extends UI {
 	private ClickListener getChangeOwnerClickListener(final String owner){
 		return new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	MapEditor.getInstance().actionHandler.changeOwner(owner);
             	showPanel(null,false);
             }

@@ -4,11 +4,12 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class JoinGameMenu extends MenuScreen {
 	
@@ -22,7 +23,7 @@ public class JoinGameMenu extends MenuScreen {
 		name     = ComponentFactory.createTextField("Game Name", false);
 		password = ComponentFactory.createTextField("Game Password", true);
 		Table settings = new Table(Assets.SKIN);
-        settings.setBackground(Assets.SKIN.getPatch("single-border"));
+        settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
         settings.defaults().height((int)(Main.percentHeight*10));
         settings.add("Name:");
         settings.add(name).fillX().expandX();
@@ -32,7 +33,7 @@ public class JoinGameMenu extends MenuScreen {
 		
 		Button join = ComponentFactory.createMenuButton( "Join Game",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	if(name.getText()==""){
             		Popup.showGenericPopup("Error", "You must enter a game name.");
             		return;

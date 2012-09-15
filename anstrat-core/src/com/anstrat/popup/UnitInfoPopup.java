@@ -7,12 +7,11 @@ import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ValueDisplay;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * @author Kalle
@@ -27,13 +26,13 @@ public class UnitInfoPopup extends Popup {
 	private Table contents, effectsTable, abilityTable;
 
 	public UnitInfoPopup() {
-		this.setBackground(Assets.SKIN.getPatch("black"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("black")));
 		
 		contents = new Table();
-		TableLayout layout = contents.getTableLayout();
-		contents.x = contents.y = 0;
-		contents.width = width;
-		contents.height = height;
+		contents.setX(0);
+		contents.setY(0);
+		contents.setWidth(getWidth());
+		contents.setHeight(getHeight());
 		contents.top().left();
 		this.addActor(contents);
 		
@@ -51,8 +50,8 @@ public class UnitInfoPopup extends Popup {
 		effectsTable = new Table(Assets.SKIN);
 		abilityTable = new Table(Assets.SKIN);
 
-		layout.pad(MARGIN);
-		layout.defaults().top().left().padBottom((int)(5*Main.percentHeight));
+		this.pad(MARGIN);
+		this.defaults().top().left().padBottom((int)(5*Main.percentHeight));
 		
 		Table outer = new Table();
 		
@@ -78,20 +77,15 @@ public class UnitInfoPopup extends Popup {
 		
 		outer.add(inner2).top();
 		
-		layout.add(outer);
-		layout.row();
-		layout.add(description).expandX().fillX();
-		layout.row();
-		layout.add(abilityTable);
-		layout.row();
-		layout.add(effectsTable);
+		this.add(outer);
+		this.row();
+		this.add(description).expandX().fillX();
+		this.row();
+		this.add(abilityTable);
+		this.row();
+		this.add(effectsTable);
 		
-		this.setClickListener(new ClickListener() {
-	        @Override
-	        public void click(Actor actor,float x,float y ){
-	        	Popup.getCurrentPopup().close();
-	        }
-		});
+		this.addListener(Popup.POPUP_CLOSE_BUTTON_HANDLER);
 	}
 	
 	/**
@@ -101,7 +95,7 @@ public class UnitInfoPopup extends Popup {
 	public void show(Unit unit){
 		name.setText(unit.getName());
 		description.setText(unit.getUnitType().description);
-		portrait.setRegion(GUnit.getTextureRegion(unit.getUnitType()));
+		portrait.setDrawable(new TextureRegionDrawable(GUnit.getTextureRegion(unit.getUnitType())));
 		
 		hp.update(unit);
 		ap.update(unit);
@@ -162,11 +156,9 @@ public class UnitInfoPopup extends Popup {
 	 * Resizes the popup
 	 */
 	@Override
-	public void resize(int width, int height) {
+	public void resize(float width, float height) {
 		overlay.setSize(width, height);
-		this.width = width;
-		this.height = height;
-		contents.width = this.width;
-		contents.height = this.height;
+		this.setSize(width, height);
+		contents.setSize(width, height);
 	}
 }

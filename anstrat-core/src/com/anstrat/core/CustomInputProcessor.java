@@ -13,9 +13,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class CustomInputProcessor extends InputAdapter {
 
@@ -25,7 +25,7 @@ public class CustomInputProcessor extends InputAdapter {
 					ComponentFactory.createButton("No", Popup.POPUP_CLOSE_BUTTON_HANDLER), 
 					ComponentFactory.createButton("Yes", new ClickListener() {
 						@Override
-						public void click(Actor actor, float x, float y) {
+						public void clicked(InputEvent event, float x, float y) {
 							Popup.getCurrentPopup().close();
 							GameInstance.activeGame.resign();
 						}

@@ -110,26 +110,24 @@ public class CameraController extends InputAdapter implements GestureListener {
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean touchDown(int x, int y, int pointer) {
+	public boolean touchDown(float x, float y, int pointer, int button) {
 		isFlinging = false;
 		isZooming = false;
-		
 		return false;
 	}
 
 	@Override
-	public boolean fling (float velocityX, float velocityY) {
+	public boolean fling(float velocityX, float velocityY, int button) {
 		isFlinging = true;
 		velX = camera.zoom * velocityX * 0.5f;
 		velY = camera.zoom * velocityY * 0.5f;
-		
 		return false;
 	}
-	
+
 	@Override
-	public boolean pan(int x, int y, int deltaX, int deltaY) {
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		boolean yDown = camera.up.y < 0;
 		camera.position.add(-deltaX * camera.zoom * 0.5f, (yDown ? -1 : 1) * deltaY * camera.zoom * 0.5f, 0);
 		
@@ -261,12 +259,12 @@ public class CameraController extends InputAdapter implements GestureListener {
 	}
 
 	@Override
-	public boolean longPress(int x, int y) {
+	public boolean tap(float x, float y, int count, int button) {
 		return false;
 	}
-	
+
 	@Override
-	public boolean tap(int x, int y, int count) {
+	public boolean longPress(float x, float y) {
 		return false;
 	}
 }

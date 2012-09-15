@@ -1,32 +1,4 @@
 {
-resources: {
-	com.badlogic.gdx.graphics.g2d.TextureRegion: {
-		selection: { width: 1, height: 1, x: 0, y: 0 }
-	},
-	com.badlogic.gdx.graphics.g2d.NinePatch: {
-		empty: [ { width: 1, height: 1, x: 3, y: 0 } ],
-		black: [ { width: 1, height: 1, x: 3, y: 1 } ],
-		cursor: [
-			{ width: 1, height: 1, x: 0, y: 1 },
-			{ width: 1, height: 1, x: 1, y: 1 },
-			{ width: 1, height: 1, x: 2, y: 1 },
-			{ width: 1, height: 1, x: 0, y: 2 },
-			{ width: 1, height: 1, x: 1, y: 2 },
-			{ width: 1, height: 1, x: 2, y: 2 },
-			{ width: 1, height: 1, x: 0, y: 3 },
-			{ width: 1, height: 1, x: 1, y: 3 },
-			{ width: 1, height: 1, x: 2, y: 4 }
-		],
-	},
-	com.badlogic.gdx.graphics.Color: {
-		green: { a: 1, b: 0, g: 1, r: 0 },
-		white: { a: 1, b: 1, g: 1, r: 1 },
-		red:   { a: 1, b: 0, g: 0, r: 1 },
-		black: { a: 1, b: 0, g: 0, r: 0 },
-		light-gray: { a: 1, b: 0.75, g: 0.75, r: 0.75 }
-	}
-},
-styles: {
 	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		default: { down: button-down, 
 		           up:   button-up },
@@ -88,9 +60,8 @@ styles: {
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
         default: { fontColorUnselected: light-gray,
-                   selectedPatch:       single-border,
+                   selection:	        single-border,
                    fontColorSelected:   white,
                    font:                menu-font }
     }
-}
 }

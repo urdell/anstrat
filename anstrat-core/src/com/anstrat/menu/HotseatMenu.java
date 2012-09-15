@@ -11,13 +11,14 @@ import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
 import com.anstrat.popup.TeamPopup.TeamPopupListener;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler {
 	private static HotseatMenu me;
@@ -35,7 +36,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 	private HotseatMenu(){
         
 		Table map = new Table(Assets.SKIN);
-		map.setBackground(Assets.SKIN.getPatch("single-border"));
+		map.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		//TextField timeLimit = ComponentFactory.createTextField("Time limit (in minutes)", false);
 		
@@ -49,7 +50,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		Button mapSpec = ComponentFactory.createButton("Specific", new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new MapsPopup(new MapsPopupHandler() {
 						@Override
 						public void mapSelected(String map){
@@ -69,7 +70,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		Button mapCustomRandom = ComponentFactory.createButton("Random custom", new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				
 				specificMap = false;
 				generatedMap = false;
@@ -82,7 +83,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		Button mapServerRandom = ComponentFactory.createButton("Random server", new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				specificMap = false;
 				generatedMap = false;
 				randomCustomMap = false;
@@ -95,7 +96,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		Button mapGenerate = ComponentFactory.createButton("Generated", new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				/*specificMap = false;
 				generatedMap = true;
 				randomCustomMap = false;
@@ -125,16 +126,16 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		Table player1table = new Table(); 
 		Table player2table = new Table();
 		
-		player1table.setBackground(Assets.SKIN.getPatch("single-border"));
-		player2table.setBackground(Assets.SKIN.getPatch("single-border"));
+		player1table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
+		player2table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		final TextButton player1nameButton = new TextButton("Player 1", Assets.SKIN);
 		final TextButton player2nameButton = new TextButton("Player 2", Assets.SKIN);
 		TextButton player1teamButton = new TextButton("God and Team", Assets.SKIN);
-		player1teamButton.setClickListener(new ClickListener() {
+		player1teamButton.addListener(new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new TeamPopup(player1god, player1team, "Select "+player1nameButton.getText()+"'s god and team", new TeamPopupListener(){
 
 					@Override
@@ -151,10 +152,10 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 			
 		});
 		TextButton player2teamButton = new TextButton("God and Team", Assets.SKIN);
-		player2teamButton.setClickListener(new ClickListener() {
+		player2teamButton.addListener(new ClickListener() {
 
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				Popup popup = new TeamPopup(player2god, player2team, "Select "+player2nameButton.getText()+"'s god and team", new TeamPopupListener(){
 
 					@Override
@@ -181,7 +182,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		        
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
-		    public void click(Actor actor,float x,float y ){
+			public void clicked(InputEvent event, float x, float y) {
 				if (generatedMap) {
 					Main.getInstance().games.createHotseatGame(null, player1god, player1team, player2god, player2team).showGame(true);
 				}

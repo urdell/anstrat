@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class ColorTable extends Table {
 	private Texture background;
@@ -20,12 +20,12 @@ public class ColorTable extends Table {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(background, x+xOff, y+yOff, width-wOff, height-hOff);
+		batch.draw(background, getX()+xOff, getY()+yOff, getWidth()-wOff, getHeight()-hOff);
 		super.draw(batch, parentAlpha);
 	}
 	
 	@Override
-	public void setBackground (NinePatch background) {
+	public void setBackground(Drawable background) {
 		if(background==null)
 			return;
 		

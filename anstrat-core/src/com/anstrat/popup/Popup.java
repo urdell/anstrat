@@ -1,7 +1,5 @@
 package com.anstrat.popup;
 
-import java.util.List;
-
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
@@ -10,14 +8,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.tablelayout.Cell;
 
 /**
@@ -25,7 +26,7 @@ import com.esotericsoftware.tablelayout.Cell;
  */
 public class Popup extends Window {
 	
-	public static final int WIDTH = (int)(90*Main.percentWidth);
+	public static final float WIDTH = 90f*Main.percentWidth;
 	
 	private static PopupGestureHandler gestureHandler;
 	private static PopupInputMultiplexer inputMultiplexer;
@@ -37,7 +38,7 @@ public class Popup extends Window {
 	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
 		@Override
-		public void click(Actor actor, float x, float y) {
+		public void clicked(InputEvent event, float x, float y) {
 			getCurrentPopup().close();
 		}
 	};
@@ -55,10 +56,9 @@ public class Popup extends Window {
 	}
 	
 	public Popup(String title, Actor... actors) {
-		super(Assets.SKIN);
-		this.setTitle(title);
+		super(title, Assets.SKIN);
 
-		top();
+		this.align(Align.top);
 		setComponents(actors);
 		this.layout();
 	}
@@ -83,9 +83,9 @@ public class Popup extends Window {
 	@SuppressWarnings("rawtypes")
 	public Cell add (Actor actor) {
 		row();
-		Cell cell = super.add(actor).width(WIDTH).center().expandX().fillX();
+		Cell cell = super.add(actor).width(WIDTH).align(Align.center).expandX().fillX();
 		if(actor instanceof TextButton)
-			cell.height((int)Main.percentHeight*8);
+			cell.height(Main.percentHeight*8f);
 		else if(actor instanceof Label)
 			((Label)actor).setWrap(true);
 		return cell;
@@ -93,8 +93,9 @@ public class Popup extends Window {
 	
 	/** Clears all text inputs in the popup. */
 	public void clearInputs(){
-		for(Actor a : this.children){
-			if(a instanceof TextField) ((TextField)a).setText("");
+		for(Actor a : this.getChildren()){
+			if(a instanceof TextField)
+				((TextField)a).setText("");
 		}
 	}
 	
@@ -116,8 +117,8 @@ public class Popup extends Window {
 	 */
 	public void close(){
 		stack.removeActor(this);
-		
-		if(stack.getActors().isEmpty()){
+
+		if(stack.getChildren().size==0){		//stack.getActors().isEmpty()
 			// Last Popup gone - return control
 			gestureHandler.setOverridesInput(false);
 			inputMultiplexer.setOverridesInput(false);
@@ -138,15 +139,16 @@ public class Popup extends Window {
 		drawDebug(stage);
 	}
 	
-	public void resize(int width, int height) {
+	public void resize(float width, float height) {
 		overlay.setSize(width, height);
+		
 		pack();
 		layout();
 		
-		stack.height = stack.getPrefHeight();
-		stack.width = stack.getPrefWidth();
-		stack.x = (width - stack.width) / 2f;
-		stack.y = (height - stack.height) / 2f;
+		stack.setHeight(stack.getPrefHeight());
+		stack.setWidth(stack.getPrefWidth());
+		stack.setX((width - stack.getWidth()) / 2f);
+		stack.setY((height - stack.getHeight()) / 2f);
 	}
 	
 	public static void initPopups(Stage stage){
@@ -194,8 +196,8 @@ public class Popup extends Window {
 	}
 	
 	public static Popup getCurrentPopup(){
-		List<Actor> actors = stack.getActors();
-		int size = actors.size();
+		Array<Actor> actors = stack.getChildren();//stack.getActors();
+		int size = actors.size;
 		return size == 0 ? null : (Popup) actors.get(size - 1);
 	}
 }

@@ -10,12 +10,13 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class TeamPopup extends Popup{
 
@@ -52,11 +53,12 @@ public class TeamPopup extends Popup{
 		
 		for(int i=0; i<godSilhouettes.length; i++){
 			godSilhouettes[i] = new NinePatch(GUnit.getTextureRegion(UnitType.BERSERKER));
-			gods[i] = new Button(new Image(godSilhouettes[i]), Assets.SKIN.getStyle("image",ButtonStyle.class));
-			gods[i].setClickListener(new ClickListener() {
+			gods[i] = new Button(new Image(godSilhouettes[i]), Assets.SKIN.get("image",ButtonStyle.class));
+			gods[i].addListener(new ClickListener() {
 				@Override
-			    public void click(Actor actor,float x,float y ){
-			        selectButton((Button)actor);
+				public void clicked(InputEvent event, float x, float y) {
+			        //selectButton((Button)actor);
+					selectButton((Button)event.getListenerActor());
 			    }
 			});
 		}
@@ -64,11 +66,12 @@ public class TeamPopup extends Popup{
 		teamSilhouettes[0] = new NinePatch(GUnit.getTextureRegion(UnitType.SWORD));
 		teamSilhouettes[1] = new NinePatch(GUnit.getTextureRegion(UnitType.JOTUN));
 		for(int i=0; i<teamSilhouettes.length; i++){
-			teams[i] = new Button(new Image(teamSilhouettes[i]), Assets.SKIN.getStyle("image",ButtonStyle.class));
-			teams[i].setClickListener(new ClickListener() {
+			teams[i] = new Button(new Image(teamSilhouettes[i]), Assets.SKIN.get("image",ButtonStyle.class));
+			teams[i].addListener(new ClickListener() {
 				@Override
-			    public void click(Actor actor,float x,float y ){
-			        selectButton((Button)actor);
+				public void clicked(InputEvent event, float x, float y) {
+			        //selectButton((Button)actor);
+					selectButton((Button)event.getListenerActor());
 			    }
 			});
 		}
@@ -79,8 +82,8 @@ public class TeamPopup extends Popup{
 		godTable = new ColorTable(Color.BLUE);
 		teamTable = new ColorTable(Color.BLUE);
 		NinePatch tableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
-		godTable.setBackground(tableBackgroundPatch);
-		teamTable.setBackground(tableBackgroundPatch);
+		godTable.setBackground(new NinePatchDrawable(tableBackgroundPatch));
+		teamTable.setBackground(new NinePatchDrawable(tableBackgroundPatch));
 		godTable.defaults().size(unitWidth);
 		teamTable.defaults().size(unitWidth);
 		
@@ -92,8 +95,8 @@ public class TeamPopup extends Popup{
 		teamTable.add(teams[0]);
 		teamTable.add(teams[1]);
 		
-		godLabel = new Label(Assets.SKIN);
-		teamLabel = new Label(Assets.SKIN);
+		godLabel = new Label("",Assets.SKIN);
+		teamLabel = new Label("",Assets.SKIN);
 		
 		//this.setBackground(Assets.SKIN.getPatch("empty")); // Overrides the default background with an empty one
 		this.add(godTable).padTop((int)(-tableBackgroundPatch.getTopHeight()/3));

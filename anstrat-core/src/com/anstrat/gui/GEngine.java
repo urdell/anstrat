@@ -127,7 +127,7 @@ public class GEngine implements Screen{
 		
 		cameraController.setBounds(map.getWidth(), map.getHeight());
 		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), map.TILE_WIDTH * 2.5f, map.TILE_HEIGHT * 2.5f);
-		cameraController.setOffsets(userInterface.topPanel.height+Options.mapBorderOffset, userInterface.bottomPanel.height+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
+		cameraController.setOffsets(userInterface.topPanel.getHeight()+Options.mapBorderOffset, userInterface.bottomPanel.getHeight()+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 		
 		if (!startZoom)
 			camera.zoom = (map.TILE_WIDTH * DEFAULT_ZOOM_LEVEL) / Gdx.graphics.getWidth();
@@ -280,7 +280,7 @@ public class GEngine implements Screen{
 		cameraController.resize();
 		
 		// Update offsets since ui has changed size
-		cameraController.setOffsets(userInterface.topPanel.height+Options.mapBorderOffset, userInterface.bottomPanel.height+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
+		cameraController.setOffsets(userInterface.topPanel.getHeight()+Options.mapBorderOffset, userInterface.bottomPanel.getHeight()+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 
 		// Draw fps at a fixed position
 		FPS_POSITION.x = 20f;
@@ -331,10 +331,10 @@ public class GEngine implements Screen{
 		Vector2 pos = t.getCenter();
 		float x1 = camera.position.x-camera.viewportWidth*camera.zoom/2;
 		float y1 = camera.position.y-camera.viewportHeight*camera.zoom/2;
-		y1 += userInterface.topPanel.height*camera.zoom;
+		y1 += userInterface.topPanel.getHeight()*camera.zoom;
 		float x2 = x1+camera.viewportWidth*camera.zoom;
 		float y2 = y1+camera.viewportHeight*camera.zoom;
-		y2 -= (userInterface.bottomPanel.height+userInterface.permanentPanel.height)*camera.zoom;
+		y2 -= (userInterface.bottomPanel.getHeight()+userInterface.permanentPanel.getHeight())*camera.zoom;
 		
 		if (pos.x < x1 || pos.x > x2 || pos.y < y1 || pos.y > y2)
 			return false;

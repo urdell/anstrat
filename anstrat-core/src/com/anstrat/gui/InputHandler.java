@@ -14,12 +14,12 @@ import com.badlogic.gdx.math.Vector3;
 public class InputHandler extends GestureAdapter {
 	
 	@Override
-	public boolean tap(int x, int y, int count) {
+	public boolean tap(float x, float y, int count, int button) {
 		
 		GEngine gEngine = GEngine.getInstance();
 		
 		// UI handles this input if it's hit
-		if(!gEngine.userInterface.tap(x, y, count)){
+		if(!gEngine.userInterface.tap(x, y, count, button)){
 			
 			if(gEngine.actionHandler.showingConfirmDialog)
 				if(handleConfirmDialog(x, y))	// Hit one of the buttons on the confirm dialog -> do not continue
@@ -40,7 +40,7 @@ public class InputHandler extends GestureAdapter {
 	 * @param y
 	 * @return
 	 */
-	public int getQuadrant(int x, int y){
+	public int getQuadrant(float x, float y){
 		GEngine gEngine = GEngine.getInstance();
 		Vector3 out = new Vector3();
 		CameraUtil.windowToCameraCoordinates(gEngine.uiCamera, new Vector2(x, y), out);
@@ -62,7 +62,7 @@ public class InputHandler extends GestureAdapter {
 	 * 
 	 * @return true if hit the dialog
 	 */
-	private boolean handleConfirmDialog(int x, int y){
+	private boolean handleConfirmDialog(float x, float y){
 		GEngine gEngine = GEngine.getInstance();
 		Vector3 out = new Vector3();
 		CameraUtil.windowToCameraCoordinates(gEngine.uiCamera, new Vector2(x, y), out);

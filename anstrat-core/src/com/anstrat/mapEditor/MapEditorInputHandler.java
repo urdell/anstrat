@@ -8,13 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 public class MapEditorInputHandler extends GestureAdapter {
 
 	@Override
-	public boolean tap(int x, int y, int count) {
+	public boolean tap(float x, float y, int count, int button) {
 		
 		MapEditor mapEditor = MapEditor.getInstance();
 		
-		if(!mapEditor.userInterface.tap(x, y, count)){// UI handles this input if it's hit
+		if(!mapEditor.userInterface.tap(x, y, count, button)){// UI handles this input if it's hit
 			
-			if(mapEditor.userInterface.panelTable.visible){
+			if(mapEditor.userInterface.panelTable.isVisible()){
 				mapEditor.userInterface.showPanel(null, false);
 				return false;
 			}

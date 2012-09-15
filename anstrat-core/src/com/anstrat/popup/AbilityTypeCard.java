@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.TableLayout;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class AbilityTypeCard extends Table {
 	private Texture background;
@@ -32,7 +32,7 @@ public class AbilityTypeCard extends Table {
 		p.fill();
 		background = new Texture(p);
 		//Border
-		this.setBackground(Assets.SKIN.getPatch("double-border"));
+		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
 		
 		this.type = type;
 		name = new Label(type.name, Assets.SKIN);
@@ -44,44 +44,42 @@ public class AbilityTypeCard extends Table {
 		//statDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_ATTACK)
 		Image costIcon = new Image(Assets.getTextureRegion("mana"));
 		
-		TableLayout layout = this.getTableLayout();
-		
 		int imageHeight = Gdx.graphics.getHeight()/5;
 		int imageWidth = Gdx.graphics.getWidth()/3;
 		
-		layout.defaults().top();
-		layout.add(name).center().padTop((int)(-3*Main.percentHeight)).padBottom((int)(-2*Main.percentHeight));
-		layout.row();
-		layout.add(image).left().width(imageWidth).height(imageHeight);
-		layout.row();
-		layout.add(description).fill().expand();
-		layout.row();
+		this.defaults().top();
+		this.add(name).center().padTop((int)(-3*Main.percentHeight)).padBottom((int)(-2*Main.percentHeight));
+		this.row();
+		this.add(image).left().width(imageWidth).height(imageHeight);
+		this.row();
+		this.add(description).fill().expand();
+		this.row();
 		
 		Table inner = new Table();
 		inner.defaults().left();
 		inner.add(costIcon).height((int)(3*Main.percentHeight)).width((int)(6*Main.percentWidth));
 		inner.add(cost);
 		
-		layout.add(inner).left().height((int)(3*Main.percentHeight));
+		this.add(inner).left().height((int)(3*Main.percentHeight));
 	}
 	
 	public void setSize(float width, float height){
-		this.width = width;
-		this.height = height;
-		description.width = width;
+		this.setWidth(width);
+		this.setHeight(height);
+		description.setWidth(width);
 		description.layout();
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(1f, 1f, 1f, 0.5f * parentAlpha);
-		batch.draw(background, x+2*Main.percentWidth, y+Main.percentHeight, width-4*Main.percentWidth, height-2*Main.percentHeight);
+		batch.draw(background, getX()+2*Main.percentWidth, getY()+Main.percentHeight, getWidth()-4*Main.percentWidth, getHeight()-2*Main.percentHeight);
 		super.draw(batch, parentAlpha);
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
-		return x > 0 && x < width && y > 0 && y < height ? this : null;
+	public Actor hit(float x, float y, boolean touchable) {
+		return x > 0 && x < getWidth() && y > 0 && y < getHeight() ? this : null;
 	}
 	
 	public void setDisabled(boolean disabled){

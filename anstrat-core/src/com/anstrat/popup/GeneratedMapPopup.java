@@ -4,11 +4,14 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class GeneratedMapPopup extends Popup {
 	
@@ -27,34 +30,36 @@ public class GeneratedMapPopup extends Popup {
 		
 		ClickListener sizeClick = new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
-				setSelected((Table)actor);
+			public void clicked(InputEvent event, float x, float y) {
+				setSelected((Table)event.getListenerActor());
 			}
 		};
 		
 		String[] strs = {"Random","Large","Medium","Small"};
 		for(String str : strs){
-			Table table = new Table(str);
-			table.setBackground(Assets.SKIN.getPatch("single-border"));
-			table.defaults().left().height((int)(4*Main.percentHeight));
+			Table table = new Table();
+			table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
+			table.defaults().align(Align.left).height(4f*Main.percentHeight);
 			table.add(new Label(str,Assets.SKIN));
-			list.add(table).fillX().expandX().height((int)(10*Main.percentHeight));
+			list.add(table).fillX().expandX().height(10f*Main.percentHeight);
 			list.row();
 			
-			table.setClickListener(sizeClick);
+			table.addListener(sizeClick);
+			table.setTouchable(Touchable.enabled);
 			if(str.equalsIgnoreCase(RANDOM))
 				setSelected(table);
 		}
 		
-		FlickScrollPane scroll = new FlickScrollPane(list);
+		ScrollPane scroll = new ScrollPane(list);
 		scroll.setScrollingDisabled(true, false);
+		scroll.setFlickScroll(true);
 		this.add(scroll).fill().expand();
 		
 		this.add(new Row(
-				ComponentFactory.createButton("Ok",new ClickListener() {
-						@Override
-						public void click(Actor actor, float x, float y) {
-							handler.sizeSelected(selected.name);
+				ComponentFactory.createButton("Ok", new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+							handler.sizeSelected("TODO - FIX THIS");	//selected.name
 							Popup.getCurrentPopup().close();
 						}
 					}),
@@ -66,10 +71,10 @@ public class GeneratedMapPopup extends Popup {
 	 */
 	public void setSelected(Table t){
 		if(selected != null){
-			selected.setBackground(Assets.SKIN.getPatch("single-border"));
+			selected.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		}
 		
-		t.setBackground(Assets.SKIN.getPatch("double-border"));
+		t.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
 		selected = t;
 	}
 	
@@ -77,3 +82,4 @@ public class GeneratedMapPopup extends Popup {
 		public void sizeSelected(String size);
 	}
 }
+

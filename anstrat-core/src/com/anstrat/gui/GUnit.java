@@ -120,13 +120,13 @@ public class GUnit extends GObject {
 				
 				// If region is not flipped even though we're not facing right, flip
 				if(region != null){
-					int regionWidth = region.getRegionWidth();
-					if(regionWidth < 0 && animationFacingRight || regionWidth > 0 && !animationFacingRight){
-						region.flip(true, false);
-					}
-					
+					float regionWidth = region.getRegionWidth();
 					sprite.setRegion(region);
 					
+					if(regionWidth < 0 && animationFacingRight || regionWidth > 0 && !animationFacingRight){
+						sprite.flip(true, false);
+					}
+				
 					animationTime += Gdx.graphics.getDeltaTime()*Options.speedFactor;
 					
 					if(!animationLooping[animationState.ordinal()] && currentAnimation.isAnimationFinished(animationTime)){

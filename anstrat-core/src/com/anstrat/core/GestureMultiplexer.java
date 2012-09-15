@@ -57,35 +57,35 @@ public class GestureMultiplexer implements GestureListener {
 	}
 	
 	@Override
-	public boolean touchDown(int x, int y, int pointer) {
+	public boolean touchDown(float x, float y, int pointer, int button) {
 		for(GestureListener processor : processors)
-			if (processor.touchDown(x, y, pointer)) return true;
+			if (processor.touchDown(x, y, pointer, button)) return true;
 		return false;
 	}
 
 	@Override
-	public boolean tap(int x, int y, int count) {
+	public boolean tap(float x, float y, int count, int button) {
 		for(GestureListener processor : processors)
-			if (processor.tap(x, y, count)) return true;
+			if (processor.tap(x, y, count, button)) return true;
 		return false;
 	}
 
 	@Override
-	public boolean longPress(int x, int y) {
+	public boolean longPress(float x, float y) {
 		for(GestureListener processor : processors)
 			if (processor.longPress(x, y)) return true;
 		return false;
 	}
 
 	@Override
-	public boolean fling(float velocityX, float velocityY) {
+	public boolean fling(float velocityX, float velocityY, int button) {
 		for(GestureListener processor : processors)
-			if (processor.fling(velocityX, velocityY)) return true;
+			if (processor.fling(velocityX, velocityY, button)) return true;
 		return false;
 	}
 
 	@Override
-	public boolean pan(int x, int y, int deltaX, int deltaY) {
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		for(GestureListener processor : processors)
 			if (processor.pan(x, y, deltaX, deltaY)) return true;
 		return false;

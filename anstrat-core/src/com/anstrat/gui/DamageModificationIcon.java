@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.core.Assets;
-import com.anstrat.core.Main;
 import com.anstrat.gameCore.DamageModification;
 import com.anstrat.gameCore.UnitType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 
 public class DamageModificationIcon extends Widget{
@@ -49,8 +46,8 @@ public class DamageModificationIcon extends Widget{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
 		validate();
-		batch.draw(portrait, x, y, width, height);
-		FancyNumbers.drawNumberPercent(number, x, y+height/50, height/3, false, batch);
+		batch.draw(portrait, getX(), getY(), getWidth(), getHeight());
+		FancyNumbers.drawNumberPercent(number, getX(), getY()+getHeight()/50, getHeight()/3, false, batch);
 	}
 
 }

@@ -5,12 +5,12 @@ import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
 import com.anstrat.popup.Popup;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * Menu to handle login, upgrade, register and logout 
@@ -31,7 +31,7 @@ public class AccountMenu extends MenuScreen {
 		
         Button registerButton = ComponentFactory.createMenuButton("Register",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Popup.showGenericPopup("Register", "Please use Quick Login.");
             	//AccountMenu.registerPopup.show();
             }
@@ -39,14 +39,14 @@ public class AccountMenu extends MenuScreen {
        
 		Button fastLoginButton = ComponentFactory.createMenuButton("Quick Login",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	quickPlay();
             }
         });
 		
 		Button loginButton = ComponentFactory.createMenuButton("Login",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	loginPopup.show();
             }
         });
@@ -55,7 +55,7 @@ public class AccountMenu extends MenuScreen {
         
         Button debugMenuButton = ComponentFactory.createMenuButton("Debug",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(DebugMenu.getInstance());
             }
         });
@@ -120,7 +120,7 @@ public class AccountMenu extends MenuScreen {
 		Button cancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		Button okButton = ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				AccountMenu am = AccountMenu.getInstance();
 				String username = loginUserNameField.getText();
 				String password = loginPasswordField.getText();
@@ -146,7 +146,7 @@ public class AccountMenu extends MenuScreen {
 		Button cancelButton = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		Button okButton = ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				AccountMenu am = AccountMenu.getInstance();
 				String username = usernameField.getText();
 				String password = passwordField.getText();
