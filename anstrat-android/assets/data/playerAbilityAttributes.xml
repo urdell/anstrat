@@ -13,30 +13,30 @@
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Hugin and Munin</name>
-			<manacost>20</manacost>
+			<manacost>15</manacost>
 			<description>Hugin and Munin harasses target enemy unit, making it regenerate less AP and take 1 damage for 3 turns.</description></PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Thor">
 		<PlayerAbility>
 			<name>Thunderbolt</name>
-			<manacost>10</manacost>
-			<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
+			<manacost>15</manacost>
+			<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit dealing 8 damage. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Comet Strike</name>
-			<manacost>35</manacost>
+			<manacost>40</manacost>
 			<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
-			<manacost>15</manacost>
+			<manacost>10</manacost>
 			<description>Target unit is blessed with Thors rage and has increased damage</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Hel">
 		<PlayerAbility>
 			<name>Zombify</name>
-			<manacost>35</manacost>
+			<manacost>40</manacost>
 			<description>Hel turns one target enemy unit into a Fallen Warrior under her controll</description>
 		</PlayerAbility>
 		<PlayerAbility>
@@ -53,12 +53,12 @@
 	<PlayerAbilityGod god="Loki">	
 		<PlayerAbility>
 			<name>Swap</name>
-			<manacost>15</manacost>
+			<manacost>20</manacost>
 			<description>Loki swaps the position of 2 target friendly units</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Freeze</name>
-			<manacost>20</manacost>
+			<manacost>15</manacost>
 			<description>Loki freezes target tile. Any unit standing on the tile takes 4 damage and is freezed for 2 turns, meaning it will regenerate less AP each round.</description>
 		</PlayerAbility>
 		<PlayerAbility>
