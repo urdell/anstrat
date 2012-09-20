@@ -34,9 +34,10 @@ public class UnitInfoPopup extends Popup {
 		
 		bottomTable = new ColorTable(Color.WHITE);
 		bottomTable.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("border-thick-updown")));
-		bottomTable.add(abilityTable);
-		bottomTable.row();
-		bottomTable.add(effectsTable);
+		bottomTable.add(abilityTable).fill();
+//		bottomTable.row();
+//		bottomTable.add(effectsTable);
+		bottomTable.debug();
 		
 		this.defaults().top().left();
 		this.padBottom(2*Main.percentHeight).padTop(2*Main.percentHeight);
@@ -56,50 +57,57 @@ public class UnitInfoPopup extends Popup {
 		bottomTable.setColor(card.getBackgroundColor());
 		
 		// Effects
-		effectsTable.clear();
-		effectsTable.defaults().left();
-		effectsTable.add("Effects:");
-		effectsTable.row();
-		
-		for(int i = 0; i < unit.effects.size(); i++){
-			Effect effect = unit.effects.get(i);
-			
-			Image icon = new Image(Assets.getTextureRegion(effect.iconName));
-			Label name = new Label(effect.name, Assets.SKIN);
-			Label description = new Label(" -" + effect.description, Assets.SKIN);
-			
-			Table inner = new Table();
-			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
-			inner.add(name).expandX().fillX();
-
-			effectsTable.add(inner);
-			effectsTable.row();
-			effectsTable.add(description);
-			effectsTable.row();
-		}
+//		effectsTable.clear();
+//		effectsTable.defaults().left();
+//		effectsTable.add("Effects:");
+//		effectsTable.row();
+//		
+//		for(int i = 0; i < unit.effects.size(); i++){
+//			Effect effect = unit.effects.get(i);
+//			
+//			Image icon = new Image(Assets.getTextureRegion(effect.iconName));
+//			Label name = new Label(effect.name, Assets.SKIN);
+//			Label description = new Label(" -" + effect.description, Assets.SKIN);
+//			
+//			Table inner = new Table();
+//			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
+//			inner.add(name).expandX().fillX();
+//
+//			effectsTable.add(inner);
+//			effectsTable.row();
+//			effectsTable.add(description);
+//			effectsTable.row();
+//		}
 		
 		// Abilities
 		abilityTable.clear();
-		abilityTable.defaults().left();
-		abilityTable.add("Abilities:");
+		abilityTable.defaults().top().left().expandX().fillX();
+		abilityTable.add("Abilities:").height(5*Main.percentHeight);
 		abilityTable.row();
 		
-		for(int i = 0; i < unit.abilities.size(); i++){
-			Ability ability = unit.abilities.get(i);
+		for(Ability a : unit.abilities){
+			Table ability = new Table();
 			
-			Image icon = new Image(Assets.getTextureRegion(ability.getIconName(unit)));
-			Label name = new Label(ability.name, Assets.SKIN);
-			Label description = new Label(" -" + ability.description, Assets.SKIN);
+			Image icon = new Image(Assets.getTextureRegion(a.getIconName(unit)));
+			Label name = new Label(a.name, Assets.SKIN);
+			Label description = new Label(" -" + a.description, Assets.SKIN);
+			description.setWrap(true);
 			
 			Table inner = new Table();
-			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
-			inner.add(name).expandX().fillX();
+			inner.defaults().top().left();
+			inner.add(icon).size(3f*Main.percentHeight).padRight(Main.percentWidth);
+			inner.add(name);
 
-			abilityTable.add(inner);
-			abilityTable.row();
-			abilityTable.add(description);
+			ability.add(inner);
+			ability.row();
+			ability.add(description).fill().expand();
+			abilityTable.add(ability).height(Main.percentHeight*10);
 			abilityTable.row();
 		}
+		
+		abilityTable.add().fill().expand();
+		
+		abilityTable.debug();
 		
 		this.show();
 	}
