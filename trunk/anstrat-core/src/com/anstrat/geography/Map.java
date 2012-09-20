@@ -320,39 +320,39 @@ public class Map implements Serializable{
 		placeOutTiles(fourth, third.length,second[0].length);
 		
 		// Place villages in random locations
-				int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
-				for(int i=0; i<nrVillages; i++){
-					int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
-					int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
-					setBuilding(
-							new TileCoordinate(rx, ry), 
-							new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
-				}
-				
-				int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;
-				if(distanceFromBorder >= tiles.length)
-					distanceFromBorder = tiles.length - 1;
-				if(distanceFromBorder >= tiles[0].length)
-					distanceFromBorder = tiles[0].length - 1;
-				TileCoordinate castle1pos = new TileCoordinate(0+distanceFromBorder, 0+distanceFromBorder);
-				TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
-				tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
-				tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
-				
-				setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
-				
-				Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
-				unit.tileCoordinate = castle1pos;
+		int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
+		for(int i=0; i<nrVillages; i++){
+			int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
+			int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
+			setBuilding(
+					new TileCoordinate(rx, ry), 
+					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+		}
+		
+		int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;
+		if(distanceFromBorder >= tiles.length)
+			distanceFromBorder = tiles.length - 1;
+		if(distanceFromBorder >= tiles[0].length)
+			distanceFromBorder = tiles[0].length - 1;
+		TileCoordinate castle1pos = new TileCoordinate(0+distanceFromBorder, 0+distanceFromBorder);
+		TileCoordinate castle2pos = new TileCoordinate(tiles.length-distanceFromBorder-1, tiles[0].length-distanceFromBorder-1);
+		tiles[castle1pos.x][castle1pos.y].terrain = TerrainType.FIELD; //not sure if needed
+		tiles[castle2pos.x][castle2pos.y].terrain = TerrainType.FIELD;
+		
+		setBuilding(castle2pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 1));
+		
+		Unit unit = new Unit(UnitType.AXE_THROWER, 1, 1);
+		unit.tileCoordinate = castle1pos;
 
-				for(Building b : buildingList.values()) {
-					if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
-						buildingList.clear();
-						unit = null;
-						return false;
-					}
-				}
-				setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
-				return true;
+		for(Building b : buildingList.values()) {
+			if (Pathfinding.getUnitPath(unit, b.tileCoordinate, this).path.size() < 2) {
+				buildingList.clear();
+				unit = null;
+				return false;
+			}
+		}
+		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
+		return true;
 	}
 	
 	/*private void randomizeMap(Random random){

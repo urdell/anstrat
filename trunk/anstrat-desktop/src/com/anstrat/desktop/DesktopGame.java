@@ -24,7 +24,7 @@ public class DesktopGame {
 	
 	// Testing mode settings
 	public static final ScreenOrientation ORIENTATION = ScreenOrientation.Portrait;
-	public static final Dimension PHONE = new Dimension(600, 400);
+	public static final Dimension PHONE = new Dimension(800, 480);
 	
 	public static void main(String[] args){
 		// Pack textures windows

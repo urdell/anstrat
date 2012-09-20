@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.AbilityFactory;
+import com.anstrat.gameCore.effects.APRegenerationModifier;
 import com.anstrat.gameCore.effects.AffectsAttack;
 import com.anstrat.gameCore.effects.DamageModifier;
 import com.anstrat.gameCore.effects.DamageTakenModifier;
@@ -109,7 +110,15 @@ public class Unit implements Serializable {
 	}
 	
 	public int getAPReg(){
-		return this.type.APReg;
+		int APReg = this.type.APReg;
+		for(Effect effectAttack : effects){
+			
+			if(effectAttack instanceof APRegenerationModifier){
+				APReg += ((APRegenerationModifier) effectAttack).APRegModication();
+			}
+		}
+		
+		return APReg;
 	}
 	
 	public int getAPCostAttack(){

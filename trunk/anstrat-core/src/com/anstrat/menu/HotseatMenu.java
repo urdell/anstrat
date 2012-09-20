@@ -1,8 +1,11 @@
 package com.anstrat.menu;
 
+import java.awt.Dimension;
+
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.GeneratedMapPopup;
 import com.anstrat.popup.GeneratedMapPopup.GeneratedMapPopupHandler;
@@ -27,6 +30,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;
+	private Dimension mapDimension = new Dimension(10,10);
 	private boolean randomServerdMap = false;
 	private boolean randomCustomMap = false;
 	
@@ -42,7 +46,7 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		
 		mapSizePopup = new GeneratedMapPopup(this);
 		
-		CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
+		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
 		mapLabel = new Label("No map chosen", Assets.SKIN);
@@ -179,20 +183,25 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (generatedMap) {
-					Main.getInstance().games.createHotseatGame(null, player1god, player1team, player2god, player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(fog.isChecked(), mapDimension.width, mapDimension.height ,player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (randomServerdMap) {
 					String[] maps = Assets.getMapList(false, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), player1god, player1team, player2god, player2team).showGame(true);
+					Map map = Assets.loadMap(getRandom(maps));
+					map.fogEnabled = fog.isChecked();
+					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (randomCustomMap) {
 					String[] maps = Assets.getMapList(true, true);
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(getRandom(maps)), player1god, player1team, player2god, player2team).showGame(true);
+					Map map = Assets.loadMap(getRandom(maps));
+					map.fogEnabled = fog.isChecked();
+					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
 				}
 				else if (specificMap) { //specific map
 					String mapName = mapLabel.getText().toString();
-					
-					Main.getInstance().games.createHotseatGame(Assets.loadMap(mapName), player1god, player1team, player2god, player2team).showGame(true);
+					Map map = Assets.loadMap(mapName);
+					map.fogEnabled = fog.isChecked();
+					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
 				}
 		   }
 		} );
@@ -231,6 +240,18 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 	@Override
 	public void sizeSelected(String size) {
 		mapLabel.setText("Generated map ("+size+")");
+		if (size.equals(GeneratedMapPopup.LARGE)) {
+			mapDimension = new Dimension(16,16);
+		}
+		else if (size.equals(GeneratedMapPopup.MEDIUM)) {
+			mapDimension = new Dimension(12,12);
+		}
+		else if (size.equals(GeneratedMapPopup.SMALL)) {
+			mapDimension = new Dimension(8,8);
+		}
+		else { //TODO random???
+			mapDimension = new Dimension(16,16);
+		}
 		specificMap = false;
 		generatedMap = true;
 		randomCustomMap = false;

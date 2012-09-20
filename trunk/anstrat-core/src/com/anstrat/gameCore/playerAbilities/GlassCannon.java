@@ -6,7 +6,7 @@ import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.effects.Effect;
+import com.anstrat.gameCore.effects.GlassCannonEffect;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -26,12 +26,10 @@ public class GlassCannon extends TargetedPlayerAbility {
 	public void activate(Player player, TileCoordinate tile){
 		super.activate();
 		Unit target = StateUtils.getUnitByTile(tile);
-		for(Effect e : target.effects) {
-			target.effects.remove(e);
-		}
+		target.effects.add(new GlassCannonEffect());
 		Animation animation = new GlassCannonAnimation(target);
 		GEngine.getInstance().animationHandler.enqueue(animation);
-		Gdx.app.log("PlayerAbility", "Remove effects was cast");
+		Gdx.app.log("PlayerAbility", "Glass Cannon was cast");
 	}
 	
 	@Override
@@ -39,7 +37,6 @@ public class GlassCannon extends TargetedPlayerAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(target);
 		return super.isAllowed(player) && 
 				targetUnit != null &&
-				!targetUnit.effects.isEmpty() &&
 				Fog.isVisible(target, player.playerId);
 	}
 
