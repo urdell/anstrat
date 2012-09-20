@@ -29,7 +29,7 @@ public class BuyUnitPopup extends Popup{
 	
 	public static final String BUY_TEXT = "Buy";
 	public static final String CANCEL_TEXT = "Cancel";
-	public static final Color  COLOR_UNAVAILABLE = Color.DARK_GRAY;
+	public static final Color  COLOR_UNAVAILABLE = Color.BLACK;
 	
 	private Button buyButton;
 	private UnitTypeCard card;
@@ -59,7 +59,7 @@ public class BuyUnitPopup extends Popup{
 		
 		units = new Button[6];
 		unitSilhouettes = new NinePatch[6];
-		card  = new UnitTypeCard(types[0]);
+		card  = new UnitTypeCard(true);
 		
 		for(int i=0; i<units.length; i++){
 			unitSilhouettes[i] = new NinePatch(GUnit.getTextureRegion(types[i]));
@@ -81,14 +81,9 @@ public class BuyUnitPopup extends Popup{
 		unitTable.setBackground(new NinePatchDrawable(unitTableBackgroundPatch));
 		unitTable.defaults().size(unitWidth).padLeft(unitPad).padRight(unitPad);
 		
-		// Don't ask me why it has to be this order...
-		unitTable.add(units[0]);
-		unitTable.add(units[3]);
-		unitTable.add(units[1]);
-		unitTable.add(units[2]);
-		unitTable.add(units[5]);
-		unitTable.add(units[4]);
-		
+		for(Button unit : units)
+			unitTable.add(unit);
+	
 		// The buy and close buttons
 		Table buttonTable = new Table(Assets.SKIN);
 		buttonTable.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("BottomLargePanel"))));
@@ -101,8 +96,7 @@ public class BuyUnitPopup extends Popup{
 		buttonTable.add(buttonCancel);
 		
 		// Put all components together into the main table
-		float cardW = Main.percentWidth*85f;
-		float cardH = Main.percentHeight*60f;
+		float cardH = Main.percentHeight*65f;
 		
 		float space = (Gdx.graphics.getHeight() - cardH - unitWidth - buttonHeight
 				- unitTableBackgroundPatch.getBottomHeight()
@@ -114,7 +108,7 @@ public class BuyUnitPopup extends Popup{
 		this.row();
 		this.add().height(space).uniform();	//space
 		this.row();
-		this.add(card).height(cardH).width(cardW);
+		this.add(card).height(cardH).width(Gdx.graphics.getWidth());
 		this.row();
 		this.add().uniform();				//space
 		this.row();
@@ -174,12 +168,12 @@ public class BuyUnitPopup extends Popup{
 		boolean canBuy = gold >= card.type.cost;
 		Assets.SKIN.setEnabled(buyButton, canBuy && isPlayerTurn);
 		card.setDisabled(!canBuy);
-		buyButton.setVisible(isPlayerTurn);
+		buyButton.setVisible(isPlayerTurn && canBuy);
 		
 		// Mark units that are too expensive.
 		for(int i=0; i<types.length; i++){
 			if(gold<types[i].cost)
-				unitSilhouettes[i].setColor(COLOR_UNAVAILABLE);	//Not enough money
+				unitSilhouettes[i].setColor(COLOR_UNAVAILABLE);	    //Not enough money
 			else
 				unitSilhouettes[i].setColor(Color.WHITE);			//Enough money
 		}
