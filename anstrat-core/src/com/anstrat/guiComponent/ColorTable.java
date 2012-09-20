@@ -11,10 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class ColorTable extends Table {
 	private Texture background;
+	private Color backgroundColor;
+	private Pixmap pix;
 	float xOff = 0, yOff = 0, wOff = 0, hOff = 0;
 	
 	public ColorTable(Color color){
 		super(Assets.SKIN);
+		pix = new Pixmap(8, 8, Format.RGB565);
 		this.setColor(color);
 	}
 	
@@ -38,9 +41,13 @@ public class ColorTable extends Table {
 	}
 
 	public void setColor(Color color){
-		Pixmap p = new Pixmap(8, 8, Format.RGB565);
-		p.setColor(color);
-		p.fill();
-		background = new Texture(p);
+		backgroundColor = color;
+		pix.setColor(color);
+		pix.fill();
+		background = new Texture(pix);
+	}
+	
+	public final Color getBackgroundColor(){
+		return backgroundColor;
 	}
 }
