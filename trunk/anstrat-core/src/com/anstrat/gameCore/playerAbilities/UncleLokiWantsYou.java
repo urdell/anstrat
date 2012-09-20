@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.UncleLokiWantsYouAnimation;
-import com.anstrat.animation.ZombifyAnimation;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;

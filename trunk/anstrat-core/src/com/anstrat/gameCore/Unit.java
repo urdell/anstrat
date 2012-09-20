@@ -8,6 +8,7 @@ import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.abilities.AbilityFactory;
 import com.anstrat.gameCore.effects.AffectsAttack;
 import com.anstrat.gameCore.effects.DamageModifier;
+import com.anstrat.gameCore.effects.DamageTakenModifier;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.EffectFactory;
 import com.anstrat.geography.Map;
@@ -86,6 +87,17 @@ public class Unit implements Serializable {
 			
 			if(effectAttack instanceof DamageModifier){
 				damageModification += ((DamageModifier) effectAttack).damageModification(this);
+			}
+		}
+		
+		return damageModification;
+	}
+	public float getDamageTakenModification(){
+		float damageModification = 1;
+		for(Effect effectAttack : effects){
+			
+			if(effectAttack instanceof DamageTakenModifier){
+				damageModification += ((DamageTakenModifier) effectAttack).damageTakenModification(this);
 			}
 		}
 		
