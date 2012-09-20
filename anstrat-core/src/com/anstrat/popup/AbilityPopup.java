@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -87,13 +88,32 @@ public class AbilityPopup extends Popup {
 		
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty")));
 		
-		for(Button ib : abilities) {
-			this.addActor(ib);
-		}
+		float bh = Main.percentHeight*10;
+		float bw = bh * 2;
 		
-		this.addActor(cast);
-		this.addActor(cancel);
-		this.addActor(card);
+		Table abilityTable = new Table();
+		abilityTable.defaults().left().top().width(bw).height(bh);
+		abilityTable.add(abilities[0]);
+		abilityTable.add(abilities[1]);
+		abilityTable.add(abilities[2]);
+		
+		Table bottom = new Table();
+		bottom.defaults().left().top().size(bw, bh);
+		bottom.add(cast);
+		bottom.add().fill();
+		bottom.add(cancel);
+		
+		this.defaults().top();
+		
+		this.add(abilityTable).width(Gdx.graphics.getWidth());
+		this.row();
+		this.add(card).height(Main.percentHeight * 60);
+		this.row();
+//		this.add().expand().fill();
+//		this.row();
+		this.add(bottom);
+		//this.add(cast).size(Main.percentWidth*20, Main.percentHeight*10).uniform();
+		//this.add(cancel).uniform();
 		
 	}
 	
@@ -138,39 +158,7 @@ public class AbilityPopup extends Popup {
 	
 	@Override
 	public void resize(float width, float height){
-		overlay.setSize(width, height);
-		this.setBounds(0, 0, width, height);
-		
-		float buttonHeight = height/8f;
-		float buttonWidth = buttonHeight;//width/4f;
-
-		float cardWidth = width-2f*buttonWidth - 4f*Main.percentWidth;//width/2f;
-		float cardHeight = 3f*width/4f;
-		
-		cast.setBounds(0.25f*buttonWidth, buttonHeight, buttonWidth*1.5f, buttonHeight);
-		cancel.setBounds(width-1.75f*buttonWidth, buttonHeight, buttonWidth*1.5f, buttonHeight);
-		card.setBounds((width-cardWidth)/2f - 2f*Main.percentWidth, 2.25f*buttonHeight-Main.percentHeight, cardWidth+4f*Main.percentWidth, cardHeight+2f*Main.percentHeight);
-		
-		if(abilities.length > 0)
-			abilities[0].setPosition(0, 3f*buttonHeight);
-		if(abilities.length > 1)
-			abilities[1].setPosition(0, 4.5f*buttonHeight);
-		if(abilities.length > 2)
-			abilities[2].setPosition(0.6f*buttonWidth, card.getY()+card.getHeight());
-		/*
-		abilities[3].x = (float) (width-1.6*buttonWidth);
-		abilities[3].y = (float) (card.y+card.height);//(float) (height-2*buttonHeight);
-		
-		
-		abilities[4].x = width-buttonWidth;
-		abilities[4].y = (float) (4.5*buttonHeight);
-		
-		abilities[5].x = width-buttonWidth;
-		abilities[5].y = (float) (3*buttonHeight);
-		*/
-		for(Button ability : abilities){
-			ability.setSize(buttonWidth, buttonHeight);
-		}
-		this.layout();
+		this.setSize(width, height);
+		super.resize(width, height);
 	}
 }
