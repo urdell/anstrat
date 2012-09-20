@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public enum PlayerAbilityType {
 	THUNDERBOLT("Thunderbolt"),
-	REMOVE_EFFECTS("Remove Effects"),
+	GLASS_CANNON("Glass Cannon"),
 	COMETSTRIKE("Comet Strike"),
 	SWAP("Swap"),
 	ZOMBIFY("Zombify"),
@@ -20,7 +20,7 @@ public enum PlayerAbilityType {
 	FREEZE("Freeze"),
 	CONFUSION("Confusion"),
 	HUGIN_AND_MUNIN("Hugin and Munin"),
-	UNCLE_LOKI("Uncle Loki wants you");
+	UNCLE_LOKI("Uncle Loki Wants You");
 	
 	public transient final String name;
 	public transient int manaCost;
@@ -31,7 +31,7 @@ public enum PlayerAbilityType {
 	public static final int GOD_THOR = 0, GOD_ODIN = 1, GOD_HEL = 2, GOD_LOKI = 3;
 	public static PlayerAbilityType[][] GODS = {
 		{THORS_RAGE, THUNDERBOLT, COMETSTRIKE},	// Thor 
-		{REMOVE_EFFECTS, HUGIN_AND_MUNIN, ODINS_BLESSING}, // Odin 
+		{GLASS_CANNON, HUGIN_AND_MUNIN, ODINS_BLESSING}, // Odin 
 		{HELS_CURSE, CONFUSION, ZOMBIFY}, // Hel 
 		{SWAP, FREEZE, UNCLE_LOKI}, // Loki
 	};

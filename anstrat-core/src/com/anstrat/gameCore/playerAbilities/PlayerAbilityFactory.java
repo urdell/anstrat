@@ -7,8 +7,8 @@ public class PlayerAbilityFactory {
 	public static PlayerAbility createAbility(PlayerAbilityType type, Player player){
 		if (type.equals(PlayerAbilityType.THUNDERBOLT))
 			return new Thunderbolt(player);
-		else if (type.equals(PlayerAbilityType.REMOVE_EFFECTS))
-			return new RemoveEffects(player);
+		else if (type.equals(PlayerAbilityType.GLASS_CANNON))
+			return new GlassCannon(player);
 		else if (type.equals(PlayerAbilityType.COMETSTRIKE))
 			return new CometStrike(player);
 		else if (type.equals(PlayerAbilityType.SWAP))
@@ -27,6 +27,8 @@ public class PlayerAbilityFactory {
 			return new Confusion(player);
 		else if (type.equals(PlayerAbilityType.HUGIN_AND_MUNIN))
 			return new HuginAndMunin(player);
+		else if (type.equals(PlayerAbilityType.UNCLE_LOKI))
+			return new UncleLokiWantsYou(player);
 		else
 			return null;
 	}

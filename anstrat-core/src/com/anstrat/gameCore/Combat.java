@@ -81,14 +81,16 @@ public final class Combat {
 	public static int minDamage(Unit attacker, Unit defender){
 		float typeModifier = (float) DamageModification.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
 		float damageModifier = attacker.getDamageModification();
-		int damage = (int) (attacker.getAttack()*damageModifier*typeModifier*(1-randomness));
+		float damageTakenModifier = defender.getDamageTakenModification();
+		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*(1-randomness));
 		if(damage < 0) { damage = 0; } // Remove negative damage
 		return damage;
 	}
 	public static int maxDamage(Unit attacker, Unit defender){	
 		float typeModifier = (float) DamageModification.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
 		float damageModifier = attacker.getDamageModification();
-		int damage = (int) (attacker.getAttack()*damageModifier*typeModifier*(1+randomness));
+		float damageTakenModifier = defender.getDamageTakenModification();
+		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*(1+randomness));
 		if(damage < 0) { damage = 0; } // Remove negative damage
 		return damage;
 	}

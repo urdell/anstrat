@@ -3,28 +3,22 @@ package com.anstrat.animation;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
-import com.anstrat.gameCore.Player;
-import com.anstrat.gameCore.State;
-import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
-import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GMap;
 import com.anstrat.gui.GUnit;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class RemoveEffectsAnimation extends Animation {
+public class GlassCannonAnimation extends Animation {
 
 	private GUnit target;
 	private boolean started = false;
 	private float timePassed = 0;
 	com.badlogic.gdx.graphics.g2d.Animation animation = null;
 	
-	public RemoveEffectsAnimation(Unit target) {
+	public GlassCannonAnimation(Unit target) {
 		animation = Assets.getAnimation("speedup");
 		
 		this.target = GEngine.getInstance().getUnit(target);
