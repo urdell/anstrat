@@ -77,7 +77,7 @@ public class BuyUnitPopup extends Popup{
 		
 		// The silhouettes of the purchasable units
 		unitTable = new ColorTable(Color.BLUE);
-		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-down");
+		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
 		unitTable.setBackground(new NinePatchDrawable(unitTableBackgroundPatch));
 		unitTable.defaults().size(unitWidth).padLeft(unitPad).padRight(unitPad);
 		
@@ -104,7 +104,10 @@ public class BuyUnitPopup extends Popup{
 		float cardW = Main.percentWidth*85f;
 		float cardH = Main.percentHeight*60f;
 		
-		float space = (Gdx.graphics.getHeight() - cardH - unitWidth - buttonHeight - unitTableBackgroundPatch.getBottomHeight()) / 2f;
+		float space = (Gdx.graphics.getHeight() - cardH - unitWidth - buttonHeight
+				- unitTableBackgroundPatch.getBottomHeight()
+				- unitTableBackgroundPatch.getTopHeight()/4f
+				) / 2f;
 		
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty"))); // Overrides the default background with an empty one
 		this.top().add(unitTable).width(Gdx.graphics.getWidth());

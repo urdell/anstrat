@@ -17,6 +17,7 @@ import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -332,6 +333,7 @@ public class MainMenu extends MenuScreen {
     	Label players = new Label(opponent, Assets.SKIN);
     	
     	Table table = new Table(Assets.SKIN);
+    	table.setTouchable(Touchable.enabled);
     	table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("line-border-thin")));
     	table.left().pad(2f*Main.percentWidth);
     	table.defaults().left().fillX().expandX();
