@@ -87,7 +87,7 @@ public class Unit implements Serializable {
 		for(Effect effectAttack : effects){
 			
 			if(effectAttack instanceof DamageModifier){
-				damageModification += ((DamageModifier) effectAttack).damageModification(this);
+				damageModification*=((DamageModifier) effectAttack).damageModification(this);
 			}
 		}
 		
@@ -98,7 +98,7 @@ public class Unit implements Serializable {
 		for(Effect effectAttack : effects){
 			
 			if(effectAttack instanceof DamageTakenModifier){
-				damageModification += ((DamageTakenModifier) effectAttack).damageTakenModification(this);
+				damageModification *= ((DamageTakenModifier) effectAttack).damageTakenModification(this);
 			}
 		}
 		

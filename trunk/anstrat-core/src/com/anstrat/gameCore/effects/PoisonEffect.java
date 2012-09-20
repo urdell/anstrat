@@ -9,7 +9,7 @@ public class PoisonEffect extends Effect implements DamageModifier,TriggerOnTurn
 	 */
 	private static final long serialVersionUID = 1L;
 	private int nrOfRoundsTotal;
-	private int nrOfRoundsSoFar = 0;
+	private int nrOfRoundsSoFar = 1;
 	
 	public PoisonEffect(int nrOfRounds){
 		this.name = "Poison";
@@ -19,7 +19,7 @@ public class PoisonEffect extends Effect implements DamageModifier,TriggerOnTurn
 	
 	@Override
 	public float damageModification(Unit unit) { 
-		return -0.5f;
+		return 0.5f;
 	}
 
 

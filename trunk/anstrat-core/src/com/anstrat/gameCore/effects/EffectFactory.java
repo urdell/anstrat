@@ -13,7 +13,7 @@ public abstract class EffectFactory {
 		
 		switch(effectId){
 			case AP_DRAIN: return new APDrainEffect();
-			case SHIELD_WALL: return new ShieldWallEffect();
+			//case SHIELD_WALL: return new ShieldWallEffect();
 			case BERSERK: return new BerserkEffect();
 			case HPREG: return new HPRegenerationEffect();
 			default: return null;
