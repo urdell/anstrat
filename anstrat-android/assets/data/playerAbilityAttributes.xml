@@ -2,7 +2,7 @@
 <PlayerAbilities>
 	<PlayerAbilityGod god="Odin">
 		<PlayerAbility>
-			<name>Remove Effects</name>
+			<name>Glass Cannon</name>
 			<manacost>10</manacost>
 			<description>Odin removes all of target unit's effects.</description>
 		</PlayerAbility>
@@ -54,12 +54,17 @@
 		<PlayerAbility>
 			<name>Swap</name>
 			<manacost>15</manacost>
-			<description>Loke swaps the position of 2 target units</description>
+			<description>Loki swaps the position of 2 target friendly units</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Freeze</name>
 			<manacost>20</manacost>
-			<description>Loke freezes target tile. Any unit standing on the tile takes 4 damage and is freezed for 2 turns, meaning it will regenerate less AP each round.</description>
+			<description>Loki freezes target tile. Any unit standing on the tile takes 4 damage and is freezed for 2 turns, meaning it will regenerate less AP each round.</description>
+		</PlayerAbility>
+		<PlayerAbility>
+			<name>Uncle Loki Wants You</name>
+			<manacost>40</manacost>
+			<description>Loki takes control over target enemy unit for 1 round. Also refills target unit's AP.</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 </PlayerAbilities>
