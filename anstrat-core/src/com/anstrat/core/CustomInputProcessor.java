@@ -5,6 +5,7 @@ import com.anstrat.gui.SelectionHandler;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
+import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.menu.MenuScreen;
 import com.anstrat.popup.Popup;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class CustomInputProcessor extends InputAdapter {
@@ -51,6 +53,9 @@ public class CustomInputProcessor extends InputAdapter {
 					return true;
 				}
 				else if (screen instanceof MenuScreen && ((MenuScreen)screen).textFieldSelected() && keycode==Input.Keys.BACKSPACE) {
+					return true;
+				}
+				else if (screen instanceof MapEditor && MapEditor.getInstance().userInterface.getKeyboardFocus() instanceof TextField && keycode==Input.Keys.BACKSPACE) {
 					return true;
 				}
 				else if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE || (keycode == Input.Keys.BACKSPACE && Gdx.app.getType() == ApplicationType.Desktop)) {
