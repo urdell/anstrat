@@ -10,7 +10,6 @@ import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GTile;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.guiComponent.Row;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -145,6 +144,30 @@ public class MapEditorUI extends UI {
 		tblChangeOwner.row();
 		tblChangeOwner.add(tblChangeOwnerInner);
 		
+		
+		//Save map table
+		final Table tblSaveMap = new Table(Assets.SKIN);
+		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
+		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				String mapName = saveMapTextfield.getText();
+				if(mapName.length() > 0){
+					MapEditor.getInstance().saveMap(mapName);
+					showPanel(null, false);
+					saveMapTextfield.setText("");
+				}
+			}
+		});
+		tblSaveMap.defaults().minSize(1);
+		tblSaveMap.center().add("Save map").colspan(2);
+		tblSaveMap.row();
+		tblSaveMap.left().add(saveMapTextfield).fillX().expandX().height(bsize);
+		tblSaveMap.right().add(saveMapOKButton).width(bsize*2).height(bsize);
+		tblSaveMap.debug();
+		
+		
+		
 		/**
 		 * PERMANENT BUTTONS
 		 */
@@ -195,7 +218,7 @@ public class MapEditorUI extends UI {
 				new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	popupSaveMap.show();
+            	showPanel(tblSaveMap,tblSaveMap.getParent()==null);
             }
         });
 		
@@ -224,26 +247,6 @@ public class MapEditorUI extends UI {
 		/**
 		 * POPUPS
 		 */
-		popupSaveMap = new Popup("Save map", ComponentFactory.createTextField("Map name", false));
-		
-		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
-		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				String mapName = saveMapTextfield.getText();
-				if(mapName.length() > 0){
-					MapEditor.getInstance().saveMap(mapName);
-					Popup.getCurrentPopup().clearInputs();
-					Popup.getCurrentPopup().close();
-				}
-			}
-		});
-		
-		popupSaveMap.setComponents(
-				saveMapTextfield,
-				new Row(saveMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
-		
-				
 		Table table1 = new Table();
 		Table table2 = new Table();
 		
@@ -295,16 +298,53 @@ public class MapEditorUI extends UI {
 				Popup.getCurrentPopup().close();
 			}
 		});
+		popupNewMap = new Popup("New map");
+		Button newMapOKButton = ComponentFactory.createButton("Ok");
+		Table flickTable = new Table();
+//		final ScrollPane scroll = new ScrollPane(table1);
+//		scroll.setFlickScroll(true);
+//		scroll.addListener(new InputListener() {
+//		        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//		                System.out.println("down");
+//		                return true;
+//		        }
+//		        
+//		        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//		                System.out.println("up");
+//		                scroll.get
+//		        }
+//			});
+//		flickTable.add(scroll).height(MenuScreen.BUTTON_HEIGHT).width(MenuScreen.BUTTON_WIDTH);
+		ArrayList<String> sizes = new ArrayList<String>();
+		for(int i =Map.MIN_SIZE; i<=Map.MAX_SIZE; i++)
+			sizes.add(String.valueOf(i));
+
+		SelectBoxStyle sbst = new SelectBoxStyle (Assets.UI_FONT, Color.WHITE,
+				new NinePatchDrawable(Assets.SKIN.getPatch("single-border")), 
+				new NinePatchDrawable(Assets.SKIN.getPatch("double-border")),
+				new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
+		SelectBox box = new SelectBox(sizes.toArray(new String[0]),sbst);
+		//box.s
+
+		flickTable.add(box);//.width(Main.percentWidth*30).height(Main.percentHeight*10);
+		
 		
 		popupNewMap.setComponents(flickTable,
 		        new Row(newMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
 		        */
 	}
 	
+	/**
+	 * Updates 'size' variable, based on screen width.
+	 * @param width
+	 */
 	private void updateSize(float width) {
 		size = width / 6f;
 	}
 
+	/**
+	 * Shows the change owner panel.
+	 */
 	public void showChangeOwner(){
 		showPanel(tblChangeOwner,true);
 	}
@@ -318,9 +358,10 @@ public class MapEditorUI extends UI {
 		panelTable.clear();
 		panelTable.setVisible(show);
 		if(show && contents!=null){
-			panelTable.add(contents).fill().pad(Main.percentHeight);
+			panelTable.add(contents).fill().expand().pad(Main.percentHeight);
 			panelTable.setHeight(contents.getPrefHeight());
 		}
+		this.unfocusAll();
 	}
 	
 	/**
