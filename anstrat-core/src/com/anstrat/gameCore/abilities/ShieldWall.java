@@ -1,24 +1,63 @@
 package com.anstrat.gameCore.abilities;
 
+import com.anstrat.animation.Animation;
+import com.anstrat.animation.HealAnimation;
 import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.effects.ShieldWallEffect;
+import com.anstrat.geography.TileCoordinate;
+import com.anstrat.gui.GEngine;
+import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.HealRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class ShieldWall extends Ability {
 
 	
-	public ShieldWall() {
-		super("name", "description",3);
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
-	 * 
+	 * Halves damage when activated
+	 * Does not affect abilities at the moment
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final int nrOfRounds = 1;
+	
+	
+	public ShieldWall() {
+		super("Shield *Wall", "Halves all incoming damage for the duration of the turn",2);
+	}
 
+	public boolean isAllowed(Unit source){
+		return super.isAllowed(source);
+	}
+	
+	public void activate(Unit source){
+		super.activate(source);
+		ShieldWallEffect shieldWallEffect = new ShieldWallEffect(nrOfRounds);
+		source.effects.add(shieldWallEffect);
+		
+		Animation healAnimation = new HealAnimation(source, source);
+		GEngine.getInstance().animationHandler.enqueue(healAnimation);
+	}
+	
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, int position){
+		ConfirmRow nameRow = new TextRow(name);
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow healRow = new HealRow(1, 1/2);
+		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, healRow);
+	}
+	
+	
 	@Override
 	public String getIconName(Unit source) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!isAllowed(source)) return "heal-button-gray";
+		if(GEngine.getInstance().selectionHandler.selectionType == SelectionHandler.SELECTION_TARGETED_ABILITY){
+			return "heal-button-active";
+		}
+		return "heal-button";
 	}
 
 }

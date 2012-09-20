@@ -93,6 +93,7 @@
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
 		<cost>22</cost>
+		<ability1>6</ability1><!-- Shield Wall -->
 		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
 		<idleImage>swordsman-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
