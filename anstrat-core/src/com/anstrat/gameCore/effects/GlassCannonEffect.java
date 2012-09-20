@@ -16,8 +16,7 @@ public class GlassCannonEffect extends Effect implements DamageModifier, DamageT
 
 	@Override
 	public float damageTakenModification(Unit unit) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1.33f;
 	}
 
 }

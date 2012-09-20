@@ -2,7 +2,7 @@ package com.anstrat.gameCore.effects;
 
 import com.anstrat.gameCore.Unit;
 
-public class FreezeEffect extends Effect implements TriggerOnTurnStart, TriggerOnTurnEnd {
+public class FreezeEffect extends Effect implements APRegenerationModifier, TriggerOnTurnEnd {
 	/**
 	 * 
 	 */
@@ -15,10 +15,6 @@ public class FreezeEffect extends Effect implements TriggerOnTurnStart, TriggerO
 		this.nrOfRoundsTotal = nr;
 		this.iconName = "sword";
 	}
-	@Override
-	public void triggerOnTurnStart(Unit u) {
-		u.currentAP -= ap;
-	}
 	
 	@Override
 	public void triggerOnTurnEnd(Unit u) {
@@ -29,5 +25,10 @@ public class FreezeEffect extends Effect implements TriggerOnTurnStart, TriggerO
 			nrOfRoundsSoFar++;
 		}
 		
+	}
+
+	@Override
+	public int APRegModication() {
+		return -ap;
 	}
 }

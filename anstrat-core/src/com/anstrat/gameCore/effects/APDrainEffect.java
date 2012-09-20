@@ -14,8 +14,6 @@ public class APDrainEffect extends Effect implements TriggerOnAttack {
 	
 	@Override
 	public void triggerOnAttack(Unit source, Unit target) {
-		target.currentAP -= 1; // drain 1 AP
-		
+		target.currentAP = Math.max(0, target.currentAP-1); // drain 1 AP
 	}
-
 }

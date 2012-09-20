@@ -33,12 +33,15 @@ public class GameManager {
 		return gi;
 	}
 	
-	/**
-	 * @param map a map or null to generate a random map
-	 * @return
-	 */
 	public GameInstance createHotseatGame(Map map, int player1god, int player1team, int player2god, int player2team){
 		return createHotseatGame(map, 2, new int[]{player1god, player2god}, new int[]{player1team, player2team});
+	}
+	
+	public GameInstance createHotseatGame(boolean fog, int sizeX, int sizeY, int player1god, int player1team,
+			int player2god, int player2team) {
+		Map map = new Map(sizeX, sizeY, new Random());
+		map.fogEnabled = fog;
+		return createHotseatGame(map, player1god, player1team, player2god, player2team);
 	}
 	
 	public GameInstance createHotseatGame(Map map, int numPlayers, int[] gods, int[] teams){

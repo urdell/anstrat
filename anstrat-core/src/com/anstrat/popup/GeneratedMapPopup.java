@@ -35,12 +35,13 @@ public class GeneratedMapPopup extends Popup {
 			}
 		};
 		
-		String[] strs = {"Random","Large","Medium","Small"};
+		String[] strs = {RANDOM,LARGE,MEDIUM,SMALL};
 		for(String str : strs){
 			Table table = new Table();
 			table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 			table.defaults().align(Align.left).height(4f*Main.percentHeight);
 			table.add(new Label(str,Assets.SKIN));
+			table.setName(str);
 			list.add(table).fillX().expandX().height(10f*Main.percentHeight);
 			list.row();
 			
@@ -59,7 +60,7 @@ public class GeneratedMapPopup extends Popup {
 				ComponentFactory.createButton("Ok", new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
-							handler.sizeSelected("TODO - FIX THIS");	//selected.name
+							handler.sizeSelected(selected.getName());	//selected.name
 							Popup.getCurrentPopup().close();
 						}
 					}),
