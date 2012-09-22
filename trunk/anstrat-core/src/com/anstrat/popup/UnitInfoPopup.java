@@ -1,7 +1,6 @@
 package com.anstrat.popup;
 
 import com.anstrat.core.Assets;
-import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.abilities.Ability;
@@ -9,9 +8,13 @@ import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.guiComponent.ColorTable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 /**
@@ -19,11 +22,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
  */
 public class UnitInfoPopup extends Popup {
 
-	private Table effectsTable, abilityTable;
+	private Table effectsTable, abilityTable, descriptionTable;
 	
 	private UnitTypeCard card;
 	private ColorTable bottomTable;
-
+	
+	private Label description, name, other;
+	
 	public UnitInfoPopup() {
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("black")));
 		
@@ -31,21 +36,37 @@ public class UnitInfoPopup extends Popup {
 		
 		effectsTable = new Table(Assets.SKIN);
 		abilityTable = new Table(Assets.SKIN);
+		descriptionTable = new Table(Assets.SKIN);
+		name = new Label("",Assets.SKIN);
+		description = new Label("", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE));
+		other = new Label("", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE));
+		description.setWrap(true);
+		descriptionTable.defaults().top().left();
+		descriptionTable.add(name).height(Main.percentHeight*3);
+		descriptionTable.row();
+		descriptionTable.add(description).fillX().expandX();
+		descriptionTable.row();
+		descriptionTable.add(other).height(Main.percentHeight*3);
+		descriptionTable.row();
+		descriptionTable.add().fill().expand();
 		
 		bottomTable = new ColorTable(Color.WHITE);
 		bottomTable.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("border-thick-updown")));
-		bottomTable.add(abilityTable).fill();
-//		bottomTable.row();
-//		bottomTable.add(effectsTable);
+		bottomTable.defaults().padRight(Main.percentHeight).padLeft(Main.percentHeight);
+		bottomTable.add("Abilities:").height(3*Main.percentHeight).expandX().fillX();
+		bottomTable.add("Effects:").height(3*Main.percentHeight).expandX().fillX();
+		bottomTable.row();
+		bottomTable.add(abilityTable).fillX().expandX().uniform();
+		bottomTable.add(effectsTable).fillX().expandX().uniform();
+		bottomTable.row();
+		bottomTable.add(descriptionTable).colspan(2).fill().expand();
 		bottomTable.debug();
 		
 		this.defaults().top().left();
-		this.padBottom(2*Main.percentHeight).padTop(2*Main.percentHeight);
+		this.padBottom(2*Main.percentHeight);
 		this.add(card).height(65 * Main.percentHeight).width(Gdx.graphics.getWidth());
 		this.row();
-		this.add(bottomTable).width(Gdx.graphics.getWidth()).height(30 * Main.percentHeight);
-		
-		this.addListener(Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		this.add(bottomTable).width(Gdx.graphics.getWidth()).height(35 * Main.percentHeight);
 	}
 	
 	/**
@@ -56,59 +77,60 @@ public class UnitInfoPopup extends Popup {
 		card.setUnit(unit);
 		bottomTable.setColor(card.getBackgroundColor());
 		
+		// Reset descriptions
+		this.name.setText("");
+		this.description.setText("Click on abilitiy / effect icons to show info. \nExit with back key / ESC / backspace.");
+		this.other.setText("");
+		
 		// Effects
-//		effectsTable.clear();
-//		effectsTable.defaults().left();
-//		effectsTable.add("Effects:");
-//		effectsTable.row();
-//		
-//		for(int i = 0; i < unit.effects.size(); i++){
-//			Effect effect = unit.effects.get(i);
-//			
-//			Image icon = new Image(Assets.getTextureRegion(effect.iconName));
-//			Label name = new Label(effect.name, Assets.SKIN);
-//			Label description = new Label(" -" + effect.description, Assets.SKIN);
-//			
-//			Table inner = new Table();
-//			inner.add(icon).height(3f*Main.percentHeight).width(5f*Main.percentWidth).padRight(Main.percentWidth);
-//			inner.add(name).expandX().fillX();
-//
-//			effectsTable.add(inner);
-//			effectsTable.row();
-//			effectsTable.add(description);
-//			effectsTable.row();
-//		}
+		effectsTable.clear();
+		effectsTable.defaults().top().left();
+		
+		for(final Effect e : unit.effects){
+			Image button = new Image(Assets.getTextureRegion(e.iconName));
+			button.setTouchable(Touchable.enabled);
+			effectsTable.add(button).size(10f*Main.percentHeight).padRight(Main.percentWidth);
+			button.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					showInfo(false, e.name, e.description, "");
+				}
+			});
+		}
+		effectsTable.add().fill().expand();
 		
 		// Abilities
 		abilityTable.clear();
-		abilityTable.defaults().top().left().expandX().fillX();
-		abilityTable.add("Abilities:").height(5*Main.percentHeight);
-		abilityTable.row();
+		abilityTable.defaults().top().left();
 		
-		for(Ability a : unit.abilities){
-			Table ability = new Table();
-			
-			Image icon = new Image(Assets.getTextureRegion(a.getIconName(unit)));
-			Label name = new Label(a.name, Assets.SKIN);
-			Label description = new Label(" -" + a.description, Assets.SKIN);
-			description.setWrap(true);
-			
-			Table inner = new Table();
-			inner.defaults().top().left();
-			inner.add(icon).size(3f*Main.percentHeight).padRight(Main.percentWidth);
-			inner.add(name);
-
-			ability.add(inner);
-			ability.row();
-			ability.add(description).fill().expand();
-			abilityTable.add(ability).height(Main.percentHeight*10);
-			abilityTable.row();
+		for(final Ability a : unit.abilities){
+			Image button = new Image(Assets.getTextureRegion(a.getIconName(unit)));
+			button.setTouchable(Touchable.enabled);
+			abilityTable.add(button).size(10f*Main.percentHeight).padRight(Main.percentWidth);
+			button.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					showInfo(true, a.name, a.description, "Cost: "+a.apCost);
+				}
+			});
 		}
 		
 		abilityTable.add().fill().expand();
 		
-		abilityTable.debug();
-		
 		this.show();
+	}
+	
+	/**
+	 * Shows info for the selected effect / ability.
+	 * TODO: Mark selected icon somehow.
+	 * @param isAbility
+	 * @param name
+	 * @param description
+	 */
+	private void showInfo(boolean isAbility, String name, String description, String other){
+		this.name.setText( (isAbility?"Ability: ":"Effect: ") + name );
+		this.description.setText(description);
+		this.other.setText(other);
+		descriptionTable.layout();
 	}
 }
