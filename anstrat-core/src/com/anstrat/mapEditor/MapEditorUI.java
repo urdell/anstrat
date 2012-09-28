@@ -10,6 +10,7 @@ import com.anstrat.gui.GBuilding;
 import com.anstrat.gui.GTile;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.guiComponent.Row;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -145,26 +146,26 @@ public class MapEditorUI extends UI {
 		tblChangeOwner.add(tblChangeOwnerInner);
 		
 		
-		//Save map table
-		final Table tblSaveMap = new Table(Assets.SKIN);
-		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
-		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				String mapName = saveMapTextfield.getText();
-				if(mapName.length() > 0){
-					MapEditor.getInstance().saveMap(mapName);
-					showPanel(null, false);
-					saveMapTextfield.setText("");
-				}
-			}
-		});
-		tblSaveMap.defaults().minSize(1);
-		tblSaveMap.center().add("Save map").colspan(2);
-		tblSaveMap.row();
-		tblSaveMap.left().add(saveMapTextfield).fillX().expandX().height(bsize);
-		tblSaveMap.right().add(saveMapOKButton).width(bsize*2).height(bsize);
-		tblSaveMap.debug();
+		//Save map table	-- covered by keyboard, need to fix before using
+//		final Table tblSaveMap = new Table(Assets.SKIN);
+//		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
+//		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				String mapName = saveMapTextfield.getText();
+//				if(mapName.length() > 0){
+//					MapEditor.getInstance().saveMap(mapName);
+//					showPanel(null, false);
+//					saveMapTextfield.setText("");
+//				}
+//			}
+//		});
+//		tblSaveMap.defaults().minSize(1);
+//		tblSaveMap.center().add("Save map").colspan(2);
+//		tblSaveMap.row();
+//		tblSaveMap.left().add(saveMapTextfield).fillX().expandX().height(bsize);
+//		tblSaveMap.right().add(saveMapOKButton).width(bsize*2).height(bsize);
+//		tblSaveMap.debug();
 		
 		
 		
@@ -218,7 +219,8 @@ public class MapEditorUI extends UI {
 				new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	showPanel(tblSaveMap,tblSaveMap.getParent()==null);
+            	//showPanel(tblSaveMap,tblSaveMap.getParent()==null);
+            	popupSaveMap.show();
             }
         });
 		
@@ -247,6 +249,27 @@ public class MapEditorUI extends UI {
 		/**
 		 * POPUPS
 		 */
+		popupSaveMap = new Popup("Save map", ComponentFactory.createTextField("Map name", false));
+
+		final TextField saveMapTextfield = ComponentFactory.createTextField("Map name", false);
+		saveMapTextfield.setHeight(Main.percentHeight*10);
+		Button saveMapOKButton = ComponentFactory.createButton("Ok", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				String mapName = saveMapTextfield.getText();
+				if(mapName.length() > 0){
+					MapEditor.getInstance().saveMap(mapName);
+					Popup.getCurrentPopup().clearInputs();
+					Popup.getCurrentPopup().close();
+				}
+			}
+		});
+		
+		popupSaveMap.setComponents(
+				saveMapTextfield,
+				new Row(saveMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
+
+		
 		Table table1 = new Table();
 		Table table2 = new Table();
 		
