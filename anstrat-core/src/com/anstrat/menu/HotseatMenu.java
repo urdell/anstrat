@@ -1,7 +1,5 @@
 package com.anstrat.menu;
 
-import java.awt.Dimension;
-
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
@@ -258,5 +256,17 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		randomServerdMap = false;
 		
 		//TODO: Set map size etc.
+	}
+	
+	/**
+	 * Custom dimension class. Can't use java.awt on android. 
+	 */
+	private class Dimension{
+		public int width, height;
+		
+		public Dimension(int w, int h){
+			this.width = w;
+			this.height = h;
+		}
 	}
 }
