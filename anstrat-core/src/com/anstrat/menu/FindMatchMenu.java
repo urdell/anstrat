@@ -64,7 +64,8 @@ public class FindMatchMenu extends MenuScreen {
 						team, 
 						fog.isChecked(),
 						mapSelecter.getMapSelection(), 
-						mapSelecter.getMapName()));
+						mapSelecter.getMapName(), 
+						null ));
 			}
 		});
 		

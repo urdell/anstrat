@@ -242,6 +242,7 @@ public final class Assets {
 		
 		//SKIN.setTexture(new Texture(Gdx.files.internal("skin.png")));
 		SKIN.load(Gdx.files.internal("data/skin.json"));
+		System.out.println("skin!");
 	}
 	
 	private static void loadFonts(){
@@ -267,6 +268,10 @@ public final class Assets {
 			generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Crimson-Bold.otf"));//*/
 			UI_FONT   = generator.generateFont(uiSize, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|?-+=()*&.;:,{}´`’/", false);
 			generator.dispose();
+
+			// Reduce margin to next line to make text look better.
+			UI_FONT.getData().descent *= 1f/5; // Works, but don't know how.
+
 			
 			generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Crimson-Bold.otf"));//*/
 			UI_FONT_BIG   = generator.generateFont(uiBigSize, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|?-+=()*&.;:,{}´`’/", false);
