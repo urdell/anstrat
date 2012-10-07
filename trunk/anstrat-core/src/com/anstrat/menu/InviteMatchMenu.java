@@ -87,8 +87,9 @@ public class InviteMatchMenu extends MenuScreen {
 						god, 
 						team,
 						fog.isChecked(),
-						mapSelecter.getMapSelection(), 
-						mapSelecter.getMapName()));
+						mapSelecter.getMapSelection(), 	// TODO doublecheck that this will be the same to all clients and that a correct map can be found using this info.
+						mapSelecter.getMapName(), 
+						null));			// TODO: Set when adding custom maps.
 		   }
 		});
 		
