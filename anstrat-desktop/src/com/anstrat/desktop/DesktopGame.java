@@ -53,8 +53,11 @@ public class DesktopGame {
         settings.defaultFilterMag = TextureFilter.Linear;
         settings.defaultFilterMin = TextureFilter.Linear;
         TexturePacker.process(settings, assetsFolder + "/textures", assetsFolder + "/textures_packed");
-        //TexturePacker.process(settings,  "textures", "textures_packed");
-        //TexturePacker.process(settings,  "../../anstrat-android/assets/textures", "../../anstrat-android/assets/textures_packed");
+        TexturePacker.process(settings, assetsFolder + "/loading", assetsFolder + "/loading_packed");
+
+        // VERSION 2	-- TODO: idea - move textures folder outside assets to avoid packing it with apk (only packed textures used anyway...)
+        //TexturePacker2.process(assetsFolder + "/loading", assetsFolder + "/loading_packed", "pack");
+        //TexturePacker2.process(assetsFolder + "/textures", assetsFolder + "/textures_packed", "pack");
 	}
 	
 	private static void handleArguments(String[] args, LwjglApplicationConfiguration config){
