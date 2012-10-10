@@ -27,21 +27,18 @@ import com.esotericsoftware.tablelayout.Cell;
 public class Popup extends Window {
 	
 	public static final float WIDTH = 90f*Main.percentWidth;
-	
-	private static PopupGestureHandler gestureHandler;
-	private static PopupInputMultiplexer inputMultiplexer;
-	private static Stage stage;
-	private static Stack stack;
-	protected static Sprite overlay;
-	
-	public static UnitInfoPopup unitInfoPopup;
-	
 	public static final ClickListener POPUP_CLOSE_BUTTON_HANDLER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			getCurrentPopup().close();
 		}
 	};
+	
+	private static PopupGestureHandler gestureHandler;
+	private static PopupInputMultiplexer inputMultiplexer;
+	private static Stage stage;
+	private static Stack stack;
+	protected static Sprite overlay;
 	
 	public boolean handlesBackspace = false;
 	public boolean drawOverlay = true;
@@ -60,7 +57,6 @@ public class Popup extends Window {
 
 		this.align(Align.top);
 		setComponents(actors);
-		this.layout();
 	}
 	
 	/**
@@ -77,8 +73,12 @@ public class Popup extends Window {
 	    this.clear();
 		for(Actor a : actors)
 			add(a);
+		this.layout();
 	}
 	
+	/**
+	 * Custom add method. Sets standard actor sizes, makes labels wrap.
+	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Cell add (Actor actor) {
@@ -86,12 +86,16 @@ public class Popup extends Window {
 		Cell cell = super.add(actor).width(WIDTH).align(Align.center).expandX().fillX();
 		if(actor instanceof TextButton)
 			cell.height(Main.percentHeight*8f);
+		else if(actor instanceof TextField)
+			cell.height(Main.percentHeight*10f);
 		else if(actor instanceof Label)
 			((Label)actor).setWrap(true);
 		return cell;
 	}
 	
-	/** Clears all text inputs in the popup. */
+	/**
+	 * Clears all text inputs.
+	 */
 	public void clearInputs(){
 		for(Actor a : this.getChildren()){
 			if(a instanceof TextField)
@@ -113,12 +117,12 @@ public class Popup extends Window {
 	}
 	
 	/**
-	 * Close the popup
+	 * Closes the popup, returns control to game if stack is empty.
 	 */
 	public void close(){
 		stack.removeActor(this);
 
-		if(stack.getChildren().size==0){		//stack.getActors().isEmpty()
+		if(stack.getChildren().size==0){
 			// Last Popup gone - return control
 			gestureHandler.setOverridesInput(false);
 			inputMultiplexer.setOverridesInput(false);
@@ -132,7 +136,8 @@ public class Popup extends Window {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		
 		// Only let the currently active popup draw the overlay
-		if(drawOverlay && getCurrentPopup() == this) overlay.draw(batch);
+		if(drawOverlay && getCurrentPopup() == this)
+			overlay.draw(batch);
 		super.draw(batch, parentAlpha);
 		
 		// Only actually draws debug if it's enabled on the table layout
@@ -152,7 +157,7 @@ public class Popup extends Window {
 	}
 	
 	public static void initPopups(Stage stage){
-		gestureHandler = new PopupGestureHandler();
+		gestureHandler   = new PopupGestureHandler();
 		inputMultiplexer = new PopupInputMultiplexer();
 		inputMultiplexer.addProcessor(stage);
 		
@@ -160,23 +165,21 @@ public class Popup extends Window {
 		Main.getInstance().gestureMultiplexer.addProcessor(0, gestureHandler);
 		Main.getInstance().addProcessor(0, inputMultiplexer);
 		
-		//popupQueue = new ArrayList<Popup>();
 		Popup.stage = stage;
-		
+	
 		Popup.stack = new Stack();
 		stage.addActor(Popup.stack);
-		
+
 		overlay = new Sprite(Assets.WHITE);
-		
 		Color bcolor = Color.DARK_GRAY;
 		bcolor.a = 0.8f;
 		overlay.setColor(bcolor);
-		
-		unitInfoPopup = new UnitInfoPopup();
 	}
 	
 	/**
-	 * Shows a generic {@link Popup}
+	 * Shows a generic {@link Popup} containing only a text message.
+	 * @param title
+	 * @param message
 	 */
 	public static void showGenericPopup(String title, String message){
 		Button ok = ComponentFactory.createButton("Ok", POPUP_CLOSE_BUTTON_HANDLER);
@@ -192,11 +195,11 @@ public class Popup extends Window {
 	public static void disposePopups(){
 		overlay = null;
 		gestureHandler = null;
-		unitInfoPopup = null;
+		inputMultiplexer = null;
 	}
 	
 	public static Popup getCurrentPopup(){
-		Array<Actor> actors = stack.getChildren();//stack.getActors();
+		Array<Actor> actors = stack.getChildren();
 		int size = actors.size;
 		return size == 0 ? null : (Popup) actors.get(size - 1);
 	}

@@ -20,6 +20,7 @@ import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
+import com.anstrat.popup.UnitInfoPopup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -79,6 +80,8 @@ public class GameUI extends UI {
 	
 	private AbilityPopup[] abilityPopups = new AbilityPopup[PlayerAbilityType.GODS.length];
 	private AbilityPopup openAbilityPopup;
+	
+	private UnitInfoPopup unitInfoPopup;
 
 	public GameUI(OrthographicCamera camera){
 		super(Main.getInstance().batch, camera);
@@ -187,11 +190,13 @@ public class GameUI extends UI {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                 	if(GEngine.getInstance().selectionHandler.selectedUnit!=null)
-                		Popup.unitInfoPopup.show(GEngine.getInstance().selectionHandler.selectedUnit);
+                		unitInfoPopup.show(GEngine.getInstance().selectionHandler.selectedUnit);
                 }
             } );
         
         addActor(bottomPanel);
+        
+        unitInfoPopup = new UnitInfoPopup();
         
         //Set sizes and positions initially so that others can access that info.
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
