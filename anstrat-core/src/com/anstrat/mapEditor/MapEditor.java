@@ -1,5 +1,7 @@
 package com.anstrat.mapEditor;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.compression.Lzma;
 
 public class MapEditor implements Screen {
 	
@@ -105,9 +108,14 @@ public class MapEditor implements Screen {
 			FileHandle fh = Gdx.files.external("soimaps/"+filename+".smap");
 			System.out.println(fh.file().getAbsolutePath());
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(fh.write(false));
-				oos.writeObject(MapEditor.getInstance().map);
-				oos.close();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			    ObjectOutputStream oos = new ObjectOutputStream(baos);
+			    oos.writeObject(MapEditor.getInstance().map);
+			    oos.flush();
+			    oos.close();
+				ObjectOutputStream output = new ObjectOutputStream(fh.write(false));
+				Lzma.compress(new ByteArrayInputStream(baos.toByteArray()), output);
+				output.close();
 			} catch (IOException e) {
 				Popup.showGenericPopup("Error", "Could not save map.");
 				e.printStackTrace();

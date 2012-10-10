@@ -23,8 +23,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -59,10 +57,8 @@ public class Main extends Game implements ApplicationListener {
 	private final CustomGestureDetector gestureDetector;
 	
 	public SpriteBatch batch;
-	private Stage overlayStage;	//for drawing transition effects and popups.
+	public Stage overlayStage;	//for drawing transition effects and popups.
 	private static Main me;
-	
-	public final AssetManager manager;
 	
 	public static synchronized Main getInstance(){
 		if(me == null){
@@ -72,7 +68,6 @@ public class Main extends Game implements ApplicationListener {
 	}
 
 	private Main(){
-		manager = new AssetManager();
 		inputMultiplexer = new InputMultiplexer();
 		inputProcessorsToBeRemoved = new LinkedList<InputProcessor>();
 		
@@ -98,6 +93,16 @@ public class Main extends Game implements ApplicationListener {
 		percentWidth = ((float)Gdx.graphics.getWidth())/100f;
 		percentHeight = ((float)Gdx.graphics.getHeight())/100f;
 		
+		// Create the single instance of sprite batch
+		batch = new SpriteBatch();
+		overlayStage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, batch);
+		
+		// Init menu, show splash
+		Gdx.graphics.setTitle("Vengeful Vikings (Beta)");
+		setScreen(SplashScreen.getInstance());
+	}
+	
+	public void init(){
 		// Music 
 		AudioAssets.load();
 		
@@ -121,10 +126,6 @@ public class Main extends Game implements ApplicationListener {
 		networkEngine = new Network(NETWORK_HOST, NETWORK_PORT, Gdx.files.local("login.bin"));
 		network = new NetworkController(networkEngine);
 		
-		// Create the single instance of sprite batch
-		batch = new SpriteBatch();
-		overlayStage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, batch);
-		
 		Popup.initPopups(overlayStage);
 		
 		// Setup input and gesture processing
@@ -132,23 +133,18 @@ public class Main extends Game implements ApplicationListener {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		inputMultiplexer.addProcessor(new CustomInputProcessor());
 		
-		// Init menu, show splash
-		MainMenu.getInstance();
-		Gdx.graphics.setTitle("Vengeful Vikings (Beta)");
-		setScreen(SplashScreen.getInstance());
-		
 		networkEngine.start();
 		
 		// Set the desktop application icon
-		FileHandle iconFile = Gdx.files.internal("icon.png");
+		/*FileHandle iconFile = Gdx.files.internal("icon.png");			TODO: FIx this for new version of libgdx
 		
 		if(iconFile.exists()){
-			//Gdx.graphics.setIcon(new Pixmap[]{new Pixmap(iconFile)});		//FIXFIXNEWGDX
+			//Gdx.graphics.setIcon(new Pixmap[]{new Pixmap(iconFile)});
 			
 		}
 		else{
 			Gdx.app.log("Main", String.format("Warning: Could not find app icon '%s'.", iconFile));
-		}
+		}*/
 	}
 
 	@Override

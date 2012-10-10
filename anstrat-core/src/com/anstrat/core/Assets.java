@@ -1,5 +1,7 @@
 package com.anstrat.core;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import com.anstrat.gui.GTile;
 import com.anstrat.gui.GUnit.AnimationState;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
@@ -31,6 +34,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.compression.Lzma;
 
 public final class Assets {
 
@@ -60,17 +64,26 @@ public final class Assets {
 	public static Texture[] unitTeamIndicators;
 	private static TextureAtlas atlas;
 	private static AnimationLoader animationLoader;
+	public static AssetManager manager;
 	public static Color apTextColor = new Color(0.4f, 1f, 1f, 1f);
+
+	public static void startLoadingTextures(){
+		manager = new AssetManager();
+		manager.load("textures_packed/pack", TextureAtlas.class);	//pack.atlas
+	}
 	
 	public static void load(){
 		Gdx.app.log("Assets", "load()");
+
+		atlas = manager.get("textures_packed/pack", TextureAtlas.class);	//pack.atlas
 		
-		atlas = new TextureAtlas("textures_packed/pack");
 		animationLoader = new AnimationLoader(Gdx.files.internal("data/animations.xml"), atlas);
 		terrainMeshes = new HexagonMesh[2][];
 		loadFonts();
 		loadUnmanagedTextures();
 		loadSkin();
+		
+		
 		
 		// Axe throw animation
 		thrownAxeAnimation = new Animation(1f/6f, 
@@ -80,7 +93,7 @@ public final class Assets {
 		
 		unitAnimations = new HashMap<UnitType, Pair<Animation[],boolean[]>>();
 	}
-	
+
 	public static void dispose(){
 		STANDARD_FONT.dispose();
 		MENU_FONT.dispose();
@@ -98,6 +111,8 @@ public final class Assets {
 		SKIN.dispose();
 		WHITE.dispose();
 		atlas.dispose();
+		
+		manager.dispose();
 		
 		unitTeamIndicators = null;
 		atlas = null;
@@ -135,7 +150,6 @@ public final class Assets {
 		map.fill();
 		
 		WHITE = new Texture(map);
-		//WHITE.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		map.dispose();
 		
 		// Circle team indicators
@@ -170,7 +184,10 @@ public final class Assets {
 		SKIN.add("default-font", Assets.STANDARD_FONT); 
 		SKIN.add("menu-font", Assets.MENU_FONT);
 		SKIN.add("ui-font", Assets.UI_FONT);
+
+		//SKIN.add("single-border", atlas.createPatch("border-thin"));		//TEXTPACK2
 		SKIN.add("single-border", new NinePatch(Assets.getTextureRegion("border-thin"),15,15,15,15));
+
 		NinePatch singleBorderWhite = new NinePatch(Assets.getTextureRegion("border-thin-white"),15,15,15,15);
 		SKIN.add("single-border-white", singleBorderWhite);
 		TextureRegion line = Assets.getTextureRegion("white-line-hard");
@@ -185,10 +202,11 @@ public final class Assets {
 				null,null,null,
 				null,null,null,
 				null,singleBorderWhiteBottomCenter,null));
-		SKIN.add("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
-		NinePatch borderThick = new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20);
 		
-		SKIN.add("double-border", borderThick);
+		//SKIN.add("default-window", atlas.createPatch("border-window"));		//TEXTPACK2
+		//SKIN.add("double-border", atlas.createPatch("border-thick"));			//TEXTPACK2
+		SKIN.add("default-window", new NinePatch(Assets.getTextureRegion("border-window"),20,20,51,20));
+		SKIN.add("double-border", new NinePatch(Assets.getTextureRegion("border-thick"),20,20,20,20));
 		
 		TextureRegion borderThickBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
 		TextureRegion borderThickTopCenter = NinePatchUtils.getTopCenter(Assets.getTextureRegion("border-thick"), 20, 20, 20, 20);
@@ -201,11 +219,11 @@ public final class Assets {
 				null,null,null,
 				null,null,null,
 				null,borderThickBottomCenter,null));
-		SKIN.add("button-up", new NinePatch(Assets.getTextureRegion("button-available")));
-		SKIN.add("button-down", new NinePatch(Assets.getTextureRegion("button-pressed")));
+		SKIN.add("button-up",       new NinePatch(Assets.getTextureRegion("button-available")));
+		SKIN.add("button-down",     new NinePatch(Assets.getTextureRegion("button-pressed")));
 		SKIN.add("button-disabled", new NinePatch(Assets.getTextureRegion("button-unavailable")));
-		SKIN.add("check-on", new TextureRegion(Assets.getTextureRegion("check-on")));
-		SKIN.add("check-off", new TextureRegion(Assets.getTextureRegion("check-off")));
+		SKIN.add("check-on",    new TextureRegion(Assets.getTextureRegion("check-on")));
+		SKIN.add("check-off",   new TextureRegion(Assets.getTextureRegion("check-off")));
 		
 		
 		Pixmap map = new Pixmap(1, 1, Format.RGB565);
@@ -240,7 +258,6 @@ public final class Assets {
 		SKIN.add("black", Color.BLACK);
 		SKIN.add("light-gray",Color.LIGHT_GRAY);
 		
-		//SKIN.setTexture(new Texture(Gdx.files.internal("skin.png")));
 		SKIN.load(Gdx.files.internal("data/skin.json"));
 		System.out.println("skin!");
 	}
@@ -319,12 +336,16 @@ public final class Assets {
 	
 	public static TextureRegion getTextureRegion(String name){
 		if(atlas.findRegion(name) == null) throw new IllegalArgumentException(name + " does not exist.");
-		
+
 		return atlas.findRegion(name);
 	}
 	
 	public static Sprite createSprite(String name){
 		return atlas.createSprite(name);
+	}
+	
+	public static NinePatch createPatch(String name){
+		return atlas.createPatch(name);
 	}
 	
 	public static synchronized Pair<Animation[], boolean[]> getAnimations(UnitType type){
@@ -419,18 +440,29 @@ public final class Assets {
 	
 	public static Map loadMap(String name, boolean fromInternal){
 		FileHandle fh = fromInternal ? Gdx.files.internal(Assets.getAssetsDirectoryPath("maps/"+name)) : Gdx.files.external("soimaps/"+ name);
-		ObjectInputStream oos = null;
+		ObjectInputStream ois = null;
 		
 		try {
-			oos = new ObjectInputStream(fh.read());
-			return (Map) oos.readObject();
+			ois = new ObjectInputStream(fh.read());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			Lzma.decompress(ois, baos);
+			ois.close();
+			ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+			return (Map) ois.readObject();
 		} 
 		catch(Exception e){
-			Gdx.app.log("Assets", String.format("Failed to load map '%s' (internal = %s) due to '%s'.", name, fromInternal ? "yes" : "no", e.getMessage()));
+			//Failed loading compressed map, try loading it uncompressed.
+			try{
+				ois = new ObjectInputStream(fh.read());
+				return (Map) ois.readObject();
+			}
+			catch(Exception e2){
+				Gdx.app.log("Assets", String.format("Failed to load map '%s' (internal = %s) due to '%s'.", name, fromInternal ? "yes" : "no", e.getMessage()));
+			}
 		}
 		finally{
 			// Close stream
-			try{ oos.close(); } catch (Exception e){/* Failed on close, we don't care */ }
+			try{ ois.close(); } catch (Exception e){/* Failed on close, we don't care */ }
 		}
 		
 		return null;
