@@ -1,11 +1,10 @@
 package com.anstrat.core;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.zip.GZIPInputStream;
 
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.UnitType;
@@ -34,7 +33,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.compression.Lzma;
 
 public final class Assets {
 
@@ -424,7 +422,7 @@ public final class Assets {
 		if(internal) {
 			files.addAll(Arrays.asList(Gdx.files.internal(Assets.getAssetsDirectoryPath("maps")).list()));
 		}
-		
+	
 		ArrayList<String> maps = new ArrayList<String>();
 		for(FileHandle fh : files){
 			maps.add(fh.name());
@@ -443,11 +441,7 @@ public final class Assets {
 		ObjectInputStream ois = null;
 		
 		try {
-			ois = new ObjectInputStream(fh.read());
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			Lzma.decompress(ois, baos);
-			ois.close();
-			ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+			ois = new ObjectInputStream(new GZIPInputStream(fh.read()));
 			return (Map) ois.readObject();
 		} 
 		catch(Exception e){
