@@ -33,7 +33,7 @@ public class AttackAnimation extends Animation{
 	
 	public AttackAnimation(CombatLog combatLog){
 		this.cl = combatLog;
-		this.attackSfx = AudioAssets.getSound("dummy1");
+		this.attackSfx = AudioAssets.getSound("dummy2");
 		
 		// Set animation timings
 		switch(cl.attacker.getUnitType()){

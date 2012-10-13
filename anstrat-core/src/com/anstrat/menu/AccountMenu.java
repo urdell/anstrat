@@ -1,5 +1,6 @@
 package com.anstrat.menu;
 
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
@@ -33,6 +34,7 @@ public class AccountMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Popup.showGenericPopup("Register", "Please use Quick Login.");
+            	AudioAssets.playSound("dummy1");
             	//AccountMenu.registerPopup.show();
             }
         });
@@ -41,6 +43,7 @@ public class AccountMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	quickPlay();
+            	AudioAssets.playSound("dummy1");
             }
         });
 		
@@ -48,6 +51,7 @@ public class AccountMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	loginPopup.show();
+            	AudioAssets.playSound("dummy1");
             }
         });
 		
@@ -57,6 +61,7 @@ public class AccountMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(DebugMenu.getInstance());
+            	AudioAssets.playSound("dummy1");
             }
         });
         
@@ -126,6 +131,7 @@ public class AccountMenu extends MenuScreen {
 				String password = loginPasswordField.getText();
 				
 				am.clearInputs();
+				AudioAssets.playSound("dummy1");
 				
 				//Main.getInstance().network.login(username, password);
 				

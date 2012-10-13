@@ -80,6 +80,7 @@ public class MainMenu extends MenuScreen {
         	@Override
         	public void clicked(InputEvent event, float x, float y) {
         		Main.getInstance().setScreen(ChooseGameTypeMenu.getInstance());
+        		AudioAssets.playSound("dummy1");
         	}
         });
 
@@ -87,6 +88,7 @@ public class MainMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(MapEditor.getInstance());
+            	AudioAssets.playSound("dummy1");
             }
         });
         
@@ -94,6 +96,7 @@ public class MainMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(InvitesMenu.getInstance());
+            	AudioAssets.playSound("dummy1");
             }
         });
         Main.getInstance().invites.registerInviteButton(invitedButton);
@@ -109,6 +112,7 @@ public class MainMenu extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(DebugMenu.getInstance());
+            	AudioAssets.playSound("dummy1");
             }
         });
 
