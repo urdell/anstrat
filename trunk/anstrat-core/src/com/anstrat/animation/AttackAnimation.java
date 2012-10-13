@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.audio.AudioAssets;
+import com.anstrat.audio.DelayedSound;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.CombatLog;
@@ -27,9 +29,11 @@ public class AttackAnimation extends Animation{
 	private boolean started;
 	private GUnit gAttacker, gDefender;
 	private CombatLog cl;
+	private DelayedSound attackSfx;
 	
 	public AttackAnimation(CombatLog combatLog){
 		this.cl = combatLog;
+		this.attackSfx = AudioAssets.getSound("dummy1");
 		
 		// Set animation timings
 		switch(cl.attacker.getUnitType()){
@@ -74,6 +78,9 @@ public class AttackAnimation extends Animation{
 	
 	@Override
 	public void run(float deltaTime) {
+		
+		if(attackSfx!=null)
+			attackSfx.run(deltaTime);
 		
 		// Run once
 		if (!started) {

@@ -69,9 +69,9 @@ public class MainMenu extends MenuScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(Options.soundOn = !Options.soundOn)
-					AudioAssets.getMusic("vikingstitle").play();
+					AudioAssets.playMusic("VikingsTheme");
 				else
-					AudioAssets.getMusic("vikingstitle").pause();
+					AudioAssets.stopMusic();
 			}
 			
 		});
