@@ -29,57 +29,70 @@ public class UnitTypeCard extends ColorTable {
 	
 	public UnitTypeCard(boolean showCost){
 		super(new Color(0f, 0f, 0.8f, 1f));
+		
+		float imageSize = Main.percentWidth*40f;
+		float iconSize  = Main.percentHeight*5f;
 
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("border-thick-updown")));
 		
 		name = new Label("", Assets.SKIN);
 		cost = new Label("", Assets.SKIN);
+		
 		description = new Label("", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE));
 		description.setWrap(true);
+		Table descriptionTable = new Table();
+		descriptionTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("fadetoblack")));
+		descriptionTable.top().left().add(description).padLeft(Main.percentHeight).fillX().expandX();
+		
 		image = new Image(Assets.WHITE);
+		
 		attack = new Label("",Assets.SKIN);
-		hp     = new Label("",Assets.SKIN);
-		ap     = new Label("",Assets.SKIN);
-		Image hpIcon = new Image(Assets.getTextureRegion("hp"));
-		Image apIcon = new Image(Assets.getTextureRegion("ap"));
-		Image attackIcon = new Image(Assets.getTextureRegion("sword"));
+		Table attackTable = new Table();
+		attackTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("fadetoblack")));
+		attackTable.defaults().left().padLeft(Main.percentWidth*2);
+		attackTable.add(new Image(Assets.getTextureRegion("sword"))).size(iconSize);
+		attackTable.add(attack).padLeft(Main.percentHeight).fillX().expandX();
+
+		hp = new Label("",Assets.SKIN);
+		Table hpTable = new Table();
+		hpTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("fadetoblack")));
+		hpTable.defaults().left().padLeft(Main.percentWidth*2);
+		hpTable.add(new Image(Assets.getTextureRegion("hp"))).size(iconSize);
+		hpTable.add(hp).padLeft(Main.percentHeight).fillX().expandX();
+		
+		ap = new Label("",Assets.SKIN);
+		Table apTable = new Table();
+		apTable.defaults().left().padLeft(Main.percentWidth*2);
+		apTable.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("fadetoblack")));
+		apTable.add(new Image(Assets.getTextureRegion("ap"))).size(iconSize);
+		apTable.add(ap).padLeft(Main.percentHeight).fillX().expandX();
+		
+		
 		Image costIcon = new Image(Assets.getTextureRegion("gold"));
 		
-		float imageSize = Main.percentWidth*40f;
-		float iconSize  = Main.percentHeight*5f;
-		
-		
-		this.defaults().top().left().expandX().fillX().padRight(Main.percentHeight).padLeft(Main.percentHeight);
+		this.defaults().top().left().expandX().fillX().space(Main.percentHeight);
 		
 		Table top = new Table();
 		top.defaults().top().left();
-		top.add(image).size(imageSize).padRight(Main.percentHeight);
-		top.add(description).expandX().fillX();
-		
-		Table stats = new Table();
-		stats.defaults().left().padRight(Main.percentHeight);
-		stats.add(attackIcon).size(iconSize);
-		stats.add(attack);
-		stats.row();
-		stats.add(apIcon).size(iconSize);
-		stats.add(ap);
-		stats.row();
-		stats.add(hpIcon).size(iconSize);
-		stats.add(hp);
-		stats.add().expandX().fillX();
+		top.add(image).size(imageSize);
+		top.add(descriptionTable).fill().expandX();
 		
 		this.add(top).fillX().expandX();
 		this.row();
-		this.add().fill().expand();
+		this.add(attackTable).height(iconSize*1.2f);
 		this.row();
-		this.add(stats);
+		this.add(apTable).height(iconSize*1.2f);
+		this.row();
+		this.add(hpTable).height(iconSize*1.2f);
+		this.row();
+		this.add().fill().expand();
 		this.row();
 		
 		Table bottom = new Table();
 		bottom.defaults().left();
 		
 		if(showCost){
-			bottom.add(costIcon).size(iconSize).padRight(Main.percentHeight);
+			bottom.add(costIcon).size(iconSize).padRight(Main.percentHeight).padLeft(Main.percentWidth*2);
 			bottom.add(cost);
 		}
 		
