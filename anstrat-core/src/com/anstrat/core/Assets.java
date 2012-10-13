@@ -15,6 +15,7 @@ import com.anstrat.gui.GUnit.AnimationState;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
@@ -67,13 +68,14 @@ public final class Assets {
 
 	public static void startLoadingTextures(){
 		manager = new AssetManager();
-		manager.load("textures_packed/pack", TextureAtlas.class);	//pack.atlas
+		manager.load("textures/pack", TextureAtlas.class);	//pack.atlas
+		//manager.load("music/vikingstitle.mp3", Music.class);
 	}
 	
 	public static void load(){
 		Gdx.app.log("Assets", "load()");
 
-		atlas = manager.get("textures_packed/pack", TextureAtlas.class);	//pack.atlas
+		atlas = manager.get("textures/pack", TextureAtlas.class);	//pack.atlas
 		
 		animationLoader = new AnimationLoader(Gdx.files.internal("data/animations.xml"), atlas);
 		terrainMeshes = new HexagonMesh[2][];

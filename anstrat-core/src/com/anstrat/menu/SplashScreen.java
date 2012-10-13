@@ -29,7 +29,7 @@ public class SplashScreen implements Screen {
 	private Table background;
 	
 	private SplashScreen(){
-		atlas = new TextureAtlas("loading_packed/pack");	//pack.atlas
+		atlas = new TextureAtlas("textures-loadingscreen/pack");	//pack.atlas
 		splashscreen = atlas.findRegion("splashscreen");
 		this.batch = Main.getInstance().batch;
 		this.stage = Main.getInstance().overlayStage;
