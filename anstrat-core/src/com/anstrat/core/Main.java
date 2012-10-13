@@ -104,7 +104,7 @@ public class Main extends Game implements ApplicationListener {
 	
 	public void init(){
 		// Music 
-		AudioAssets.load();
+		AudioAssets.load(Gdx.files.internal("audio/music.xml"), Gdx.files.internal("audio/sfx.xml"));
 		
 		// Load from file
 		Assets.load();													// Textures, fonts
@@ -234,14 +234,11 @@ public class Main extends Game implements ApplicationListener {
 		
 		if(screen instanceof GEngine){
 			overlayStage.addActor(new TransitionEffect());
-			
-			// do not stop menu music, menu music even ingame
-			// menuMusic.setLooping(false);
+			if(Options.soundOn)
+				AudioAssets.playMusic("ingamedummy");
 		}
 		else if(screen instanceof MainMenu){
-			if(!AudioAssets.getMusic("vikingstitle").isPlaying() && Options.soundOn){
-				AudioAssets.getMusic("vikingstitle").play();
-			}
+			if(Options.soundOn) AudioAssets.playMusic("VikingsTheme");
 		}
 	}
 	

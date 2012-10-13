@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sfxs>
+	<effect name="dummy1" filename="blip.mp3" delay="0.0"/>
+	<effect name="dummy2" filename="swoosch.mp3" delay="0.0"/>
+</sfxs>

@@ -21,7 +21,7 @@ public final class Options {
 			System.out.println("\tSound: "+prefs.getBoolean("sound"));
 			soundOn = prefs.getBoolean("sound");
 			if(soundOn)
-				AudioAssets.getMusic("menumusic").play();
+				AudioAssets.playMusic("VikingsTheme");
 		}
 		if(prefs.contains("fps")){
 			System.out.println("\tShow fps: "+prefs.getBoolean("fps"));
