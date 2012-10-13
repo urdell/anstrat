@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.anstrat.core.Options;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -117,6 +118,22 @@ public class AudioAssets {
 		}
 		
 		return s.clone();
+	}
+	
+	public static void playSound(String soundName)
+	{
+		if(Options.soundOn)
+		{
+			Sound s = sounds.get(soundName.toLowerCase(Locale.ENGLISH)).sound;
+			
+			if(s==null)
+			{
+				Gdx.app.log("Audio", String.format("Sound effect not found: %s.",soundName));
+				return;
+			}
+			
+			s.play();
+		}
 	}
 	
 	public static void playMusic(String musicName)
