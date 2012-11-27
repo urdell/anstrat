@@ -55,7 +55,7 @@ public class GameManager {
 		// If no map given, create a random one
 		if(map == null) map = new Map(10, 10, new Random());
 		
-		GameInstance gi = new GameInstance(games.size() + 1, map, players);
+		GameInstance gi = new GameInstance(games.size() + 1, map, players, GameInstanceType.HOTSEAT);
 		games.add(gi);
 		
 		return gi;

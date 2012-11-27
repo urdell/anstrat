@@ -5,6 +5,7 @@ import java.util.Random;
 import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
+import com.anstrat.core.GameInstanceType;
 import com.anstrat.core.Main;
 import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.core.Options;
@@ -299,7 +300,7 @@ public class MainMenu extends MenuScreen {
     	   	
     	Label turn = new Label("Turn " + instance.getTurnNumber(), Assets.SKIN);
     	Label type = new Label(
-    			String.format("(%s)", instance.isAiGame() ? "AI" : (instance instanceof NetworkGameInstance ? "Network" : "Hotseat")), 
+    			String.format("(%s)", instance.getGameType() == GameInstanceType.AI ? "AI" : (instance instanceof NetworkGameInstance ? "Network" : "Hotseat")), 
     			Assets.SKIN);
 
     	Label map = new Label(String.format("'%s'", instance.state.map.name), Assets.SKIN);
@@ -316,7 +317,7 @@ public class MainMenu extends MenuScreen {
     	
     	String opponent = null;
     	
-    	if(instance.isAiGame() || instance instanceof NetworkGameInstance){
+    	if(instance.getGameType() == GameInstanceType.AI || instance.getGameType() == GameInstanceType.NETWORK){
     		StringBuffer opponents = new StringBuffer("vs. ");
     		boolean first = true;
     		Player userPlayer = instance.getUserPlayer();

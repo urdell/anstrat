@@ -1,8 +1,12 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.EndTurnAnimation;
+import com.anstrat.core.GameInstance;
+import com.anstrat.core.GameInstanceType;
+import com.anstrat.core.Main;
 import com.anstrat.gameCore.State;
 import com.anstrat.gui.GEngine;
+import com.anstrat.menu.HotseatNextTurnScreen;
 
 public class EndTurnCommand extends Command{
 	
@@ -18,8 +22,13 @@ public class EndTurnCommand extends Command{
 	protected void execute() {
 		State.activeState.endTurn();
 		
-		EndTurnAnimation animation = new EndTurnAnimation();
-		GEngine.getInstance().animationHandler.enqueue(animation);
-		GEngine.getInstance().selectionHandler.deselect();
+		if (GameInstance.activeGame.getGameType().equals(GameInstanceType.HOTSEAT)) {
+			Main.getInstance().setScreen(HotseatNextTurnScreen.getInstance());
+		}
+		else {
+			EndTurnAnimation animation = new EndTurnAnimation();
+			GEngine.getInstance().animationHandler.enqueue(animation);
+			GEngine.getInstance().selectionHandler.deselect();
+		}
 	}
 }

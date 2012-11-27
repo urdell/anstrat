@@ -3,8 +3,8 @@ package com.anstrat.gui;
 import com.anstrat.command.CaptureCommand;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
+import com.anstrat.core.GameInstanceType;
 import com.anstrat.core.Main;
-import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -396,7 +396,7 @@ public class GameUI extends UI {
 		Assets.SKIN.setEnabled(endTurnButton, userCurrentPlayer);
 		//Assets.SKIN.setEnabled(buyButton, userCurrentPlayer);
 
-		boolean playerControlsAllPlayers = !(game instanceof NetworkGameInstance) && !game.isAiGame();
+		boolean playerControlsAllPlayers = game.getGameType() == GameInstanceType.HOTSEAT;//!(game instanceof NetworkGameInstance) && !game.isAiGame();
 		String text = (!playerControlsAllPlayers && userCurrentPlayer) ? "Your turn" : player.getDisplayName();
 		
 		if(openBuyUnitPopup != null) openBuyUnitPopup.update();
