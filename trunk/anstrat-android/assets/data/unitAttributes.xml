@@ -12,6 +12,8 @@
 		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
 		<idleImage>berserker-idle-0001</idleImage>
 		<portrait>berserkerportrait</portrait>
+		<swingSfx>berserker_swing</swingSfx>
+		<impactSfx>berserker_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Shaman</name>
@@ -26,6 +28,8 @@
 		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
 		<portrait>shamanportrait</portrait>
+		<swingSfx>shaman_swing</swingSfx>
+		<impactSfx>shaman_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Axe Thrower</name>
@@ -41,6 +45,8 @@
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
 		<movementSpeed>2.3</movementSpeed>
+		<swingSfx>axe_swing</swingSfx>
+		<impactSfx>axe_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Wolf</name>
@@ -55,6 +61,8 @@
 		<description>The Wolf is incredibly fast.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
+		<swingSfx>wolf_swing</swingSfx>
+		<impactSfx>wolf_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Hawk</name>
@@ -66,7 +74,7 @@
 		<APReg>5</APReg>
 		<cost>12</cost>
 		<ability1>1</ability1><!-- Kamikaze -->
-		<description>Hawks are fast and cheap, and can fly over any terrain.</description>
+		<description>Hawks are fast and cheap, flying over any terrain bar volcanoes.</description>
 		<idleImage>hawk-idle-0001</idleImage>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
@@ -83,6 +91,8 @@
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<portrait>hawkportrait</portrait>
+		<swingSfx>hawk_swing</swingSfx>
+		<impactSfx>hawk_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Swordsman</name>
@@ -94,9 +104,11 @@
 		<APReg>3</APReg>
 		<cost>22</cost>
 		<ability1>6</ability1><!-- Shield Wall -->
-		<description>The Swordsman blocks the first attack each turn, making him an exceptional duelist.</description>
+		<description>The Swordsman's block ability and resilience make him an exceptional duelist.</description>
 		<idleImage>swordsman-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
+		<swingSfx>sword_swing</swingSfx>
+		<impactSfx>sword_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Valkyrie</name>
@@ -125,6 +137,8 @@
 		<description>Can fly over mountains and is powerful in most aspects.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
 		<portrait>valkyrieportrait</portrait>
+		<swingSfx>valkyrie_swing</swingSfx>
+		<impactSfx>valkyrie_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Fallen Warrior</name>
@@ -136,10 +150,12 @@
 		<APReg>2</APReg>
 		<cost>8</cost>
 		<ability1>11</ability1><!-- Dark Ritual -->
-		<description>The Fallen Warrior is cheap unit, only effective in great numbers.</description>
+		<description>The Fallen Warrior is cheap unit, effective only in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>fallenportrait</portrait>
 		<movementSpeed>1</movementSpeed>
+		<swingSfx>axe_swing</swingSfx>
+		<impactSfx>axe_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Dark Elf</name>
@@ -151,9 +167,11 @@
 		<APReg>5</APReg>
 		<cost>22</cost>
 		<ability1>12</ability1><!-- Poison -->
-		<description>The Dark Elf is a poweful and mobile unit.</description>
+		<description>The Dark Elf is a powerful and mobile unit.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>elfportrait</portrait>
+		<swingSfx>elf_swing</swingSfx>
+		<impactSfx>elf_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Goblin Shaman</name>
@@ -168,6 +186,8 @@
 		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>goblinportrait</portrait>
+		<swingSfx>axe_swing</swingSfx>
+		<impactSfx>axe_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Jotun</name>
@@ -182,6 +202,8 @@
 		<description>The Jotun is a very, very powerful unit.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>jotunportrait</portrait>
+		<swingSfx>jotun_swing</swingSfx>
+		<impactSfx>jotun_impact</impactSfx>
 	</UnitType>
 	<UnitType>
 		<name>Troll</name>
@@ -199,8 +221,10 @@
 		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowmountain>4</terrainPenaltySnowmountain>
-		<description>The Troll is the only unit with a passive regeneration ability. It can also climb mountains and have no terrain penalty in forests.</description>
+		<description>The Troll is the only unit with a passive regeneration ability. It can also climb mountains and has no terrain penalty in forests.</description>
 		<idleImage>troll-idle-0001</idleImage>
 		<portrait>trollportrait</portrait>
+		<swingSfx>troll_swing</swingSfx>
+		<impactSfx>troll_impact</impactSfx>
 	</UnitType>
 </UnitTypes>

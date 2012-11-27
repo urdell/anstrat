@@ -56,6 +56,7 @@ public class AudioAssets {
 			Element root = new XmlReader().parse(sfxsHandle);
 			int sfxCount = root.getChildCount();
 			int sfxFail = 0;
+			int uniques = 0;
 			
 			for (int i = 0; i < sfxCount; i++) {
 				String sfxName = root.getChild(i).get("name");
@@ -66,7 +67,10 @@ public class AudioAssets {
 				if(fh.exists())
 				{
 					if(!baseSounds.containsKey(sfxFile))
+					{
+						uniques++;
 						baseSounds.put(sfxFile.toLowerCase(Locale.ENGLISH), Gdx.audio.newSound(fh));
+					}
 					
 					sounds.put(sfxName.toLowerCase(Locale.ENGLISH), 
 							new DelayedSound(baseSounds.get(sfxFile.toLowerCase(Locale.ENGLISH)), sfxDelay));
@@ -77,8 +81,9 @@ public class AudioAssets {
 					sfxFail++;
 				}
 			}
-			
-			Gdx.app.log("Audio", String.format("Successfully loaded %d sfxs from '%s'.", sfxCount-sfxFail, sfxsHandle));
+
+			Gdx.app.log("Audio", String.format("Successfully loaded %d (%d unique) sfxs from '%s'.", sfxCount-sfxFail,
+					uniques, sfxsHandle));
 			
 		} catch (IOException e) {
 			throw new IllegalArgumentException(String.format("Failed to parse sfxs from '%s'.", sfxsHandle.name()), e);
@@ -124,7 +129,7 @@ public class AudioAssets {
 	{
 		if(Options.soundOn)
 		{
-			Sound s = sounds.get(soundName.toLowerCase(Locale.ENGLISH)).sound;
+			DelayedSound s = sounds.get(soundName.toLowerCase(Locale.ENGLISH));
 			
 			if(s==null)
 			{
@@ -132,32 +137,32 @@ public class AudioAssets {
 				return;
 			}
 			
-			s.play();
+			s.sound.play();
 		}
 	}
 	
 	public static void playMusic(String musicName)
 	{
 		stopMusicExceptFor(musicName);
-		
+
 		Music m = music.get(musicName.toLowerCase(Locale.ENGLISH));
-		
+
 		if(m==null)
 		{
 			Gdx.app.log("Audio", String.format("Music file not found: %s.",musicName));
 			return;
 		}
-		
+
 		if(!m.isPlaying())
 			m.play();
 	}
-	
+
 	public static void stopMusic()
 	{
 		for(Music track : music.values())
 			track.pause();
 	}
-	
+
 	private static void stopMusicExceptFor(String ignore)
 	{
 		for(Entry<String,Music> track : music.entrySet())
