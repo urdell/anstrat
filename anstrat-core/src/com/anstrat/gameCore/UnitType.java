@@ -37,6 +37,8 @@ public enum UnitType {
 	public transient final String name;
 	
 	public transient String graphicsFolder;
+	public transient String swingSfx;
+	public transient String impactSfx;
 	
 	public String idleImage;
 	public String portrait;
@@ -140,6 +142,8 @@ public enum UnitType {
 		type.description = element.get("description", type.description);
 		type.idleImage = element.get("idleImage", type.idleImage);
 		type.portrait = element.get("portrait", type.portrait);
+		type.swingSfx = element.get("swingSfx", "swinging");
+		type.impactSfx = element.get("impactSfx", "impacting");
 		
 		// Terrain type penalties, attributes/elements starting with 'terrainPenalty', e.g 'terrainPenaltySnow'
 		for(TerrainType t : TerrainType.values()){

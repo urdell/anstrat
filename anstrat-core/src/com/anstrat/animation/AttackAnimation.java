@@ -29,11 +29,10 @@ public class AttackAnimation extends Animation{
 	private boolean started;
 	private GUnit gAttacker, gDefender;
 	private CombatLog cl;
-	private DelayedSound attackSfx;
+	private DelayedSound swingSfx;
 	
 	public AttackAnimation(CombatLog combatLog){
 		this.cl = combatLog;
-		this.attackSfx = AudioAssets.getSound("dummy2");
 		
 		// Set animation timings
 		switch(cl.attacker.getUnitType()){
@@ -42,18 +41,18 @@ public class AttackAnimation extends Animation{
 				impactTime = (attackSpeed + rangedDelay) / 2;
 				break;
 			}
-			case GOBLIN_SHAMAN: // Fall through
+			case GOBLIN_SHAMAN: {
+				// Fall through
+			}
 			case SHAMAN: {
 				rangedDelay = 0.3f;
 				attackSpeed = 1.2f;
 				impactTime = 1f;
 				break;
 			}
-			case WOLF: {
-				attackSpeed = 0.8f;
-				break;
-			}
 		}
+		
+		this.swingSfx = AudioAssets.getSound(cl.attacker.getUnitType().swingSfx);
 		
 		this.length = attackSpeed;
 		this.lifetimeLeft = length;
@@ -79,8 +78,8 @@ public class AttackAnimation extends Animation{
 	@Override
 	public void run(float deltaTime) {
 		
-		if(attackSfx!=null)
-			attackSfx.run(deltaTime);
+		if(swingSfx!=null)
+			swingSfx.run(deltaTime);
 		
 		// Run once
 		if (!started) {
@@ -104,7 +103,8 @@ public class AttackAnimation extends Animation{
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
 			// Start impact animation
 			GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
-			
+			AudioAssets.playSound(cl.attacker.getUnitType().impactSfx);
+	
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
 			FloatingTextAnimation animation = new FloatingTextAnimation(cl.defender.tileCoordinate, String.valueOf(cl.attackDamage), Color.RED);

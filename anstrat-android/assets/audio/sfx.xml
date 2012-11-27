@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sfxs>
-	<effect name="dummy1" filename="blip.mp3" delay="0.0"/>
-	<effect name="dummy2" filename="swoosch.mp3" delay="0.0"/>
+	<!-- Attack sfx: swing + impact -->
+
+	<effect name="berserker_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="berserker_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="axe_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="axe_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="sword_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="sword_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="wolf_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="wolf_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="hawk_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="hawk_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="shamn_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="shamn_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="valkyrie_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="valkyrie_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="fallen_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="fallen_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="elf_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="elf_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="jotun_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="jotun_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="troll_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="troll_impact" filename="swoosch.mp3" delay="0.0"/>
+	<effect name="goblin_swing" filename="blip.mp3" delay="0.0"/>
+	<effect name="goblin_impact" filename="swoosch.mp3" delay="0.0"/>
 </sfxs>
