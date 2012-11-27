@@ -4,6 +4,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.HealAnimation;
+import com.anstrat.animation.MagicSpearAnimation;
 import com.anstrat.animation.UpdateBarAnimation;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -46,7 +47,7 @@ public class MagicSpear extends TargetedAbility {
 		targetUnit.currentHP -= source.getAttack();
 		targetUnit.resolveDeath();
 		
-		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(source.tileCoordinate));
+		Animation animation = new MagicSpearAnimation(source, targetUnit, source.getAttack());
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		animation = new UpdateBarAnimation(targetUnit);
 		GEngine.getInstance().animationHandler.enqueue(animation);
