@@ -32,15 +32,19 @@ public class GameInstance implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public static GameInstance activeGame;
 	
+	private GameInstanceType gameType;
+
 	public State state;
 	private Collection<Integer> aiPlayerIDs;
 	
-	public GameInstance(long gameID, Map map, Player[] players){
+	public GameInstance(long gameID, Map map, Player[] players, GameInstanceType type){
 		state = new State(map, players);
+		this.gameType = type;
 	}
 	
-	protected GameInstance(Map map, Player[] players, long randomSeed){
+	protected GameInstance(Map map, Player[] players, long randomSeed, GameInstanceType type){
 		state = new State(map, players, randomSeed);
+		this.gameType = type;
 	}
 	
 	public void setAIPlayers(Integer... aiPlayerIDs){
@@ -92,9 +96,9 @@ public class GameInstance implements Serializable{
 		Main.getInstance().games.endGame(this);
 	}
 	
-	public boolean isAiGame(){
-		return this.aiPlayerIDs != null;
-	}
+	//public boolean isAiGame(){
+	//	return this.aiPlayerIDs != null;
+	//}
 	
 	public Player getUserPlayer(){
 		if(aiPlayerIDs == null) return state.getCurrentPlayer();
@@ -120,5 +124,19 @@ public class GameInstance implements Serializable{
 	
 	public void onCommandExecute(Command command){
 		
+	}
+	
+	/**
+	 * @return the gameType
+	 */
+	public GameInstanceType getGameType() {
+		return gameType;
+	}
+
+	/**
+	 * @param gameType the gameType to set
+	 */
+	public void setGameType(GameInstanceType gameType) {
+		this.gameType = gameType;
 	}
 }

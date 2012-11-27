@@ -23,7 +23,7 @@ public class NetworkGameInstance extends GameInstance {
 	private Queue<Command> pendingCommands = new LinkedList<Command>();
 	
 	public NetworkGameInstance(long gameID, NetworkPlayer[] players, Map map, long seed){
-		super(map, players, seed);
+		super(map, players, seed, GameInstanceType.NETWORK);
 		this.gameID = gameID;
 	}
 	
