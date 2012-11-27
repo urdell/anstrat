@@ -4,6 +4,8 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Invite;
 import com.anstrat.core.Main;
 import com.anstrat.network.protocol.GameOptions;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,34 +25,50 @@ public class InviteRow extends Table{
 	}
 	public InviteRow(final Invite invite){
 		
-		Label topText = new Label("From:", Assets.SKIN);
+		float rowWidth = Gdx.graphics.getWidth();
+		
+		Label topText = new Label("Invite from:", Assets.SKIN);
+		topText.setColor(Color.BLACK);
 		Label bottomText = new Label(invite.otherPlayerName, Assets.SKIN);
+		bottomText.setColor(Color.BLACK);
 		Table textTable = new Table();
 		TextureRegion mapTypeRegion = Assets.getTextureRegion("cancel");
 		switch(invite.gameOptions.mapChoice){
 		case GameOptions.MAP_CUSTOM:
-			mapTypeRegion = Assets.getTextureRegion("kamikaze-button");
+			mapTypeRegion = Assets.getTextureRegion("mapIconCustom");
 			break;
 		case GameOptions.MAP_GENERATED:
-			mapTypeRegion = Assets.getTextureRegion("terrain-button");
+			mapTypeRegion = Assets.getTextureRegion("mapIconGenerated");
 			break;
 		case GameOptions.MAP_RANDOM:
-			mapTypeRegion = Assets.getTextureRegion("help-button");
+			mapTypeRegion = Assets.getTextureRegion("mapIconRandom");
 			break;
 		case GameOptions.MAP_SPECIFIC:
-			mapTypeRegion = Assets.getTextureRegion("open-button");
+			mapTypeRegion = Assets.getTextureRegion("mapIconSpecific");
 			break;
 		}
 		Image mapTypeImage = new Image(mapTypeRegion);
 		
-		textTable.add(topText).align(Align.left).maxHeight(25);
+		TextureRegion fogRegion;
+		if(invite.gameOptions.fog){
+			fogRegion = Assets.getTextureRegion("eye");
+		}
+		else{
+			fogRegion = Assets.getTextureRegion("eyeOff");
+		}
+		Image fogImage = new Image(fogRegion);
+		
+		textTable.add(topText).align(Align.left).maxHeight(rowWidth/14);
 		textTable.row();
-		textTable.add(bottomText).align(Align.left).maxHeight(25);
+		textTable.add(bottomText).align(Align.left).maxHeight(rowWidth/14);
 		
 		add(textTable).align(Align.left).fillX().expandX();
-		add(mapTypeImage).align(Align.right).maxSize(50);
+		add(fogImage).align(Align.right).maxSize(rowWidth/7);
+		add(mapTypeImage).align(Align.right).maxSize(rowWidth/7);
 		
-		this.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("sword"))));
+		NinePatch ninePatch = new NinePatch(Assets.getTextureRegion("goldBorder"), 5, 5, 5, 5);
+		ninePatch.setMiddleHeight(10);
+		this.setBackground(new NinePatchDrawable(ninePatch));
 		addListener(new ClickListener() {
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {

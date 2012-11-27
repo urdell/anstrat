@@ -12,7 +12,7 @@ public class InvitesMenu extends MenuScreen{
 
 	private static InvitesMenu me;
 	private InvitesMenu(){
-		contents.debug();
+		//contents.debug();
 		contents.align(Align.top);
 		contents.add(new Label("Invite menu", Assets.SKIN)).expandX();
 		contents.row();
