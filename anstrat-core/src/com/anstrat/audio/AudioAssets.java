@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -57,11 +58,19 @@ public class AudioAssets {
 			int sfxCount = root.getChildCount();
 			int sfxFail = 0;
 			int uniques = 0;
+			float sfxDelay = 0;
 			
 			for (int i = 0; i < sfxCount; i++) {
 				String sfxName = root.getChild(i).get("name");
 				String sfxFile = root.getChild(i).get("filename");
-				float sfxDelay = root.getChild(i).getFloat("delay");
+				try
+				{
+					sfxDelay = root.getChild(i).getFloat("delay");
+				}
+				catch(GdxRuntimeException gre)
+				{
+					;; //swallow
+				}
 				
 				FileHandle fh = Gdx.files.internal("audio/sfx/"+sfxFile);
 				if(fh.exists())

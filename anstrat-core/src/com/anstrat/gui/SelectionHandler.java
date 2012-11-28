@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.MoveCameraAnimation;
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -43,12 +44,15 @@ public class SelectionHandler {
 		if(unit != null && unit.currentHP > 0){
 			gEngine.highlighter.clearHighlights();
 			selectedUnit = unit;
+			int prevSel = selectionType;
 			selectionType = SELECTION_UNIT;
 			gEngine.userInterface.showUnit(unit);
 			
 			gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
 			
 			if(unit.ownerId == State.activeState.currentPlayerId){
+				if(prevSel == SELECTION_EMPTY)
+					AudioAssets.playSound("selectUnit");
 				gEngine.actionMap.prepare(unit);
 				gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
 			}
