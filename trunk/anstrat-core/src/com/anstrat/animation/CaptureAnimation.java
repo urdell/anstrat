@@ -1,5 +1,7 @@
 package com.anstrat.animation;
 
+import com.anstrat.audio.AudioAssets;
+import com.anstrat.audio.DelayedSound;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Fog;
@@ -40,9 +42,13 @@ public class CaptureAnimation extends Animation{
 			FloatingTextAnimation animation;
 			if(unit.unit.ownerId == building.building.controllerId){  // It was captured
 				animation = new FloatingTextAnimation(unit.unit.tileCoordinate, "Captured!", Color.RED);
+				if(building.building.type != Building.TYPE_CASTLE)
+					AudioAssets.playSound("capture");
 			}
 			else{	// Still being captured
 				animation = new FloatingTextAnimation(unit.unit.tileCoordinate, "Capturing", Color.ORANGE);
+				if(building.building.type == Building.TYPE_CASTLE)
+					AudioAssets.playSound("capture");
 			}
 			ge.animationHandler.runParalell(animation);
 			
