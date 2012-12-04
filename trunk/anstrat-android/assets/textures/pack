@@ -1,16 +1,4 @@
 
-textures1.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-lol
-  rotate: false
-  xy: 2, 2
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-
 abilities1.png
 format: RGBA8888
 filter: Linear,Linear
@@ -1331,149 +1319,135 @@ water
   orig: 256, 256
   offset: 0, 0
   index: -1
-water-shallow-0001
+volcano
   rotate: false
   xy: 260, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-volcano
+snowshallow
   rotate: false
   xy: 518, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snowshallow
-  rotate: false
-  xy: 776, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 snowmountain
-  rotate: false
-  xy: 1034, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-snowice
-  rotate: false
-  xy: 1292, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-snowhill
-  rotate: false
-  xy: 1550, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-snowforest
   rotate: false
   xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snow
-  rotate: false
-  xy: 2, 518
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-shallow
-  rotate: false
-  xy: 2, 776
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-rockyvolcano
-  rotate: false
-  xy: 2, 1034
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-rockylavapool
-  rotate: false
-  xy: 2, 1292
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-rockylava
-  rotate: false
-  xy: 2, 1550
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-rockyhill
+snowice
   rotate: false
   xy: 260, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockyground
+snowhill
   rotate: false
   xy: 518, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockyforest
+snowforest
   rotate: false
-  xy: 776, 260
+  xy: 2, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-mountain
-  rotate: false
-  xy: 1034, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-hill
-  rotate: false
-  xy: 1292, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-grid
-  rotate: false
-  xy: 1550, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-grass
+snow
   rotate: false
   xy: 260, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-forest
+shallow
+  rotate: false
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+rockylavapool
+  rotate: false
+  xy: 2, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+rockylava
   rotate: false
   xy: 260, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-crater
+rockyhill
+  rotate: false
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+rockyground
+  rotate: false
+  xy: 2, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+rockyforest
+  rotate: false
+  xy: 2, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+mountain
+  rotate: false
+  xy: 2, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+hill
   rotate: false
   xy: 260, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 518, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 260, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+forest
+  rotate: false
+  xy: 260, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+crater
+  rotate: false
+  xy: 518, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0

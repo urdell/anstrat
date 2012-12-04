@@ -61,6 +61,18 @@
         <frame image="berserker-attack-0002" number="2"/>
         <frame image="berserker-attack-0003" number="3" count="3"/>
     </animation>
+    <animation name="berserker-ability">
+        <frame image="berserker-ability-0001" number="1"/>
+        <frame image="berserker-ability-0002" number="2"/>
+        <frame image="berserker-ability-0003" number="3"/>
+        <frame image="berserker-ability-0004" number="4"/>
+    </animation>
+    <animation name="berserker-ability-enter">
+        <frame image="berserker-ability-enter-0001" number="1"/>
+    </animation>
+    <animation name="berserker-ability-finish">
+        <frame image="berserker-ability-finish-0001" number="1"/>
+    </animation>
     <animation name="berserker-attack-effect">
         <frame image="hammer-attack-effect-0001" number="1"/>
         <frame image="hammer-attack-effect-0002" number="2"/>
@@ -547,9 +559,6 @@
         <frame image="valkyrie-walk-0002" number="2"/>
         <frame image="valkyrie-walk-0003" number="3"/>
         <frame image="valkyrie-walk-0004" number="4"/>
-    </animation>
-    <animation name="water-shallow">
-        <frame image="water-shallow-0001" number="1"/>
     </animation>
     <animation name="wolf-attack" fps="9">
         <frame image="wolf-attack-0001" number="1" count="3"/>

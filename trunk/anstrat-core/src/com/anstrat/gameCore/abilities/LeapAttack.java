@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.animation.LeapAttackAnimation;
 import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -26,7 +27,7 @@ public class LeapAttack extends TargetedAbility{
 		private static final int RANGE = 1;
 
 		public LeapAttack(){
-			super("Leap Attack","Making a leap-attack, jumping over the enemy and finishes with a dashing blow for extra damage",AP_COST, RANGE);
+			super("Leap Attack","Rushes through target enemy, dealing tons of damage",AP_COST, RANGE);
 			iconName = "leap-button";
 		}
 		
@@ -60,8 +61,9 @@ public class LeapAttack extends TargetedAbility{
 			targetUnit.currentHP -= damage;
 			targetUnit.resolveDeath();
 			source.tileCoordinate = Knockback.getKnockBackCoordinate(source, targetUnit);
-			Animation moveAnimation = new MoveAnimation(source, jumpingFrom, source.tileCoordinate);
-			GEngine.getInstance().animationHandler.enqueue(moveAnimation);
+			Animation leapAnimation = new LeapAttackAnimation(source, targetUnit, damage, jumpingFrom, source.tileCoordinate);
+			GEngine.getInstance().animationHandler.enqueue(leapAnimation);
+			GEngine.getInstance().getUnit(targetUnit).updateHealthbar();
 			
 			CombatLog cl = new CombatLog();
 			cl.attacker = source;
@@ -69,8 +71,7 @@ public class LeapAttack extends TargetedAbility{
 			cl.newAttackerAP = source.currentAP;
 			cl.newDefenderHP = targetUnit.currentHP;
 			cl.attackDamage = damage;
-			Animation animation = new AttackAnimation(cl);
-			GEngine.getInstance().animationHandler.enqueue(animation);
+			
 			if(!targetUnit.isAlive){
 				Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
 				GEngine.getInstance().animationHandler.enqueue(deathAnimation);
