@@ -223,9 +223,9 @@ public class GameUI extends UI {
 		lastWidth = width;
 		lastHeight = height;
 		
-		float bph = Main.percentHeight*20f;
+		float bph = Main.percentWidth*30f;  // Bottom panel height is based on screen width to maintain aspect ratio
 		float pad = 2f;
-		float tph = Main.percentHeight*10f;
+		float tph = Main.percentHeight*9f;  // Top panel height is based on screen height because there is no need for strict width
 		
 		//Top panel
 		topPanel.setBounds(0, height - tph, width, tph);
@@ -264,7 +264,7 @@ public class GameUI extends UI {
 	}
 	
 	private void layoutUnitTable(){
-		float bph = Main.percentHeight * 20f;
+		float bph = Main.percentWidth * 30;
         
         unitTable.clear();
         unitTable.row().expand().pad(2f).top();
