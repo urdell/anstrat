@@ -70,10 +70,6 @@
         <frame image="berserker-berserk-0002" number="2"/>
         <frame image="berserker-berserk-0003" number="3" count="2"/>
     </animation>
-    <animation name="berserker-berserk-effect">
-        <frame image="berserker-berserk-effect-0001" number="1" count="2"/>
-        <frame image="berserker-berserk-effect-0002" number="2" count="2"/>
-    </animation>
     <animation name="berserker-death">
         <frame image="berserker-death-0001" number="1" count="2"/>
         <frame image="berserker-death-0002" number="2" count="2"/>
@@ -364,10 +360,6 @@
         <frame image="movement-line-arrows-0008" number="8"/>
         <frame image="movement-line-arrows-0009" number="9"/>
     </animation> 
-    <animation name="shallow">
-        <frame image="shallow-0001" number="1"/>
-        <frame image="shallow-0002" number="2"/>
-    </animation>
     <animation name="shaman-attack" fps="9">
         <frame image="shaman-attack-0001" number="1" count="10"/>
         <frame image="shaman-attack-0002" number="2"/>
@@ -429,6 +421,9 @@
         <frame image="shaman-walk-0002" number="2"/>
         <frame image="shaman-walk-0003" number="3"/>
         <frame image="shaman-walk-0004" number="4"/>
+    </animation>
+    <animation name="spear-effect">
+        <frame image="spear-effect-0001" number="1"/>
     </animation>
     <animation name="speedup">
         <frame image="speedup-0001" number="1"/>
@@ -552,17 +547,6 @@
         <frame image="valkyrie-walk-0002" number="2"/>
         <frame image="valkyrie-walk-0003" number="3"/>
         <frame image="valkyrie-walk-0004" number="4"/>
-    </animation>
-    <animation name="volcano">
-        <frame image="volcano-0001" number="1"/>
-        <frame image="volcano-0002" number="2"/>
-    </animation>
-    <animation name="water">
-        <frame image="water-0001" number="1"/>
-        <frame image="water-0002" number="2"/>
-    </animation>
-    <animation name="water-deep">
-        <frame image="water-deep-0001" number="1"/>
     </animation>
     <animation name="water-shallow">
         <frame image="water-shallow-0001" number="1"/>

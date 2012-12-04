@@ -319,13 +319,6 @@ castle
   orig: 256, 256
   offset: 0, 0
   index: -1
-temple
-  rotate: false
-  xy: 260, 2
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 
 flags1.png
 format: RGBA8888
@@ -924,51 +917,23 @@ elf-ability-effect-0001
   orig: 128, 128
   offset: 0, 0
   index: -1
-berserker-berserk-effect-0003
-  rotate: false
-  xy: 1040, 520
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0004
-  rotate: false
-  xy: 1040, 520
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0001
-  rotate: false
-  xy: 1170, 520
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-berserker-berserk-effect-0002
-  rotate: false
-  xy: 1170, 520
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 axe-attack-effect-0003
   rotate: false
-  xy: 1300, 520
+  xy: 1040, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 axe-attack-effect-0002
   rotate: false
-  xy: 1430, 520
+  xy: 1170, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 axe-attack-effect-0001
   rotate: false
-  xy: 1560, 520
+  xy: 1300, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -1010,49 +975,49 @@ blood-small-0001
   index: -1
 blood-medium-0004
   rotate: false
-  xy: 1690, 520
+  xy: 1430, 520
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-medium-0003
   rotate: false
-  xy: 1820, 520
+  xy: 1560, 520
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-medium-0002
   rotate: false
-  xy: 520, 650
+  xy: 1690, 520
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-medium-0001
   rotate: false
-  xy: 520, 716
+  xy: 1820, 520
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-big-0003
   rotate: false
-  xy: 520, 782
+  xy: 520, 650
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-big-0002
   rotate: false
-  xy: 520, 848
+  xy: 520, 716
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 blood-big-0001
   rotate: false
-  xy: 520, 914
+  xy: 520, 782
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
@@ -1115,28 +1080,28 @@ shaman-attack-effect-0001
   index: -1
 jotun-ability-effect2-0001
   rotate: false
-  xy: 520, 980
+  xy: 520, 848
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 axe-effect-0003
   rotate: false
-  xy: 520, 1046
+  xy: 520, 914
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 axe-effect-0002
   rotate: false
-  xy: 520, 1112
+  xy: 520, 980
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 axe-effect-0001
   rotate: false
-  xy: 520, 1178
+  xy: 520, 1046
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -1373,172 +1338,144 @@ water-shallow-0001
   orig: 256, 256
   offset: 0, 0
   index: -1
-water-deep-0001
+volcano
   rotate: false
   xy: 518, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-water-0002
+snowshallow
   rotate: false
   xy: 776, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-water-0001
+snowmountain
   rotate: false
   xy: 1034, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-volcano
+snowice
   rotate: false
   xy: 1292, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snowmountain
+snowhill
   rotate: false
   xy: 1550, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snowhill
+snowforest
   rotate: false
   xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snowforest
+snow
   rotate: false
   xy: 2, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-snow
+shallow
   rotate: false
   xy: 2, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-shallow
+rockyvolcano
   rotate: false
   xy: 2, 1034
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-shallow-0002
+rockylavapool
   rotate: false
   xy: 2, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-shallow-0001
+rockylava
   rotate: false
   xy: 2, 1550
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockylavapool
+rockyhill
   rotate: false
   xy: 260, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockylava
+rockyground
   rotate: false
   xy: 518, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockyhill
+rockyforest
   rotate: false
   xy: 776, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockyground
+mountain
   rotate: false
   xy: 1034, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-rockyforest
+hill
   rotate: false
   xy: 1292, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-mountain
+grid
   rotate: false
   xy: 1550, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-hill
+grass
   rotate: false
   xy: 260, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-grid
+forest
   rotate: false
   xy: 260, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-grass
+crater
   rotate: false
   xy: 260, 1034
   size: 256, 256
   orig: 256, 256
-  offset: 0, 0
-  index: -1
-forest
-  rotate: false
-  xy: 260, 1292
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-crater
-  rotate: false
-  xy: 260, 1550
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-volcano-0002
-  rotate: false
-  xy: 1808, 2
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-volcano-0001
-  rotate: false
-  xy: 2, 1808
-  size: 128, 128
-  orig: 128, 128
   offset: 0, 0
   index: -1
 
