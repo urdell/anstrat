@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -213,7 +214,7 @@ public final class Pathfinding {
 				}
 				
 				// Unit can't go there? Skip.
-				if(isRange && distance > unit.currentAP)
+				if(isRange && (distance > unit.currentAP ))
 					continue;
 				
 				//Shorter distance? Add/update data.

@@ -2,9 +2,11 @@ package com.anstrat.gui;
 
 import java.util.HashMap;
 
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.Pathfinding;
+import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 
 public class ActionMap {
@@ -66,6 +68,7 @@ public class ActionMap {
 	public void prepare(Unit u){
 		clear();
 		Pathfinding.updateActionMapMoves(u, this);
+		
 		for(Unit otherUnit : State.activeState.unitList.values()){
 			actionTypeMap.remove(otherUnit.tileCoordinate);
 			if(otherUnit.ownerId != u.ownerId){
@@ -77,6 +80,14 @@ public class ActionMap {
 			}
 		}
 		
+		for(Tile[] tilerow : State.activeState.map.tiles) {
+			for(Tile tile : tilerow) {
+				if (getActionType(tile.coordinates) != ACTION_NULL && !Fog.isVisible(tile.coordinates, State.activeState.currentPlayerId)) {
+					setActionType(tile.coordinates, ACTION_NULL);
+				}
+			}
+		}
+			
 		isValid = true;
 	}
 	

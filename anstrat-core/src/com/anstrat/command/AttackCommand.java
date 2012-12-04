@@ -1,6 +1,7 @@
 package com.anstrat.command;
 
 import com.anstrat.gameCore.Combat;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 
@@ -39,6 +40,7 @@ public class AttackCommand extends Command{
 				attacker != null &&
 				defender != null &&
 				attacker.ownerId != defender.ownerId &&
+				Fog.isVisible(defender.tileCoordinate, attacker.ownerId) &&
 				Combat.canAttack(attacker, defender);
 	}
 	

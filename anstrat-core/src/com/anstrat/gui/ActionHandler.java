@@ -75,7 +75,7 @@ public class ActionHandler {
 		}
 		case SelectionHandler.SELECTION_UNIT:
 			Unit selectedUnit = gEngine.selectionHandler.selectedUnit;
-			if(unit == null){   //Empty tile clicked
+			if(unit == null || !Fog.isVisible(unit.tileCoordinate, State.activeState.currentPlayerId)){   //Empty tile clicked
 				if(gEngine.actionMap.getActionType(gTile.tile.coordinates) == ActionMap.ACTION_MOVE){
 					Command c = new MoveCommand(selectedUnit, gTile.tile.coordinates);
 					requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
@@ -91,16 +91,18 @@ public class ActionHandler {
 					
 					gEngine.selectionHandler.selectUnit(unit);
 					gEngine.selectionHandler.gTile = gTile;
-					gEngine.highlighter.highlightTile(unit.tileCoordinate);
+					gEngine.highlighter.highlightTile(unit.tileCoordinate, false);
 				}
 				else if(unit.ownerId != State.activeState.currentPlayerId && selectedUnit.ownerId==State.activeState.currentPlayerId){
 					Command c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
 					if(c.isAllowed())
 						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
-					else
+					else {
 						gEngine.animationHandler.runParalell(new FullscreenTextAnimation("Can not attack this"));
+						
+					}
 				}else{
-					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
+					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit), false);
 					gEngine.selectionHandler.selectUnit(unit);
 					gEngine.selectionHandler.gTile = gTile;
 				}
@@ -197,9 +199,9 @@ public class ActionHandler {
 	}
 	public void refreshHighlight(Unit unit){
 		GEngine gEngine = GEngine.getInstance();
-		gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
+		gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit), false);
 		gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
-		GEngine.getInstance().actionMap.prepare(unit);
+		gEngine.actionMap.prepare(unit);
 	}
 
 	public void abilityPress(int i) {
