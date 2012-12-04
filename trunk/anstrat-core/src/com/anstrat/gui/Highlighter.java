@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.anstrat.command.ActivateAbilityCommand;
+import com.anstrat.command.ActivateTargetedAbilityCommand;
+import com.anstrat.command.AttackCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Fog;
@@ -221,18 +224,38 @@ public class Highlighter {
 		}
 		
 		if(gEngine.actionHandler.showingConfirmDialog){   // Render outline of target
-			Color targetColor = Color.GRAY;
+			Color flashColor = null;
+			Color baseColor = null;
 			Color modifiedColor = new Color(0f, 0f, 0f, 1f);
-			if(gEngine.actionHandler.confirmCommand instanceof MoveCommand)
-				targetColor = Color.GRAY;
+			if(gEngine.actionHandler.confirmCommand instanceof MoveCommand){
+				//baseColor = Color.ORANGE;
+				//flashColor = Color.WHITE;
+				baseColor = new Color(0.65f, 0.65f, 0f, 0.5f);
+				flashColor = new Color(1f, 1f, 0.3f, 1f);
+			}
+			else if(gEngine.actionHandler.confirmCommand instanceof AttackCommand){
+				baseColor = new Color(0.65f, 0.0f, 0f, 0.5f);
+				flashColor = new Color(1f, 0.0f, 0.0f, 1f);
+			} else if(gEngine.actionHandler.confirmCommand instanceof ActivateTargetedAbilityCommand ||
+					gEngine.actionHandler.confirmCommand instanceof ActivateAbilityCommand){
+				baseColor = new Color(0.2f, 0.5f, 0.5f, 0.8f);
+				flashColor = new Color(0.4f, 0.8f, 0.8f, 1f);
+			} else{
+				baseColor = Color.BLACK;
+				flashColor = Color.WHITE;
+			}
 			//if(gEngine.actionHandler.confirmCommand instanceof AttackCommand)
 			//	targetColor = Color.RED;
 			
 			float sinValue = 1-Math.abs((float)Math.sin(GEngine.elapsedTime*3));
-			modifiedColor.r = targetColor.r+(1-targetColor.r)*sinValue;
+			/*modifiedColor.r = targetColor.r+(1-targetColor.r)*sinValue;
 			modifiedColor.g = targetColor.g+(1-targetColor.g)*sinValue;
 			modifiedColor.b = targetColor.b+(1-targetColor.b)*sinValue;
-			modifiedColor.a = targetColor.a+(1-targetColor.a)*sinValue;
+			modifiedColor.a = targetColor.a+(1-targetColor.a)*sinValue;*/
+			modifiedColor.r = sinValue*flashColor.r+(1-sinValue)*baseColor.r;
+			modifiedColor.g = sinValue*flashColor.g+(1-sinValue)*baseColor.g;
+			modifiedColor.b = sinValue*flashColor.b+(1-sinValue)*baseColor.b;
+			modifiedColor.a = sinValue*flashColor.a+(1-sinValue)*baseColor.a;
 			
 			gEngine.actionHandler.confirmTile.renderOutline(Gdx.gl10, modifiedColor, 6f);
 		}
