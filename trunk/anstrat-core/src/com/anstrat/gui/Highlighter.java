@@ -116,7 +116,8 @@ public class Highlighter {
 			for(GTile tile : row){
 					if(highlights.containsKey(tile.tile.coordinates)){
 						
-						if(highlights.get(tile.tile.coordinates)!=HIGHLIGHT_OFF && (highlightFog || !highlightFog && Fog.isVisible(tile.tile.coordinates, State.activeState.currentPlayerId))) {
+						if(highlights.get(tile.tile.coordinates)!=HIGHLIGHT_OFF 
+								&& (highlightFog || !highlightFog && Fog.isVisible(tile.tile.coordinates, State.activeState.currentPlayerId))) {
 							tile.setHighlight(HIGHLIGHT_TILE);
 						}
 						switch(highlights.get(tile.tile.coordinates)){
