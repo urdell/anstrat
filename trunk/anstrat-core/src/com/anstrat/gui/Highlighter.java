@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.anstrat.command.AttackCommand;
 import com.anstrat.command.MoveCommand;
 import com.anstrat.core.Assets;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -70,7 +70,7 @@ public class Highlighter {
 		{
 			for(int j=0;j<tiles[i].length;j++)
 			{
-				if(Pathfinding.getDistance(center, tiles[i][j].coordinates) <= range){
+				if(Pathfinding.getDistance(center, tiles[i][j].coordinates) <= range && Fog.isVisible(tiles[i][j].coordinates, State.activeState.currentPlayerId)){
 					coordinates.add(tiles[i][j].coordinates);
 				}
 			}
@@ -84,7 +84,7 @@ public class Highlighter {
 	 * Given tiles, highlights them with the color representing a units range/path.
 	 * @param coordinates The tiles to highlight.
 	 */
-	public void highlightTiles(List<TileCoordinate> coordinates)
+	public void highlightTiles(List<TileCoordinate> coordinates, boolean highlightFog)
 	{
 		if(coordinates==null)
 			return;
@@ -95,43 +95,45 @@ public class Highlighter {
 			highlights.put(tc, HIGHLIGHT_OFF);
 
 		}
-		applyHighlights();
+		applyHighlights(highlightFog);
 	}
 	
 	/**
 	 * Highlights a single tile.
 	 * @param coordinate Tile to be highlighted
 	 */
-	public void highlightTile(TileCoordinate coordinate){
+	public void highlightTile(TileCoordinate coordinate, boolean highlightFog){
 		clearHighlights();
 		highlights.put(coordinate, HIGHLIGHT_UNIT);
-		applyHighlights();
+		applyHighlights(highlightFog);
 	}
 	
 	/**
 	 * Applies all highlights.
 	 */
-	public void applyHighlights(){
+	public void applyHighlights(boolean highlightFog){
 		for(GTile[] row : gEngine.map.tiles)
 			for(GTile tile : row){
-				if(highlights.containsKey(tile.tile.coordinates)){
-					if(highlights.get(tile.tile.coordinates)!=HIGHLIGHT_OFF)
-						tile.setHighlight(HIGHLIGHT_TILE);
-					
-					switch(highlights.get(tile.tile.coordinates)){
-					case HIGHLIGHT_UNIT:
-						Unit unit = StateUtils.getUnitByTile(tile.tile.coordinates);
-						if(unit!=null && unit.ownerId!=State.activeState.currentPlayerId)
-							tile.setHighlight(HIGHLIGHT_ENEMY);
-						else
-							tile.setHighlight(HIGHLIGHT_UNIT);
-						break;
-					default:
-						break;
+					if(highlights.containsKey(tile.tile.coordinates)){
+						
+						if(highlights.get(tile.tile.coordinates)!=HIGHLIGHT_OFF && (highlightFog || !highlightFog && Fog.isVisible(tile.tile.coordinates, State.activeState.currentPlayerId))) {
+							tile.setHighlight(HIGHLIGHT_TILE);
+						}
+						switch(highlights.get(tile.tile.coordinates)){
+						case HIGHLIGHT_UNIT:
+							Unit unit = StateUtils.getUnitByTile(tile.tile.coordinates);
+							if(unit!=null && unit.ownerId!=State.activeState.currentPlayerId)
+								tile.setHighlight(HIGHLIGHT_ENEMY);
+							else
+								tile.setHighlight(HIGHLIGHT_UNIT);
+							break;
+						default:
+							break;
+						}
 					}
-				}
-				else
-					tile.setHighlight(HIGHLIGHT_TILE);
+					else
+						tile.setHighlight(HIGHLIGHT_TILE);
+				//}
 			}
 	}
 	

@@ -91,7 +91,8 @@ public class MoveCommand extends Command {
 				!unit.tileCoordinate.equals(endTile) &&
 				unit.ownerId == state.currentPlayerId &&
 				Pathfinding.getUnitRange(unit).contains(endTile) &&
-				StateUtils.getUnitByTile(state.map.getTile(endTile).coordinates) == null);
+				StateUtils.getUnitByTile(state.map.getTile(endTile).coordinates) == null) &&
+				Fog.isVisible(endTile, unit.ownerId);
 	}
 
 }

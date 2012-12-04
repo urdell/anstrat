@@ -54,10 +54,10 @@ public class SelectionHandler {
 				if(prevSel == SELECTION_EMPTY)
 					AudioAssets.playSound("selectUnit");
 				gEngine.actionMap.prepare(unit);
-				gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit));
+				gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit), false);
 			}
 			else
-				gEngine.highlighter.highlightTile(unit.tileCoordinate);
+				gEngine.highlighter.highlightTile(unit.tileCoordinate, false);
 		} else{
 			deselect();
 		}
@@ -72,7 +72,7 @@ public class SelectionHandler {
 			deselect();
 			return;
 		}
-		GEngine.getInstance().highlighter.highlightTiles(highlights);
+		GEngine.getInstance().highlighter.highlightTiles(highlights, true);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);	
 	}
 	
@@ -86,7 +86,7 @@ public class SelectionHandler {
 			return;
 		}
 		selectedUnit = null;
-		GEngine.getInstance().highlighter.highlightTiles(highlights);
+		GEngine.getInstance().highlighter.highlightTiles(highlights, true);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
 	}
 	
@@ -100,7 +100,7 @@ public class SelectionHandler {
 			return;
 		}
 		selectedUnit = null;
-		GEngine.getInstance().highlighter.highlightTiles(highlights);
+		GEngine.getInstance().highlighter.highlightTiles(highlights, true);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
 	}
 	
@@ -129,7 +129,7 @@ public class SelectionHandler {
 				highlights.add(t.coordinates);
 		}
 		
-		GEngine.getInstance().highlighter.highlightTiles(highlights);
+		GEngine.getInstance().highlighter.highlightTiles(highlights, false);
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_SPAWN);
 		
 		Animation animation = new MoveCameraAnimation(GEngine.getInstance().map.getTile(StateUtils.getCurrentPlayerCastle().tileCoordinate).getCenter());
