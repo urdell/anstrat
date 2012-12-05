@@ -320,12 +320,16 @@ public class Map implements Serializable{
 		placeOutTiles(fourth, third.length,second[0].length);
 		
 		// Place villages in random locations
-		int nrVillages = tiles.length * tiles[0].length / 13;  // One building every 13 tiles (number 13 taken from nothing)
+		int nrVillages = numberOfVillages();	
 		for(int i=0; i<nrVillages; i++){
-			int rx = Math.abs(random.nextInt()%tiles.length);    // 0 to width
-			int ry = Math.abs(random.nextInt()%tiles[0].length); // 0 to height
+			
+			int rx = Math.abs(random.nextInt(tiles.length/2));	//don't know why Math.abs, it's from older code. Surely there must be a reason for it so it's left
+			int ry = Math.abs(random.nextInt(tiles[0].length)); 	// 0 to height
 			setBuilding(
 					new TileCoordinate(rx, ry), 
+					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+			setBuilding(
+					new TileCoordinate(tiles.length-rx-1, tiles[0].length-ry-1), 
 					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
 		}
 		
@@ -353,6 +357,14 @@ public class Map implements Serializable{
 		}
 		setBuilding(castle1pos, new Building(Building.TYPE_CASTLE, nextBuildingId++, 0));
 		return true;
+	}
+	
+	private int numberOfVillages() {
+		int nr = 0;
+		
+		for(int i = 0, j = 26; (i+j) < tiles.length*tiles[0].length; i += j, j++, nr++); // one village per 26 tiles, 2 for 27 more, 3 for 28 more... 
+		
+		return nr; 
 	}
 	
 	/*private void randomizeMap(Random random){

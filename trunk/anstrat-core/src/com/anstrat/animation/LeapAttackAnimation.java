@@ -58,7 +58,6 @@ public class LeapAttackAnimation extends Animation {
 		}
 		if(lifetimeLeft <= 1.0f && !enterFinished) {
 			enterFinished = true;
-			System.out.println("hej första");
 			gunit.playCustom(Assets.getAnimation("berserker-ability"), true);
 			target.updateHealthbar();
 			FloatingTextAnimation animation2 = new FloatingTextAnimation(target.unit.tileCoordinate, ""+damage, Color.RED);
@@ -66,7 +65,6 @@ public class LeapAttackAnimation extends Animation {
 		}
 		else if(lifetimeLeft <= 0.5f && !finishStarted) {
 			finishStarted = true;
-			System.out.println("hej andra");
 			gunit.playCustom(Assets.getAnimation("berserker-ability-finish"), true);
 		}
 		
