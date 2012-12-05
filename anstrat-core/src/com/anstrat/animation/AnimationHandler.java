@@ -40,8 +40,7 @@ public class AnimationHandler {
 		for(Animation removeMe : plannedRemovals){
 			runningAnimations.remove(removeMe);
 			//TODO Works but possibly needs tossing around later (can only be robust enough here atm)
-			if(removeMe instanceof DeathAnimation)
-				((DeathAnimation) removeMe).removeGUnit();
+			removeMe.postAnimationAction();				
 		}
 		timeToNext -= deltaTime;
 		tryAddNextPending();

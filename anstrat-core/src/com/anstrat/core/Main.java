@@ -2,6 +2,7 @@ package com.anstrat.core;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Stack;
 
 import com.anstrat.ai.AIRunner;
@@ -177,6 +178,9 @@ public class Main extends Game implements ApplicationListener {
 		//Draw overlays and popups
 		overlayStage.act(Gdx.graphics.getDeltaTime());
 		overlayStage.draw();
+		
+		// Deal with crossfades
+		AudioAssets.update(Gdx.graphics.getDeltaTime());
 	}
 	
 	@Override
@@ -235,7 +239,18 @@ public class Main extends Game implements ApplicationListener {
 		if(screen instanceof GEngine){
 			overlayStage.addActor(new TransitionEffect());
 			if(Options.soundOn)
-				AudioAssets.playMusic("ingamedummy");
+			{
+				Random rand = new Random();
+				// Binomial distr0
+				if(rand.nextFloat() > 0.5f)
+					AudioAssets.playMusic("vv_ingame_1");
+				else if(rand.nextFloat() > 0.5f)
+					AudioAssets.playMusic("vv_ingame_2");
+				else if(rand.nextFloat() > 0.5f)
+					AudioAssets.playMusic("dd_ingame_1");
+				else
+					AudioAssets.playMusic("dd_ingame_2");
+			}
 		}
 		else if(screen instanceof MainMenu){
 			if(Options.soundOn) AudioAssets.playMusic("VikingsTheme");

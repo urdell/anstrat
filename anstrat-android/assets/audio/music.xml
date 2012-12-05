@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <music>
 	<track title="VikingsTheme" filename="vikingstitle.mp3"/>
-	<track title="ingamedummy" filename="ingame.mp3"/>
+	<track title="dd_ingame_1" filename="dreadone.mp3"/>
+	<track title="dd_ingame_2" filename="dreadtwo.mp3"/>
+	<track title="vv_ingame_1" filename="vengeanceone.mp3"/>
+	<track title="vv_ingame_2" filename="vengeanceone.mp3"/>
+	<track title="victory" filename="victory.wav"/>
+	<track title="defeat" filename="defeat.wav"/>
 </music>

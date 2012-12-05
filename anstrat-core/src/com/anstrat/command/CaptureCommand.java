@@ -1,6 +1,7 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.CaptureAnimation;
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Building;
@@ -46,6 +47,7 @@ public class CaptureCommand extends Command{
 			
 			if(captureBuilding.type == Building.TYPE_CASTLE){
 				GameUI.showVictoryPopup(State.activeState.getCurrentPlayer().getDisplayName());
+				AudioAssets.playMusic("victory");
 				
 				// Send a "hidden" EndTurnCommand
 				CommandHandler.execute(new EndTurnCommand());

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.anstrat.core.Options;
 import com.badlogic.gdx.Gdx;
@@ -16,26 +15,32 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class AudioAssets {
-	
+
 	private static Map<String,Music> music;
 	private static Map<String,Sound> baseSounds;
 	private static Map<String,DelayedSound> sounds;
-	
+	private static Music currentTrack = null;
+	private static Music nextTrack = null;
+	private static final float FADE_DELAY = 3.0f;
+	private static float FADE_PROGRESS = -1.0f;
+	private static float CURRENT_VOLUME = 0.0f;
+
 	private static void loadMusic(FileHandle musicHandle){
 		try {
 			Element root = new XmlReader().parse(musicHandle);
 			int trackCount = root.getChildCount();
 			int trackFail = 0;
-			
+
 			for (int i = 0; i < trackCount; i++) {
 				String trackName = root.getChild(i).get("title");
 				String trackFile = root.getChild(i).get("filename");
-				
+
 				FileHandle fh = Gdx.files.internal("audio/music/"+trackFile);
 				if(fh.exists())
 				{
 					Music m = Gdx.audio.newMusic(fh);
-					m.setLooping(true);
+					if(!trackName.equalsIgnoreCase("victory") && !trackName.equalsIgnoreCase("defeat"))
+						m.setLooping(true);
 					music.put(trackName.toLowerCase(Locale.ENGLISH), m);
 				}
 				else
@@ -44,14 +49,14 @@ public class AudioAssets {
 					trackFail++;
 				}
 			}
-			
+
 			Gdx.app.log("Audio", String.format("Successfully loaded %d tracks from '%s'.", trackCount-trackFail, musicHandle));
-			
+
 		} catch (IOException e) {
 			throw new IllegalArgumentException(String.format("Failed to parse tracks from '%s'.", musicHandle.name()), e);
 		}
 	}
-	
+
 	private static void loadSfxs(FileHandle sfxsHandle){
 		try {
 			Element root = new XmlReader().parse(sfxsHandle);
@@ -59,7 +64,7 @@ public class AudioAssets {
 			int sfxFail = 0;
 			int uniques = 0;
 			float sfxDelay = 0;
-			
+
 			for (int i = 0; i < sfxCount; i++) {
 				String sfxName = root.getChild(i).get("name");
 				String sfxFile = root.getChild(i).get("filename");
@@ -71,7 +76,7 @@ public class AudioAssets {
 				{
 					;; //swallow
 				}
-				
+
 				FileHandle fh = Gdx.files.internal("audio/sfx/"+sfxFile);
 				if(fh.exists())
 				{
@@ -80,7 +85,7 @@ public class AudioAssets {
 						uniques++;
 						baseSounds.put(sfxFile.toLowerCase(Locale.ENGLISH), Gdx.audio.newSound(fh));
 					}
-					
+
 					sounds.put(sfxName.toLowerCase(Locale.ENGLISH), 
 							new DelayedSound(baseSounds.get(sfxFile.toLowerCase(Locale.ENGLISH)), sfxDelay));
 				}
@@ -93,77 +98,83 @@ public class AudioAssets {
 
 			Gdx.app.log("Audio", String.format("Successfully loaded %d (%d unique) sfxs from '%s'.", sfxCount-sfxFail,
 					uniques, sfxsHandle));
-			
+
 		} catch (IOException e) {
 			throw new IllegalArgumentException(String.format("Failed to parse sfxs from '%s'.", sfxsHandle.name()), e);
 		}
 	}
-	
+
 	public static void load(FileHandle musicHandle, FileHandle sfxsHandle)
 	{
 		music = new HashMap<String,Music>();
 		baseSounds = new HashMap<String,Sound>();
 		sounds = new HashMap<String,DelayedSound>();
-		
+
 		loadMusic(musicHandle);
 		loadSfxs(sfxsHandle);
 	}
-	
+
 	public static void dispose()
 	{
 		for(Music m : music.values())
 			m.dispose();
-		
+
 		for(Sound s : baseSounds.values())
 			s.dispose();
-		
+
 		music = null;
 		baseSounds = null;
 		sounds = null;
+		currentTrack = null;
+		nextTrack = null;
 	}
-	
+
 	public static DelayedSound getSound(String soundName){
 		DelayedSound s = sounds.get(soundName.toLowerCase(Locale.ENGLISH));
-		
+
 		if(s==null)
 		{
 			Gdx.app.log("Audio", String.format("Sound effect not found: %s.",soundName));
 			return null;
 		}
-		
+
 		return s.clone();
 	}
-	
+
 	public static void playSound(String soundName)
 	{
 		if(Options.soundOn)
 		{
 			DelayedSound s = sounds.get(soundName.toLowerCase(Locale.ENGLISH));
-			
+
 			if(s==null)
 			{
 				Gdx.app.log("Audio", String.format("Sound effect not found: %s.",soundName));
 				return;
 			}
-			
+
 			s.sound.play();
 		}
 	}
-	
+
 	public static void playMusic(String musicName)
 	{
-		stopMusicExceptFor(musicName);
-
-		Music m = music.get(musicName.toLowerCase(Locale.ENGLISH));
-
-		if(m==null)
+		if(Options.soundOn)
 		{
-			Gdx.app.log("Audio", String.format("Music file not found: %s.",musicName));
-			return;
-		}
+			Music m = music.get(musicName.toLowerCase(Locale.ENGLISH));
 
-		if(!m.isPlaying())
-			m.play();
+			if(m==null)
+			{
+				Gdx.app.log("Audio", String.format("Music file not found: %s.",musicName));
+				return;
+			}
+
+			nextTrack = m;
+			FADE_PROGRESS = 0.0f;
+			
+			if(musicName.equalsIgnoreCase("victory") || musicName.equalsIgnoreCase("defeat"))
+				FADE_PROGRESS = FADE_DELAY / 2.0f;
+		}
 	}
 
 	public static void stopMusic()
@@ -172,12 +183,46 @@ public class AudioAssets {
 			track.pause();
 	}
 
-	private static void stopMusicExceptFor(String ignore)
+	public static void update(float delta)
 	{
-		for(Entry<String,Music> track : music.entrySet())
+		if(FADE_PROGRESS >= 0.0f)
+			FADE_PROGRESS += delta;
+		
+		if(FADE_PROGRESS >= 0.0f && FADE_PROGRESS < FADE_DELAY / 2.0f)
 		{
-			if(!track.getKey().equalsIgnoreCase(ignore))
-				track.getValue().pause();
+			if(currentTrack == null || currentTrack.equals(nextTrack))
+				FADE_PROGRESS = FADE_DELAY / 2.0f;
+			else
+			{
+				CURRENT_VOLUME = 1.0f - FADE_PROGRESS / ( FADE_DELAY / 2.0f );
+				currentTrack.setVolume(CURRENT_VOLUME);
+			}
+		}
+		else if(FADE_PROGRESS >= FADE_DELAY / 2.0f)
+		{
+			if(nextTrack != null)
+			{
+				if(currentTrack != null)
+					currentTrack.pause();
+				currentTrack = nextTrack;
+				nextTrack = null;
+			}
+
+			if(FADE_PROGRESS > FADE_DELAY)
+			{
+				currentTrack.setVolume(1.0f);
+				FADE_PROGRESS = -1.0f;
+			}
+			else
+			{
+				float new_vol_calc = (FADE_PROGRESS - FADE_DELAY / 2.0f) / ( FADE_DELAY / 2.0f );
+				if( new_vol_calc > CURRENT_VOLUME)
+					CURRENT_VOLUME = new_vol_calc;
+				currentTrack.setVolume(CURRENT_VOLUME);
+				if(!currentTrack.isPlaying() && Options.soundOn)
+					currentTrack.play();
+			}
+
 		}
 	}
 }
