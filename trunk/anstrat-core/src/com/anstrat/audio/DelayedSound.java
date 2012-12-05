@@ -1,5 +1,6 @@
 package com.anstrat.audio;
 
+import com.anstrat.core.Options;
 import com.badlogic.gdx.audio.Sound;
 
 public class DelayedSound {
@@ -25,7 +26,8 @@ public class DelayedSound {
 			
 			if(delay<0f)
 			{
-				sound.play();
+				if(Options.soundOn)
+					sound.play();
 				finished = true;
 			}
 		}

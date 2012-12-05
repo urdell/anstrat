@@ -162,6 +162,20 @@
         <frame image="elf-walk-0003" number="3"/>
         <frame image="elf-walk-0004" number="4"/>
     </animation>
+    <animation name="fallen-ability">
+        <frame image="fallen-ability-0001" number="1" count="2"/>
+        <frame image="fallen-ability-0002" number="2" count="2"/>
+        <frame image="fallen-ability-0003" number="3" count="4"/>
+	<frame image="fallen-ability-0004" number="4"/>
+        <frame image="fallen-ability-0005" number="5"/>
+    </animation>
+    <animation name="fallen-ability-effect">
+        <frame image="fallen-ability-effect-0001" number="1"/>
+        <frame image="fallen-ability-effect-0002" number="2"/>
+        <frame image="fallen-ability-effect-0003" number="3"/>
+	<frame image="fallen-ability-effect-0004" number="4"/>
+        <frame image="fallen-ability-effect-0005" number="5"/>
+    </animation>
     <animation name="fallen-attack">
         <frame image="fallen-attack-0001" number="1" count="2"/>
         <frame image="fallen-attack-0002" number="2"/>

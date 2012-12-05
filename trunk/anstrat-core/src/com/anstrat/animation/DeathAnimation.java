@@ -52,15 +52,15 @@ public class DeathAnimation extends Animation {
 			newAlpha = 0f;
 		unit.setAlpha(newAlpha);
 	}
-	
-	public void removeGUnit()
+
+	@Override
+	public void postAnimationAction()
 	{
 		GEngine.getInstance().gUnits.remove(unit.unit.id);
 	}
-
+	
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
 		return Fog.isVisible(unit.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.DebuffAnimation;
+import com.anstrat.animation.RitualisticVortex;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -42,21 +42,24 @@ public class DarkRitual extends Ability{
 		List<Tile> adjacentTiles = new ArrayList<Tile>();
 		adjacentTiles = State.activeState.map.getNeighbors(source.tileCoordinate);
 		
+		List<Unit> units = new ArrayList<Unit>();
+		
 		for (Tile adjacentTile : adjacentTiles){
 			Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
 			if (unit != null){
 				if (unit.ownerId != source.ownerId){
+					units.add(unit);
 					unit.currentAP -= AP_DRAIN_AMOUNT;
 					if (unit.currentAP < 0){
 						unit.currentAP = 0;
 					}
-					Animation animation = new DebuffAnimation(unit, Color.RED);
-					GEngine.getInstance().animationHandler.enqueue(animation);
+					//Animation animation = new DebuffAnimation(unit, Color.RED);
+					//GEngine.getInstance().animationHandler.enqueue(animation);
 				}
 			}
 		}
 		source.resolveDeath();
-		Animation animation = new DeathAnimation(source, source.tileCoordinate);
+		Animation animation = new RitualisticVortex(source, units);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	
