@@ -6,6 +6,7 @@ import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.LeapAttackAnimation;
 import com.anstrat.animation.MoveAnimation;
 import com.anstrat.gameCore.CombatLog;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -65,6 +66,8 @@ public class LeapAttack extends TargetedAbility{
 			GEngine.getInstance().animationHandler.enqueue(leapAnimation);
 			GEngine.getInstance().getUnit(targetUnit).updateHealthbar();
 			
+			Fog.recalculateFog(source.ownerId, State.activeState);
+			
 			CombatLog cl = new CombatLog();
 			cl.attacker = source;
 			cl.defender = targetUnit;
@@ -72,10 +75,6 @@ public class LeapAttack extends TargetedAbility{
 			cl.newDefenderHP = targetUnit.currentHP;
 			cl.attackDamage = damage;
 			
-			if(!targetUnit.isAlive){
-				Animation deathAnimation = new DeathAnimation(targetUnit,source.tileCoordinate);
-				GEngine.getInstance().animationHandler.enqueue(deathAnimation);
-			}
 		}
 		
 		@Override

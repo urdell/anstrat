@@ -1,6 +1,9 @@
 package com.anstrat.gui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
@@ -89,6 +92,17 @@ public class ActionMap {
 		}
 			
 		isValid = true;
+	}
+	
+	public List<TileCoordinate> getAllowedTiles() {
+		List<TileCoordinate> ret = new ArrayList<TileCoordinate>();
+		System.out.println("test entryset bla bla: "+actionTypeMap.entrySet().size());
+		for(Entry<TileCoordinate, Integer> tile: actionTypeMap.entrySet()) {
+			if(tile.getValue() != ACTION_NULL && Fog.isVisible(tile.getKey(), State.activeState.currentPlayerId)) 
+				ret.add(tile.getKey());
+		}
+		System.out.println("test allowed bla bla: "+ret.size());
+		return ret;
 	}
 	
 	public void clear(){

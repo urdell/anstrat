@@ -54,7 +54,7 @@ public class SelectionHandler {
 				if(prevSel == SELECTION_EMPTY)
 					AudioAssets.playSound("selectUnit");
 				gEngine.actionMap.prepare(unit);
-				gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit), false);
+				gEngine.highlighter.highlightTiles(gEngine.actionMap.getAllowedTiles(), true);//Pathfinding.getUnitRange(unit), false);
 			}
 			else
 				gEngine.highlighter.highlightTile(unit.tileCoordinate, false);
