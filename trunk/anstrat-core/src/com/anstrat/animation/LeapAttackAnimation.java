@@ -62,6 +62,10 @@ public class LeapAttackAnimation extends Animation {
 			target.updateHealthbar();
 			FloatingTextAnimation animation2 = new FloatingTextAnimation(target.unit.tileCoordinate, ""+damage, Color.RED);
 			GEngine.getInstance().animationHandler.runParalell(animation2);
+			if(!target.unit.isAlive){
+				Animation deathAnimation = new DeathAnimation(target.unit, startTile);
+				GEngine.getInstance().animationHandler.runParalell(deathAnimation);
+			}
 		}
 		else if(lifetimeLeft <= 0.5f && !finishStarted) {
 			finishStarted = true;
