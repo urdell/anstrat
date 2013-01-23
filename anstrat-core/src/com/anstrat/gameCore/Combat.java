@@ -79,18 +79,25 @@ public final class Combat {
 	}
 	
 	public static int minDamage(Unit attacker, Unit defender){
+		return minDamage(attacker, defender, 1f);
+	}
+	public static int maxDamage(Unit attacker, Unit defender){
+		return maxDamage(attacker, defender, 1f);
+	}
+	
+	public static int minDamage(Unit attacker, Unit defender, float DamageMultiplier){
 		float typeModifier = (float) DamageModification.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
 		float damageModifier = attacker.getDamageModification();
 		float damageTakenModifier = defender.getDamageTakenModification();
-		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*(1-randomness));
+		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*DamageMultiplier*(1-randomness));
 		if(damage < 0) { damage = 0; } // Remove negative damage
 		return damage;
 	}
-	public static int maxDamage(Unit attacker, Unit defender){	
+	public static int maxDamage(Unit attacker, Unit defender, float DamageMultiplier){	
 		float typeModifier = (float) DamageModification.getAttackModifier(attacker.getUnitType(), defender.getUnitType());
 		float damageModifier = attacker.getDamageModification();
 		float damageTakenModifier = defender.getDamageTakenModification();
-		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*(1+randomness));
+		int damage = (int) (attacker.getAttack()*damageModifier*damageTakenModifier*typeModifier*DamageMultiplier*(1+randomness));
 		if(damage < 0) { damage = 0; } // Remove negative damage
 		return damage;
 	}

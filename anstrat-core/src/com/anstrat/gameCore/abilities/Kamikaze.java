@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -20,6 +21,7 @@ public class Kamikaze extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 3;
 	private static final int RANGE = 1;
+	private static final float DAMAGEMULTIPLIER = 2.0f;
 
 	public Kamikaze(){
 		super("Kamikaze","Making a suicideattack dealing additional damage",AP_COST, RANGE);
@@ -40,10 +42,12 @@ public class Kamikaze extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		int roll = State.activeState.random.nextInt(6)+1;
 		
-		targetUnit.currentHP -= source.getAttack()+roll;
-		source.currentHP = 0;
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
+		source.currentHP = 0;	//Kamikaze kills itself
 		
 		targetUnit.resolveDeath();
 		source.resolveDeath();
@@ -54,7 +58,7 @@ public class Kamikaze extends TargetedAbility {
 		cl.defender = targetUnit;
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
-		cl.attackDamage = source.getAttack()+3+roll;
+		cl.attackDamage = damage;
 		Animation animation = new AttackAnimation(cl);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
@@ -67,7 +71,9 @@ public class Kamikaze extends TargetedAbility {
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack()+4, source.getAttack()+9);
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	

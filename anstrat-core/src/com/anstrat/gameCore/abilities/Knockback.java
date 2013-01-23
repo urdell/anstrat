@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.KnockbackAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -20,6 +21,7 @@ public class Knockback extends TargetedAbility {
 	private static final int AP_COST = 3;
 	private static final int RANGE = 1;
 	private static final long serialVersionUID = 1L;
+	private static final float DAMAGEMULTIPLIER = 1.5f;
 	
 	public Knockback() {
 		super("Knockback", "Makes an attack knocking the enemy back if possible", AP_COST, RANGE);
@@ -40,15 +42,17 @@ public class Knockback extends TargetedAbility {
 		super.activate(source, coordinate);
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
-		int roll = State.activeState.random.nextInt(6)+1;
-		targetUnit.currentHP -= source.getAttack()+roll;
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
 		
 		CombatLog cl = new CombatLog();
 		cl.attacker = source;
 		cl.defender = targetUnit;
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
-		cl.attackDamage = source.getAttack()+roll;
+		cl.attackDamage = damage;
 		targetUnit.resolveDeath();
 		if(targetUnit.isAlive){
 			TileCoordinate knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
@@ -154,7 +158,9 @@ public class Knockback extends TargetedAbility {
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack()+1, source.getAttack()+6);
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 
