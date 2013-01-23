@@ -541,6 +541,9 @@
         <frame image="valkyrie-ability-0002" number="2"/>
         <frame image="valkyrie-ability-0003" number="3"/>
     </animation>
+     <animation name="valkyrie-ability-effect">
+    	<frame image="spear-effect-0001" number="1"/>
+    </animation>
     <animation name="valkyrie-attack">
         <frame image="valkyrie-attack-0001" number="1" count="2"/>
         <frame image="valkyrie-attack-0002" number="2"/>
