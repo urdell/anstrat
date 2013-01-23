@@ -1,5 +1,6 @@
 package com.anstrat.gameCore.abilities;
 
+import com.anstrat.animation.APHealAnimation;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.HealAnimation;
 import com.anstrat.gameCore.StateUtils;
@@ -43,7 +44,7 @@ public class APHeal extends TargetedAbility{
 		
 		if(targetUnit.currentAP > targetUnit.getMaxAP()) targetUnit.currentAP = targetUnit.getMaxAP();
 		
-		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(coordinate));
+		Animation animation = new APHealAnimation(source, StateUtils.getUnitByTile(coordinate));
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	

@@ -56,12 +56,7 @@
         <frame image="axethrower-walk-0007" number="7"/>
         <frame image="axethrower-walk-0008" number="8"/>
     </animation>
-    <animation name="berserker-attack">
-        <frame image="berserker-attack-0001" number="1" count="2"/>
-        <frame image="berserker-attack-0002" number="2"/>
-        <frame image="berserker-attack-0003" number="3" count="3"/>
-    </animation>
-    <animation name="berserker-ability">
+    <animation name="berserker-ability" fps="8">
         <frame image="berserker-ability-0001" number="1"/>
         <frame image="berserker-ability-0002" number="2"/>
         <frame image="berserker-ability-0003" number="3"/>
@@ -72,6 +67,11 @@
     </animation>
     <animation name="berserker-ability-finish">
         <frame image="berserker-ability-finish-0001" number="1"/>
+    </animation>
+    <animation name="berserker-attack">
+        <frame image="berserker-attack-0001" number="1" count="2"/>
+        <frame image="berserker-attack-0002" number="2"/>
+        <frame image="berserker-attack-0003" number="3" count="3"/>
     </animation>
     <animation name="berserker-attack-effect">
         <frame image="hammer-attack-effect-0001" number="1"/>
@@ -243,6 +243,22 @@
         <frame image="flag-inplace-red-0003" number="3"/>
         <frame image="flag-inplace-red-0004" number="4"/>
     </animation>
+    <animaion name="goblin-abiliy-effect">
+    	<frame image="goblin-ability-effect-0001" number="1"/>
+    	<frame image="goblin-ability-effect-0002" number="1"/>
+    	<frame image="goblin-ability-effect-0003" number="1"/>
+    	<frame image="goblin-ability-effect-0004" number="1"/>
+    	<frame image="goblin-ability-effect-0005" number="1"/>
+    	<frame image="goblin-ability-effect-0006" number="1"/>
+    </animaion>
+    <animaion name="goblin-ability-effect-target">
+    	<frame image="goblin-ability-effect-target-0001" number="1"/>
+    	<frame image="goblin-ability-effect-target-0002" number="1"/>
+    	<frame image="goblin-ability-effect-target-0003" number="1"/>
+    	<frame image="goblin-ability-effect-target-0004" number="1"/>
+    	<frame image="goblin-ability-effect-target-0005" number="1"/>
+    	<frame image="goblin-ability-effect-target-0006" number="1"/>
+    </animaion>
     <animation name="goblin-attack">
         <frame image="goblin-attack-0001" number="1" count="4"/>
         <frame image="goblin-attack-0002" number="2"/>
