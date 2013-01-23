@@ -38,7 +38,7 @@ public class LeapAttack extends TargetedAbility{
 			boolean jumpingTarget = false;
 			TileCoordinate tile = Knockback.getKnockBackCoordinate(source, targetUnit);
 			if(StateUtils.getUnitByTile(tile) == null){
-				if(State.activeState.map.getTile(tile).terrain.penalty != Integer.MAX_VALUE){ 
+				if(State.activeState.map.getTile(tile) != null && State.activeState.map.getTile(tile).terrain.penalty != Integer.MAX_VALUE){ 
 					jumpingTarget = true;
 				}
 			}		
