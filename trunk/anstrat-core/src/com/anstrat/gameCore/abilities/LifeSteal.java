@@ -12,6 +12,7 @@ public class LifeSteal extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
 	private static final int RANGE = 1;
+	private static final float DAMAGEMULTIPLIER = 1.0f;
 	
 	public LifeSteal(){
 		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);

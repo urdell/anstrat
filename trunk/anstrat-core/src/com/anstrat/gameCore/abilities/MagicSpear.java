@@ -6,6 +6,8 @@ import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.HealAnimation;
 import com.anstrat.animation.MagicSpearAnimation;
 import com.anstrat.animation.UpdateBarAnimation;
+import com.anstrat.gameCore.Combat;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
@@ -21,6 +23,7 @@ public class MagicSpear extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 3;
 	private static final int RANGE = 2;
+	private static final float DAMAGEMULTIPLIER = 1.2f;
 
 	
 	public MagicSpear(){
@@ -44,10 +47,13 @@ public class MagicSpear extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		targetUnit.currentHP -= source.getAttack();
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
 		targetUnit.resolveDeath();
 		
-		Animation animation = new MagicSpearAnimation(source, targetUnit, source.getAttack());
+		Animation animation = new MagicSpearAnimation(source, targetUnit, damage);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		animation = new UpdateBarAnimation(targetUnit);
 		GEngine.getInstance().animationHandler.enqueue(animation);
@@ -61,7 +67,9 @@ public class MagicSpear extends TargetedAbility {
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack(), source.getAttack());
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	

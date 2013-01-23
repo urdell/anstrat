@@ -3,6 +3,8 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.LifeStealAnimation;
+import com.anstrat.gameCore.Combat;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
@@ -19,6 +21,7 @@ public class ShadowImage extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
 	private static final int RANGE = 1;
+	private static final float DAMAGEMULTIPLIER = 1.0f;
 	
 	public ShadowImage(){
 		super("ShadowImage","Creates an shadow image that makes a lifesteal attack",AP_COST, RANGE);
@@ -39,8 +42,13 @@ public class ShadowImage extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		targetUnit.currentHP -= source.getAttack()-1;
-		source.currentHP += source.getAttack()-1;
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
+		
+		targetUnit.currentHP -= damage;
+		source.currentHP += damage;
 		
 		if(source.currentHP > source.getMaxHP()) source.currentHP = source.getMaxHP();
 		
@@ -57,8 +65,10 @@ public class ShadowImage extends TargetedAbility {
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack()-1, source.getAttack()-1);
-		int HPAfterAttack = source.currentHP+source.getAttack()-1;
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
+		int HPAfterAttack = source.currentHP+Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER);
 		if(source.currentHP+source.getAttack() > source.getMaxHP() ){
 			HPAfterAttack = source.getMaxHP();
 		}

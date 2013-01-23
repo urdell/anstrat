@@ -8,6 +8,7 @@ import java.util.Map;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.ThrowIceAnimation;
 import com.anstrat.animation.UpdateBarAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -26,6 +27,7 @@ public class ThrowIce extends TargetedAbility{
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 5;
 	private static final int RANGE = 2;
+	private static final float DAMAGEMULTIPLIER = 1.5f;
 
 	public ThrowIce(){
 		super("Throwing Ice block","Throws a Ice spear which will cause AoE damage in adjacent Tiles",AP_COST, RANGE);
@@ -47,8 +49,11 @@ public class ThrowIce extends TargetedAbility{
 		super.activate(source, coordinate);
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
-		targetUnit.currentHP -= source.getAttack();
-		map.put(targetUnit, source.getAttack());
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
+		map.put(targetUnit, damage);
 		Animation updateBarAnimation = new UpdateBarAnimation(source);
 		GEngine.getInstance().animationHandler.enqueue(updateBarAnimation);
 	
@@ -57,7 +62,7 @@ public class ThrowIce extends TargetedAbility{
 		adjacentTiles = State.activeState.map.getNeighbors(targetUnit.tileCoordinate);
 		targetUnit.resolveDeath();
 		
-		int splashDamage = (int)(source.getAttack()*splashReduction);	
+		int splashDamage = (int)(damage*splashReduction);	
 		for (Tile adjacentTile : adjacentTiles){
 			
 			Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
@@ -78,7 +83,9 @@ public class ThrowIce extends TargetedAbility{
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack(), source.getAttack());
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	

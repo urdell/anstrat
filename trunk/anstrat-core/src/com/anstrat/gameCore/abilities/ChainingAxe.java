@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.ChainingAxeAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -23,6 +24,7 @@ public class ChainingAxe extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
 	private static final int RANGE = 2;
+	private static final float DAMAGEMULTIPLIER = 1.2f;
 
 	public ChainingAxe(){
 		super("Chaining Axe","Throws a magic axe jumping between up to 4 adjacent enemies, damage is reduced by for each succesive hit",AP_COST, RANGE);
@@ -43,7 +45,10 @@ public class ChainingAxe extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		int numberOfHits = 1;
-		targetUnit.currentHP -= source.getAttack();
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
 		Unit lastHit = targetUnit;
 		TileCoordinate lastHitTile = targetUnit.tileCoordinate;
 		List<Tile> adjacentTiles = new ArrayList<Tile>();
@@ -65,7 +70,10 @@ public class ChainingAxe extends TargetedAbility {
 				Unit unit = StateUtils.getUnitByTile(adjacentTile.coordinates);
 				if (unit != null){
 					if (unit.ownerId != source.ownerId && unit.currentHP > 0 && !alreadyHit.contains(unit)){
-						unit.currentHP -= (source.getAttack()-numberOfHits);
+						minDamage = Combat.minDamage(source, unit, DAMAGEMULTIPLIER-numberOfHits*0.2f);
+						maxDamage = Combat.maxDamage(source, unit, DAMAGEMULTIPLIER-numberOfHits*0.2f);
+						damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+						unit.currentHP -= damage;
 						Animation chainingAxeAnimation = new ChainingAxeAnimation(lastHit, unit, (source.getAttack()-numberOfHits), firstUnit);
 						GEngine.getInstance().animationHandler.enqueue(chainingAxeAnimation);
 						lastHit = unit;
@@ -92,7 +100,9 @@ public class ChainingAxe extends TargetedAbility {
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack(), source.getAttack());
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	

@@ -2,7 +2,9 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.effects.PoisonEffect;
@@ -20,6 +22,7 @@ public class Poison extends TargetedAbility{
 	private static final int AP_COST = 3;
 	private static final int RANGE = 2;
 	private static final int nrOfRounds = 3;
+	private static final float DAMAGEMULTIPLIER = 0.7f;
 	
 	public Poison() {
 		super("Poison", "Fires a poisonous arrow that reduces the targets damage for the next round", AP_COST, RANGE);
@@ -41,7 +44,10 @@ public class Poison extends TargetedAbility{
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		targetUnit.currentHP -= source.getAttack();
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
 		targetUnit.resolveDeath();
 		PoisonEffect poisonEffect = new PoisonEffect(nrOfRounds);
 		targetUnit.effects.add(poisonEffect);
@@ -51,7 +57,7 @@ public class Poison extends TargetedAbility{
 		cl.defender = targetUnit;
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
-		cl.attackDamage = source.getAttack();
+		cl.attackDamage = damage;
 		Animation attackanimation = new AttackAnimation(cl);
 		GEngine.getInstance().animationHandler.enqueue(attackanimation);
 	}
@@ -60,7 +66,9 @@ public class Poison extends TargetedAbility{
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow damageRow = new DamageRow(source.getAttack(), source.getAttack());
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 	}
 	

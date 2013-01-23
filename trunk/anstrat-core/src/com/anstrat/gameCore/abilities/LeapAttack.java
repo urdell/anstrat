@@ -5,6 +5,7 @@ import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.LeapAttackAnimation;
 import com.anstrat.animation.MoveAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
@@ -26,6 +27,7 @@ public class LeapAttack extends TargetedAbility{
 		private static final long serialVersionUID = 1L;
 		private static final int AP_COST = 3;
 		private static final int RANGE = 1;
+		private static final float DAMAGEMULTIPLIER = 1.5f;
 
 		public LeapAttack(){
 			super("Leap Attack","Rushes through target enemy, dealing tons of damage",AP_COST, RANGE);
@@ -57,8 +59,9 @@ public class LeapAttack extends TargetedAbility{
 			TileCoordinate jumpingFrom = source.tileCoordinate;
 			Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 			
-			int roll = State.activeState.random.nextInt(6)+1;
-			int damage = source.getAttack()+6+roll;
+			int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+			int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+			int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 			targetUnit.currentHP -= damage;
 			targetUnit.resolveDeath();
 			source.tileCoordinate = Knockback.getKnockBackCoordinate(source, targetUnit);
@@ -81,7 +84,9 @@ public class LeapAttack extends TargetedAbility{
 		public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 			ConfirmRow nameRow = new TextRow(name);
 			ConfirmRow apRow = new APRow(source, apCost);
-			ConfirmRow damageRow = new DamageRow(source.getAttack()+7, source.getAttack()+12);
+			ConfirmRow damageRow = new DamageRow(
+					Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+					Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
 			return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
 		}
 		
