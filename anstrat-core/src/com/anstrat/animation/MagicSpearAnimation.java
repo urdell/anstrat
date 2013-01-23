@@ -130,7 +130,7 @@ public class MagicSpearAnimation extends Animation {
 		
 			if(animationTimePassed > rangedDelay){
 				TextureRegion region = null;
-				region = Assets.getAnimation("spear-effect").getKeyFrame(animationTimePassed, true);
+				region = Assets.getAnimation("valkyrie-ability-effect").getKeyFrame(animationTimePassed, true);
 				// Draw impact effect
 				if(region != null) {
 					batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
