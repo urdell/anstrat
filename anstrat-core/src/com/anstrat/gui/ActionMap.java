@@ -96,12 +96,10 @@ public class ActionMap {
 	
 	public List<TileCoordinate> getAllowedTiles() {
 		List<TileCoordinate> ret = new ArrayList<TileCoordinate>();
-		System.out.println("test entryset bla bla: "+actionTypeMap.entrySet().size());
 		for(Entry<TileCoordinate, Integer> tile: actionTypeMap.entrySet()) {
 			if(tile.getValue() != ACTION_NULL && Fog.isVisible(tile.getKey(), State.activeState.currentPlayerId)) 
 				ret.add(tile.getKey());
 		}
-		System.out.println("test allowed bla bla: "+ret.size());
 		return ret;
 	}
 	

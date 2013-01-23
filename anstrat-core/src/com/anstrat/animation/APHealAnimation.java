@@ -34,12 +34,13 @@ public class APHealAnimation extends Animation {
 		
 		// Run once
 		if(!started){
-			source.playCustom(Assets.getAnimation("goblin-magic"), false);
+			source.playCustom(Assets.getAnimation("goblin-magic"), true);
 			started = true;	
 			source.updateHealthbar();
 		}
 		
 		if(lifetimeLeft <= 0f){
+			source.playIdle();
 			target.updateHealthbar();
 		}
 	}
@@ -57,14 +58,14 @@ public class APHealAnimation extends Animation {
 			position = target.getPosition();
 			
 			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
-			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y + region.getRegionHeight() / 2f);
+			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
 		else if(timePassed >= START_DELAY){
 			animation = sourceAnimation;
 			position = source.getPosition();
 			
 			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
-			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y + region.getRegionHeight());
+			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
 		
 		animationStateTime += deltaTime;
