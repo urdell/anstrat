@@ -16,10 +16,13 @@ public class LifeStealAnimation extends Animation{
 	private float animationStateTime;
 	private GUnit source, target;
 	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation, targetAnimation;
+	private Unit attacker, defender;
 	
 	private static final float START_DELAY = 0.5f;
 	
 	public LifeStealAnimation(Unit source, Unit target){
+	attacker = source;
+	defender = target;
 	sourceAnimation = Assets.getAnimation("wolf-attack");
 	targetAnimation = Assets.getAnimation("wolf-attack-effect");
 	
@@ -35,12 +38,21 @@ public void run(float deltaTime) {
 	
 	// Run once
 	if(!started){
-		source.playCustom(Assets.getAnimation("wolf-attack"), false);
+		GEngine ge = GEngine.getInstance();
+		ge.updateUI();
+		
+		Animation mAnimation = new MoveCameraAnimation(target.getPosition());
+		ge.animationHandler.runParalell(mAnimation);
+		
+		boolean facingRight = attacker.tileCoordinate.x <= defender.tileCoordinate.x;
+		source.setFacingRight(facingRight);
+		target.setFacingRight(!facingRight);
+		source.playAttack();
 		started = true;	
-		source.updateHealthbar();
 	}
 	
 	if(lifetimeLeft <= 0f){
+		source.updateHealthbar();
 		target.updateHealthbar();
 	}
 }
