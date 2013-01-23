@@ -58,14 +58,14 @@ public class HealAnimation extends Animation{
 			position = target.getPosition();
 			
 			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
-			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y + region.getRegionHeight() / 2f);
+			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
 		else if(timePassed >= START_DELAY){
 			animation = sourceAnimation;
 			position = source.getPosition();
 			
 			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
-			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y + region.getRegionHeight());
+			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y - region.getRegionHeight());
 		}
 		
 		animationStateTime += deltaTime;
