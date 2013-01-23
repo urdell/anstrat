@@ -66,6 +66,20 @@ public class APPieDisplay {
 			frontRotation = 0;
 		batch.draw(foreground, x, y, size/2, size/2, size, size, 1f, 1f, frontRotation);
 		
+		//Number modification
+		float midCircleSize = size*0.6f;
+		batch.draw(background, x+size/2-midCircleSize/2, y+size/2-midCircleSize/2, midCircleSize/2, midCircleSize/2, midCircleSize, midCircleSize, 1f, 1f, frontRotation); // Background for number
+		
+		c = Assets.apTextColor;
+		batch.setColor(c.r, c.g, c.b, alpha);
+		if(UI) // Flipping and position dependant on if in UI
+			FancyNumbers.drawNumber(currentAP, x+size/2-midCircleSize*0.475f, y+midCircleSize*0.38f, midCircleSize*0.95f, false, batch);
+		else
+			FancyNumbers.drawNumber(currentAP, x+size/2-midCircleSize*0.475f, y+midCircleSize*1.3f, midCircleSize*0.95f, true, batch);
+		
+		//End of number modification
+		
+		
 		//batch.dr
 		/* pseudocode 
 		 * drawBackground();
