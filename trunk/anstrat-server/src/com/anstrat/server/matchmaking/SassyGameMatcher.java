@@ -96,6 +96,10 @@ public class SassyGameMatcher {
 
 	public Map getMapForGametype(int gametype)
 	{
+		// TODO: Fix, GameSetup class has changed
+		throw new UnsupportedOperationException("Not implemented.");
+		
+		/*
 		switch(gametype)
 		{
 			case GameSetup.gametype_small_random:
@@ -113,10 +117,15 @@ public class SassyGameMatcher {
 			default:
 				return new Map(10, 10, new Random());
 		}
+		*/
 	}
 	
 	public Queue<WaitingPlayer> getQueueForGametype(int gametype)
 	{
+		// TODO: Fix, GameSetup class has changed
+		throw new UnsupportedOperationException("Not implemented.");
+		
+		/*
 		switch(gametype)
 		{
 			case GameSetup.gametype_small_random:
@@ -134,6 +143,7 @@ public class SassyGameMatcher {
 			default:
 				return null;
 		}
+		*/
 	}
 	
 	@Subscribe
