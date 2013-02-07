@@ -82,7 +82,10 @@
 
     <target name="run-server" depends="compile-server-only">
         <java fork="yes" dir="anstrat-server" failonerror="yes" classname="com.anstrat.server.MainServer">
-            <classpath refid="dependencies"/>
+            <classpath>
+                <fileset dir="anstrat-server/libs"/>
+                <pathelement path="${bin}"/>
+            </classpath>
         </java>
     </target>
 
