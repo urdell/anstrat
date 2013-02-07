@@ -12,32 +12,32 @@
 
     <target name="compile">
         <mkdir dir="build/classes"/>
-        
+
         <!-- Copy all assets -->
         <mkdir dir="${bin}/assets"/>
         <copy todir="${bin}">
             <fileset dir="anstrat-android/assets"/>
         </copy>
-        
+
         <!-- Compile Core -->
         <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false">
             <classpath refid="dependencies"/>
         </javac>
-        
+
         <!-- Compile Tests -->
        <javac srcdir="anstrat-test/src" destdir="${bin}" includeantruntime="false">
             <classpath refid="dependencies" />
         </javac>
-        
+
         <!-- Server -->
         <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false"/>
-        
+
         <!-- Desktop -->
         <javac srcdir="anstrat-desktop/src" destdir="${bin}" includeantruntime="false">
             <classpath refid="dependencies"/>
         </javac>
     </target>
-    
+
     <target name="test" depends="compile">
         <junit haltonfailure="yes" dir="anstrat-test" fork="yes" timeout="10000" showoutput="yes">
             <classpath refid="dependencies"/>
@@ -75,7 +75,9 @@
         </javac>
 
         <!-- Server -->
-        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false"/>
+        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false">
+            <classpath refid="dependencies"/>
+        </javac>
     </target>
 
     <target name="run-server" depends="compile-server-only">
