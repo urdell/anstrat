@@ -81,13 +81,13 @@
     </target>
 
     <target name="run-server" depends="compile-server-only">
-        <java fork="yes" failonerror="yes" classname="com.anstrat.server.MainServer">
+        <java fork="yes" dir="anstrat-server" failonerror="yes" classname="com.anstrat.server.MainServer">
             <classpath refid="dependencies"/>
         </java>
     </target>
 
     <target name="run-db-init" depends="compile-server-only">
-        <java fork="yes" failonerror="yes" classname="com.anstrat.server.db.DatabaseSchema">
+        <java fork="yes" dir="anstrat-server" failonerror="yes" classname="com.anstrat.server.db.DatabaseSchema">
             <classpath refid="dependencies"/>
         </java>
     </target>
