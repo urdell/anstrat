@@ -35,6 +35,7 @@
 		                 checked:   button-disabled,
 		                 font:      menu-font,
 		                 fontColor: light-gray }
+	
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		default: { titleFont:      menu-font,
