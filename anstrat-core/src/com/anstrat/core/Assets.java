@@ -37,7 +37,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public final class Assets {
 
-	public static boolean USE_GENERATED_FONTS = false;
+	public static boolean USE_GENERATED_FONTS = true;
 
 	// TODO: Ugly way of storing two values, but a rewrite of the animation system is required to do this properly
 	private static HashMap<UnitType, Pair<Animation[], boolean[]>> unitAnimations;
@@ -195,7 +195,8 @@ public final class Assets {
 				null,line,null,
 				null,null,null,
 				null,line,null));
-		
+		SKIN.add("games-frame", new NinePatch(Assets.getTextureRegion("games-frame"),15,15,15,15));
+		SKIN.add("games-Topframe", new NinePatch(Assets.getTextureRegion("games-Topframe"),15,15,15,15));
 		TextureRegion singleBorderWhiteBottomCenter = NinePatchUtils.getBottomCenter(Assets.getTextureRegion("border-thin-white"), 15, 15, 15, 15);
 		
 		SKIN.add("line-border-thin", new NinePatch(

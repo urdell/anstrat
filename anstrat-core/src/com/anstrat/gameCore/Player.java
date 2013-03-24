@@ -39,16 +39,14 @@ public class Player implements Serializable {
 	
 	public int mana = 10;
 	
-	public final int god;
 	public final int team;
 	
 	public boolean[][] visibleTiles;
 	
-	public Player(int playerID, String displayName, int team, int god){
+	public Player(int playerID, String displayName, int team){
 		this.playerId = playerID;
 		this.displayedName = displayName;
 		this.team = team;
-		this.god = god;
 	}
 	
 	public void assignAI(IArtificialIntelligence ai){

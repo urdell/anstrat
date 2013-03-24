@@ -25,7 +25,7 @@ public class ViewInviteMenu extends MenuScreen{
 
 	
 	long inviteId;
-	int chosenTeam = 0, chosenGod = 0;
+	int chosenTeam = 0;
 	
 	public ViewInviteMenu(Invite invite){
 		
@@ -39,11 +39,10 @@ public class ViewInviteMenu extends MenuScreen{
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(chosenGod, chosenTeam, "Select god and team", new TeamPopupListener(){
+				Popup popup = new TeamPopup(chosenTeam, "Select god and team", new TeamPopupListener(){
 
 					@Override
-					public void onChosen(int god, int team) {
-						chosenGod = god;
+					public void onChosen(int team) {
 						chosenTeam = team;
 					}
 				});
@@ -56,7 +55,7 @@ public class ViewInviteMenu extends MenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(MainMenu.getInstance());
-            	Main.getInstance().network.acceptInvite(inviteId, chosenTeam, chosenGod);
+            	Main.getInstance().network.acceptInvite(inviteId, chosenTeam);
             }
         });
 		

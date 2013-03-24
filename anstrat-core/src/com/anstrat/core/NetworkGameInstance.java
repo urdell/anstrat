@@ -121,8 +121,8 @@ public class NetworkGameInstance extends GameInstance {
 		private static final long serialVersionUID = 1L;
 		public final long userID;
 		
-		public NetworkPlayer(long userID, int playerID, String displayName, int team, int god) {
-			super(playerID, displayName, team, god);
+		public NetworkPlayer(long userID, int playerID, String displayName, int team) {
+			super(playerID, displayName, team);
 			this.userID = userID;
 		}
 	}

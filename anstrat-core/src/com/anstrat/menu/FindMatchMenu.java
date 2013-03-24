@@ -8,7 +8,6 @@ import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
 import com.anstrat.popup.TeamPopup.TeamPopupListener;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -32,14 +31,13 @@ public class FindMatchMenu extends MenuScreen {
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
-		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
+		Button godButton = ComponentFactory.createButton("Team", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(god, team, "Select your team and god", new TeamPopupListener() {
+				Popup popup = new TeamPopup(team, "Select your team", new TeamPopupListener() {
 					@Override
-					public void onChosen(int godChosen, int teamChosen) {
+					public void onChosen(int teamChosen) {
 						System.out.println("hej findmatchmenu someting");
-						god = godChosen;
 						team = teamChosen;
 					}
 				});

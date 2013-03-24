@@ -38,11 +38,10 @@ public class InviteMatchMenu extends MenuScreen {
 		Button godButton = ComponentFactory.createButton("God and team", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(god, team, "Select your team and god", new TeamPopupListener() {
+				Popup popup = new TeamPopup(team, "Select your team", new TeamPopupListener() {
 
 					@Override
-					public void onChosen(int godChosen, int teamChosen) {
-						god = godChosen;
+					public void onChosen(int teamChosen) {
 						team = teamChosen;
 					}
 				});
