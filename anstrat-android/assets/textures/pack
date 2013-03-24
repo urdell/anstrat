@@ -1506,9 +1506,23 @@ EndTurnGradient
   orig: 512, 256
   offset: 0, 0
   index: -1
-TopPanel
+games-Topframe
   rotate: false
   xy: 1132, 1270
+  size: 720, 159
+  orig: 720, 159
+  offset: 0, 0
+  index: -1
+games-frame
+  rotate: false
+  xy: 1132, 1431
+  size: 720, 130
+  orig: 720, 130
+  offset: 0, 0
+  index: -1
+TopPanel
+  rotate: false
+  xy: 1132, 1563
   size: 720, 128
   orig: 720, 128
   offset: 0, 0
@@ -1543,21 +1557,21 @@ confirm-capture
   index: -1
 confirm-attack
   rotate: false
-  xy: 1132, 1400
+  xy: 1132, 1693
   size: 512, 130
   orig: 512, 130
   offset: 0, 0
   index: -1
 confirm-ability
   rotate: false
-  xy: 1132, 1532
+  xy: 1132, 1825
   size: 512, 130
   orig: 512, 130
   offset: 0, 0
   index: -1
 background
   rotate: false
-  xy: 1132, 1664
+  xy: 1646, 1693
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -1641,98 +1655,28 @@ movement-line-arrows-0009
   index: -1
 movement-line-arrows-0008
   rotate: false
-  xy: 1646, 1400
+  xy: 1854, 1431
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 movement-line-arrows-0007
   rotate: false
-  xy: 1776, 1400
+  xy: 1854, 1563
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 movement-line-arrows-0006
   rotate: false
-  xy: 1906, 1400
+  xy: 1904, 1693
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 movement-line-arrows-0005
   rotate: false
-  xy: 1390, 1664
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-movement-line-arrows-0004
-  rotate: false
-  xy: 1390, 1794
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-movement-line-arrows-0003
-  rotate: false
-  xy: 1646, 1532
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-movement-line-arrows-0002
-  rotate: false
-  xy: 1776, 1532
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-movement-line-arrows-0001
-  rotate: false
-  xy: 1906, 1532
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-mapIconSpecific
-  rotate: false
-  xy: 1646, 1662
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-mapIconRandom
-  rotate: false
-  xy: 1646, 1792
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-mapIconGenerated
-  rotate: false
-  xy: 1776, 1662
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-mapIconCustom
-  rotate: false
-  xy: 1906, 1662
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-goldBorder
-  rotate: false
-  xy: 1776, 1792
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-fadetoblack
-  rotate: false
-  xy: 1906, 1792
+  xy: 1904, 1823
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -1847,79 +1791,149 @@ MenuBackground-transparent
   orig: 614, 1024
   offset: 0, 0
   index: -1
-eyeOff
+movement-line-arrows-0004
   rotate: false
   xy: 618, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-eye
+movement-line-arrows-0003
   rotate: false
   xy: 748, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-symbol
+movement-line-arrows-0002
   rotate: false
   xy: 878, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0008
+movement-line-arrows-0001
   rotate: false
   xy: 618, 132
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0007
+mapIconSpecific
   rotate: false
   xy: 748, 132
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0006
+mapIconRandom
   rotate: false
   xy: 878, 132
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0005
+mapIconGenerated
   rotate: false
   xy: 618, 262
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0004
+mapIconCustom
   rotate: false
   xy: 748, 262
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0003
+goldBorder
   rotate: false
   xy: 878, 262
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0002
+fadetoblack
   rotate: false
   xy: 618, 392
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-attack-line-0001
+eyeOff
   rotate: false
   xy: 748, 392
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 878, 392
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-symbol
+  rotate: false
+  xy: 618, 522
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0008
+  rotate: false
+  xy: 748, 522
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0007
+  rotate: false
+  xy: 878, 522
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0006
+  rotate: false
+  xy: 618, 652
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0005
+  rotate: false
+  xy: 618, 782
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0004
+  rotate: false
+  xy: 748, 652
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0003
+  rotate: false
+  xy: 878, 652
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0002
+  rotate: false
+  xy: 748, 782
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+attack-line-0001
+  rotate: false
+  xy: 878, 782
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
