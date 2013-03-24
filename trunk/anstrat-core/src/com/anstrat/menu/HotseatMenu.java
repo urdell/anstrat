@@ -2,8 +2,10 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.anstrat.gameCore.UnitType;
 import com.anstrat.geography.Map;
+import com.anstrat.gui.GEngine;
+import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.GeneratedMapPopup;
 import com.anstrat.popup.GeneratedMapPopup.GeneratedMapPopupHandler;
@@ -11,28 +13,32 @@ import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TeamPopup;
-import com.anstrat.popup.TeamPopup.TeamPopupListener;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler {
 	private static HotseatMenu me;
 	
-	public int player1god = PlayerAbilityType.GOD_HEL, player1team = TeamPopup.TEAM_DD, player2god = PlayerAbilityType.GOD_HEL, player2team = TeamPopup.TEAM_VV;
+	public int player1team = TeamPopup.TEAM_DD, player2team = TeamPopup.TEAM_VV;
 	
 	private boolean specificMap = false;
 	private boolean generatedMap = false;
 	private Dimension mapDimension = new Dimension(10,10);
-	private boolean randomServerdMap = false;
-	private boolean randomCustomMap = false;
+	//private boolean randomServerdMap = false;
+	//private boolean randomCustomMap = false;
 	
-	private final Label mapLabel;
+	private final Label mapTitel, mapLabel;
 	private final GeneratedMapPopup mapSizePopup;
 	
 	private HotseatMenu(){
@@ -47,9 +53,10 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
+		mapTitel = new Label("Map options", Assets.SKIN);
 		mapLabel = new Label("No map chosen", Assets.SKIN);
 		
-		Button mapSpec = ComponentFactory.createButton("Specific", new ClickListener() {
+		Button mapSpec = ComponentFactory.createButton("Select map", new ClickListener() {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -58,8 +65,8 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 						public void mapSelected(String map){
 							specificMap = true;
 							generatedMap = false;
-							randomCustomMap = false;
-							randomServerdMap = false;
+							//randomCustomMap = false;
+							//randomServerdMap = false;
 							mapLabel.setText(map);
 						}
 					}, false, "Choose specific map", Assets.getMapList(true, true));
@@ -69,15 +76,16 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 			}
 			
 		});
-		Button mapCustomRandom = ComponentFactory.createButton("Random custom", new ClickListener() {
+		/*Button mapCustomRandom = ComponentFactory.createButton("Random custom", new ClickListener() {
+			
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				
 				specificMap = false;
 				generatedMap = false;
-				randomCustomMap = true;
-				randomServerdMap = false;
+				//randomCustomMap = true;
+				//randomServerdMap = false;
 				mapLabel.setText("Random custom map");
 			}
 			
@@ -94,8 +102,8 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 				
 			}
 			
-		});
-		Button mapGenerate = ComponentFactory.createButton("Generated", new ClickListener() {
+		});*/
+		Button mapGenerate = ComponentFactory.createButton("Generate map", new ClickListener() {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -111,17 +119,18 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		
 		
 		Table mapTable1 = new Table();
-		mapTable1.add(mapSpec).size(Main.percentWidth*37f, Main.percentHeight*8f);
-		mapTable1.add(mapServerRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
+		mapTable1.add(mapSpec).size(Main.percentWidth*40, Main.percentHeight*8f);
+		mapTable1.add(mapGenerate).size(Main.percentWidth*40, Main.percentHeight*8f);
+		//mapTable1.add(mapServerRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
 		
-		Table mapTable2 = new Table();
-		mapTable2.add(mapGenerate).size(Main.percentWidth*37f, Main.percentHeight*8f);
-		mapTable2.add(mapCustomRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
+		/*Table mapTable2 = new Table();
+		mapTable2.add(mapGenerate).size(Main.percentWidth*37f, Main.percentHeight*8f);*/
+		//mapTable2.add(mapCustomRandom).size(Main.percentWidth*37f, Main.percentHeight*8f);
 		
 		map.defaults().height(Main.percentHeight*8f);
-		map.add(mapTable1);
+		map.add(mapTitel).center();
 		map.row();
-		map.add(mapTable2);
+		map.add(mapTable1);
 		map.row();
 		map.add(mapLabel).center();
 		
@@ -131,75 +140,158 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		player1table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		player2table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
-		final TextButton player1nameButton = new TextButton("Player 1", Assets.SKIN);
-		final TextButton player2nameButton = new TextButton("Player 2", Assets.SKIN);
-		TextButton player1teamButton = new TextButton("God and Team", Assets.SKIN);
+		final TextField player1nameButton = ComponentFactory.createTextField("Player 1", false);
+		final TextField player2nameButton = ComponentFactory.createTextField("Player 2", false);
+		
+		Table teamTable1 = new Table();
+		Table teamTable2 = new Table();
+		
+		final CheckBox teamVV1 = ComponentFactory.createCheckBox("");
+		final CheckBox teamVV2 = ComponentFactory.createCheckBox("");
+		final CheckBox teamDD1 = ComponentFactory.createCheckBox("");
+		final CheckBox teamDD2 = ComponentFactory.createCheckBox("");
+		
+		Image vv1 =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.SWORD)));
+		Image dd1 =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.JOTUN)));
+		Image vv2 =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.SWORD)));
+		Image dd2 =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.JOTUN)));
+		
+		Button questionButton = ComponentFactory.createButton(Assets.getTextureRegion("help-button"), new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//TODO help popup
+		    }
+		
+		});
+		
+		Button questionButton2 = ComponentFactory.createButton(Assets.getTextureRegion("help-button"), new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//TODO help popup
+		    }
+		
+		});
+		
+		questionButton2.setScaleX(0.5f);
+		vv1.setScaleX(0.6f);
+		dd1.setScaleX(0.6f);
+		vv2.setScaleX(0.6f);
+		dd2.setScaleX(0.6f);
+		
+		teamVV1.setChecked(true);
+		teamDD1.setChecked(false);
+		teamDD2.setChecked(true);
+		teamVV2.setChecked(false);
+		
+		teamVV1.addListener(new ClickListener() {
+			 @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	         	teamVV1.setChecked(true);
+	         	teamDD1.setChecked(false);
+	         }
+		});
+		teamDD1.addListener(new ClickListener() {
+			 @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	         	teamVV1.setChecked(false);
+	         	teamDD1.setChecked(true);
+	         }
+		});
+		teamVV2.addListener(new ClickListener() {
+			 @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	         	teamVV2.setChecked(true);
+	         	teamDD2.setChecked(false);
+	         }
+		});
+		teamDD2.addListener(new ClickListener() {
+			 @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	         	teamVV2.setChecked(false);
+	         	teamDD2.setChecked(true);
+	         }
+		});
+		
+		teamTable1.add(teamVV1);
+		teamTable1.add(vv1);
+		teamTable1.add(teamDD1);
+		teamTable1.add(dd1);
+		//teamTable1.add(questionButton);
+		teamTable2.add(teamVV2);
+		teamTable2.add(vv2);
+		teamTable2.add(teamDD2);
+		teamTable2.add(dd2);
+		//teamTable2.add(questionButton2);
+		
+		/*TextButton player1teamButton = new TextButton("Team", Assets.SKIN);
 		player1teamButton.addListener(new ClickListener() {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(player1god, player1team, "Select "+player1nameButton.getText()+"'s god and team", new TeamPopupListener(){
+				Popup popup = new TeamPopup(player1team, "Select "+player1nameButton.getText()+"'s team", new TeamPopupListener(){
 
 					@Override
-					public void onChosen(int god, int team) {
-						player1god = god;
+					public void onChosen(int team) {
 						player1team = team;
 					}
 				});
-				popup.show();
+				popup.show(); 
 			}
 			
 		});
-		TextButton player2teamButton = new TextButton("God and Team", Assets.SKIN);
+		TextButton player2teamButton = new TextButton("Team", Assets.SKIN);
 		player2teamButton.addListener(new ClickListener() {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(player2god, player2team, "Select "+player2nameButton.getText()+"'s god and team", new TeamPopupListener(){
+				Popup popup = new TeamPopup(player2team, "Select "+player2nameButton.getText()+"'s team", new TeamPopupListener(){
 
 					@Override
-					public void onChosen(int god, int team) {
-						player2god = god;
+					public void onChosen(int team) {
 						player2team = team;
 					}
 				});
 				popup.show();
 			}
 		});
-		
+		*/
 		player1table.defaults().height(Main.percentHeight*8f);
 		player1table.add(player1nameButton).fillX().expandX();
 		player1table.row();
-		player1table.add(player1teamButton).fillX().expandX();
+		player1table.add(teamTable1).fillX().expandX();
 		
 		player2table.defaults().height(Main.percentHeight*8f);
 		player2table.add(player2nameButton).fillX().expandX();
 		player2table.row();
-		player2table.add(player2teamButton).fillX().expandX();
+		player2table.add(teamTable2).fillX().expandX();
 		        
 		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				
+				if(teamDD1.isChecked()) {
+					player1team = TeamPopup.TEAM_DD;
+				}
+				else if (teamVV1.isChecked()){
+					player1team = TeamPopup.TEAM_VV;
+				}
+				if(teamDD2.isChecked()) {
+					player2team = TeamPopup.TEAM_DD;
+				}
+				else if (teamVV2.isChecked()) {
+					player2team = TeamPopup.TEAM_VV;
+				}
+				
 				if (generatedMap) {
-					Main.getInstance().games.createHotseatGame(fog.isChecked(), mapDimension.width, mapDimension.height ,player1god, player1team, player2god, player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(fog.isChecked(), mapDimension.width, mapDimension.height , player1team, player2team).showGame(true);
 				}
-				else if (randomServerdMap) {
-					String[] maps = Assets.getMapList(false, true);
-					Map map = Assets.loadMap(getRandom(maps));
-					map.fogEnabled = fog.isChecked();
-					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
-				}
-				else if (randomCustomMap) {
-					String[] maps = Assets.getMapList(true, true);
-					Map map = Assets.loadMap(getRandom(maps));
-					map.fogEnabled = fog.isChecked();
-					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
-				}
-				else if (specificMap) { //specific map
+				else if (specificMap) {
 					String mapName = mapLabel.getText().toString();
 					Map map = Assets.loadMap(mapName);
 					map.fogEnabled = fog.isChecked();
-					Main.getInstance().games.createHotseatGame(map, player1god, player1team, player2god, player2team).showGame(true);
+					Main.getInstance().games.createHotseatGame(map, player1team, player2team).showGame(true);
 				}
 		   }
 		} );
@@ -252,8 +344,8 @@ public class HotseatMenu extends MenuScreen implements GeneratedMapPopupHandler 
 		}
 		specificMap = false;
 		generatedMap = true;
-		randomCustomMap = false;
-		randomServerdMap = false;
+		//randomCustomMap = false;
+		//randomServerdMap = false;
 		
 		//TODO: Set map size etc.
 	}

@@ -11,7 +11,6 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
@@ -78,7 +77,7 @@ public class GameUI extends UI {
 	private BuyUnitPopup[] buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
 	private BuyUnitPopup openBuyUnitPopup;
 	
-	private AbilityPopup[] abilityPopups = new AbilityPopup[PlayerAbilityType.GODS.length];
+	//private AbilityPopup[] abilityPopups = new AbilityPopup[PlayerAbilityType.GODS.length];
 	private AbilityPopup openAbilityPopup;
 	
 	private UnitInfoPopup unitInfoPopup;
@@ -417,13 +416,13 @@ public class GameUI extends UI {
 	}
 
 	public void showAbilityPopup(){
-		int god = GameInstance.activeGame.getUserPlayer().god;
+		/*int god = GameInstance.activeGame.getUserPlayer().god;
 		
 		if(abilityPopups[god] == null){
 			abilityPopups[god] = new AbilityPopup(PlayerAbilityType.GODS[god]);
 		}
 		
-		(openAbilityPopup = abilityPopups[god]).show();
+		(openAbilityPopup = abilityPopups[god]).show();*/
 	}
 	
 	/**

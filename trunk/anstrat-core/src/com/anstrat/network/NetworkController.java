@@ -136,8 +136,8 @@ public class NetworkController {
 		this.network.setDisplayName(name);
 	}
 	
-	public void acceptInvite(long inviteId, int team, int god){
-		this.network.acceptInvite(inviteId, team, god);
+	public void acceptInvite(long inviteId, int team){
+		this.network.acceptInvite(inviteId, team);
 	}
 	public void declineInvite(long inviteId){
 		this.network.declineInvite(inviteId);
@@ -162,7 +162,7 @@ public class NetworkController {
 				for(int i = 0; i < gameSetup.players.length; i++){
 					GameSetup.Player player = gameSetup.players[i];
 					String playerName = player.displayName != null ? player.displayName : "Unnamed" + player.userID;
-					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, playerName, player.team, player.god));
+					players.add(new NetworkGameInstance.NetworkPlayer(player.userID, i, playerName, player.team));
 				}
 				
 				Main.getInstance().games.createNetworkGame(

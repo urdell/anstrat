@@ -299,26 +299,29 @@ public class MainMenu extends MenuScreen {
 	private Table gameInstanceToTable(final GameInstance instance){
     	   	
     	Label turn = new Label("Turn " + instance.getTurnNumber(), Assets.SKIN);
-    	Label type = new Label(
+		//Button turn = new TextButton("Play", Assets.SKIN);
+    	/*Label type = new Label(
     			String.format("(%s)", instance.getGameType() == GameInstanceType.AI ? "AI" : (instance instanceof NetworkGameInstance ? "Network" : "Hotseat")), 
     			Assets.SKIN);
-
-    	Label map = new Label(String.format("'%s'", instance.state.map.name), Assets.SKIN);
-    	Label mapSize = new Label(String.format("%dx%d", instance.state.map.getXSize(), instance.state.map.getYSize()), Assets.SKIN);
-    	Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.get("image-toggle", ButtonStyle.class));
+		*/
+    	//Label map = new Label(String.format("'%s'", instance.state.map.name), Assets.SKIN);
+    	//Label mapSize = new Label(String.format("%dx%d", instance.state.map.getXSize(), instance.state.map.getYSize()), Assets.SKIN);
+    	//Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.get("image-toggle", ButtonStyle.class));
     	
-    	cancel.addListener(new ClickListener() {
+    	Button play = new Button(new Image(Assets.getTextureRegion("button-medium")), Assets.SKIN.get("image-toggle", ButtonStyle.class));
+    	Label lPlay = new Label("Play", Assets.SKIN);
+    	/*cancel.addListener(new ClickListener() {
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
 	        	instance.resign();
 	        	updateGamesList();
 	        }
 		});
-    	
+    	*/
     	String opponent = null;
     	
     	if(instance.getGameType() == GameInstanceType.AI || instance.getGameType() == GameInstanceType.NETWORK){
-    		StringBuffer opponents = new StringBuffer("vs. ");
+    		StringBuffer opponents = new StringBuffer("");
     		boolean first = true;
     		Player userPlayer = instance.getUserPlayer();
     		
@@ -339,29 +342,24 @@ public class MainMenu extends MenuScreen {
     	
     	Table table = new Table(Assets.SKIN);
     	table.setTouchable(Touchable.enabled);
-    	table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("line-border-thin")));
+    	table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("games-frame")));
     	table.left().pad(2f*Main.percentWidth);
     	table.defaults().left().fillX().expandX();
     	
     	Table outer = new Table();
     	outer.defaults().left().height(4f*Main.percentHeight);
+    	outer.padLeft(10f*Main.percentWidth);
     	outer.add(players);
     	outer.row();
     	
     	Table inner1 = new Table();
-    	inner1.add(map).fillX().expandX();
-    	inner1.add(mapSize);
-    	
-    	Table inner2 = new Table();
-    	inner2.add(type);
-    	inner2.add(turn).expandX();
-    	
-    	outer.add(inner1).expandX().fillX();
-    	outer.row();
-    	outer.add(inner2).expandX().fillX();
+    	inner1.add(turn);
     	
     	table.add(outer).expandX().fillX().padLeft(Main.percentHeight);
-    	table.add(cancel).pad(3f+Main.percentWidth).height(7f*Main.percentHeight).width(7f*Main.percentHeight).bottom().right();
+    	table.row();
+    	table.add(inner1).expandX().fillX().padLeft(Main.percentHeight);
+    	table.add(lPlay).pad(3f+Main.percentWidth).height(7f*Main.percentHeight).width(12f*Main.percentHeight).bottom().right();
+    	
     	
     	table.addListener(new ClickListener() {
 	        @Override
