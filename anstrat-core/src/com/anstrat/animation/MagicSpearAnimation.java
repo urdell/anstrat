@@ -8,6 +8,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +33,7 @@ public class MagicSpearAnimation extends Animation {
 	private Unit sourceUnit, targetUnit;
 	private int damage;
 	private boolean firstUnit;
+	boolean facingRight;
 	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation;
 	
 	public MagicSpearAnimation(Unit sourceUnit, Unit targetUnit, int damage){
@@ -51,8 +53,11 @@ public class MagicSpearAnimation extends Animation {
 		
 		GEngine ge = GEngine.getInstance();
 		start = ge.getMap().getTile(sourceUnit.tileCoordinate).getCenter();
+		start.y -= 65;
 		
 		target = ge.getMap().getTile(targetUnit.tileCoordinate).getCenter();
+		target.y -= 65;
+		
 		gAttacker = ge.getUnit(sourceUnit);
 		gDefender = ge.getUnit(targetUnit);
 		xoffset = target.x - start.x;
@@ -77,9 +82,10 @@ public class MagicSpearAnimation extends Animation {
 				gAttacker.healthBar.currentAP = sourceUnit.currentAP;
 			}
 			
-			boolean facingRight = sourceUnit.tileCoordinate.x <= targetUnit.tileCoordinate.x;
+			facingRight = start.x <= target.x;
 			gAttacker.setFacingRight(facingRight);
-			gAttacker.playAttack();
+			//gAttacker.playAttack();
+			gAttacker.playCustom(Assets.getAnimation("valkyrie-ability"), false);
 
 			started = true;
 		}
@@ -133,7 +139,12 @@ public class MagicSpearAnimation extends Animation {
 				region = Assets.getAnimation("valkyrie-ability-effect").getKeyFrame(animationTimePassed, true);
 				// Draw impact effect
 				if(region != null) {
-					batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
+					//batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
+					Sprite sprite = new Sprite(region);
+					sprite.setPosition(current.x - region.getRegionWidth() / 2, current.y);
+					sprite.rotate(facingRight?90:270);
+					sprite.setScale(0.77f);
+					sprite.draw(batch);
 				}
 			}
 	}
