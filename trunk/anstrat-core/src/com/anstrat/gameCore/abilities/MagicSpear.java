@@ -3,7 +3,6 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.DeathAnimation;
-import com.anstrat.animation.HealAnimation;
 import com.anstrat.animation.MagicSpearAnimation;
 import com.anstrat.animation.UpdateBarAnimation;
 import com.anstrat.gameCore.Combat;

@@ -553,9 +553,9 @@
         <frame image="troll-walk-0004" number="4" count="2"/>
     </animation>
     <animation name="valkyrie-ability">
-    	<frame image="valkyrie-ability-0001" number="1"/>
+    	<frame image="valkyrie-ability-0001" number="1" count="2"/>
         <frame image="valkyrie-ability-0002" number="2"/>
-        <frame image="valkyrie-ability-0003" number="3"/>
+        <frame image="valkyrie-ability-0003" number="3" count="3"/>
     </animation>
      <animation name="valkyrie-ability-effect">
     	<frame image="spear-effect-0001" number="1"/>
