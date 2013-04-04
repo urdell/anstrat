@@ -107,7 +107,8 @@ public class AttackAnimation extends Animation{
 	
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
-			FloatingTextAnimation animation = new FloatingTextAnimation(cl.defender.tileCoordinate, String.valueOf(cl.attackDamage), Color.RED);
+			//FloatingTextAnimation animation = new FloatingTextAnimation(cl.defender.tileCoordinate, String.valueOf(cl.attackDamage), Color.RED);
+			FloatingNumberAnimation animation = new FloatingNumberAnimation(cl.defender.tileCoordinate, cl.attackDamage, 40f, Color.RED);
 			ge.animationHandler.runParalell(animation);
 			float healthPercentage = (float)cl.newDefenderHP/(float)cl.defender.getMaxHP();
 			

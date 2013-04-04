@@ -77,7 +77,7 @@ public class CometStrikeAnimation extends Animation {
 						GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(unit,
 								GEngine.getInstance().getUnit(unit).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 					}
-					FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
+					FloatingNumberAnimation animation = new FloatingNumberAnimation(unit.tileCoordinate, units.get(unit), 40f, Color.RED);
 					GEngine.getInstance().animationHandler.runParalell(animation);
 					GEngine.getInstance().getUnit(unit).updateHealthbar();
 				}

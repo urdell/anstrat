@@ -60,7 +60,7 @@ public class LeapAttackAnimation extends Animation {
 			enterFinished = true;
 			gunit.playCustom(Assets.getAnimation("berserker-ability"), true);
 			target.updateHealthbar();
-			FloatingTextAnimation animation2 = new FloatingTextAnimation(target.unit.tileCoordinate, ""+damage, Color.RED);
+			FloatingNumberAnimation animation2 = new FloatingNumberAnimation(target.unit.tileCoordinate, damage, 40f, Color.RED);
 			GEngine.getInstance().animationHandler.runParalell(animation2);
 			if(!target.unit.isAlive){
 				Animation deathAnimation = new DeathAnimation(target.unit, startTile);
