@@ -15,10 +15,15 @@ public class DamageModificationIcon extends Widget{
 
 	int number;
 	TextureRegion portrait;
+	float hawkOffset;
 	
 	public DamageModificationIcon(UnitType source, UnitType target){
 		number = DamageModification.getAttackModifierAsPercent(source, target);
-		portrait = Assets.getTextureRegion(target.portrait);
+		portrait = GUnit.getTextureRegion(target);
+		hawkOffset = Gdx.graphics.getHeight()*0.0125f;
+		if (target.equals(UnitType.HAWK)) {
+			hawkOffset -= Gdx.graphics.getHeight()*0.015f;
+		}
 	}
 	public DamageModificationIcon(){
 		number = 125;
@@ -46,7 +51,7 @@ public class DamageModificationIcon extends Widget{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha){
 		validate();
-		batch.draw(portrait, getX(), getY(), getWidth(), getHeight());
+		batch.draw(portrait, getX(), getY()+hawkOffset, getWidth(), getHeight());
 		FancyNumbers.drawNumberPercent(number, getX(), getY()+getHeight()/50, getHeight()/3, false, batch);
 	}
 
