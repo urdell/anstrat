@@ -37,7 +37,7 @@ public class ThrowIce extends TargetedAbility{
 	public boolean isAllowed(Unit source, TileCoordinate coordinates) {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinates);
 		
-		return super.isAllowed(source, coordinates) 
+		return super.isAllowed(source, coordinates)
 				&& targetUnit != null
 				&& targetUnit.ownerId != source.ownerId;
 	}
@@ -60,7 +60,6 @@ public class ThrowIce extends TargetedAbility{
 		
 		List<Tile> adjacentTiles = new ArrayList<Tile>();
 		adjacentTiles = State.activeState.map.getNeighbors(targetUnit.tileCoordinate);
-		targetUnit.resolveDeath();
 		
 		int splashDamage = (int)(damage*splashReduction);	
 		for (Tile adjacentTile : adjacentTiles){
@@ -75,7 +74,7 @@ public class ThrowIce extends TargetedAbility{
 			}
 		}
 		
-		Animation throwIceAnimation = new ThrowIceAnimation(targetUnit.tileCoordinate, map);
+		Animation throwIceAnimation = new ThrowIceAnimation(source, targetUnit.tileCoordinate, map);
 		GEngine.getInstance().animationHandler.enqueue(throwIceAnimation);	
 	}
 	

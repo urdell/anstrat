@@ -348,6 +348,23 @@
         <frame image="jotun-attack-0010" number="10"/>
         <frame image="jotun-attack-0011" number="11"/>
     </animation>
+    <animation name="jotun-ability">
+       <frame image="jotun-ability-0001" number="1" count="2"/>
+	   <frame image="jotun-ability-0002" number="2"/>
+	   <frame image="jotun-ability-0003" number="3"/>
+	   <frame image="jotun-ability-0004" number="4"/>
+	   <frame image="jotun-ability-0005" number="5"/>
+	   <frame image="jotun-ability-0006" number="6" count="3"/>
+    </animation>
+    <animation name="jotun-ability-effect">
+       <frame image="jotun-ability-effect-0001" number="1"/>
+	   <frame image="jotun-ability-effect-0002" number="2"/>
+	   <frame image="jotun-ability-effect-0003" number="3"/>
+	   <frame image="jotun-ability-effect-0004" number="4"/>
+    </animation>
+    <animation name="jotun-ability-effect-2">
+        <frame image="jotun-ability-effect2-0001" number="1"/>
+    </animation>
     <animation name="jotun-attack-effect" aliasof="swordsman-attack-effect"/>
     <animation name="jotun-death">
        <frame image="jotun-death-0001" number="1" count="2"/>
