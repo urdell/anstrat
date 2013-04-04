@@ -91,7 +91,7 @@ public class ChainingAxeAnimation extends Animation{
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
-			FloatingTextAnimation animation = new FloatingTextAnimation(targetUnit.tileCoordinate, String.valueOf(damage), Color.RED);
+			FloatingNumberAnimation animation = new FloatingNumberAnimation(targetUnit.tileCoordinate, damage, 40f, Color.RED);
 			ge.animationHandler.runParalell(animation);
 			float healthPercentage = (float)targetUnit.currentHP/(float)targetUnit.getMaxHP();
 			

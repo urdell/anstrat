@@ -116,21 +116,26 @@ public class FancyNumbers {
 	 * @param batch
 	 */
 	public static void drawNumberPercent(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){
+		Color tempColor = batch.getColor();
+		
+		float modifier = 0.5333f;
 		TextureRegion percentRegion = Assets.getTextureRegion("percent");
 		float percentXIncrement = 3*sideIncrement; //default fit for 100
+		Color red = new Color(modifier, 1-modifier, 1-modifier, 1);
+		batch.setColor(red);
 		if(number < 100){
-			batch.setColor(Color.RED);
+			//batch.setColor(Color.RED);
 			percentXIncrement = 2*sideIncrement;
 		}
 		if(number > 100){
-			batch.setColor(Color.GREEN);
+			//batch.setColor(Color.GREEN);
 			percentXIncrement = 3*sideIncrement;
 		}
 		drawNumber(number, x, y, size, flipped, batch);
 		batch.draw(percentRegion, x+size*percentXIncrement, y, size, 	// if flipped, invert height
 				flipped ? -size : size);
 		
-		batch.setColor(Color.WHITE);
+		batch.setColor(tempColor);
 	}
 	
 }
