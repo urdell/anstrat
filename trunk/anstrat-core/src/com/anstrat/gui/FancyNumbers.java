@@ -74,6 +74,38 @@ public class FancyNumbers {
 		
 		
 	}
+	
+	public static void drawNumber(int number, float x, float y, float size, boolean flipped, Color color, SpriteBatch batch){
+		Color tempColor = batch.getColor();
+		batch.setColor(color);
+		int hundreds = number/100%10;
+		int tens = number/10%10;
+		int ones = number%10;
+		
+		TextureRegion onesTexture, tensTexture, hundredsTextrue;
+		
+		if(hundreds > 0)
+		{
+			hundredsTextrue = Assets.getTextureRegion("ap-"+hundreds);
+			batch.draw(hundredsTextrue, x, y, size, 	// if flipped, invert height
+					flipped ? -size : size);
+			x += size*sideIncrement;
+		}
+		if(tens > 0 || hundreds > 0)
+		{
+			tensTexture = Assets.getTextureRegion("ap-"+tens);
+			batch.draw(tensTexture, x, y, size, 	// if flipped, invert height
+					flipped ? -size : size);
+			x += size*sideIncrement;
+		}
+		onesTexture = Assets.getTextureRegion("ap-"+ones);
+		batch.draw(onesTexture, x, y, size, 	// if flipped, invert height
+				flipped ? -size : size);
+		
+		batch.setColor(tempColor);
+		
+	}
+	
 	/**
 	 * Automatically tints to green or red
 	 * @param number 10 <= number <= 999
