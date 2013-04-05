@@ -24,15 +24,13 @@ public class ThrowIceAnimation extends Animation {
 
 	private GTile target;
 	private GUnit gsource;
-	private Unit source;
-	private boolean started = false, started2 = false, 
+	private boolean started = false, 
 			initialImpact = false, shardImpact = false;
 	private float timePassed = 0;
-	private Vector2 end = null;
 	private List<GTile> splashTiles = null;
 	private float xoffset = 0;
 	private float yoffset = 0;
-	private Vector2 startPos, currPos, targetPos;
+	private Vector2 startPos, targetPos;
 	com.badlogic.gdx.graphics.g2d.Animation j_ability = null;
 	com.badlogic.gdx.graphics.g2d.Animation j_ability_effect = null;
 	com.badlogic.gdx.graphics.g2d.Animation shard_effect = null;
@@ -83,14 +81,12 @@ public class ThrowIceAnimation extends Animation {
 		gsource = engine.getUnit(source);
 		gsource.setFacingRight(this.target.getPosition().x >= this.gsource.getPosition().x);
 		
-		end = this.target.getPosition();
-		
 		gsource.playCustom(j_ability, false);
 		
 		//xdiff = 3*GEngine.getInstance().map.TILE_WIDTH;
 		//ydiff = 3*GEngine.getInstance().map.TILE_HEIGHT;
 		
-		//shake1 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/25, GEngine.getInstance().map.TILE_HEIGHT/25, length/8, 12);
+		shake1 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/25, GEngine.getInstance().map.TILE_HEIGHT/25, length/8, 12);
 		//shake2 = new ShakeCamAnimation(new Vector2(GEngine.getInstance().camera.position.x, GEngine.getInstance().camera.position.y), GEngine.getInstance().map.TILE_WIDTH/15, GEngine.getInstance().map.TILE_HEIGHT/15, 1.1f*animation2.animationDuration, 20);
 		
 	}
@@ -104,13 +100,13 @@ public class ThrowIceAnimation extends Animation {
 		}
 		
 		if(!initialImpact && lifetimeLeft - shard_time - 0.75f <= 0f){
+			GEngine.getInstance().animationHandler.runParalell(shake1);
 			initialImpact = true;
 			Unit unit = StateUtils.getUnitByTile(target.tile.coordinates);
 			if(unit != null){
 				unit.resolveDeath();
 				if(unit.currentHP <= 0){
-					GEngine.getInstance().animationHandler.runParalell(new DeathAnimation(unit,
-							GEngine.getInstance().getUnit(unit).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
+					GEngine.getInstance().animationHandler.runParalell(new DeathAnimation(unit, new Vector2(0f,0f)));
 				}
 				FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
 				GEngine.getInstance().animationHandler.runParalell(animation);
@@ -120,24 +116,21 @@ public class ThrowIceAnimation extends Animation {
 		}
 		
 		if(!shardImpact && lifetimeLeft - shard_time / 1.64f - 0.75f <= 0f){
+			GEngine engine = GEngine.getInstance();
 			shardImpact = true;
 			Set<Unit> list = units.keySet();
 			for (Unit unit: list) {
 				if (unit != null) {
 					if(unit.currentHP <= 0){
-						GEngine.getInstance().animationHandler.runParalell(new DeathAnimation(unit,
-								GEngine.getInstance().getUnit(unit).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
+						engine.animationHandler.runParalell(new DeathAnimation(unit,
+								engine.map.getTile(unit.tileCoordinate).getPosition().cpy().sub(target.getPosition()).nor()));
 					}
 					FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
-					GEngine.getInstance().animationHandler.runParalell(animation);
-					GEngine.getInstance().getUnit(unit).updateHealthbar();
+					engine.animationHandler.runParalell(animation);
+					engine.getUnit(unit).updateHealthbar();
 				}
 			}
 		}
-		//if (lifetimeLeft <= animation2.animationDuration && started2 == false) {
-		//	started2 = true;
-		//	//GEngine.getInstance().animationHandler.runParalell(shake2);
-		//}
 		timePassed += deltaTime;
 	}
 	
