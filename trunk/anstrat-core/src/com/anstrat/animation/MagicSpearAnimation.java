@@ -34,7 +34,7 @@ public class MagicSpearAnimation extends Animation {
 	private int damage;
 	private boolean firstUnit;
 	boolean facingRight;
-	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation;
+	private Sprite spearSprite = null;
 	
 	public MagicSpearAnimation(Unit sourceUnit, Unit targetUnit, int damage){
 		this.sourceUnit = sourceUnit;
@@ -63,8 +63,6 @@ public class MagicSpearAnimation extends Animation {
 		xoffset = target.x - start.x;
 		yoffset = target.y - start.y;
 		current = new Vector2();
-		
-		sourceAnimation = Assets.getAnimation("valkyrie-ability");
 	}
 	@Override
 	public void run(float deltaTime) {
@@ -137,17 +135,60 @@ public class MagicSpearAnimation extends Animation {
 			if(animationTimePassed > rangedDelay){
 				TextureRegion region = null;
 				region = Assets.getAnimation("valkyrie-ability-effect").getKeyFrame(animationTimePassed, true);
+				if(spearSprite==null)
+					spearSprite = new Sprite(region);
+				spearSprite.setScale(0.77f);
+				
 				// Draw impact effect
-				if(region != null) {
-					//batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
-					Sprite sprite = new Sprite(region);
-					sprite.setPosition(current.x - region.getRegionWidth() / 2, current.y);
-					sprite.rotate(facingRight?90:270);
-					sprite.setScale(0.77f);
-					sprite.draw(batch);
+				if(spearSprite != null) {
+					spearSprite.setPosition(current.x - region.getRegionWidth() / 2, current.y);
+					spearSprite.setRotation((float)getRotationAngle());	
+					spearSprite.draw(batch);
 				}
 			}
 	}
+	
+	private double getRotationAngle() {
+        float dx = (int) (target.x-start.x);
+        float dy = (int) (target.y-start.y);
+        float x = Math.abs(dx);
+        float y = Math.abs(dy);
+        double res;
+        if (y == 0) {
+            if ( dx < 0 ){
+                res = 270;
+            }
+            else {
+                res = 90;
+            }
+        }
+        else if (x != 0) {
+            res = Math.toDegrees(Math.atan(y/x));
+            if (dx < 0 && dy < 0) {
+                res += 270;
+            }
+            else if (dx < 0 && dy > 0) {
+                res = 90 - res;
+                res += 180;
+            }
+            else if (dx > 0 && dy > 0) {
+                res += 90;
+            }
+            else { //normal
+                res = 90-res;
+            }
+        }
+        else {
+            if (dy > 0) {
+                res = 180;
+            }
+            else {
+                res = 0;
+            }
+        }
+        return res;
+    }
+	
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
