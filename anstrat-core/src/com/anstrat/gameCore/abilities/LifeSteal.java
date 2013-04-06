@@ -38,7 +38,7 @@ public class LifeSteal extends TargetedAbility {
 		
 		if(source.currentHP > source.getMaxHP()) source.currentHP = source.getMaxHP();
 		
-		Animation animation = new LifeStealAnimation(source,targetUnit);
+		Animation animation = new LifeStealAnimation(source,targetUnit,source.getAttack()-1);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 
