@@ -616,11 +616,26 @@
         <frame image="wolf-attack-0003" number="3"/>
         <frame image="wolf-attack-0004" number="4" count="3"/>
     </animation>
+    <animation name="wolf-ability" fps="12">
+        <frame image="wolf-attack-0001" number="1" count="12"/>
+        <frame image="wolf-attack-0002" number="2" count="2"/>
+        <frame image="wolf-attack-0003" number="3" count="2"/>
+        <frame image="wolf-attack-0004" number="4" count="3"/>
+    </animation>
     <animation name="wolf-attack-effect">
         <frame image="wolf-attack-effect-0001" number="1"/>
         <frame image="wolf-attack-effect-0002" number="2"/>
         <frame image="wolf-attack-effect-0003" number="3"/>
         <frame image="wolf-attack-effect-0004" number="4"/>
+    </animation>
+    <animation name="wolf-ability-effect">
+        <frame image="wolf-ability-effect-0001" number="1"/>
+        <frame image="wolf-ability-effect-0002" number="2"/>
+        <frame image="wolf-ability-effect-0003" number="3"/>
+        <frame image="wolf-ability-effect-0004" number="4"/>
+        <frame image="wolf-ability-effect-0005" number="5"/>
+        <frame image="wolf-ability-effect-0006" number="6"/>
+        <frame image="wolf-ability-effect-0007" number="7"/>
     </animation>
     <animation name="wolf-death">
         <frame image="wolf-death-0001" number="1" count="2"/>

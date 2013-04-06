@@ -52,7 +52,7 @@ public class ShadowImage extends TargetedAbility {
 		
 		if(source.currentHP > source.getMaxHP()) source.currentHP = source.getMaxHP();
 		
-		Animation animation = new LifeStealAnimation(source,targetUnit);
+		Animation animation = new LifeStealAnimation(source,targetUnit,damage);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		targetUnit.resolveDeath();
 		if(!targetUnit.isAlive){
