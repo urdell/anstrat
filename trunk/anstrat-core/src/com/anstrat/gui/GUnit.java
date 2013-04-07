@@ -9,6 +9,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.effects.BerserkEffect;
 import com.anstrat.gameCore.effects.Effect;
+import com.anstrat.gameCore.effects.ShieldWallEffect;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GUnit extends GObject {
 	
-	public enum AnimationState { IDLE, SPECIAL_IDLE, WALK, ATTACK, HURT, DEATH, ABILITY, CUSTOM }
+	public enum AnimationState { IDLE, SPECIAL_IDLE, WALK, ATTACK, HURT, DEATH, ABILITY, CUSTOM, CUSTOM2}
 	
 	private Animation[] animations;
 	private boolean animationLooping[];
@@ -82,6 +83,10 @@ public class GUnit extends GObject {
 				animationSpeed = 2f;
 				break;
 			}
+			if(e instanceof ShieldWallEffect){
+				playCustom(Assets.getAnimation("swordsman-ability"), true);
+				break;
+			}
 		}
 	}
 
@@ -128,11 +133,25 @@ public class GUnit extends GObject {
 					}
 				
 					animationTime += Gdx.graphics.getDeltaTime()*Options.speedFactor;
-					
 					if(!animationLooping[animationState.ordinal()] && currentAnimation.isAnimationFinished(animationTime)){
-						playIdle();
+						boolean defending = false;
+
+						if(unit.getUnitType().equals(UnitType.SWORD)){
+						
+							for(Effect e : unit.getEffects())
+								if(e instanceof ShieldWallEffect)
+									defending = true;
+						}
+						
+						System.out.println(String.format("AT:%f, D:%s, T:%s", animationTime, defending, unit.getUnitType()));
+						
+						if(!defending)
+							playIdle();
+						else
+							playCustom(Assets.getAnimation("swordsman-ability"), true);
 					}
-				}else
+				}
+				else
 					System.err.println("Tried to draw null region in GUnit.render "+animationTime);
 			}
 			
@@ -200,8 +219,21 @@ public class GUnit extends GObject {
 	}
 	
 	public void playIdle(){
-		animationTime = 0;
-		animationState = AnimationState.IDLE;
+		boolean defending = false;
+		if(unit.getUnitType().equals(UnitType.SWORD)){
+		
+			for(Effect e : unit.getEffects())
+				if(e instanceof ShieldWallEffect)
+					defending = true;								
+		}
+		
+		if(!defending){
+			animationTime = 0;
+			animationState = AnimationState.IDLE;
+		}
+		else{
+			playCustom(Assets.getAnimation("swordsman-ability"), true);
+		}
 	}
 	
 	public void playSpecialIdle(){
@@ -215,8 +247,21 @@ public class GUnit extends GObject {
 	}
 	
 	public void playHurt(){
-		animationTime = 0;
-		animationState = AnimationState.HURT;
+		boolean defending = false;
+		if(unit.getUnitType().equals(UnitType.SWORD)){
+		
+			for(Effect e : unit.getEffects())
+				if(e instanceof ShieldWallEffect)
+					defending = true;								
+		}
+		
+		if(!defending){
+			animationTime = 0;
+			animationState = AnimationState.HURT;
+		}
+		else{
+			playCustom(Assets.getAnimation("swordsman-shield"), false);
+		}
 	}
 	
 	public void setFacingRight(boolean facingRight){

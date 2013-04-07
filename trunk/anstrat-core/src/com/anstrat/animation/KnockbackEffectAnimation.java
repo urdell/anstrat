@@ -30,15 +30,16 @@ import com.badlogic.gdx.math.Vector2;
 		private GUnit gAttacker, gDefender;
 		private CombatLog cl;
 		private final static float moveSpeed = 0.5f;
+		private TileCoordinate kbCoord;
 		
 		/**Knockback positions*/
 		private Vector2 startP, offsets, endP;
 		
 		private String impactAnimationName;
 		
-		public KnockbackEffectAnimation(CombatLog cl){
+		public KnockbackEffectAnimation(CombatLog cl, TileCoordinate knockbackCoordinate){
 			this.cl = cl;
-			
+			this.kbCoord = knockbackCoordinate;
 			this.length = attackSpeed;
 			this.lifetimeLeft = length;
 			
@@ -58,11 +59,16 @@ import com.badlogic.gdx.math.Vector2;
 			if (!started) {
 				System.out.println("knockbackEffect");
 				TileCoordinate endTile = cl.defender.tileCoordinate;
-				TileCoordinate startTile = Knockback.getKnockBackCoordinate(cl.attacker,cl.defender);
+				TileCoordinate startTile = cl.attacker.tileCoordinate;
+				
+				/* Don't look at this code */
+				
 				startP = GEngine.getInstance().getMap().getTile(startTile).getCenter();
 				endP = GEngine.getInstance().getMap().getTile(endTile).getCenter();
+				startP.sub(startP.cpy().sub(endP).mul(0.5f));
+				System.out.println(startP);
+				System.out.println(endP);
 				offsets = endP.cpy().sub(startP);
-				//Vector2 distance = endP.cpy().sub(startP);
 				
 				// Set animation length proportional to on the unit's movement speed
 				//float distanceInTiles = distance.len() / GEngine.getInstance().map.TILE_WIDTH;
