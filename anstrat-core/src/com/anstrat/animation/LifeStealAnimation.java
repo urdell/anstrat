@@ -132,7 +132,7 @@ public void draw(float deltaTime, SpriteBatch batch){
 	if(!showedHeal && timeIntoTarget >= targetAnimation.animationDuration*0.75f){
 		showedHeal = true;
 		source.updateHealthbar();
-		FloatingNumberAnimation fanimation = new FloatingNumberAnimation(target.unit.tileCoordinate, damage, 40f, Color.RED);
+		FloatingNumberAnimation fanimation = new FloatingNumberAnimation(source.unit.tileCoordinate, damage, 40f, Color.GREEN);
 		//FloatingTextAnimation fanimation = new FloatingTextAnimation(source.unit.tileCoordinate, String.valueOf(damage), Color.GREEN);
 		GEngine.getInstance().animationHandler.runParalell(fanimation);
 	}

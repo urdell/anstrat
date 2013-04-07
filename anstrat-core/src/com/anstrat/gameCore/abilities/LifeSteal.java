@@ -33,6 +33,9 @@ public class LifeSteal extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
+		System.out.println("TarHp:" + targetUnit.currentHP);
+		System.out.println("SouHP:" + targetUnit.currentHP);
+		
 		targetUnit.currentHP -= source.getAttack()-1;
 		source.currentHP += source.getAttack()-1;
 		
@@ -40,6 +43,9 @@ public class LifeSteal extends TargetedAbility {
 		
 		Animation animation = new LifeStealAnimation(source,targetUnit,source.getAttack()-1);
 		GEngine.getInstance().animationHandler.enqueue(animation);
+		
+		System.out.println("TarHp:" + targetUnit.currentHP);
+		System.out.println("SouHP:" + targetUnit.currentHP);
 	}
 
 	@Override

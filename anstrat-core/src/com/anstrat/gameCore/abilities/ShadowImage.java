@@ -17,6 +17,7 @@ import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.HealRow;
 import com.anstrat.gui.confirmDialog.TextRow;
 
+@Deprecated
 public class ShadowImage extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
 	private static final int AP_COST = 4;
@@ -45,7 +46,6 @@ public class ShadowImage extends TargetedAbility {
 		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
 		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
 		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
-		targetUnit.currentHP -= damage;
 		
 		targetUnit.currentHP -= damage;
 		source.currentHP += damage;
