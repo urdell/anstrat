@@ -33,20 +33,14 @@ public class InviteRow extends Table{
 		bottomText.setColor(Color.BLACK);
 		Table textTable = new Table();
 		TextureRegion mapTypeRegion = Assets.getTextureRegion("cancel");
-		switch(invite.gameOptions.mapChoice){
-		case GameOptions.MAP_CUSTOM:
-			mapTypeRegion = Assets.getTextureRegion("mapIconCustom");
-			break;
-		case GameOptions.MAP_GENERATED:
-			mapTypeRegion = Assets.getTextureRegion("mapIconGenerated");
-			break;
-		case GameOptions.MAP_RANDOM:
-			mapTypeRegion = Assets.getTextureRegion("mapIconRandom");
-			break;
-		case GameOptions.MAP_SPECIFIC:
+		
+		if(invite.gameOptions.mapType == GameOptions.MapType.SPECIFIC){
 			mapTypeRegion = Assets.getTextureRegion("mapIconSpecific");
-			break;
 		}
+		else {
+			mapTypeRegion = Assets.getTextureRegion("mapIconGenerated");
+		}
+		
 		Image mapTypeImage = new Image(mapTypeRegion);
 		
 		TextureRegion fogRegion;
