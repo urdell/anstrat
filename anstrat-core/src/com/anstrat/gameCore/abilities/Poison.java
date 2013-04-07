@@ -2,6 +2,7 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
+import com.anstrat.animation.PoisonAnimation;
 import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -59,7 +60,12 @@ public class Poison extends TargetedAbility{
 		cl.newDefenderHP = targetUnit.currentHP;
 		cl.attackDamage = damage;
 		Animation attackanimation = new AttackAnimation(cl);
-		GEngine.getInstance().animationHandler.enqueue(attackanimation);
+		GEngine ge = GEngine.getInstance();
+		ge.animationHandler.enqueue(attackanimation);
+		if(targetUnit.currentHP > 0){
+			Animation poisonAnimation = new PoisonAnimation(targetUnit, ge.state.turnNr);
+			ge.animationHandler.runParalell(poisonAnimation);
+		}
 	}
 
 	@Override
