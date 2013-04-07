@@ -179,11 +179,13 @@
     </animation>
     <animation name="poison" aliasof="elf-ability"/>
     <animation name="fallen-ability">
-        <frame image="fallen-ability-0001" number="1" count="2"/>
-        <frame image="fallen-ability-0002" number="2" count="2"/>
-        <frame image="fallen-ability-0003" number="3" count="4"/>
-		<frame image="fallen-ability-0004" number="4"/>
-        <frame image="fallen-ability-0005" number="5"/>
+        <frame image="fallen-ability-0001" number="1" count="1"/>
+        <frame image="fallen-ability-0002" number="2" count="1"/>
+        <frame image="fallen-ability-0003" number="3" count="1"/>
+		<frame image="fallen-ability-0004" number="4" count="1"/>
+        <frame image="fallen-ability-0005" number="5" count="2"/>
+        <frame image="fallen-ability-0006" number="6"/>
+        <frame image="fallen-ability-0007" number="7"/>
     </animation>
     <animation name="fallen-ability-effect">
         <frame image="fallen-ability-effect-0001" number="1"/>
@@ -532,10 +534,25 @@
         <frame image="swordsman-idle-0009" number="9"/>
         <frame image="swordsman-idle-0010" number="10"/>
         <frame image="swordsman-idle-0011" number="11"/>
-        <frame image="swordsman-idle-0012" number="12"/>
+    </animation>
+    <animation name="swordsman-ability">
+        <frame image="swordsman-ability-0001" number="1"/>
+        <frame image="swordsman-ability-0002" number="2"/>
+        <frame image="swordsman-ability-0003" number="3"/>
+        <frame image="swordsman-ability-0004" number="4"/>
+        <frame image="swordsman-ability-0005" number="5"/>
+        <frame image="swordsman-ability-0006" number="6"/>
+        <frame image="swordsman-ability-0007" number="7"/>
+        <frame image="swordsman-ability-0008" number="8"/>
+        <frame image="swordsman-ability-0009" number="9"/>
+        <frame image="swordsman-ability-0010" number="10"/>
+        <frame image="swordsman-ability-0011" number="11"/>
     </animation>
     <animation name="swordsman-shield">
-        <frame image="swordsman-shield-0001" number="1"/>
+        <frame image="swordsman-shield-0001" number="1" count="6"/>
+    </animation>
+    <animation name="swordsman-prepare">
+        <frame image="swordsman-prepare-0001" number="1" count="2"/>
     </animation>
     <animation name="swordsman-walk">
         <frame image="swordsman-walk-0001" number="1"/>

@@ -31,15 +31,16 @@ public class KnockbackAnimation extends Animation {
 	private CombatLog cl;
 	private float timeElapsed;
 	private final static float moveSpeed = 0.5f;
-	private TileCoordinate originating;
+	private TileCoordinate originating, kbCoord;
 	
 	/**Knockback positions*/
 	private Vector2 startP, currentP, endP;
 	
 	private String impactAnimationName;
 	
-	public KnockbackAnimation(CombatLog cl, boolean canMove, TileCoordinate originating){
+	public KnockbackAnimation(CombatLog cl, boolean canMove, TileCoordinate originating, TileCoordinate kbCoord){
 		this.originating = originating;
+		this.kbCoord = kbCoord;
 		this.cl = cl;
 		this.canMove = canMove;		
 		
@@ -81,13 +82,14 @@ public class KnockbackAnimation extends Animation {
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;
 			
-			boolean facingRight = cl.attacker.tileCoordinate.x <= cl.defender.tileCoordinate.x;
+			boolean facingRight = GEngine.getInstance().getUnit(cl.attacker).getPosition().x <= 
+					GEngine.getInstance().getUnit(cl.defender).getPosition().x;
 			gAttacker.setFacingRight(facingRight);
 			gDefender.setFacingRight(!facingRight);
 			gAttacker.playCustom(Assets.getAnimation("troll-ability"),false);
 			
 			if(canMove)
-				ge.animationHandler.enqueue(new KnockbackEffectAnimation(cl));
+				ge.animationHandler.enqueue(new KnockbackEffectAnimation(cl, kbCoord));
 			started = true;
 		}
 		

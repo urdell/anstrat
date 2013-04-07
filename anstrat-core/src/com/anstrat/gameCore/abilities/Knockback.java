@@ -54,13 +54,14 @@ public class Knockback extends TargetedAbility {
 		cl.newDefenderHP = targetUnit.currentHP;
 		cl.attackDamage = damage;
 		targetUnit.resolveDeath();
+		TileCoordinate knockbackCoordinate = null;
 		if(targetUnit.isAlive){
-			TileCoordinate knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
+			knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
 			canMove = knockBack(targetUnit, knockbackCoordinate);
 		}
 
 		System.out.println("Knockbackanimation");
-		Animation knockbackAnimation = new KnockbackAnimation(cl,canMove, coordinate);
+		Animation knockbackAnimation = new KnockbackAnimation(cl,canMove, coordinate, knockbackCoordinate);
 		GEngine.getInstance().animationHandler.enqueue(knockbackAnimation);	
 	}
 	
@@ -131,6 +132,9 @@ public class Knockback extends TargetedAbility {
 			KnockBackCoordinate.y = def.y-1;
 		}	
 			
+		System.out.println(KnockBackCoordinate.x);
+		System.out.println(KnockBackCoordinate.y);
+		
 		return KnockBackCoordinate;
 	}
 

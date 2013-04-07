@@ -1,16 +1,13 @@
 package com.anstrat.gameCore.abilities;
 
-import com.anstrat.animation.Animation;
-import com.anstrat.animation.HealAnimation;
+import com.anstrat.animation.ShieldWallAnimation;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.effects.ShieldWallEffect;
-import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
 import com.anstrat.gui.confirmDialog.APRow;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
-import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.HealRow;
 import com.anstrat.gui.confirmDialog.TextRow;
 
@@ -26,7 +23,8 @@ public class ShieldWall extends Ability {
 	
 	
 	public ShieldWall() {
-		super("Shield *Wall", "Halves all incoming damage for the duration of the turn",2);
+		super("Shield Wall", "Halves all incoming damage for the duration of the turn",2);
+		iconName = "shield-button";
 	}
 
 	public boolean isAllowed(Unit source){
@@ -38,8 +36,7 @@ public class ShieldWall extends Ability {
 		ShieldWallEffect shieldWallEffect = new ShieldWallEffect(nrOfRounds);
 		source.effects.add(shieldWallEffect);
 		
-		Animation healAnimation = new HealAnimation(source, source);
-		GEngine.getInstance().animationHandler.enqueue(healAnimation);
+		GEngine.getInstance().animationHandler.enqueue(new ShieldWallAnimation(source));
 	}
 	
 	@Override
@@ -57,7 +54,7 @@ public class ShieldWall extends Ability {
 		if(GEngine.getInstance().selectionHandler.selectionType == SelectionHandler.SELECTION_TARGETED_ABILITY){
 			return "heal-button-active";
 		}
-		return "heal-button";
+		return "shield-button";
 	}
 
 }
