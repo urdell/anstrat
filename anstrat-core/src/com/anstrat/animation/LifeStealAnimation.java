@@ -20,7 +20,7 @@ public class LifeStealAnimation extends Animation{
 	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation, targetAnimation;
 	private Unit attacker, defender;
 	private int damage;
-	private boolean showedDamage = false, showedHeal = false;
+	private boolean showedDamage = false, showedHeal = false, facingRight = false;
 	private Vector2 offsets;
 	private Sprite bloods = null;
 	
@@ -58,7 +58,7 @@ public void run(float deltaTime) {
 		Animation mAnimation = new MoveCameraAnimation(target.getPosition());
 		ge.animationHandler.runParalell(mAnimation);
 		
-		boolean facingRight = attacker.tileCoordinate.x <= defender.tileCoordinate.x;
+		facingRight = attacker.tileCoordinate.x <= defender.tileCoordinate.x;
 		source.setFacingRight(facingRight);
 		target.setFacingRight(!facingRight);
 		started = true;
@@ -94,9 +94,13 @@ public void draw(float deltaTime, SpriteBatch batch){
 		batch.setColor(Color.WHITE);
 
 	/* 0.85 scale and 15 pixel justifications to match "standard" animation location */
-	if(timePassed <= sourceAnimation.animationDuration)
-		batch.draw(region, position.x - region.getRegionWidth() / 2f * 0.85f, position.y - region.getRegionHeight() / 2f * 0.85f - 15, 
-				region.getRegionWidth()*0.85f, region.getRegionHeight()*0.85f);
+	if(timePassed <= sourceAnimation.animationDuration){
+		batch.draw(region, 
+				facingRight?position.x - region.getRegionWidth() / 2f * 0.85f:position.x + region.getRegionWidth() / 2f * 0.85f, 
+				position.y - region.getRegionHeight() / 2f * 0.85f - 15, 
+				facingRight?region.getRegionWidth()*0.85f:-region.getRegionWidth()*0.85f, 
+				region.getRegionHeight()*0.85f);
+	}
 	
 	float timeIntoTarget = timePassed - sourceAnimation.animationDuration;
 	
@@ -120,14 +124,16 @@ public void draw(float deltaTime, SpriteBatch batch){
 	if(!showedDamage && timeIntoTarget > 0) {
 		showedDamage = true;
 		target.updateHealthbar();
-		FloatingTextAnimation fanimation = new FloatingTextAnimation(target.unit.tileCoordinate, String.valueOf("DAMAGE"), Color.RED);
+		FloatingNumberAnimation fanimation = new FloatingNumberAnimation(target.unit.tileCoordinate, damage, 40f, Color.RED);
+		//FloatingTextAnimation fanimation = new FloatingTextAnimation(target.unit.tileCoordinate, String.valueOf(damage), Color.RED);
 		GEngine.getInstance().animationHandler.runParalell(fanimation);
 	}
 	
 	if(!showedHeal && timeIntoTarget >= targetAnimation.animationDuration*0.75f){
 		showedHeal = true;
 		source.updateHealthbar();
-		FloatingTextAnimation fanimation = new FloatingTextAnimation(source.unit.tileCoordinate, String.valueOf("HEAL"), Color.GREEN);
+		FloatingNumberAnimation fanimation = new FloatingNumberAnimation(target.unit.tileCoordinate, damage, 40f, Color.RED);
+		//FloatingTextAnimation fanimation = new FloatingTextAnimation(source.unit.tileCoordinate, String.valueOf(damage), Color.GREEN);
 		GEngine.getInstance().animationHandler.runParalell(fanimation);
 	}
 	

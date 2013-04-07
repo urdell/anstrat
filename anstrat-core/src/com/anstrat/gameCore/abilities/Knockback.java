@@ -24,7 +24,7 @@ public class Knockback extends TargetedAbility {
 	private static final float DAMAGEMULTIPLIER = 1.5f;
 	
 	public Knockback() {
-		super("Knockback", "Makes an attack knocking the enemy back if possible", AP_COST, RANGE);
+		super("Knockback", "Makes an attack knocking the enemy back if possible.", AP_COST, RANGE);
 		iconName = "knockback-button";
 	}
 
@@ -58,19 +58,10 @@ public class Knockback extends TargetedAbility {
 			TileCoordinate knockbackCoordinate = getKnockBackCoordinate(source, targetUnit);
 			canMove = knockBack(targetUnit, knockbackCoordinate);
 		}
-		System.out.println("canMove: " + canMove);
-		if(canMove){
-			System.out.println("Knockbackanimation");
-			Animation knockbackAnimation = new KnockbackAnimation(cl);
-			GEngine.getInstance().animationHandler.enqueue(knockbackAnimation);
-			
-		}
-		if(!canMove){
-			System.out.println("AttackAnimation");
-			Animation attackAnimation = new AttackAnimation(cl);
-			GEngine.getInstance().animationHandler.enqueue(attackAnimation);
-		}
-		
+
+		System.out.println("Knockbackanimation");
+		Animation knockbackAnimation = new KnockbackAnimation(cl,canMove, coordinate);
+		GEngine.getInstance().animationHandler.enqueue(knockbackAnimation);	
 	}
 	
 	/**
