@@ -102,10 +102,26 @@ public class AnimationHandler {
 	 * no guarantee to end state of animations
 	 */
 	public void clearAnimations(){
-		runningAnimations.clear();
+		betterClear(runningAnimations);
 		pendingAnimations.clear();
 		paralellPendingAnimations.clear();
 		timeToNext=0;
+	}
+	
+	public void betterClear(List<Animation> toBeCleared){
+		
+		List<Animation> leaveThese = new ArrayList<Animation>();
+		
+		for(Animation ani : toBeCleared){
+			if(ani instanceof PoisonAnimation && !((PoisonAnimation) ani).expended){
+				leaveThese.add(ani);
+			}
+		}
+		
+		toBeCleared.clear();
+		
+		for(Animation ani : leaveThese)
+			toBeCleared.add(ani);
 	}
 	
 	/**

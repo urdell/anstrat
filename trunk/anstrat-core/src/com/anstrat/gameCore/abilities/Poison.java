@@ -63,7 +63,7 @@ public class Poison extends TargetedAbility{
 		GEngine ge = GEngine.getInstance();
 		ge.animationHandler.enqueue(attackanimation);
 		if(targetUnit.currentHP > 0){
-			Animation poisonAnimation = new PoisonAnimation(targetUnit, ge.state.turnNr);
+			Animation poisonAnimation = new PoisonAnimation(targetUnit);
 			ge.animationHandler.runParalell(poisonAnimation);
 		}
 	}

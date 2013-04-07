@@ -15,12 +15,14 @@ public class PoisonAnimation extends Animation {
 	private Unit unit;
 	private GUnit gunit;
 	private float stateTime = 0f;
-	private int turn;
+	private float startAt = 2f;
+	private int turn, player;
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
-	private boolean expended = false;
+	public boolean expended = false;
 	
-	public PoisonAnimation(Unit unit, int turn){
-		this.turn = turn;
+	public PoisonAnimation(Unit unit){
+		this.turn = GEngine.getInstance().state.turnNr;
+		this.player = GEngine.getInstance().state.currentPlayerId;
 		this.unit = unit;
 		this.gunit = GEngine.getInstance().getUnit(unit);
 		this.lifetimeLeft = 4f;
@@ -30,15 +32,16 @@ public class PoisonAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		stateTime += deltaTime;
-		if(!unit.isAlive || GEngine.getInstance().state.turnNr > turn){
-			//if(!expended){
-			//	expended = true;
-			//	lifetimeLeft = 2f;
-			//}
+		if(!(unit.currentHP > 0) || GEngine.getInstance().state.currentPlayerId == player &&
+				GEngine.getInstance().state.turnNr > turn){
+			if(!expended){
+				expended = true;
+				lifetimeLeft = 2f;
+			}
+		}
+		else if(!expended){
 			lifetimeLeft = 4f;
 		}
-		else
-			lifetimeLeft = 4f;
 	}
 
 	@Override
@@ -53,6 +56,8 @@ public class PoisonAnimation extends Animation {
 		Color temp = batch.getColor();
 		if(lifetimeLeft < 2f)
 			batch.setColor(temp.r, temp.g, temp.b, lifetimeLeft / 2f);
+		else if(stateTime < 2f)
+			batch.setColor(temp.r, temp.g, temp.b, stateTime / 2f);
 		batch.draw(region, 
 				gunit.getPosition().x-region.getRegionWidth() / 2f * scale, 
 				gunit.getPosition().y-region.getRegionHeight() / 2f * scale, 
