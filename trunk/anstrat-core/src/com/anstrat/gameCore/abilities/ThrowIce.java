@@ -74,7 +74,7 @@ public class ThrowIce extends TargetedAbility{
 			}
 		}
 		
-		Animation throwIceAnimation = new ThrowIceAnimation(source, targetUnit.tileCoordinate, map);
+		Animation throwIceAnimation = new ThrowIceAnimation(source, targetUnit.tileCoordinate, map, damage, splashDamage);
 		GEngine.getInstance().animationHandler.enqueue(throwIceAnimation);	
 	}
 	

@@ -549,9 +549,15 @@
         <frame image="troll-attack-0003" number="3"/>
         <frame image="troll-attack-0004" number="4" count="2"/>
     </animation>
+    <animation name="troll-ability" fps="12">
+        <frame image="troll-attack-0001" number="1"/>
+        <frame image="troll-attack-0002" number="2" count="12"/>
+        <frame image="troll-attack-0003" number="3"/>
+        <frame image="troll-attack-0004" number="4" count="4"/>
+    </animation>
     <animation name="troll-attack-effect" aliasof="berserker-attack-effect"/>
     <animation name="troll-death">
-        <frame image="troll-death-0001" number="1" count="2"/>
+       <frame image="troll-death-0001" number="1" count="2"/>
 	   <frame image="troll-death-0002" number="2" count="2"/>
 	   <frame image="troll-death-0003" number="3" count="10"/>
     </animation>

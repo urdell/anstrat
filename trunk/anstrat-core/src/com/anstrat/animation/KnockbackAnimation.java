@@ -5,6 +5,7 @@ import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.graphics.Color;
@@ -15,32 +16,32 @@ import com.badlogic.gdx.math.Vector2;
 public class KnockbackAnimation extends Animation {
 
 	/** Time for entire animation */
-	public float attackSpeed = 0.8f; 
-	public float impactTime = 0.5f;
-	public float impactAnimationTime = 0.3f;
+	public float attackSpeed = 1.1f; 
+	public float impactTime = 1.0f;
+	public float impactAnimationTime = 1.0f;
 	public float rangedDelay = 0.6f;
 	
 	private boolean pastImpact = false;
-	private boolean pastImpactAnimation = false;
 	
 	/** Projectile positions */
 	private Vector2 start, current, target;
 	private float xoffset, yoffset, amtOffset;
-	private boolean started;
+	private boolean started, canMove;
 	private GUnit gAttacker, gDefender;
 	private CombatLog cl;
 	private float timeElapsed;
 	private final static float moveSpeed = 0.5f;
+	private TileCoordinate originating;
 	
 	/**Knockback positions*/
 	private Vector2 startP, currentP, endP;
 	
 	private String impactAnimationName;
 	
-	public KnockbackAnimation(CombatLog cl){
+	public KnockbackAnimation(CombatLog cl, boolean canMove, TileCoordinate originating){
+		this.originating = originating;
 		this.cl = cl;
-		
-		
+		this.canMove = canMove;		
 		
 		this.length = attackSpeed;
 		this.lifetimeLeft = length;
@@ -83,23 +84,19 @@ public class KnockbackAnimation extends Animation {
 			boolean facingRight = cl.attacker.tileCoordinate.x <= cl.defender.tileCoordinate.x;
 			gAttacker.setFacingRight(facingRight);
 			gDefender.setFacingRight(!facingRight);
-			gAttacker.playAttack();
+			gAttacker.playCustom(Assets.getAnimation("troll-ability"),false);
 			
-			ge.animationHandler.enqueue(new KnockbackEffectAnimation(cl));
+			if(canMove)
+				ge.animationHandler.enqueue(new KnockbackEffectAnimation(cl));
 			started = true;
-		}
-		
-		if(!pastImpactAnimation && length - lifetimeLeft > impactAnimationTime){ // Time of impact animation (slightly before actual impact
-			//GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
-			pastImpactAnimation = true;
-			gDefender.playHurt();
 		}
 		
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
-			FloatingNumberAnimation animation = new FloatingNumberAnimation(cl.defender.tileCoordinate, cl.attackDamage, 40f, Color.RED);
+			FloatingNumberAnimation animation = new FloatingNumberAnimation(originating, cl.attackDamage, 40f, Color.RED);
 			ge.animationHandler.runParalell(animation);
+			gDefender.playHurt();
 			float healthPercentage = (float)cl.newDefenderHP/(float)cl.defender.getMaxHP();
 			
 			if(healthPercentage < 0f){
@@ -142,7 +139,6 @@ public class KnockbackAnimation extends Animation {
 			// Draw impact effect
 			if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
 		}
-		
 	}
 
 	@Override
@@ -151,6 +147,5 @@ public class KnockbackAnimation extends Animation {
 		return Fog.isVisible(gAttacker.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId) ||
 				Fog.isVisible(gDefender.unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
 	}
-
 }
 

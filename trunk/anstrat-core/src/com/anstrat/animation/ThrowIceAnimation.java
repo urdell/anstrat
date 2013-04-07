@@ -42,12 +42,15 @@ public class ThrowIceAnimation extends Animation {
 	private float[] shard_rotation = new float[NUM_SHARDS];
 	private float[] shard_speed = new float[NUM_SHARDS];
 	Random rand = new Random();
+	int damage, splashDamage;
 	
 	Animation shake1 = null, shake2= null, move = null;
 	private Map<Unit, Integer> units;
 	
-	public ThrowIceAnimation(Unit source, TileCoordinate target, Map<Unit, Integer> units) {		
+	public ThrowIceAnimation(Unit source, TileCoordinate target, Map<Unit, Integer> units, int damage, int splashDamage) {		
 		GEngine engine = GEngine.getInstance();
+		this.damage = damage;
+		this.splashDamage = splashDamage;
 		
 		for(int i=0;i<NUM_SHARDS;i++){
 			shard_times[i] = rand.nextFloat()/5f;
@@ -108,8 +111,9 @@ public class ThrowIceAnimation extends Animation {
 				if(unit.currentHP <= 0){
 					GEngine.getInstance().animationHandler.runParalell(new DeathAnimation(unit, new Vector2(0f,0f)));
 				}
-				FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
-				GEngine.getInstance().animationHandler.runParalell(animation);
+				FloatingNumberAnimation fanimation = new FloatingNumberAnimation(unit.tileCoordinate, damage, 40f, Color.RED);
+				//FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
+				GEngine.getInstance().animationHandler.runParalell(fanimation);
 				GEngine.getInstance().getUnit(unit).updateHealthbar();
 				units.remove(unit);
 			}
@@ -125,8 +129,9 @@ public class ThrowIceAnimation extends Animation {
 						engine.animationHandler.runParalell(new DeathAnimation(unit,
 								engine.map.getTile(unit.tileCoordinate).getPosition().cpy().sub(target.getPosition()).nor()));
 					}
-					FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
-					engine.animationHandler.runParalell(animation);
+					FloatingNumberAnimation fanimation = new FloatingNumberAnimation(unit.tileCoordinate, splashDamage, 40f, Color.RED);
+					//FloatingTextAnimation animation = new FloatingTextAnimation(unit.tileCoordinate, String.valueOf(units.get(unit)), Color.RED);
+					engine.animationHandler.runParalell(fanimation);
 					engine.getUnit(unit).updateHealthbar();
 				}
 			}
