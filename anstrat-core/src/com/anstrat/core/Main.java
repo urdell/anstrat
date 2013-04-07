@@ -31,7 +31,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Main extends Game implements ApplicationListener {
 	
 	public static final String version = "Beta 1";
-	public static final String NETWORK_HOST = "192.168.1.74";
+	public static String NETWORK_HOST = "192.168.1.74";
 	public static final int NETWORK_PORT = 25406;
 	
 	public static float percentWidth;
@@ -99,7 +99,6 @@ public class Main extends Game implements ApplicationListener {
 		overlayStage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, batch);
 		
 		// Init menu, show splash
-		Gdx.graphics.setTitle("Vengeful Vikings (Beta)");
 		setScreen(SplashScreen.getInstance());
 	}
 	

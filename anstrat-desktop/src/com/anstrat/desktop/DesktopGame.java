@@ -32,13 +32,13 @@ public class DesktopGame {
 		//packTextures("../anstrat-android/assets", false);		// Linux
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title ="Vengeful Vikings";
+		config.title ="Vengeful Vikings (Beta)";
 		config.width = ORIENTATION == ScreenOrientation.Landscape ? PHONE.getWidth() : PHONE.getHeight();
 		config.height = ORIENTATION == ScreenOrientation.Landscape ? PHONE.getHeight() : PHONE.getWidth();
 		config.resizable = false;
 		config.samples = 2;	// Antialiasing k
 		config.vSyncEnabled = true;
-		
+
 		handleArguments(args, config);
 		
 		new LwjglApplication(Main.getInstance(), config);
@@ -72,6 +72,20 @@ public class DesktopGame {
 		if(Arrays.binarySearch(args, "-ft") >= 0){
 			System.out.println("Found -ft flag, enabling font generation using freetype.");
 			Assets.USE_GENERATED_FONTS = true;
+		}
+		
+		// Check for custom server ip
+		String server = getArgumentValue("--server", args);
+		if(server != null){
+			System.out.println(String.format("Found --server flag, using custom server ip \"%s\".", server));
+			Main.NETWORK_HOST = server;
+		}
+		
+		// Check for window title (useful when debugging with multiple clients)
+		String title = getArgumentValue("--title", args);
+		if(title != null){
+			config.title = title;
+			System.out.println(String.format("Found --title flag, setting title to \"%s\".", title));
 		}
 		
 		// Check if width or height was set using an cmdline argument
