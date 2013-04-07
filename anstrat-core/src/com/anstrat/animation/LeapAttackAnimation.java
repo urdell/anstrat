@@ -16,7 +16,7 @@ public class LeapAttackAnimation extends Animation {
 	private int damage;
 	
 	private float xoffset, yoffset, amtOffset;
-	private boolean enterFinished, finishStarted, started;
+	private boolean enterFinished, finishStarted, started, hurt;
 	private TileCoordinate startTile, endTile;
 	
 	public LeapAttackAnimation(Unit unit, Unit target, int damage, TileCoordinate startTile, TileCoordinate endTile){
@@ -40,6 +40,7 @@ public class LeapAttackAnimation extends Animation {
 		lifetimeLeft = length;
 		enterFinished = false;
 		finishStarted = false;
+		hurt = false;
 	}
 	
 
@@ -56,6 +57,12 @@ public class LeapAttackAnimation extends Animation {
 			gunit.playCustom(Assets.getAnimation("berserker-ability-enter"), true);
 			
 		}
+		
+		if(!hurt && lifetimeLeft <= length / 2f){
+			hurt = true;
+			target.playHurt();
+		}
+		
 		if(lifetimeLeft <= 1.0f && !enterFinished) {
 			enterFinished = true;
 			gunit.playCustom(Assets.getAnimation("berserker-ability"), true);
