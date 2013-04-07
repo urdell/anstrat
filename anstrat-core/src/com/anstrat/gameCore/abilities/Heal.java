@@ -43,7 +43,7 @@ public class Heal extends TargetedAbility {
 		
 		if(targetUnit.currentHP > targetUnit.getMaxHP()) targetUnit.currentHP = targetUnit.getMaxHP();
 		
-		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(coordinate));
+		Animation animation = new HealAnimation(source, StateUtils.getUnitByTile(coordinate), HEAL_AMOUNT);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
 	

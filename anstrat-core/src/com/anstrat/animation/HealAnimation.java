@@ -6,23 +6,25 @@ import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class HealAnimation extends Animation{
 
-	private boolean started;
+	private boolean started = false, displayedHeal = false;
 	private float animationStateTime;
 	private GUnit source, target;
 	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation, targetAnimation;
+	private int heal;
 	
 	private static final float START_DELAY = 0.5f;
 	
-	public HealAnimation(Unit source, Unit target){
+	public HealAnimation(Unit source, Unit target, int heal){
 		sourceAnimation = Assets.getAnimation("shaman-heal");
 		targetAnimation = Assets.getAnimation("target-heal");
-		
+		this.heal = heal;
 		GEngine engine = GEngine.getInstance();
 		this.source = engine.getUnit(source);
 		this.target = engine.getUnit(target);
@@ -54,13 +56,22 @@ public class HealAnimation extends Animation{
 		Vector2 position = null;
 		
 		if(timePassed >= START_DELAY + sourceAnimation.animationDuration){
+			
+			if(!displayedHeal){
+				displayedHeal = true;
+				GEngine ge = GEngine.getInstance();
+				FloatingNumberAnimation fanimation = new FloatingNumberAnimation(target.unit.tileCoordinate, 
+						heal, 28f, Color.GREEN);
+				ge.animationHandler.runParalell(fanimation);
+			}
+			
 			animation = targetAnimation;
 			position = target.getPosition();
 			
 			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
 			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
-		else if(timePassed >= START_DELAY){
+		else if(timePassed >= START_DELAY){			
 			animation = sourceAnimation;
 			position = source.getPosition();
 			

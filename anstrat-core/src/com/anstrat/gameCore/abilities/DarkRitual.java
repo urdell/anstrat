@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.DebuffAnimation;
 import com.anstrat.animation.RitualisticVortex;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -12,14 +11,13 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.Tile;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
-import com.badlogic.gdx.graphics.Color;
 
 public class DarkRitual extends Ability{
 
 	private static final int AP_DRAIN_AMOUNT = 2;
 	
 	public DarkRitual() {
-		super("Dark Ritual", "Performs a dark ritual in which they offer their life for AP-loss to adjacent enemy units", 0);
+		super("Dark Ritual", "Performs a dark ritual sacrificing its life to drain Action Points from adjacent enemy units.", 0);
 		iconName = "suicide-button";
 	}
 
@@ -53,8 +51,6 @@ public class DarkRitual extends Ability{
 					if (unit.currentAP < 0){
 						unit.currentAP = 0;
 					}
-					//Animation animation = new DebuffAnimation(unit, Color.RED);
-					//GEngine.getInstance().animationHandler.enqueue(animation);
 				}
 			}
 		}

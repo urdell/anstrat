@@ -13,12 +13,11 @@ import com.anstrat.gui.confirmDialog.TextRow;
 
 public class ShieldWall extends Ability {
 
-	
+	private static final long serialVersionUID = 7057699430536432784L;
 	/**
 	 * Halves damage when activated
 	 * Does not affect abilities at the moment
 	 */
-	private static final long serialVersionUID = 1L;
 	private static final int nrOfRounds = 1;
 	
 	
