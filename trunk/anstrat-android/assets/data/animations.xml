@@ -527,6 +527,14 @@
         <frame image="swordsman-walk-0003" number="3"/>
         <frame image="swordsman-walk-0004" number="4"/>
     </animation>
+    <animation name="swordsman-death">
+        <frame image="swordsman-death-0001" number="1" count="2"/>
+		<frame image="swordsman-death-0002" number="2" count="2"/>
+		<frame image="swordsman-death-0003" number="3" count="10"/>
+    </animation>
+    <animation name="swordsman-hurt">
+        <frame image="swordsman-death-0001" number="1" count="2"/>
+    </animation>
     <animation name="target-heal" fps="9">
         <frame image="target-heal-0001" number="1"/>
         <frame image="target-heal-0002" number="2"/>
@@ -585,8 +593,8 @@
     <animation name="valkyrie-attack-effect" aliasof="hawk-attack-effect"/>
     <animation name="valkyrie-death">
         <frame image="valkyrie-death-0001" number="1" count="2"/>
-	<frame image="valkyrie-death-0002" number="2" count="2"/>
-	<frame image="valkyrie-death-0003" number="3" count="10"/>
+		<frame image="valkyrie-death-0002" number="2" count="2"/>
+		<frame image="valkyrie-death-0003" number="3" count="10"/>
     </animation>
     <animation name="valkyrie-hurt">
         <frame image="valkyrie-death-0001" number="1" count="2"/>
