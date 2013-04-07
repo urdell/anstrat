@@ -85,13 +85,13 @@ public class ServerMessageHandler {
 				case INVITE_PLAYER_NAME: {
 					String name = (String) payload.get(0);
 					GameOptions options = (GameOptions) payload.get(1);
-					socialMessageHandler.invitePlayer(client, name, options);
+					socialMessageHandler.invitePlayerByName(client, name, options);
 					break;
 				}
 				case INVITE_PLAYER_ID: {
 					long userID = (Integer) payload.get(0);
 					GameOptions options = (GameOptions) payload.get(1);
-					socialMessageHandler.invitePlayer(client, userID, options);
+					socialMessageHandler.invitePlayerByID(client, userID, options);
 					break;
 				}
 				case INVITE_ACCEPT: {
