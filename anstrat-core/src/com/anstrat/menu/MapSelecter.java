@@ -18,16 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class MapSelecter extends Table implements GeneratedMapPopupHandler {
 	
-	private GameOptions.MapType mapSelection;
-	private String mapName = null;
 	private GeneratedMapPopup generatedMapSizePopup;
 	private Label mapTitle, mapLabel;
+	private MapSelectionHandler handler;
 	
-	public MapSelecter(){
+	public MapSelecter(final MapSelectionHandler handler){
 		super(Assets.SKIN);
 		setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
-		mapSelection = GameOptions.MapType.GENERATED_SIZE_MEDIUM;
+		this.handler = handler;
 		generatedMapSizePopup = new GeneratedMapPopup(this);		
 		mapTitle = new Label("Map options", Assets.SKIN);
 		mapLabel = new Label("No map chosen", Assets.SKIN);
@@ -39,8 +38,7 @@ public class MapSelecter extends Table implements GeneratedMapPopupHandler {
 						@Override
 						public void mapSelected(String map){
 							mapLabel.setText(map);
-							mapSelection = GameOptions.MapType.SPECIFIC;
-							mapName = map;
+							handler.mapSelected(GameOptions.MapType.SPECIFIC, map);
 						}
 					}, false, "Choose specific map", Assets.getMapList(true, true));
         		
@@ -70,14 +68,10 @@ public class MapSelecter extends Table implements GeneratedMapPopupHandler {
 	@Override
 	public void sizeSelected(GameOptions.MapType type) {
 		mapLabel.setText("Generated map (" + type + ")");
-		mapSelection = type;
+		handler.mapSelected(type, null);
 	}
 	
-	public GameOptions.MapType getMapTypeSelection(){
-		return mapSelection;
-	}
-	
-	public String getMapNameSelection(){
-		return mapName;
+	public static interface MapSelectionHandler {
+		public void mapSelected(GameOptions.MapType type, String mapName);
 	}
 }

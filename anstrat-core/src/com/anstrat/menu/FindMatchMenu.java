@@ -2,86 +2,65 @@ package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
-import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
+import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
-import com.anstrat.popup.Popup;
-import com.anstrat.popup.TeamPopup;
-import com.anstrat.popup.TeamPopup.TeamPopupListener;
+import com.anstrat.network.protocol.GameOptions.MapType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
-public class FindMatchMenu extends MenuScreen {
+public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
 	private static FindMatchMenu me;
 	
-	
-	private int god = PlayerAbilityType.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	private MapSelecter mapSelecter;
+	private PlayerSelecter playerSelecter;
+	private Button goButton;
+	
+	private String mapName;
+	private GameOptions.MapType mapType;
 	
 	private FindMatchMenu(){
-		/*
-		Table settings = new Table(Assets.SKIN);
-		settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
-		mapSelecter = new MapSelecter(true, false);
+		mapSelecter = new MapSelecter(this);
+		playerSelecter = new PlayerSelecter();
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
-		Button godButton = ComponentFactory.createButton("Team", new ClickListener() {
+		goButton = ComponentFactory.createMenuButton("GO!", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Popup popup = new TeamPopup(team, "Select your team", new TeamPopupListener() {
-					@Override
-					public void onChosen(int teamChosen) {
-						System.out.println("hej findmatchmenu someting");
-						team = teamChosen;
-					}
-				});
+				if(goButton.isDisabled()) return;
 				
-				popup.show();
+				// Load named map (if selected)
+				Map map = mapType == GameOptions.MapType.SPECIFIC 
+							      ? Assets.loadMap(mapName)
+							      : null;
+
+				GameOptions options = new GameOptions(map, mapType, playerSelecter.getGod(), playerSelecter.getTeam(), fog.isChecked());
+				Main.getInstance().network.findRandomGame(options);
 			}
 		});
 		
-		settings.add("Find Match");
-		settings.row();
-		settings.add(mapSelecter).fillX().expandX();
-		settings.row();
-		settings.add(fog).fillX().expandX();
-		settings.row();
-		settings.add(godButton).height(BUTTON_HEIGHT).fillX().expandX();
-		        
-		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Main.getInstance().network.findRandomGame(new GameOptions(
-						god, 
-						team, 
-						fog.isChecked(),
-						mapSelecter.getMapSelection(), 
-						mapSelecter.getMapName(), 
-						null ));
-				new GameOptions(map, mapType, god, team, fog)
-			}
-		});
+		goButton.setDisabled(true);
+		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
-		contents.padTop(3f*Main.percentHeight).center();
+		contents.padTop(3f * Main.percentHeight).center();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
-		contents.add(settings);
+		contents.add(mapSelecter);
 		contents.row();
-		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*1.3f);
+		contents.add(playerSelecter);
 		contents.row();
-		contents.add().expandY();
+		contents.add(fog);
+		contents.row();
+		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
-		contents.add(centerLogin);
-		*/
-		contents.add("Redo with same style as hotseat menu");
+		contents.add(centerLogin).bottom();
 	}
 	
 	public static synchronized FindMatchMenu getInstance() {
@@ -95,5 +74,13 @@ public class FindMatchMenu extends MenuScreen {
 	public void dispose() {
 		super.dispose();
 		me = null;
+	}
+
+	@Override
+	public void mapSelected(MapType type, String mapName) {
+		this.mapType = type;
+		this.mapName = mapName;
+		this.goButton.setDisabled(false);
+		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 	}
 }
