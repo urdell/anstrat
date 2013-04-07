@@ -104,32 +104,7 @@ public class SocialMessageHandler {
 		}
 	}
 	
-	private void invitePlayer(InetSocketAddress client, User user, GameOptions options){
-		
-		// Logged in?
-		Long clientUserID = connectionManager.getUserID(client);
-		
-		if(clientUserID == null){
-			logger.info("%s attempted to invite user by id '%d' without being logged in.", client, user.getUserID());
-			return;
-		}
-		
-		Invite invite = db.createInvite(clientUserID, user.getUserID(), options);
-		if(invite != null){
-			
-			// Notify client the invite request has been handled
-			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_PENDING, invite.inviteID, user.getDisplayedName(), options));
-			
-			// Get display name of invite sender
-			User sender = db.getUser(clientUserID);
-			if(sender == null) throw new IllegalStateException(String.format("No user exists in database for logged in user '%d'.", clientUserID));
-			
-			// If the receiving user is currently online, invite request will be sent directly
-			connectionManager.sendMessage(user.getUserID(), new NetworkMessage(NetworkMessage.Command.INVITE_REQUEST, invite.inviteID, sender.getDisplayedName(), options));
-		}
-	}
-	
-	public void invitePlayer(InetSocketAddress client, String name, GameOptions options){
+	public void invitePlayerByName(InetSocketAddress client, String name, GameOptions options){
 		if(name == null){
 			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, "Name cannot be null."));
 			return;
@@ -146,7 +121,7 @@ public class SocialMessageHandler {
 		}
 	}
 	
-	public void invitePlayer(InetSocketAddress client, long userID, GameOptions options){
+	public void invitePlayerByID(InetSocketAddress client, long userID, GameOptions options){
 		User user = db.getUser(userID);
 		
 		if(user != null){
@@ -155,6 +130,37 @@ public class SocialMessageHandler {
 		else{
 			logger.info("%s attempted to invite user with id '%d', but that user does not exist.", client, userID);
 			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, String.format("A user with id '%d' does not exist.", userID)));
+		}
+	}
+	
+	private void invitePlayer(InetSocketAddress client, User user, GameOptions options){
+		// Logged in?
+		Long clientUserID = connectionManager.getUserID(client);
+		
+		if(clientUserID == null){
+			logger.info("%s attempted to invite user by id '%d' without being logged in.", client, user.getUserID());
+			return;
+		}
+		
+		// Can't invite yourself
+		if(clientUserID == user.getUserID()){
+			logger.warning("%s (%d) attempted to invite himself.",  client, user.getUserID());
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_FAILED, "You can't invite yourself!"));
+			return;
+		}
+		
+		Invite invite = db.createInvite(clientUserID, user.getUserID(), options);
+		if(invite != null){
+			
+			// Notify client the invite request has been handled
+			connectionManager.sendMessage(client, new NetworkMessage(NetworkMessage.Command.INVITE_PENDING, invite.inviteID, user.getDisplayedName(), options));
+			
+			// Get display name of invite sender
+			User sender = db.getUser(clientUserID);
+			if(sender == null) throw new IllegalStateException(String.format("No user exists in database for logged in user '%d'.", clientUserID));
+			
+			// If the receiving user is currently online, invite request will be sent directly
+			connectionManager.sendMessage(user.getUserID(), new NetworkMessage(NetworkMessage.Command.INVITE_REQUEST, invite.inviteID, sender.getDisplayedName(), options));
 		}
 	}
 	
