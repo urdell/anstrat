@@ -26,7 +26,9 @@ public class InviteMatchMenu extends MenuScreen {
 	private int god = PlayerAbilityType.GOD_ODIN, team = TeamPopup.TEAM_VV;
 	private MapSelecter mapSelecter;
 	
-	private InviteMatchMenu(){        
+	private InviteMatchMenu(){      
+		
+		/*
 		Table settings = new Table(Assets.SKIN);
 		settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
@@ -104,6 +106,8 @@ public class InviteMatchMenu extends MenuScreen {
 		contents.add().expandY();
 		contents.row();
 		contents.add(centerLogin);
+		*/
+		contents.add("Redo with same style as hotseat menu");
 	}
 	
 	public static synchronized InviteMatchMenu getInstance() {

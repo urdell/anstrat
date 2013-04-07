@@ -6,42 +6,31 @@ import com.anstrat.geography.Map;
 
 public class GameOptions implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
-	public static final int MAP_SPECIFIC = 0;
-	public static final int MAP_GENERATED = 1;
-	public static final int MAP_RANDOM = 2;
-	public static final int MAP_CUSTOM = 3;
+	public enum MapType { SPECIFIC, GENERATED_SIZE_SMALL, GENERATED_SIZE_MEDIUM,
+						  GENERATED_SIZE_LARGE, GENERATED_SIZE_RANDOM };
 	
-	/** Only used for custom maps **/
+	/** The map to use if MapType is set to SPECIFIC **/
 	public final Map map;
-	
+	public final MapType mapType;
 	public final int god;
 	public final int team;
-	
 	public final boolean fog;
-	
-	/** One of {@link MAP_SPECIFIC}, {@link MAP_GENERATED} or {@link MAP_RANDOM} */
-	public final int mapChoice;
-	
-	/** The associated map name if map choice is set to {@link SPECIFIC_MAP} */
-	public final String mapName;
 
-	/**
-	 * 
-	 * @param god
-	 * @param team
-	 * @param fog
-	 * @param mapChoice
-	 * @param mapName
-	 * @param map may be null
-	 */
-	public GameOptions(int god, int team, boolean fog, int mapChoice, String mapName, Map map) {
+	/** Map may only be null if map type is set to generated. **/
+	public GameOptions(Map map, MapType mapType, int god, int team, boolean fog) {
+		this.map = map;
+		this.mapType = mapType;
 		this.god = god;
 		this.team = team;
 		this.fog = fog;
-		this.mapChoice = mapChoice;
-		this.mapName = mapName;
-		this.map = map;
+		
+		if(map == null && mapType == MapType.SPECIFIC){
+			throw new IllegalArgumentException("Have to specify map if MapType is set to SPECIFIC!");
+		}
+		else if(map != null && mapType != MapType.SPECIFIC){
+			throw new IllegalArgumentException("Can't specify map when MapType is set to GENERATED!");
+		}
 	}
 }

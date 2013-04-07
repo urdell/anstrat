@@ -24,6 +24,7 @@ public class FindMatchMenu extends MenuScreen {
 	private MapSelecter mapSelecter;
 	
 	private FindMatchMenu(){
+		/*
 		Table settings = new Table(Assets.SKIN);
 		settings.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		mapSelecter = new MapSelecter(true, false);
@@ -64,6 +65,7 @@ public class FindMatchMenu extends MenuScreen {
 						mapSelecter.getMapSelection(), 
 						mapSelecter.getMapName(), 
 						null ));
+				new GameOptions(map, mapType, god, team, fog)
 			}
 		});
 		
@@ -78,6 +80,8 @@ public class FindMatchMenu extends MenuScreen {
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
 		contents.add(centerLogin);
+		*/
+		contents.add("Redo with same style as hotseat menu");
 	}
 	
 	public static synchronized FindMatchMenu getInstance() {

@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.esotericsoftware.tablelayout.Cell;
 
 /**
  * 
@@ -69,23 +68,10 @@ public class ViewInviteMenu extends MenuScreen{
         });
 		
 		
-		String mapText = "";
-		switch(invite.gameOptions.mapChoice){
-		case GameOptions.MAP_CUSTOM:
-			mapText = "Map: "+ invite.gameOptions.mapName + "\n"+
-					"This is a custom map! It may be unfair.";
-			break;
-		case GameOptions.MAP_GENERATED:
-			mapText = "Map is randomly generated.";
-			break;
-		case GameOptions.MAP_RANDOM:
-			mapText = "Map is randomly selected among approved maps.";
-			break;
-		case GameOptions.MAP_SPECIFIC:
-			mapText = "Map: "+ invite.gameOptions.mapName + "\n"+
-					"This is an approved map.";
-			break;
-		}
+		String mapText = invite.gameOptions.mapType == GameOptions.MapType.SPECIFIC
+													 ? "Map: " + invite.gameOptions.map.name
+													 : "Map: randomly generated";
+		
 		if(invite.gameOptions.fog){
 			mapText += "\nFog is enabled.";
 		}
