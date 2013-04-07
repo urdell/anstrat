@@ -97,8 +97,8 @@ public class MagicSpearAnimation extends Animation {
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
 			// Show damage taken etc.
 			GEngine ge = GEngine.getInstance();
-			FloatingTextAnimation animation = new FloatingTextAnimation(targetUnit.tileCoordinate, String.valueOf(damage), Color.RED);
-			ge.animationHandler.runParalell(animation);
+			FloatingNumberAnimation fanimation = new FloatingNumberAnimation(targetUnit.tileCoordinate, damage, 40f, Color.RED);
+			ge.animationHandler.runParalell(fanimation);
 			float healthPercentage = (float)targetUnit.currentHP/(float)targetUnit.getMaxHP();
 			
 			if(healthPercentage < 0f){
