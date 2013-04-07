@@ -23,7 +23,17 @@ public class PlayerSelecter extends Table {
 	
 	private TextField playerNameButton;
 	
+	/** Player selecter without name */
+	public PlayerSelecter(){
+		this(false, null);
+	}
+	
+	/** Player selection with name **/
 	public PlayerSelecter(String defaultName){
+		this(true, defaultName);
+	}
+	
+	private PlayerSelecter(boolean nameSelection, String defaultName){
 		setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		playerNameButton = ComponentFactory.createTextField(defaultName, false);
@@ -39,6 +49,8 @@ public class PlayerSelecter extends Table {
 		dd.setScaleX(0.6f);
 		
 		teamVV.setChecked(true);
+		team = TeamPopup.TEAM_VV;
+		
 		teamDD.setChecked(false);
 		
 		teamVV.addListener(new ClickListener() {
@@ -65,8 +77,12 @@ public class PlayerSelecter extends Table {
 		teamTable.add(dd);
 
 		defaults().height(Main.percentHeight*8f);
-		add(playerNameButton).fillX().expandX();
-		row();
+		
+		if(nameSelection){
+			add(playerNameButton).fillX().expandX();
+			row();
+		}
+		
 		add(teamTable).fillX().expandX();
 	}
 	

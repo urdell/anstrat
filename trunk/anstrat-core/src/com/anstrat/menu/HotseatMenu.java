@@ -4,22 +4,28 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
+import com.anstrat.network.protocol.GameOptions.MapType;
 import com.anstrat.popup.TeamPopup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class HotseatMenu extends MenuScreen {
+public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 	private static HotseatMenu me;
 	public int player1team = TeamPopup.TEAM_DD, player2team = TeamPopup.TEAM_VV;
 
 	private MapSelecter mapSelecter;
 	
+	private String mapName;
+	private GameOptions.MapType mapType;
+	private Button goButton;
+	
 	private HotseatMenu(){
-		mapSelecter = new MapSelecter();
+		mapSelecter = new MapSelecter(this);
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
@@ -27,17 +33,17 @@ public class HotseatMenu extends MenuScreen {
 		final PlayerSelecter player1Selecter = new PlayerSelecter("Player 1");
 		final PlayerSelecter player2Selecter = new PlayerSelecter("Player 2");
 		
-		TextButton goButton = ComponentFactory.createMenuButton( "GO!",new ClickListener() {
+		goButton = ComponentFactory.createMenuButton("GO!", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
-				if(mapSelecter.getMapTypeSelection() == GameOptions.MapType.SPECIFIC){
-					Map map = Assets.loadMap(mapSelecter.getMapNameSelection());
+				// Load named map (if selected)
+				if(mapType == GameOptions.MapType.SPECIFIC){
+					Map map = Assets.loadMap(mapName);
 					map.fogEnabled = fog.isChecked();
 					Main.getInstance().games.createHotseatGame(map, player1Selecter.getTeam(), player2Selecter.getTeam()).showGame(true);
 				}
 				else {
-					Dimension d = getMapSize(mapSelecter.getMapTypeSelection());
+					Dimension d = getMapSize(mapType);
 					Main.getInstance().games.createHotseatGame(
 							fog.isChecked(),
 							d.width,
@@ -47,6 +53,8 @@ public class HotseatMenu extends MenuScreen {
 				}
 		   }
 		});
+		goButton.setDisabled(true);
+		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
 		contents.padTop(3f*Main.percentHeight).center();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
@@ -101,5 +109,13 @@ public class HotseatMenu extends MenuScreen {
 			me = new HotseatMenu();
 		}
 		return me;
+	}
+
+	@Override
+	public void mapSelected(MapType type, String mapName) {
+		this.mapType = type;
+		this.mapName = mapName;
+		this.goButton.setDisabled(false);
+		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 	}
 }
