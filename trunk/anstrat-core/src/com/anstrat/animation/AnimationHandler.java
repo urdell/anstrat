@@ -93,7 +93,6 @@ public class AnimationHandler {
 	}
 	
 	public void enqueue(Animation animation){
-		
 		pendingAnimations.add(animation);
 		tryAddNextPending();
 	}

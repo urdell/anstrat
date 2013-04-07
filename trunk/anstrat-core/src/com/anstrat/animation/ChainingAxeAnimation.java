@@ -39,8 +39,8 @@ public class ChainingAxeAnimation extends Animation{
 		
 		// Set animation timings
 		rangedDelay = 0.3f;
-		attackSpeed = 1.2f;
-		impactTime = 1f;
+		attackSpeed = 1.0f;
+		impactTime = 0.98f;
 		impactAnimationTime = impactTime; // start playing exactly when axe hits
 
 		this.length = attackSpeed;
@@ -128,18 +128,18 @@ public class ChainingAxeAnimation extends Animation{
 		if(firstUnit){
 			if(animationTimePassed > rangedDelay){
 				TextureRegion region = null;
+				batch.setColor(Color.WHITE);
 				region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
 				// Draw impact effect
-				if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
+				if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y - region.getRegionHeight() / 2);
 			}
 		}
 		else{
-			if(animationTimePassed > rangedDelay){
-				TextureRegion region = null;
-				region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
-				// Draw projectile animation
-				if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y + region.getRegionHeight() / 2);
-			}
+			TextureRegion region = null;
+			batch.setColor(Color.WHITE);
+			region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
+			// Draw projectile animation
+			if(region != null) batch.draw(region, current.x - region.getRegionWidth() / 2, current.y - region.getRegionHeight() / 2);
 		}
 	}
 	@Override

@@ -162,11 +162,27 @@
         <frame image="elf-walk-0003" number="3"/>
         <frame image="elf-walk-0004" number="4"/>
     </animation>
+    <animation name="elf-ability">
+		<frame image="elf-ability-effect-0001" number="1"/>
+        <frame image="elf-ability-effect-0002" number="2"/>
+        <frame image="elf-ability-effect-0003" number="3"/>
+        <frame image="elf-ability-effect-0004" number="4"/>
+        <frame image="elf-ability-effect-0005" number="5"/>
+        <frame image="elf-ability-effect-0006" number="6"/>
+        <frame image="elf-ability-effect-0007" number="7"/>
+        <frame image="elf-ability-effect-0008" number="8"/>
+        <frame image="elf-ability-effect-0009" number="9"/>
+        <frame image="elf-ability-effect-0010" number="10"/>
+        <frame image="elf-ability-effect-0011" number="11"/>
+        <frame image="elf-ability-effect-0012" number="12"/>
+        <frame image="elf-ability-effect-0013" number="13"/>
+    </animation>
+    <animation name="poison" aliasof="elf-ability"/>
     <animation name="fallen-ability">
         <frame image="fallen-ability-0001" number="1" count="2"/>
         <frame image="fallen-ability-0002" number="2" count="2"/>
         <frame image="fallen-ability-0003" number="3" count="4"/>
-	<frame image="fallen-ability-0004" number="4"/>
+		<frame image="fallen-ability-0004" number="4"/>
         <frame image="fallen-ability-0005" number="5"/>
     </animation>
     <animation name="fallen-ability-effect">
@@ -181,7 +197,7 @@
         <frame image="fallen-attack-0002" number="2"/>
         <frame image="fallen-attack-0003" number="3" count="3"/>
     </animation>
-     <animation name="fallen-attack-effect" aliasof="swordsman-attack-effect"/>
+    <animation name="fallen-attack-effect" aliasof="swordsman-attack-effect"/>
     <animation name="fallen-death">
     <frame image="fallen-death-0001" number="1" count="2"/>
 	   <frame image="fallen-death-0002" number="2" count="2"/>
