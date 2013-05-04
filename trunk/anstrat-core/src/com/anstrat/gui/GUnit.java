@@ -132,6 +132,8 @@ public class GUnit extends GObject {
 						sprite.flip(true, false);
 					}
 				
+					currentAnimation.setPlayMode(Animation.NORMAL);
+					
 					animationTime += Gdx.graphics.getDeltaTime()*Options.speedFactor;
 					if(!animationLooping[animationState.ordinal()] && currentAnimation.isAnimationFinished(animationTime)){
 						boolean defending = false;
