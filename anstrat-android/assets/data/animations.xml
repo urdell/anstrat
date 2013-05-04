@@ -178,12 +178,12 @@
         <frame image="elf-ability-effect-0013" number="13"/>
     </animation>
     <animation name="poison" aliasof="elf-ability"/>
-    <animation name="fallen-ability">
-        <frame image="fallen-ability-0001" number="1" count="1"/>
-        <frame image="fallen-ability-0002" number="2" count="1"/>
-        <frame image="fallen-ability-0003" number="3" count="1"/>
-		<frame image="fallen-ability-0004" number="4" count="1"/>
-        <frame image="fallen-ability-0005" number="5" count="2"/>
+    <animation name="fallen-ability" fps="12">
+        <frame image="fallen-ability-0001" number="1" count="2"/>
+        <frame image="fallen-ability-0002" number="2" count="2"/>
+        <frame image="fallen-ability-0003" number="3" count="2"/>
+		<frame image="fallen-ability-0004" number="4" count="4"/>
+        <frame image="fallen-ability-0005" number="5" count="8"/>
         <frame image="fallen-ability-0006" number="6"/>
         <frame image="fallen-ability-0007" number="7"/>
     </animation>
@@ -352,6 +352,12 @@
         <frame image="hawk-idle-0009" number="9"/>
         <frame image="hawk-idle-0010" number="10"/>
         <frame image="hawk-idle-0011" number="11"/>
+    </animation>
+    <animation name="hawk-ability" fps="12">
+        <frame image="hawk-ability-0001" number="1" count="3"/>
+        <frame image="hawk-ability-0002" number="2" count="2"/>
+        <frame image="hawk-ability-0003" number="3" count="2"/>
+        <frame image="hawk-ability-0004" number="4" count="2"/>
     </animation>
     <animation name="jotun-attack" fps="9">
         <frame image="jotun-attack-0001" number="1" count="3"/>

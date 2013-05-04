@@ -1,8 +1,8 @@
 package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.animation.KamikazeAnimation;
 import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -52,19 +52,15 @@ public class Kamikaze extends TargetedAbility {
 		targetUnit.resolveDeath();
 		source.resolveDeath();
 		
-		
 		CombatLog cl = new CombatLog();
 		cl.attacker = source;
 		cl.defender = targetUnit;
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
 		cl.attackDamage = damage;
-		Animation animation = new AttackAnimation(cl);
+		//Animation animation = new AttackAnimation(cl);
+		KamikazeAnimation animation = new KamikazeAnimation(source, targetUnit, damage);
 		GEngine.getInstance().animationHandler.enqueue(animation);
-		
-		Animation sourceDeathAnimation = new DeathAnimation(source, coordinate);
-		GEngine.getInstance().animationHandler.enqueue(sourceDeathAnimation);
-		
 	}
 	
 	@Override

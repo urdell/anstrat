@@ -2016,65 +2016,72 @@ swordsman-idle-0004
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0002
+swordsman-idle-0012
   rotate: false
   xy: 132, 522
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0011
+swordsman-idle-0002
   rotate: false
   xy: 262, 522
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0006
+swordsman-idle-0011
   rotate: false
   xy: 2, 652
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-attack-0002
+swordsman-idle-0006
   rotate: false
   xy: 132, 652
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0008
+swordsman-attack-0002
   rotate: false
   xy: 262, 652
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0010
+swordsman-idle-0008
   rotate: false
   xy: 2, 782
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-idle-0009
+swordsman-idle-0010
   rotate: false
   xy: 132, 782
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-attack-0003
+swordsman-idle-0009
   rotate: false
   xy: 262, 782
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-walk-0001
+swordsman-attack-0003
   rotate: false
   xy: 2, 912
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+swordsman-walk-0001
+  rotate: false
+  xy: 132, 912
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -4412,123 +4419,118 @@ valkyrie-ability-0001
   orig: 128, 128
   offset: 0, 0
   index: -1
-jotun-ability-0004
+hawk-ability-0002
   rotate: false
   xy: 262, 912
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0011
+jotun-ability-0004
   rotate: false
   xy: 2, 1042
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0001
+hawk-ability-0004
   rotate: false
   xy: 132, 1042
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0007
+swordsman-ability-0011
   rotate: false
   xy: 262, 1042
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-jotun-ability-0001
+hawk-ability-0001
   rotate: false
   xy: 2, 1172
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-fallen-ability-0004
+swordsman-ability-0001
   rotate: false
   xy: 132, 1172
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0004
+swordsman-ability-0007
   rotate: false
   xy: 262, 1172
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0008
+jotun-ability-0001
   rotate: false
   xy: 2, 1302
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-valkyrie-ability-0003
+fallen-ability-0004
   rotate: false
   xy: 132, 1302
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0002
+swordsman-ability-0004
   rotate: false
   xy: 262, 1302
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-swordsman-ability-0006
+swordsman-ability-0008
   rotate: false
   xy: 2, 1432
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-jotun-ability-0005
+valkyrie-ability-0003
   rotate: false
   xy: 132, 1432
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-
-abilities2.png
-format: Alpha
-filter: Linear,Linear
-repeat: none
-hawk
+hawk-ability-0003
   rotate: false
-  xy: 2, 2
+  xy: 262, 1432
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-hawk
+  index: -1
+swordsman-ability-0002
   rotate: false
-  xy: 2, 132
+  xy: 2, 1562
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
-hawk
+  index: -1
+swordsman-ability-0006
   rotate: false
-  xy: 2, 262
+  xy: 2, 1692
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-hawk
+  index: -1
+jotun-ability-0005
   rotate: false
-  xy: 2, 392
+  xy: 2, 1822
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
+  index: -1
 
 terrain1.png
 format: RGBA8888
