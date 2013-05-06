@@ -99,8 +99,14 @@ public class GUnit extends GObject {
 	}
 	
 	public static TextureRegion getUnitPortrait(UnitType type){
+		System.out.println(type.portrait);
 		return Assets.getTextureRegion(type.portrait);
 	}
+	
+	public static TextureRegion getUnitName(UnitType type){
+		return Assets.getTextureRegion(type.nameLabel);
+	}
+	
 	
 	public void setAlpha(float alpha){
 		this.alpha = alpha;

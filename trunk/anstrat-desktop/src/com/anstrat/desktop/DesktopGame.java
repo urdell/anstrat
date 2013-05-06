@@ -28,7 +28,7 @@ public class DesktopGame {
 	
 	public static void main(String[] args){
 		// Pack textures windows
-		//packTextures("../../anstrat-android/assets", false);	// Windows
+		//packTextures("../../anstrat-android/assets", false);	// Windows (does not work, should remain however according to ekiz)
 		//packTextures("../anstrat-android/assets", false);		// Linux
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

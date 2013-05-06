@@ -59,7 +59,11 @@ public class GameUI extends UI {
 	public Table bottomPanel;
 	private Button deselectButton;
 	private Label nameLabel;
-	private Image selectedImage;
+	private Image portraitFrame;
+	private Image unitTypeImage;
+	private APPieIcon apWheel;
+	private NumberIcon hpValue;
+	private Image unitNameLabel;
 	private Image tempCaptureImage;
 	
 	//Permanent panel
@@ -68,8 +72,8 @@ public class GameUI extends UI {
 	
 	//Unit version
 	private Table unitTable;
-	private ValueDisplay hpDisplay;
-	private ValueDisplay apDisplay;
+	//private ValueDisplay hpDisplay;
+	//private ValueDisplay apDisplay;
 	private Button[] abilityButtons = new Button[MAX_ABILITIES];
 	private Image[] effectImage = new Image[MAX_EFFECTS];
 	private Button captureButton;
@@ -148,8 +152,9 @@ public class GameUI extends UI {
         /**
         * UNIT PANEL
         */
-        hpDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_HP);
-		apDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_AP);
+        //hpValue = ;
+        //hpDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_HP);
+		//apDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_AP);
         tempCaptureImage = new Image(Assets.getTextureRegion("capture-button-blue"));
         captureButton = new Button(tempCaptureImage, Assets.SKIN.get("image", ButtonStyle.class));
         captureButton.addListener(new ClickListener() {
@@ -184,15 +189,16 @@ public class GameUI extends UI {
         	unitTable.addActor(effectImage[i]);
         }
         nameLabel = new Label("name",Assets.SKIN);
-        selectedImage = new Image(Assets.getTextureRegion("grid"));
-        selectedImage.addListener(new ClickListener() {
+        unitTypeImage = new Image(Assets.getTextureRegion("grid"));
+        unitTypeImage.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                 	if(GEngine.getInstance().selectionHandler.selectedUnit!=null)
                 		unitInfoPopup.show(GEngine.getInstance().selectionHandler.selectedUnit);
                 }
             } );
-        
+        unitNameLabel = new Image(Assets.getTextureRegion("grid"));
+        portraitFrame = new Image(Assets.getTextureRegion("grid"));
         addActor(bottomPanel);
         
         unitInfoPopup = new UnitInfoPopup();
@@ -272,13 +278,19 @@ public class GameUI extends UI {
         Table table1 = new Table();
         table1.defaults().top().left();
         table1.row();
-        table1.add(nameLabel).height(bph/6f);
+        table1.add(unitTypeImage).size(bph/1.4f);
+        table1.add(apWheel).height(bph/3f);
+        
         table1.row();
-        table1.add(selectedImage).size(bph/2f);
+        table1.add(unitNameLabel).height(bph/6f);
+        table1.add(hpValue).height(bph/6f);
+        
+        /*
         table1.row();
         table1.add(hpDisplay);
         table1.row();
         table1.add(apDisplay);
+        */
         
         // Right table, effects + abilities
         Table table2 = new Table();
@@ -304,7 +316,8 @@ public class GameUI extends UI {
 	 */
 	public void showUnitType(UnitType unit){
 		unitTable.setVisible(true);
-		selectedImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit)));
+		unitTypeImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit)));
+		unitNameLabel.setDrawable(new TextureRegionDrawable(GUnit.getUnitName(unit)));
 		nameLabel.setText(unit.name);
 		
 		for(Image i : effectImage){
@@ -328,16 +341,21 @@ public class GameUI extends UI {
 			return;
 		}
 		unitTable.setVisible(true);
-		selectedImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit.getUnitType())));
+		unitTypeImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit.getUnitType())));
 		if(State.activeState.currentPlayerId%2==0){
 			tempCaptureImage.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("capture-button-blue")));
 		}
 		else{
 			tempCaptureImage.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("capture-button-red")));	
 		}
+		unitNameLabel.setDrawable(new TextureRegionDrawable(GUnit.getUnitName(unit.getUnitType())));
+		apWheel = new APPieIcon(unit.getMaxAP(),unit.currentAP);
+		hpValue = new NumberIcon(unit.currentHP, 30f, Color.GREEN);
 		nameLabel.setText(unit.getName());
+		/*
 		apDisplay.update(unit);
 		hpDisplay.update(unit);
+		*/
 		for(Image i : effectImage){
 			i.setVisible(false);
 		}
