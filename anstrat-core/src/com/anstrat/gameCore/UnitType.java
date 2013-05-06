@@ -42,6 +42,7 @@ public enum UnitType {
 	
 	public String idleImage;
 	public String portrait;
+	public String nameLabel;
 	public float movementSpeed;
 	
 	// HP
@@ -69,6 +70,8 @@ public enum UnitType {
 	
 	// Terrain type penalties
 	public transient final int[] terrainTypePenalties;
+
+	
 	
 	private UnitType(String name){
 		this.name = name;
@@ -144,6 +147,7 @@ public enum UnitType {
 		type.portrait = element.get("portrait", type.portrait);
 		type.swingSfx = element.get("swingSfx", "swinging");
 		type.impactSfx = element.get("impactSfx", "impacting");
+		type.nameLabel = "name-"+name.toLowerCase().replaceAll("\\s","");
 		
 		// Terrain type penalties, attributes/elements starting with 'terrainPenalty', e.g 'terrainPenaltySnow'
 		for(TerrainType t : TerrainType.values()){
