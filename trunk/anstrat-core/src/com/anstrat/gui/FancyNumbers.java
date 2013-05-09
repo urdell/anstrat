@@ -44,7 +44,7 @@ public class FancyNumbers {
 	 * @param x
 	 * @param y
 	 * @param size
-	 * @param flipped
+	 * @param fli	pped
 	 * @param batch
 	 */
 	public static void drawNumber(int number, float x, float y, float size, boolean flipped, SpriteBatch batch){

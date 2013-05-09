@@ -94,11 +94,11 @@ public class ActionHandler {
 					gEngine.highlighter.highlightTile(unit.tileCoordinate, false);
 				}
 				else if(unit.ownerId != State.activeState.currentPlayerId && selectedUnit.ownerId==State.activeState.currentPlayerId){
-					Command c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
+					AttackCommand c = new AttackCommand(gEngine.selectionHandler.selectedUnit, unit);
 					if(c.isAllowed())
 						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					else {
-						gEngine.animationHandler.runParalell(new FullscreenTextAnimation("Can not attack this"));
+						gEngine.animationHandler.runParalell(new FullscreenTextAnimation(c.failReason()));
 						
 					}
 				}else{

@@ -55,6 +55,9 @@ public class GameUI extends UI {
 	private ValueDisplay goldDisplay, manaDisplay;
 	private Label turnDisplay;
 	
+	//Top magic bar
+	private MagicBart3 mbar;
+	
 	//Bottom panel
 	public Table bottomPanel;
 	private Button deselectButton;
@@ -112,6 +115,10 @@ public class GameUI extends UI {
         
         addActor(topPanel);
         
+        /**
+         * MAGICKA
+         */
+        mbar = new MagicBart3();
         
         /**
          * BOTTOM PANEL
@@ -441,6 +448,12 @@ public class GameUI extends UI {
 		}
 		
 		(openAbilityPopup = abilityPopups[god]).show();*/
+	}
+	
+	@Override
+	public void draw(){
+		super.draw();
+		mbar.draw();
 	}
 	
 	/**
