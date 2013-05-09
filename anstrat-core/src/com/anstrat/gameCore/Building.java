@@ -44,7 +44,7 @@ public class Building implements Serializable {
 		case TYPE_CASTLE:
 			typeName = "Capital";
 			goldIncome = 12;
-			manaIncome = 10;
+			manaIncome = 1;
 			captureCost = 3;
 			break;
 		default:

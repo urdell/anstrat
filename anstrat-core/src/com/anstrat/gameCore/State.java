@@ -30,7 +30,7 @@ public class State implements Serializable{
 	private static final long serialVersionUID = 2L;
 	
 	public static final int MAX_GOLD = 999;
-	public static final int MAX_MANA = 50;
+	public static final int MAX_MANA = 6;
 	
 	public static State activeState;
 	

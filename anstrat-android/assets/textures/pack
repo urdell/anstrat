@@ -2880,65 +2880,72 @@ background
   orig: 256, 256
   offset: 0, 0
   index: -1
-border-window.9
+portraitFrame
   rotate: false
   xy: 1850, 2
+  size: 175, 116
+  orig: 175, 116
+  offset: 0, 0
+  index: -1
+border-window.9
+  rotate: false
+  xy: 1850, 120
   size: 130, 141
   orig: 130, 141
   offset: 0, 0
   index: -1
 border-window-white
   rotate: false
-  xy: 1850, 145
+  xy: 1850, 263
   size: 128, 139
   orig: 128, 139
   offset: 0, 0
   index: -1
 border-window
   rotate: false
-  xy: 1850, 286
+  xy: 1850, 404
   size: 128, 139
   orig: 128, 139
   offset: 0, 0
   index: -1
 border-thin.9
   rotate: false
-  xy: 1850, 427
+  xy: 1850, 545
   size: 142, 124
   orig: 142, 124
   offset: 0, 0
   index: -1
 border-thick.9
   rotate: false
-  xy: 1850, 553
+  xy: 1850, 671
   size: 151, 115
   orig: 151, 115
   offset: 0, 0
   index: -1
 border-thin-white
   rotate: false
-  xy: 1850, 670
+  xy: 1850, 788
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
 border-thin
   rotate: false
-  xy: 1850, 794
+  xy: 1845, 1028
   size: 140, 122
   orig: 140, 122
   offset: 0, 0
   index: -1
 border-thick
   rotate: false
-  xy: 1845, 1028
+  xy: 1850, 912
   size: 149, 113
   orig: 149, 113
   offset: 0, 0
   index: -1
 border-thick-white
   rotate: false
-  xy: 1845, 1143
+  xy: 1845, 1152
   size: 149, 113
   orig: 149, 113
   offset: 0, 0
@@ -2978,60 +2985,137 @@ fadetoblack
   orig: 128, 128
   offset: 0, 0
   index: -1
-flag-inplace-black-0002
+magic-bar-2
+  rotate: false
+  xy: 2, 1936
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-bar-5
+  rotate: false
+  xy: 2, 1969
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-bar-6
+  rotate: false
+  xy: 2, 2002
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-bar-1
+  rotate: false
+  xy: 1340, 1211
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-bar-4
+  rotate: false
+  xy: 1132, 1957
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-bar-empty
+  rotate: false
+  xy: 1132, 1990
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+magic-two
   rotate: false
   xy: 516, 1028
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-movement-line-circle
+magic-three
   rotate: false
   xy: 516, 1094
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-white-flag
+magic-three-glowing
   rotate: false
   xy: 516, 1160
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0004
+magic-two-glowing
   rotate: false
   xy: 516, 1226
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-rightArrow
+flag-inplace-black-0002
   rotate: false
   xy: 516, 1292
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0001
+movement-line-circle
   rotate: false
   xy: 516, 1358
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flag-inplace-black-0003
+white-flag
   rotate: false
   xy: 516, 1424
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-white-line
+magic-one
   rotate: false
-  xy: 2, 1936
-  size: 578, 5
-  orig: 578, 5
+  xy: 516, 1542
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-black-0004
+  rotate: false
+  xy: 516, 1608
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rightArrow
+  rotate: false
+  xy: 516, 1674
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-black-0001
+  rotate: false
+  xy: 516, 1740
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flag-inplace-black-0003
+  rotate: false
+  xy: 516, 1806
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+magic-one-glowing
+  rotate: false
+  xy: 399, 1936
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 sound-on
@@ -3057,7 +3141,7 @@ arrow
   index: -1
 white-line-hard
   rotate: false
-  xy: 2, 1943
+  xy: 2, 2035
   size: 240, 3
   orig: 240, 3
   offset: 0, 0
@@ -3247,6 +3331,109 @@ BottomSmallPanel
   xy: 516, 1028
   size: 480, 120
   orig: 480, 120
+  offset: 0, 0
+  index: -1
+magic-bar-3
+  rotate: false
+  xy: 2, 1160
+  size: 395, 31
+  orig: 395, 31
+  offset: 0, 0
+  index: -1
+white-line
+  rotate: false
+  xy: 399, 1160
+  size: 578, 5
+  orig: 578, 5
+  offset: 0, 0
+  index: -1
+
+labels1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+name-troll
+  rotate: false
+  xy: 2, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-jotun
+  rotate: false
+  xy: 2, 36
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-hawk
+  rotate: false
+  xy: 2, 70
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-wolf
+  rotate: false
+  xy: 164, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-shaman
+  rotate: false
+  xy: 164, 36
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-swordsman
+  rotate: false
+  xy: 164, 70
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-axethrower
+  rotate: false
+  xy: 326, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-berserker
+  rotate: false
+  xy: 326, 36
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-goblinshaman
+  rotate: false
+  xy: 326, 70
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-fallenwarrior
+  rotate: false
+  xy: 488, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-darkelf
+  rotate: false
+  xy: 488, 36
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name-valkyrie
+  rotate: false
+  xy: 488, 70
+  size: 160, 32
+  orig: 160, 32
   offset: 0, 0
   index: -1
 
@@ -3441,184 +3628,205 @@ spear-button
   orig: 128, 128
   offset: 0, 0
   index: -1
-poison-button
+magic-button-three
   rotate: false
   xy: 262, 390
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-open-button
+magic-button-two
   rotate: false
   xy: 392, 390
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-test
+poison-button
   rotate: false
   xy: 522, 390
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-empty-button
+open-button
   rotate: false
   xy: 652, 390
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-kamikaze-button
+test
   rotate: false
   xy: 782, 390
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-help-button
+empty-button
   rotate: false
   xy: 2, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-lifesteal-button
+kamikaze-button
   rotate: false
   xy: 132, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-shield-button
+help-button
   rotate: false
   xy: 262, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-chat-button
+lifesteal-button
   rotate: false
   xy: 392, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-magic-button
+shield-button
   rotate: false
   xy: 522, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-ap-heal-button
+chat-button
   rotate: false
   xy: 652, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-but-button-gray
+magic-button
   rotate: false
   xy: 782, 520
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-heal-button-active
+ap-heal-button
   rotate: false
   xy: 2, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-knockback-button
+but-button-gray
   rotate: false
   xy: 132, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-cancel
+heal-button-active
   rotate: false
   xy: 262, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-capture-button-red
+knockback-button
   rotate: false
   xy: 392, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-buy
+magic-button-one
   rotate: false
   xy: 522, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-capture-button-blue
+cancel
   rotate: false
   xy: 652, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-berserk-button-gray
+capture-button-red
   rotate: false
   xy: 782, 650
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-heal-button-gray
+buy
   rotate: false
   xy: 2, 780
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building-button
+capture-button-blue
   rotate: false
   xy: 132, 780
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-terrain-button
+berserk-button-gray
   rotate: false
   xy: 262, 780
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-button-pressed
+heal-button-gray
   rotate: false
   xy: 392, 780
-  size: 439, 111
-  orig: 439, 111
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-button-unavailable
+building-button
+  rotate: false
+  xy: 522, 780
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+terrain-button
+  rotate: false
+  xy: 652, 780
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+button-pressed
   rotate: false
   xy: 2, 910
   size: 439, 111
   orig: 439, 111
   offset: 0, 0
   index: -1
-button-available
+button-unavailable
   rotate: false
   xy: 443, 910
   size: 439, 111
   orig: 439, 111
   offset: 0, 0
   index: -1
-button-medium
+button-available
   rotate: false
   xy: 2, 1023
+  size: 439, 111
+  orig: 439, 111
+  offset: 0, 0
+  index: -1
+button-medium
+  rotate: false
+  xy: 443, 1023
   size: 254, 111
   orig: 254, 111
   offset: 0, 0
@@ -4019,37 +4227,100 @@ buildings1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-runestone-blue
+portal-effect-blue-1
   rotate: false
   xy: 2, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-castle
+portal-effect-blue-4
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+runestone-blue
+  rotate: false
+  xy: 518, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-3
   rotate: false
   xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-runestone-gray
+castle
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-4
+  rotate: false
+  xy: 518, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-2
   rotate: false
   xy: 2, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-runestone-red
+portal-effect-blue-2
+  rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-blue-3
+  rotate: false
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+runestone-gray
   rotate: false
   xy: 2, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-village
+runestone-red
+  rotate: false
+  xy: 260, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-1
+  rotate: false
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-base
   rotate: false
   xy: 2, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+village
+  rotate: false
+  xy: 2, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -4531,6 +4802,39 @@ jotun-ability-0005
   orig: 128, 128
   offset: 0, 0
   index: -1
+
+abilities2.png
+format: Alpha
+filter: Linear,Linear
+repeat: none
+hawk
+  rotate: false
+  xy: 2, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+hawk
+  rotate: false
+  xy: 2, 132
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+hawk
+  rotate: false
+  xy: 2, 262
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+hawk
+  rotate: false
+  xy: 2, 392
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
 
 terrain1.png
 format: RGBA8888
