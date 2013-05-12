@@ -147,7 +147,7 @@ public class MapEditorActionHandler {
 		int contr = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
 		
 		// make sure both castles don't have the same owner by switching
-		if(map.getPlayersCastle(contr) !=null && map.buildingList.containsKey(map.getPlayersCastle(contr).id)){
+		if(b.type == Building.TYPE_CASTLE && map.getPlayersCastle(contr) !=null && map.buildingList.containsKey(map.getPlayersCastle(contr).id)){
 			map.getPlayersCastle(contr).controllerId = contr==1?0:1;
 		}
 		
