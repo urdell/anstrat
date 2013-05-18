@@ -80,7 +80,7 @@ public class MapEditor implements Screen {
 		
 		gBuildings.clear();
 		for(Building b: map.buildingList.values()) {
-			gBuildings.put(b.id, new GBuilding(b,gMap));
+			gBuildings.put(b.id, new GBuilding(b,gMap,0));
 			if (b.type == Building.TYPE_CASTLE) {
 				if (b.controllerId == Player.PLAYER_1_ID)
 					nextPlayerToRecieveCastle = Player.PLAYER_2_ID;

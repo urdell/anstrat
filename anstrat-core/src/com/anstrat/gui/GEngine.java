@@ -144,7 +144,7 @@ public class GEngine implements Screen{
 			gUnits.put(u.id, new GUnit(u));
 		}	
 		for(Building b : state.map.buildingList.values()){
-			gBuildings.put(b.id,new GBuilding(b,map));
+			gBuildings.put(b.id,new GBuilding(b,map,b.controllerId==-1?0:State.activeState.players[b.controllerId].team));
 		}
 		
 		//camera.lookAt(camera.position.x+100,camera.position.y, camera.position.z);
