@@ -66,7 +66,9 @@ public final class CreationHandler {
 		Building building = new Building(buildingType, state.map.nextBuildingId++, -1);
 		building.tileCoordinate = state.map.tiles[coordinate.x][coordinate.y].coordinates;
 		state.map.setBuilding(coordinate, building);
-		GEngine.getInstance().gBuildings.put(building.id,new GBuilding(building,GEngine.getInstance().getMap()));
+		GEngine.getInstance().gBuildings.put(building.id,new GBuilding(building,
+				GEngine.getInstance().getMap(),
+				state.players[state.currentPlayerId].team));
 		return building;
 	}
 }

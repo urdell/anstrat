@@ -28,6 +28,7 @@ public enum TerrainType {
 	
 	//Buildings
 	CASTLE("Castle", 1, "castle"),
+	PORTAL("Portal", 1, "portal-base"),
 	VILLAGE("Village", 1, "village"),
 	RUNE("Runestone", 1, "runestone-red");
 	

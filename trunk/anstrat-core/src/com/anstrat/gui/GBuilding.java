@@ -38,17 +38,23 @@ public class GBuilding extends GObject {
 	 * Initialized at correct position
 	 * @param unit
 	 */
-	public GBuilding(Building building, GMap map)
+	public GBuilding(Building building, GMap map, int team)
 	{
 		this.building = building;
 		this.lastOwner = building.controllerId;
 		
-		sprite = new Sprite(getTextureRegion(building.type));
+		sprite = new Sprite(getTextureRegion(building.type, team));
 		
 		if(building.type == Building.TYPE_CASTLE) {
 			sprite.setColor(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 0);
-			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.CASTLE;
-			map.getTile(building.tileCoordinate).setTexture(TerrainType.CASTLE);
+			if(team==0){
+				map.getTile(building.tileCoordinate).tile.terrain = TerrainType.CASTLE;
+				map.getTile(building.tileCoordinate).setTexture(TerrainType.CASTLE);
+			}
+			else{
+				map.getTile(building.tileCoordinate).tile.terrain = TerrainType.PORTAL;
+				map.getTile(building.tileCoordinate).setTexture(TerrainType.PORTAL);
+			}
 			
 			flagScale = FLAG_SCALE_CASTLE;
 		}
@@ -70,12 +76,17 @@ public class GBuilding extends GObject {
 		setPosition(screenPos);
 	}
 	
-	public static TextureRegion getTextureRegion(int type){
+	public static TextureRegion getTextureRegion(int type, int team){
 		switch(type){
 		case Building.TYPE_RUNE:
 			return Assets.getTextureRegion("runestone-gray");
 		case Building.TYPE_CASTLE:
-			return Assets.getTextureRegion("castle");
+			System.out.println("Making castle for team "+team+"!");
+			if(team==0)
+				return Assets.getTextureRegion("castle");
+			else{
+				return Assets.getTextureRegion("portal-base");
+			}
 		case Building.TYPE_VILLAGE:
 			return Assets.getTextureRegion("village");
 		default:
@@ -85,7 +96,7 @@ public class GBuilding extends GObject {
 	
 	public void render(SpriteBatch batch, float delta)
 	{
-		sprite.draw(batch);
+		//sprite.draw(batch);
 		
 		// Check if building has changed owner
 		if(lastOwner != building.controllerId){

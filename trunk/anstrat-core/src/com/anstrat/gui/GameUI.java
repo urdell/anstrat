@@ -407,6 +407,44 @@ public class GameUI extends UI {
 		goldDisplay.update(null);
 		manaDisplay.update(null);
 		showUnit(lastShownUnit);
+		
+		int ma0n = State.activeState.players[State.activeState.currentPlayerId].mana;
+		if(ma0n >= 6){
+			spellButton = new Button(new Image(Assets.getTextureRegion("magic-button-three")), Assets.SKIN.get("image", ButtonStyle.class));
+	        spellButton.addListener(new ClickListener() {
+	            @Override
+	            public void clicked(InputEvent event, float x, float y) {
+	            	showAbilityPopup();
+	            }
+	        } );
+		}
+		else if(ma0n >= 4){
+			spellButton = new Button(new Image(Assets.getTextureRegion("magic-button-two")), Assets.SKIN.get("image", ButtonStyle.class));
+	        spellButton.addListener(new ClickListener() {
+	            @Override
+	            public void clicked(InputEvent event, float x, float y) {
+	            	showAbilityPopup();
+	            }
+	        } );
+		}
+		else if(ma0n >= 2){
+			spellButton = new Button(new Image(Assets.getTextureRegion("magic-button-one")), Assets.SKIN.get("image", ButtonStyle.class));
+	        spellButton.addListener(new ClickListener() {
+	            @Override
+	            public void clicked(InputEvent event, float x, float y) {
+	            	showAbilityPopup();
+	            }
+	        } );
+		}
+		else{
+			spellButton = new Button(new Image(Assets.getTextureRegion("magic-button")), Assets.SKIN.get("image", ButtonStyle.class));
+	        spellButton.addListener(new ClickListener() {
+	            @Override
+	            public void clicked(InputEvent event, float x, float y) {
+	            	showAbilityPopup();
+	            }
+	        } );
+		}
 	}
 	
 	/**

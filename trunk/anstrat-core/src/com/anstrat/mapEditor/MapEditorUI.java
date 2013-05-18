@@ -427,7 +427,7 @@ public class MapEditorUI extends UI {
 	   		buildingsToggle.size(size, size);
  		}
  		else{
-       		btImg.setDrawable(new TextureRegionDrawable(GBuilding.getTextureRegion((Integer)MapEditor.getInstance().actionHandler.selected)));
+       		btImg.setDrawable(new TextureRegionDrawable(GBuilding.getTextureRegion((Integer)MapEditor.getInstance().actionHandler.selected,0)));
        		ttImg.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("terrain-button")));
 	   		terrainToggle.size(size, size);
 	   		buildingsToggle.size(bsize, bsize);

@@ -109,7 +109,7 @@ public class MapEditorActionHandler {
 			Building b = new Building(type, id, controller);
 				
 			mapEd.map.setBuilding(gTile.tile.coordinates, b);
-			mapEd.gBuildings.put(b.id, new GBuilding(b,mapEd.gMap));
+			mapEd.gBuildings.put(b.id, new GBuilding(b,mapEd.gMap,0));
 		}
 	}
 	
