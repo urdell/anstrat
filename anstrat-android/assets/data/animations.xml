@@ -443,6 +443,12 @@
         <frame image="movement-line-arrows-0008" number="8"/>
         <frame image="movement-line-arrows-0009" number="9"/>
     </animation> 
+    <animation name="portal-effect" fps="6">
+        <frame image="portal-effect-0001" number="1"/>
+        <frame image="portal-effect-0002" number="2"/>
+        <frame image="portal-effect-0003" number="3"/>
+        <frame image="portal-effect-0004" number="4"/>
+    </animation>
     <animation name="shaman-attack" fps="9">
         <frame image="shaman-attack-0001" number="1" count="10"/>
         <frame image="shaman-attack-0002" number="2"/>

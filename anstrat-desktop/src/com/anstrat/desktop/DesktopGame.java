@@ -27,7 +27,7 @@ public class DesktopGame {
 	public static final Dimension PHONE = new Dimension(800, 480);
 	
 	public static void main(String[] args){
-		// Pack textures windows
+		//Pack textures windows
 		//packTextures("../../anstrat-android/assets", false);	// Windows (does not work, should remain however according to ekiz)
 		//packTextures("../anstrat-android/assets", false);		// Linux
 		
