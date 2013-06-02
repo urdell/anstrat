@@ -8,6 +8,7 @@ import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.gameCore.playerAbilities.CometStrike;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
 import com.anstrat.guiComponent.ColorTable;
@@ -38,13 +39,14 @@ public class MagicPopup extends Popup {
 	private UnitType[] types;
 	private ColorTable unitTable;
 
-	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
+	private static final ClickListener MAGIC_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
-			BuyUnitPopup popup = (BuyUnitPopup) Popup.getCurrentPopup();
-			UnitType type = UnitType.DARK_ELF;//popup.card.type;
-			Gdx.app.log("BuyUnitPopup", String.format("User wants to buy '%s'.", type.name));
-			GEngine.getInstance().selectionHandler.selectSpawn(type);
+			MagicPopup popup = (MagicPopup) Popup.getCurrentPopup();
+			
+			Player player = State.activeState.getCurrentPlayer();
+			GEngine.getInstance().selectionHandler.selectPlayerAbility(
+					new CometStrike(player));
 			popup.close();
 		}
 	};
@@ -54,7 +56,7 @@ public class MagicPopup extends Popup {
 		this.types = types;
 		this.drawOverlay = false;
 
-		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", BUY_BUTTON_LISTENER);
+		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("Ok-button"), "image", MAGIC_LISTENER);
 		Button buttonCancel = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 
 		units = new Button[6];

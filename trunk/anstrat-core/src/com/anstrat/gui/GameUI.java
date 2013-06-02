@@ -11,6 +11,7 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.ValueDisplay;
@@ -480,7 +481,10 @@ public class GameUI extends UI {
 	}
 
 	public void showAbilityPopup(){		
-		(new MagicPopup(UnitType.TEAMS[GameInstance.activeGame.getUserPlayer().team])).show();
+		//(new MagicPopup(UnitType.TEAMS[GameInstance.activeGame.getUserPlayer().team])).show();
+		new AbilityPopup(PlayerAbilityType.ODINS_BLESSING,
+				PlayerAbilityType.SWAP,
+				PlayerAbilityType.COMETSTRIKE).show();
 	}
 	
 	@Override

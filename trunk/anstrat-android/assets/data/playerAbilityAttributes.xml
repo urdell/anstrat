@@ -3,13 +3,13 @@
 	<PlayerAbilityGod god="Odin">
 		<PlayerAbility>
 			<name>Glass Cannon</name>
-			<manacost>10</manacost>
+			<manacost>1</manacost>
 			<description>Odin increases the damage of target unit by 30%, but also increases the damage taken by 30%.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Odin's Blessing</name>
-			<manacost>40</manacost>
-			<description>Odin blesses all your units. They restore 3 AP.</description>
+			<manacost>2</manacost>
+			<description>Odin blesses all your units, restoring 3 AP for each of them.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Hugin and Munin</name>
@@ -19,17 +19,17 @@
 	<PlayerAbilityGod god="Thor">
 		<PlayerAbility>
 			<name>Thunderbolt</name>
-			<manacost>15</manacost>
+			<manacost>1</manacost>
 			<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit dealing 8 damage. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Comet Strike</name>
-			<manacost>40</manacost>
+			<manacost>6</manacost>
 			<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
-			<manacost>10</manacost>
+			<manacost>1</manacost>
 			<description>Target unit is blessed with Thors rage and has increased damage</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
@@ -53,7 +53,7 @@
 	<PlayerAbilityGod god="Loki">	
 		<PlayerAbility>
 			<name>Swap</name>
-			<manacost>20</manacost>
+			<manacost>4</manacost>
 			<description>Loki swaps the position of 2 target friendly units</description>
 		</PlayerAbility>
 		<PlayerAbility>
