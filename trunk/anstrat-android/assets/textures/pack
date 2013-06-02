@@ -4255,98 +4255,42 @@ buildings1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-portal-effect-blue-1
+portal-effect-0004
   rotate: false
   xy: 2, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-effect-blue-4
-  rotate: false
-  xy: 260, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-red-3
-  rotate: false
-  xy: 518, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-castle
+portal-effect-0003
   rotate: false
   xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-effect-red-4
-  rotate: false
-  xy: 260, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-2
-  rotate: false
-  xy: 518, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-red-2
+castle
   rotate: false
   xy: 2, 518
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-effect-blue-2
-  rotate: false
-  xy: 260, 518
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-blue-3
-  rotate: false
-  xy: 518, 518
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-3
+portal-effect-0002
   rotate: false
   xy: 2, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-effect-red-1
-  rotate: false
-  xy: 260, 776
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-4
-  rotate: false
-  xy: 518, 776
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-portal-effect-1
+portal-base
   rotate: false
   xy: 2, 1034
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-base
+portal-effect-0001
   rotate: false
   xy: 2, 1292
   size: 256, 256

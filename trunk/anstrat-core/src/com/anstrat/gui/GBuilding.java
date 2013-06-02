@@ -19,11 +19,14 @@ public class GBuilding extends GObject {
 	private Sprite sprite;
 	private Vector2 screenPos;
 	private float flagAnimationStateTime;
+	private com.badlogic.gdx.graphics.g2d.Animation portalAnimation = null;
 	
 	private float flagX, flagY;
 	private float flagScale = 1f;
 	private static final float FLAG_SCALE_CASTLE = .85f;
 	private static final float FLAG_SCALE_VILLAGE = .5f;
+	private boolean portal = false;
+	private float portalScale = 0.5f;
 	
 	/**
 	 * @return the screenPos
@@ -52,6 +55,8 @@ public class GBuilding extends GObject {
 				map.getTile(building.tileCoordinate).setTexture(TerrainType.CASTLE);
 			}
 			else{
+				portalAnimation = Assets.getAnimation("portal-effect");
+				portal = true;
 				map.getTile(building.tileCoordinate).tile.terrain = TerrainType.PORTAL;
 				map.getTile(building.tileCoordinate).setTexture(TerrainType.PORTAL);
 			}
@@ -97,6 +102,15 @@ public class GBuilding extends GObject {
 	public void render(SpriteBatch batch, float delta)
 	{
 		//sprite.draw(batch);
+		flagAnimationStateTime += delta;
+		
+		if(portal){
+			TextureRegion tr = portalAnimation.getKeyFrame(flagAnimationStateTime, true);
+			batch.draw(tr, sprite.getX() + tr.getRegionWidth()*(1f-portalScale) / 2f, 
+					sprite.getY() + tr.getRegionHeight()*(1f-portalScale) / 2f, 
+					tr.getRegionWidth() * portalScale, 
+					tr.getRegionHeight() * portalScale);
+		}
 		
 		// Check if building has changed owner
 		if(lastOwner != building.controllerId){
@@ -105,7 +119,7 @@ public class GBuilding extends GObject {
 		
 		// Render flag (if the village is owned by a player)
 		if(lastOwner != -1){
-			flagAnimationStateTime += delta;
+			
 			
 			// Player0 = blue, Player0 = red
 			TextureRegion region = Assets.getAnimation(lastOwner == 0 ? "flag-inplace-blue" : "flag-inplace-red").getKeyFrame(flagAnimationStateTime, true);
