@@ -299,8 +299,8 @@ public class GameUI extends UI {
 		//table1.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("portraitFrame"))));
 
         Cell portraitCell = table1.add(portraitFrame);
-        //Cell wid = portraitCell.pad(bph/15f);
-		//wid.setWidget(table11);
+        
+		//portraitCell.setWidget(table11);
 
 		table1.row();
 		table1.add(unitNameLabel).align(Align.left);
