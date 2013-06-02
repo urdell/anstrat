@@ -10,6 +10,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GameUI;
 
+@Deprecated
 public class CaptureCommand extends Command{
 	
 	private static final long serialVersionUID = 1L;
@@ -76,4 +77,3 @@ public class CaptureCommand extends Command{
 		return super.hashCode() + buildingID * 23 + playerID * 7 + unitID * 31;
 	}
 }
-

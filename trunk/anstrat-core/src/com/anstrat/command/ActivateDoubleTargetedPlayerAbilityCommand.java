@@ -2,12 +2,10 @@ package com.anstrat.command;
 
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
-import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
-import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.TileCoordinate;
 
 public class ActivateDoubleTargetedPlayerAbilityCommand extends Command {
