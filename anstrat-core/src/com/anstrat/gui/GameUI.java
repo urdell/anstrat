@@ -38,6 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.esotericsoftware.tablelayout.Cell;
 
 public class GameUI extends UI {
 	
@@ -281,18 +282,34 @@ public class GameUI extends UI {
 		float bph = Main.percentWidth * 30;
         
         unitTable.clear();
-        unitTable.row().expand().pad(2f).top();
+        unitTable.row().expand().top();
         
         // Left table, portrait, name, ap, health
+        
         Table table1 = new Table();
         table1.defaults().top().left();
-        table1.row();
-        table1.add(unitTypeImage).size(bph/1.4f);
-        table1.add(apWheel).height(bph/3f);
         
-        table1.row();
-        table1.add(unitNameLabel).height(bph/6f);
-        table1.add(hpValue).height(bph/6f);
+		//float pad = -Assets.NinePatchUtils.getTopLeft(Assets.getTextureRegion("portraitFrame"), 15, 15, 15, 15).getRegionHeight()/2f;
+        
+		Cell portraitCell = table1.add(portraitFrame);
+		//portraitCell.
+		//table1.addActor(unitTypeImage);
+		
+		Table portraitTable = new Table();
+		//table1.add(unitTypeImage).align(Align.left);
+		//table1.add(apWheel);
+		table1.row();
+		table1.add(unitNameLabel).align(Align.left);
+		//table1.add(hpValue);
+		
+        //table1.row();
+        //table1.add(portraitFrame);
+        //table1.add(unitTypeImage).size(bph/1.4f);
+        //table1.add(apWheel).height(bph/3f);
+        
+        //table1.row();
+        //table1.add(unitNameLabel).height(bph/6f);
+        //table1.add(hpValue).height(bph/6f);
         
         /*
         table1.row();
@@ -327,6 +344,7 @@ public class GameUI extends UI {
 		unitTable.setVisible(true);
 		unitTypeImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit)));
 		unitNameLabel.setDrawable(new TextureRegionDrawable(GUnit.getUnitName(unit)));
+		portraitFrame.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("portraitFrame")));
 		nameLabel.setText(unit.name);
 		
 		for(Image i : effectImage){
@@ -358,6 +376,7 @@ public class GameUI extends UI {
 			tempCaptureImage.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("capture-button-red")));	
 		}
 		unitNameLabel.setDrawable(new TextureRegionDrawable(GUnit.getUnitName(unit.getUnitType())));
+		portraitFrame.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("portraitFrame")));
 		apWheel = new APPieIcon(unit.getMaxAP(),unit.currentAP);
 		hpValue = new NumberIcon(unit.currentHP, 30f, Color.GREEN);
 		nameLabel.setText(unit.getName());
