@@ -1,10 +1,9 @@
 package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.AttackAnimation;
-import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.LeapAttackAnimation;
-import com.anstrat.animation.MoveAnimation;
+import com.anstrat.animation.UberTextAnimation;
+import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.Fog;
@@ -64,10 +63,26 @@ public class LeapAttack extends TargetedAbility{
 			int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 			targetUnit.currentHP -= damage;
 			targetUnit.resolveDeath();
-			source.tileCoordinate = Knockback.getKnockBackCoordinate(source, targetUnit);
+			TileCoordinate tc = Knockback.getKnockBackCoordinate(source, targetUnit);
+			source.tileCoordinate = tc;
 			Animation leapAnimation = new LeapAttackAnimation(source, targetUnit, damage, jumpingFrom, source.tileCoordinate);
 			GEngine.getInstance().animationHandler.enqueue(leapAnimation);
 			GEngine.getInstance().getUnit(targetUnit).updateHealthbar();
+			
+			Building buildbob = StateUtils.getBuildingByTile(tc);
+			int curid = State.activeState.currentPlayerId;
+			if(	buildbob!=null && buildbob.controllerId != curid) {
+				if(buildbob.type == Building.TYPE_VILLAGE){
+					buildbob.controllerId = curid;
+					UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+				}
+				else if(buildbob.type == Building.TYPE_CASTLE){
+					UberTextAnimation utah = new UberTextAnimation(tc, "capturing-base-player");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+					State.activeState.baseCaps[curid] = State.activeState.turnNr;
+				}
+			}
 			
 			Fog.recalculateFog(source.ownerId, State.activeState);
 			

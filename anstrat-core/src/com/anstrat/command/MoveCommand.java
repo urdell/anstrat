@@ -1,6 +1,8 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.MoveAnimation;
+import com.anstrat.animation.UberTextAnimation;
+import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -45,10 +47,28 @@ public class MoveCommand extends Command {
 		
 		for(int i=0;i<path.path.size();i++){
 			TileCoordinate tc = path.path.get(i);
+			Building buildbob = StateUtils.getBuildingByTile(tc);
+			int curid = State.activeState.currentPlayerId;
+			if(	buildbob!=null && 
+				buildbob.type != Building.TYPE_CASTLE && 
+				buildbob.controllerId != curid){
+				buildbob.controllerId = curid;
+				UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
+				GEngine.getInstance().animationHandler.runParalell(utah);
+			}
+			
 			MoveAnimation animation = new MoveAnimation(unit, previousTile, tc);
 			
 			if(i == 0) animation.setIsFirst();
-			if(i == path.path.size() - 1) animation.setIsLast();
+			if(i == path.path.size() - 1) { 
+				animation.setIsLast();
+				if(buildbob!=null && buildbob.type == Building.TYPE_CASTLE && buildbob.controllerId != curid){
+					UberTextAnimation utah = new UberTextAnimation(tc, "capturing-base-player");
+					GEngine.getInstance().animationHandler.enqueue(utah);
+					System.out.println(State.activeState.baseCaps==null);
+					State.activeState.baseCaps[curid] = State.activeState.turnNr;
+				}
+			}
 			
 			GEngine.getInstance().animationHandler.enqueue(animation);
 			previousTile = tc;

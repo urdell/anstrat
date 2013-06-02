@@ -3867,90 +3867,174 @@ repeat: none
 hawkportrait
   rotate: false
   xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 axethrowerportrait
   rotate: false
-  xy: 516, 2
-  size: 512, 512
-  orig: 512, 512
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 jotunportrait
   rotate: false
-  xy: 1030, 2
-  size: 512, 512
-  orig: 512, 512
+  xy: 518, 2
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 elfportrait
   rotate: false
-  xy: 2, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 bigguyportrait
   rotate: false
-  xy: 2, 1030
-  size: 512, 512
-  orig: 512, 512
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 valkyrieportrait
   rotate: false
-  xy: 516, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 518, 260
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 wolfportrait
   rotate: false
-  xy: 1030, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 shamanportrait
   rotate: false
-  xy: 516, 1030
-  size: 512, 512
-  orig: 512, 512
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 berserkerportrait
   rotate: false
-  xy: 1030, 1030
-  size: 512, 512
-  orig: 512, 512
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
-
-portraits2.png
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 goblinportrait
   rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
+  xy: 2, 776
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 trollportrait
   rotate: false
-  xy: 2, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 260, 776
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 fallenportrait
   rotate: false
-  xy: 2, 1030
-  size: 512, 512
-  orig: 512, 512
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 36
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 70
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 104
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 138
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 172
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 206
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 260
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 294
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 328
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+name
+  rotate: false
+  xy: 776, 362
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1
+
+portraits2.png
+format: Alpha
+filter: Linear,Linear
+repeat: none
+name
+  rotate: false
+  xy: 2, 2
+  size: 160, 32
+  orig: 160, 32
   offset: 0, 0
   index: -1
 
@@ -4113,6 +4197,60 @@ ap-2
   offset: 0, 0
   index: -1
 
+text1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+toofar
+  rotate: false
+  xy: 2, 2
+  size: 378, 97
+  orig: 378, 97
+  offset: 0, 0
+  index: -1
+captured-player
+  rotate: false
+  xy: 2, 101
+  size: 378, 97
+  orig: 378, 97
+  offset: 0, 0
+  index: -1
+capturing-base-player
+  rotate: false
+  xy: 382, 2
+  size: 378, 97
+  orig: 378, 97
+  offset: 0, 0
+  index: -1
+capturing-base-enemy
+  rotate: false
+  xy: 382, 101
+  size: 378, 97
+  orig: 378, 97
+  offset: 0, 0
+  index: -1
+captured-enemy
+  rotate: false
+  xy: 762, 2
+  size: 378, 97
+  orig: 378, 97
+  offset: 0, 0
+  index: -1
+StartGame
+  rotate: false
+  xy: 762, 101
+  size: 222, 72
+  orig: 222, 72
+  offset: 0, 0
+  index: -1
+enemyunit
+  rotate: false
+  xy: 2, 200
+  size: 234, 46
+  orig: 234, 46
+  offset: 0, 0
+  index: -1
+
 magic1.png
 format: RGBA8888
 filter: Linear,Linear
@@ -4255,21 +4393,49 @@ buildings1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-portal-effect-0004
+portal-effect-blue-1
   rotate: false
   xy: 2, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-portal-effect-0003
+portal-effect-blue-4
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-3
+  rotate: false
+  xy: 518, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+castle
   rotate: false
   xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-castle
+portal-effect-red-4
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-2
+  rotate: false
+  xy: 518, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-blue-2
   rotate: false
   xy: 2, 518
   size: 256, 256
@@ -4278,7 +4444,56 @@ castle
   index: -1
 portal-effect-0002
   rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-2
+  rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-blue-3
+  rotate: false
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-3
+  rotate: false
   xy: 2, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-0003
+  rotate: false
+  xy: 2, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-red-1
+  rotate: false
+  xy: 260, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-4
+  rotate: false
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-0004
+  rotate: false
+  xy: 518, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -4291,6 +4506,13 @@ portal-base
   offset: 0, 0
   index: -1
 portal-effect-0001
+  rotate: false
+  xy: 2, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+portal-effect-1
   rotate: false
   xy: 2, 1292
   size: 256, 256

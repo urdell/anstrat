@@ -7,6 +7,7 @@ import com.anstrat.animation.Animation;
 import com.anstrat.animation.AnimationHandler;
 import com.anstrat.animation.MoveCameraAnimation;
 import com.anstrat.animation.ZoomCameraAnimation;
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.CameraController;
 import com.anstrat.core.GestureMultiplexer;
@@ -161,6 +162,11 @@ public class GEngine implements Screen{
 			
 			animationHandler.runParalell(zoom);
 			animationHandler.runParalell(move);
+		}
+		
+		if(State.activeState.losert3){
+			GameUI.showVictoryPopup(State.activeState.oldblah.getDisplayName());
+			AudioAssets.playMusic("victory");
 		}
 	}
 	
