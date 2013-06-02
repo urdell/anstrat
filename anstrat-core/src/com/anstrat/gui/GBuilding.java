@@ -86,7 +86,6 @@ public class GBuilding extends GObject {
 		case Building.TYPE_RUNE:
 			return Assets.getTextureRegion("runestone-gray");
 		case Building.TYPE_CASTLE:
-			System.out.println("Making castle for team "+team+"!");
 			if(team==0)
 				return Assets.getTextureRegion("castle");
 			else{

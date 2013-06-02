@@ -17,6 +17,7 @@ import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
+import com.anstrat.popup.MagicPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
 import com.anstrat.popup.UnitInfoPopup;
@@ -478,14 +479,8 @@ public class GameUI extends UI {
 		(openBuyUnitPopup = buyUnitPopups[team]).show();
 	}
 
-	public void showAbilityPopup(){
-		/*int god = GameInstance.activeGame.getUserPlayer().god;
-		
-		if(abilityPopups[god] == null){
-			abilityPopups[god] = new AbilityPopup(PlayerAbilityType.GODS[god]);
-		}
-		
-		(openAbilityPopup = abilityPopups[god]).show();*/
+	public void showAbilityPopup(){		
+		(new MagicPopup(UnitType.TEAMS[GameInstance.activeGame.getUserPlayer().team])).show();
 	}
 	
 	@Override

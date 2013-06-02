@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 	private static HotseatMenu me;
-	public int player1team = TeamPopup.TEAM_DD, player2team = TeamPopup.TEAM_VV;
+	public int player1team, player2team;
 
 	private MapSelecter mapSelecter;
 	
@@ -42,8 +42,10 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 					map.fogEnabled = fog.isChecked();
 					Main.getInstance().games.createHotseatGame(map, player1Selecter.getTeam(), player2Selecter.getTeam()).showGame(true);
 				}
-				else {
+				else if(mapType != null){
 					Dimension d = getMapSize(mapType);
+					player1team = player1Selecter.getTeam();
+					player2team = player2Selecter.getTeam();
 					Main.getInstance().games.createHotseatGame(
 							fog.isChecked(),
 							d.width,
