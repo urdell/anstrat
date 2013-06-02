@@ -18,6 +18,7 @@ import com.anstrat.geography.Map;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SelectionHandler {
 	public static final int SELECTION_UNIT = 1;
@@ -48,19 +49,21 @@ public class SelectionHandler {
 			selectionType = SELECTION_UNIT;
 			gEngine.userInterface.showUnit(unit);
 			
-			gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
 			
 			if(unit.ownerId == State.activeState.currentPlayerId){
 				if(prevSel == SELECTION_EMPTY)
 					AudioAssets.playSound("selectUnit");
+				gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
 				gEngine.actionMap.prepare(unit);
 				gEngine.highlighter.highlightTiles(gEngine.actionMap.getAllowedTiles(), true);//Pathfinding.getUnitRange(unit), false);
+				gEngine.actionHandler.refreshHighlight(unit);
 			}
 			else
 				gEngine.highlighter.highlightTile(unit.tileCoordinate, false);
 		} else{
 			deselect();
 		}
+		
 	}
 	public void selectAbility(Unit source, TargetedAbility ability){
 		selectedUnit = source;

@@ -190,6 +190,7 @@ public class GEngine implements Screen{
 		
 		if(selectionHandler.selectionType == SelectionHandler.SELECTION_UNIT){
 			actionHandler.refreshHighlight(selectionHandler.selectedUnit);
+			//selectionHandler.selectUnit(selectionHandler.selectedUnit);
 		}
 	}
 	
