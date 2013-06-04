@@ -25,7 +25,7 @@
 		<PlayerAbility>
 			<name>Comet Strike</name>
 			<manacost>6</manacost>
-			<description>Thor summons a comet that strikes target location and destroys any mountain on that location. Area of effect damage.</description>
+			<description>Thor summons a comet that strikes target location and destroys any terrain, even inpassable terrain such as mountains, on that location and creates a crater, with movement cost of 3. Destroys unit on target tile as well as area of effect damage to neighbouring tiles. Cannot target bases or villages.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
