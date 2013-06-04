@@ -89,10 +89,10 @@ public class ConfirmOverlay {
 		TextureRegion circle = Assets.getTextureRegion("movement-line-circle");
 		
 		for(Vector3 checkpoint : checkpoints){
-			TextureRegion number = Assets.getTextureRegion("ap-"+(int)checkpoint.z);
+			TextureRegion number = Assets.getTextureRegion("blue-"+(int)checkpoint.z);
 			batch.setColor(checkpointTint);
 			batch.draw( circle, checkpoint.x-checkpointSize/2, checkpoint.y-checkpointSize/2, checkpointSize, checkpointSize);
-			batch.setColor(Assets.apTextColor);
+			batch.setColor(Color.WHITE);
 			batch.draw( number, checkpoint.x-numberSize/2, checkpoint.y-numberSize/2+numberSize, numberSize, -numberSize); // flip upside down and compensate position		
 		}
 		batch.setColor(Color.WHITE);

@@ -81,7 +81,7 @@ public class AbilityButton extends Table{
 
 		if(unit != null && ability != null){
 			//batch.setColor(Assets.apTextColor);
-			FancyNumbers.drawApNumber(ability.apCost, getX()+getHeight()/6, getY()+getHeight()*0.22f, getHeight()/2.8f, false, batch);
+			FancyNumbers.drawApNumber(ability.apCost, getX()+getHeight()/6, getY()+getHeight()*0.22f, getHeight()/3.8f, false, batch);
 		
 		}
 		batch.setColor(Color.WHITE);
