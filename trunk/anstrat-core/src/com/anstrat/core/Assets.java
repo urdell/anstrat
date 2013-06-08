@@ -68,22 +68,20 @@ public final class Assets {
 
 	public static void startLoadingTextures(){
 		manager = new AssetManager();
-		manager.load("textures/pack", TextureAtlas.class);	//pack.atlas
+		manager.load("textures/pack.atlas", TextureAtlas.class);
 		//manager.load("music/vikingstitle.mp3", Music.class);
 	}
 	
 	public static void load(){
 		Gdx.app.log("Assets", "load()");
 
-		atlas = manager.get("textures/pack", TextureAtlas.class);	//pack.atlas
-		
+		atlas = manager.get("textures/pack.atlas", TextureAtlas.class);
 		animationLoader = new AnimationLoader(Gdx.files.internal("data/animations.xml"), atlas);
 		terrainMeshes = new HexagonMesh[2][];
+		
 		loadFonts();
 		loadUnmanagedTextures();
 		loadSkin();
-		
-		
 		
 		// Axe throw animation
 		thrownAxeAnimation = new Animation(1f/6f, 
