@@ -1,5 +1,6 @@
 package com.anstrat.menu;
 
+import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.badlogic.gdx.Gdx;
@@ -16,15 +17,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class HotseatNextTurnScreen implements Screen {
 	private static HotseatNextTurnScreen me = null;
 	private TextureRegion splashscreen;
-	private TextureAtlas atlas;
 	private SpriteBatch batch;
 	
 	private Stage stage;
 	private Table background;
+	private TextureAtlas atlas;
 	
 	private HotseatNextTurnScreen(){
-		atlas = new TextureAtlas("textures-loadingscreen/pack");	//pack.atlas
+		atlas = new TextureAtlas("textures-loadingscreen/pack.atlas");
 		splashscreen = atlas.findRegion("splashscreen");
+
 		this.batch = Main.getInstance().batch;
 		this.stage = Main.getInstance().overlayStage;
 		
@@ -80,8 +82,6 @@ public class HotseatNextTurnScreen implements Screen {
 	@Override
 	public void dispose() {
 		me = null;
-		splashscreen = null;
-		batch = null;
 		atlas.dispose();
 	}
 }
