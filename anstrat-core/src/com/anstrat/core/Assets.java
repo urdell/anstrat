@@ -15,7 +15,6 @@ import com.anstrat.gui.GUnit.AnimationState;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
@@ -66,8 +65,16 @@ public final class Assets {
 	public static AssetManager manager;
 	public static Color apTextColor = new Color(0.4f, 1f, 1f, 1f);
 
+	/**
+	 * Starts loading textures, loading screen textures will be available immediately.
+	 */
 	public static void startLoadingTextures(){
+		// Load loading screen textures synchronously
 		manager = new AssetManager();
+		manager.load("textures-loadingscreen/pack.atlas", TextureAtlas.class);
+		manager.finishLoading();
+		
+		// Load rest of the texture asynchronously
 		manager.load("textures/pack.atlas", TextureAtlas.class);
 		//manager.load("music/vikingstitle.mp3", Music.class);
 	}

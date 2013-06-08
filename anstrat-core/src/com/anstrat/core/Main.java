@@ -99,6 +99,7 @@ public class Main extends Game implements ApplicationListener {
 		overlayStage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, batch);
 		
 		// Init menu, show splash
+		Assets.startLoadingTextures();
 		setScreen(SplashScreen.getInstance());
 	}
 	
