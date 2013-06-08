@@ -1,0 +1,26 @@
+
+pack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+loading
+  rotate: false
+  xy: 578, 1070
+  size: 133, 29
+  orig: 133, 29
+  offset: 0, 0
+  index: -1
+splashscreen
+  rotate: false
+  xy: 1, 75
+  size: 575, 1024
+  orig: 575, 1024
+  offset: 0, 0
+  index: -1
+splashscreen-startgame
+  rotate: false
+  xy: 1, 1
+  size: 222, 72
+  orig: 222, 72
+  offset: 0, 0
+  index: -1
