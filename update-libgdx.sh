@@ -1,4 +1,6 @@
 #!/bin/bash
+# WARNING: This script is outdated, the locations of some files within the libgdx-nightly-latest.zip have changed
+
 wget http://libgdx.badlogicgames.com/nightlies/libgdx-nightly-latest.zip
 unzip -od libgdx-latest libgdx-nightly-latest.zip
 
