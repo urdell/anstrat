@@ -46,18 +46,18 @@ public class DesktopGame {
 	
 	private static void packTextures(String assetsFolder, boolean incremental){
 		Settings settings = new Settings();
-        settings.padding = 2;
-        settings.maxWidth = 2048;
-        settings.maxHeight = 2048;
-        settings.incremental = incremental;
-        settings.defaultFilterMag = TextureFilter.Linear;
-        settings.defaultFilterMin = TextureFilter.Linear;
-        TexturePacker.process(settings, assetsFolder + "/../graphics/textures", assetsFolder + "/textures");
-        TexturePacker.process(settings, assetsFolder + "/../graphics/loadingscreen", assetsFolder + "/textures-loadingscreen");
-
-        // VERSION 2	-- TODO: idea - move textures folder outside assets to avoid packing it with apk (only packed textures used anyway...)
-        //TexturePacker2.process(assetsFolder + "/loading", assetsFolder + "/loading_packed", "pack");
-        //TexturePacker2.process(assetsFolder + "/textures", assetsFolder + "/textures_packed", "pack");
+		settings.padding = 2;
+		settings.maxWidth = 2048;
+		settings.maxHeight = 2048;
+		settings.incremental = incremental;
+		settings.defaultFilterMag = TextureFilter.Linear;
+		settings.defaultFilterMin = TextureFilter.Linear;
+		TexturePacker.process(settings, assetsFolder + "/../graphics/textures", assetsFolder + "/textures");
+		TexturePacker.process(settings, assetsFolder + "/../graphics/loadingscreen", assetsFolder + "/textures-loadingscreen");
+		
+		// VERSION 2	-- TODO: idea - move textures folder outside assets to avoid packing it with apk (only packed textures used anyway...)
+		//TexturePacker2.process(assetsFolder + "/loading", assetsFolder + "/loading_packed", "pack");
+		//TexturePacker2.process(assetsFolder + "/textures", assetsFolder + "/textures_packed", "pack");
 	}
 	
 	private static void handleArguments(String[] args, LwjglApplicationConfiguration config){
