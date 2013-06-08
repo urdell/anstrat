@@ -8,9 +8,6 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.tools.imagepacker.TexturePacker;
-import com.badlogic.gdx.tools.imagepacker.TexturePacker.Settings;
 
 public class DesktopGame {
 	
@@ -27,10 +24,6 @@ public class DesktopGame {
 	public static final Dimension PHONE = new Dimension(800, 480);
 	
 	public static void main(String[] args){
-		//Pack textures windows
-		//packTextures("../../anstrat-android/assets", false);	// Windows (does not work, should remain however according to ekiz)
-		//packTextures("../anstrat-android/assets", false);		// Linux
-		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title ="Vengeful Vikings (Beta)";
 		config.width = ORIENTATION == ScreenOrientation.Landscape ? PHONE.getWidth() : PHONE.getHeight();
@@ -43,29 +36,13 @@ public class DesktopGame {
 		
 		new LwjglApplication(Main.getInstance(), config);
 	}
-	
-	private static void packTextures(String assetsFolder, boolean incremental){
-		Settings settings = new Settings();
-		settings.padding = 2;
-		settings.maxWidth = 2048;
-		settings.maxHeight = 2048;
-		settings.incremental = incremental;
-		settings.defaultFilterMag = TextureFilter.Linear;
-		settings.defaultFilterMin = TextureFilter.Linear;
-		TexturePacker.process(settings, assetsFolder + "/../graphics/textures", assetsFolder + "/textures");
-		TexturePacker.process(settings, assetsFolder + "/../graphics/loadingscreen", assetsFolder + "/textures-loadingscreen");
-		
-		// VERSION 2	-- TODO: idea - move textures folder outside assets to avoid packing it with apk (only packed textures used anyway...)
-		//TexturePacker2.process(assetsFolder + "/loading", assetsFolder + "/loading_packed", "pack");
-		//TexturePacker2.process(assetsFolder + "/textures", assetsFolder + "/textures_packed", "pack");
-	}
-	
+
 	private static void handleArguments(String[] args, LwjglApplicationConfiguration config){
 		
 		// Used for running from a jar, enables easy switching of textures and data
 		if(Arrays.binarySearch(args, "--externalTextures") >= 0){
 			System.out.println("Found --externalTextures flag, running with external textures on, textures will be loaded and packed on each run.");
-			packTextures(".", true);
+			TexturePacker.pack();
 		}
 		
 		// Check if fonts should be generated using freetype
