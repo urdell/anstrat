@@ -28,10 +28,8 @@ public class Map implements Serializable{
 	public Tile[][] tiles;
 	public String name;
 	private static final int[] NEIGHBORS_DX = { 0, 1, 1, 0, -1, -1 };
-    private static final int[][] NEIGHBORS_DY = { 
-            { -1, -1, 0, 1, 0, -1 }, { -1, 0, 1, 1, 1, 0 } };
-    
-    public HashMap<Integer,Building> buildingList;
+	private static final int[][] NEIGHBORS_DY = { { -1, -1, 0, 1, 0, -1 }, { -1, 0, 1, 1, 1, 0 } };
+	public HashMap<Integer,Building> buildingList;
 	public int nextBuildingId;
 	
 	public boolean fogEnabled = true;
