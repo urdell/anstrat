@@ -12,6 +12,7 @@ import com.anstrat.geography.Map;
 import com.anstrat.geography.TerrainType;
 import com.anstrat.gui.GTile;
 import com.anstrat.gui.GUnit.AnimationState;
+import com.anstrat.util.Pair;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -468,17 +469,6 @@ public final class Assets {
 		}
 		
 		return null;
-	}
-	
-	// Replacement for AbstractMap.SimpleEntry that does not exist in the Android SDK till api level 9
-	public static final class Pair<A,B> {
-		public final A a;
-		public final B b;
-		
-		public Pair(A a, B b){
-			this.a = a;
-			this.b = b;
-		}
 	}
 	
 	// A hexagon mesh with an associated TextureRegion

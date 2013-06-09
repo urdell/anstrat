@@ -7,7 +7,7 @@ import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameOptions.MapType;
-import com.anstrat.popup.TeamPopup;
+import com.anstrat.util.Dimension;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -91,18 +91,6 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 		}
 		else {
 			throw new IllegalArgumentException("Was not expecting " + t);
-		}
-	}
-	
-	/**
-	 * Custom dimension class. Can't use java.awt on android. 
-	 */
-	private static class Dimension{
-		public int width, height;
-		
-		public Dimension(int w, int h){
-			this.width = w;
-			this.height = h;
 		}
 	}
 	
