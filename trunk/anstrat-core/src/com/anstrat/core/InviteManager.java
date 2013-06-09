@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.anstrat.menu.InvitesMenu;
 import com.anstrat.network.protocol.GameOptions;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -28,7 +29,7 @@ public class InviteManager {
 	
 	public void recievedInvite(long inviteId, String senderName, GameOptions gameInfo){
 		invites.add( new Invite(inviteId, senderName, gameInfo));
-		updateButton();
+		refresh();
 	}
 	
 	public void inviteCompleted(long inviteID, boolean accept) {
@@ -46,13 +47,12 @@ public class InviteManager {
 		}
 		outgoingInvites.remove(inviteToBeRemoved);
 		
-		updateButton();
-		
+		refresh();
 	}
 
 	public void invitePending(long inviteID, String receiverDisplayName, GameOptions options) {
 		outgoingInvites.add( new Invite(inviteID, receiverDisplayName, options));
-		updateButton();
+		refresh();
 		
 	}
 	
@@ -63,11 +63,13 @@ public class InviteManager {
 		return outgoingInvites;
 	}
 	
-	private void updateButton(){
+	private void refresh(){
 		if(inviteButton != null){
 			inviteButton.setVisible(( !invites.isEmpty() || !outgoingInvites.isEmpty() ));
 			inviteButton.setVisible(true); //TODO remove after finished with testing
 		}
+		
+		InvitesMenu.getInstance().refresh();
 	}
 	
 	/**
@@ -75,7 +77,7 @@ public class InviteManager {
 	 */
 	public void registerInviteButton(Button inviteButton){
 		this.inviteButton = inviteButton;
-		updateButton();
+		refresh();
 	}
 	
 	public void saveInviteInstances(){
@@ -111,6 +113,4 @@ public class InviteManager {
 			return String.format("%s(size = %d + %d)", this.getClass().getSimpleName(), invites.size(), outgoingInvites.size());
 		}
 	}
-
-	
 }
