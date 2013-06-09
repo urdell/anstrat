@@ -20,20 +20,20 @@
         </copy>
 
         <!-- Compile Core -->
-        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false">
+        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
             <classpath refid="dependencies"/>
         </javac>
 
         <!-- Compile Tests -->
-       <javac srcdir="anstrat-test/src" destdir="${bin}" includeantruntime="false">
+       <javac srcdir="anstrat-test/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
             <classpath refid="dependencies" />
         </javac>
 
         <!-- Server -->
-        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false"/>
+        <javac srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source" />
 
         <!-- Desktop -->
-        <javac srcdir="anstrat-desktop/src" destdir="${bin}" includeantruntime="false">
+        <javac srcdir="anstrat-desktop/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
             <classpath refid="dependencies"/>
         </javac>
     </target>
@@ -70,7 +70,7 @@
         <mkdir dir="build/classes"/>
 
         <!-- Compile Core -->
-        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false">
+        <javac srcdir="anstrat-core/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
             <classpath refid="dependencies"/>
         </javac>
 
@@ -85,6 +85,7 @@
             <classpath>
                 <fileset dir="anstrat-server/libs"/>
                 <pathelement path="${bin}"/>
+                <path refid="dependencies"/>
             </classpath>
         </java>
     </target>
