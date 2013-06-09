@@ -547,8 +547,8 @@ public class DatabaseManager implements IDatabaseService {
 		
 		try{
 			conn = context.getConnection();
-			pst = conn.prepareStatement("DELETE FROM Invites WHERE id IN (?)");
-			pst.setArray(1, conn.createArrayOf("integer", Longs.asList(inviteIDs).toArray()));
+			pst = conn.prepareStatement("DELETE FROM Invites WHERE id = ANY(?)");
+			pst.setArray(1, conn.createArrayOf("bigint", Longs.asList(inviteIDs).toArray()));
 			return pst.executeUpdate();
 		}
 		catch(SQLException e){
