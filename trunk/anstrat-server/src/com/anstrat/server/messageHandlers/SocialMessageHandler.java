@@ -42,7 +42,7 @@ public class SocialMessageHandler {
 		Invite invite = handleRequest(client, inviteID);
 		if(invite == null) return;
 		
-		NetworkMessage inviteCompleted = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, true);
+		NetworkMessage inviteCompleted = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, invite.inviteID, true);
 		
 		// Send invite completed to client
 		if(!connectionManager.sendMessage(client, inviteCompleted)){
@@ -84,7 +84,7 @@ public class SocialMessageHandler {
 		Invite invite = handleRequest(client, inviteID);
 		if(invite == null) return;
 		
-		NetworkMessage inviteCompleted = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, false);
+		NetworkMessage inviteCompleted = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, invite.inviteID, false);
 		
 		// Send invite completed to client
 		if(!connectionManager.sendMessage(client, inviteCompleted)){
