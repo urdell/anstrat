@@ -42,6 +42,9 @@ public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
 
 				GameOptions options = new GameOptions(map, mapType, playerSelecter.getGod(), playerSelecter.getTeam(), fog.isChecked());
 				Main.getInstance().network.findRandomGame(options);
+				
+				// Go back to menu
+				Main.getInstance().setScreen(MainMenu.getInstance());
 			}
 		});
 		
