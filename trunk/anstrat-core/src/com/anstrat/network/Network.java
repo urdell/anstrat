@@ -111,8 +111,8 @@ public class Network implements INetworkCallback {
     	worker.sendMessage(new NetworkMessage(Command.INVITE_PLAYER_ID, userID, options));
     }
     
-    public void acceptInvite(long inviteID, int team){
-    	worker.sendMessage(new NetworkMessage(Command.INVITE_ACCEPT, inviteID, team));
+    public void acceptInvite(long inviteID, int team, int god){
+    	worker.sendMessage(new NetworkMessage(Command.INVITE_ACCEPT, inviteID, team, god));
     }
     
     public void declineInvite(long inviteID){

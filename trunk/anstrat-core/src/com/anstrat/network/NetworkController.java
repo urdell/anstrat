@@ -136,8 +136,8 @@ public class NetworkController {
 		this.network.setDisplayName(name);
 	}
 	
-	public void acceptInvite(long inviteId, int team){
-		this.network.acceptInvite(inviteId, team);
+	public void acceptInvite(long inviteId, int team, int god){
+		this.network.acceptInvite(inviteId, team, god);
 	}
 	public void declineInvite(long inviteId){
 		this.network.declineInvite(inviteId);

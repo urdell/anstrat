@@ -8,23 +8,27 @@ public class GameOptions implements Serializable {
 	
 	private static final long serialVersionUID = 2L;
 	
-	public enum MapType { SPECIFIC, 
+	public enum MapType {
+		SPECIFIC, 
 		GENERATED_SIZE_SMALL {
 			@Override
 			public String toString() {
 				return "Small";
 			}
-		}, GENERATED_SIZE_MEDIUM {
+		},
+		GENERATED_SIZE_MEDIUM {
 			@Override
 			public String toString() {
 				return "Medium";
 			}
-		}, GENERATED_SIZE_LARGE {
+		},
+		GENERATED_SIZE_LARGE {
 			@Override
 			public String toString() {
 				return "Large";
 			}
-		}, GENERATED_SIZE_RANDOM {
+		},
+		GENERATED_SIZE_RANDOM {
 			@Override
 			public String toString() {
 				return "Random";
@@ -34,6 +38,7 @@ public class GameOptions implements Serializable {
 	
 	/** The map to use if MapType is set to SPECIFIC **/
 	public final Map map;
+	
 	public final MapType mapType;
 	public final int god;
 	public final int team;
