@@ -1,7 +1,6 @@
 package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
-import com.anstrat.core.Assets.Pair;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Player;
@@ -10,6 +9,7 @@ import com.anstrat.gameCore.UnitType;
 import com.anstrat.gameCore.effects.BerserkEffect;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.ShieldWallEffect;
+import com.anstrat.util.Pair;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
