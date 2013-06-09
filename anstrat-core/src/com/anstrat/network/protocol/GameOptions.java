@@ -1,37 +1,54 @@
 package com.anstrat.network.protocol;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import com.anstrat.geography.Map;
+import com.anstrat.util.Dimension;
 
 public class GameOptions implements Serializable {
 	
 	private static final long serialVersionUID = 2L;
 	
-	public enum MapType {
-		SPECIFIC, 
-		GENERATED_SIZE_SMALL {
-			@Override
-			public String toString() {
-				return "Small";
-			}
-		},
-		GENERATED_SIZE_MEDIUM {
-			@Override
-			public String toString() {
-				return "Medium";
-			}
-		},
-		GENERATED_SIZE_LARGE {
-			@Override
-			public String toString() {
-				return "Large";
-			}
-		},
-		GENERATED_SIZE_RANDOM {
-			@Override
-			public String toString() {
-				return "Random";
+	public static enum MapType {
+		GENERATED_SIZE_SMALL("Small"),
+		GENERATED_SIZE_MEDIUM("Medium"),
+		GENERATED_SIZE_LARGE("Large"),
+		GENERATED_SIZE_RANDOM("Random"),
+		SPECIFIC("Specific");
+		
+		private String description;
+		
+		private MapType(String description){
+			this.description = description;
+		}
+		
+		@Override
+		public String toString() {
+			return this.description;
+		}
+
+		/**
+		 * Returns (or randomizes) the map size for the given MapType.
+		 */
+		public static Dimension getMapSize(MapType t, Random random){
+			switch(t){
+				case GENERATED_SIZE_LARGE: {
+					return new Dimension(16,16);
+				}
+				case GENERATED_SIZE_MEDIUM: {
+					return new Dimension(12,12);
+				}
+				case GENERATED_SIZE_SMALL: {
+					return new Dimension(8,8);
+				}
+				case GENERATED_SIZE_RANDOM: {
+				// TODO: Randomize! Make sure to keep a good width/height ratio
+					return new Dimension(16,16);
+				}
+				default: {
+					throw new IllegalArgumentException("Can't get size of map type: " + t);
+				}
 			}
 		}
 	}

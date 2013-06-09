@@ -1,5 +1,7 @@
 package com.anstrat.menu;
 
+import java.util.Random;
+
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
@@ -43,7 +45,7 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 					Main.getInstance().games.createHotseatGame(map, player1Selecter.getTeam(), player2Selecter.getTeam()).showGame(true);
 				}
 				else if(mapType != null){
-					Dimension d = getMapSize(mapType);
+					Dimension d = GameOptions.MapType.getMapSize(mapType, new Random());
 					player1team = player1Selecter.getTeam();
 					player2team = player2Selecter.getTeam();
 					Main.getInstance().games.createHotseatGame(
@@ -73,25 +75,6 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
 		contents.add(centerLogin).bottom();
-	}
-	
-	private static Dimension getMapSize(GameOptions.MapType t){
-		if(t == GameOptions.MapType.GENERATED_SIZE_LARGE){
-			return new Dimension(16,16);
-		}
-		else if(t == GameOptions.MapType.GENERATED_SIZE_MEDIUM){
-			return new Dimension(12,12);
-		}
-		else if(t == GameOptions.MapType.GENERATED_SIZE_SMALL){
-			return new Dimension(8,8);
-		}
-		else if(t == GameOptions.MapType.GENERATED_SIZE_RANDOM){
-			// TODO: Randomize! Make sure to keep a good width/height ratio
-			return new Dimension(16,16);
-		}
-		else {
-			throw new IllegalArgumentException("Was not expecting " + t);
-		}
 	}
 	
 	public static synchronized HotseatMenu getInstance() {

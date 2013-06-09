@@ -19,6 +19,7 @@ import com.anstrat.server.events.ClientAuthenticatedEvent;
 import com.anstrat.server.events.Event;
 import com.anstrat.server.util.DependencyInjector.Inject;
 import com.anstrat.server.util.Logger;
+import com.anstrat.util.Dimension;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 import com.google.common.primitives.Longs;
@@ -258,7 +259,18 @@ public class SocialMessageHandler {
 			new Player(invite.receiver, team, god, receiver.getDisplayedName()),
 		};
 		
-		// TODO: Select map according to map choice
-		return new GameSetup(new Map(10, 10), new Random().nextLong(), players);
+		// Select map according to map choice
+		Map map = null;
+		
+		if(invite.options.mapType == GameOptions.MapType.SPECIFIC){
+			map = invite.options.map;
+		}
+		else{
+			// Randomize map
+			Dimension size = GameOptions.MapType.getMapSize(invite.options.mapType, new Random());
+			map = new Map(size.width, size.height, new Random());
+		}
+		
+		return new GameSetup(map, new Random().nextLong(), players);
 	}
 }
