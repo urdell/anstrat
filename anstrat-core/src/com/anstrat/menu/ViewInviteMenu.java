@@ -19,12 +19,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * 
  * @author Anton
  * Used for responding to a specific invite
+ * @todo Needs a god selection
  */
 public class ViewInviteMenu extends MenuScreen{
 
 	
 	long inviteId;
 	int chosenTeam = 0;
+	int chosenGod = 0;
 	
 	public ViewInviteMenu(Invite invite){
 		
@@ -54,7 +56,7 @@ public class ViewInviteMenu extends MenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Main.getInstance().setScreen(MainMenu.getInstance());
-            	Main.getInstance().network.acceptInvite(inviteId, chosenTeam);
+            	Main.getInstance().network.acceptInvite(inviteId, chosenTeam, chosenGod);
             }
         });
 		
