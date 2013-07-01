@@ -9,14 +9,12 @@ import java.util.Random;
 
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
-import com.anstrat.audio.AudioAssets;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
 import com.anstrat.gameCore.effects.TriggerOnTurnStart;
 import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
-import com.anstrat.gui.GameUI;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
