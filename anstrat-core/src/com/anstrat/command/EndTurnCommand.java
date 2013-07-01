@@ -23,7 +23,9 @@ public class EndTurnCommand extends Command{
 		State.activeState.endTurn();
 		
 		if (GameInstance.activeGame.getGameType().equals(GameInstanceType.HOTSEAT)) {
-			Main.getInstance().setScreen(HotseatNextTurnScreen.getInstance());
+			//HotAnimation hanimation = new HotAnimation();
+			//GEngine.getInstance().animationHandler.enqueue(hanimation);
+			//GEngine.getInstance().selectionHandler.deselect();
 		}
 		else {
 			EndTurnAnimation animation = new EndTurnAnimation();

@@ -508,7 +508,7 @@ public class GameUI extends UI {
 		super.draw();
 		mbar.draw();
 		/* Bugfix xD lol */
-		if(unitTable.isVisible()) {
+		if(unitTable.isVisible() && lastShownUnit != null) {
 			SpriteBatch batch = Main.getInstance().batch;
 			batch.begin();
 			float pw = Main.percentWidth;
