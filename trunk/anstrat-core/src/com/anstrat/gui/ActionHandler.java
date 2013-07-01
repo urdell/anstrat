@@ -1,6 +1,7 @@
 package com.anstrat.gui;
 
 import com.anstrat.animation.FullscreenTextAnimation;
+import com.anstrat.animation.UberTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
 import com.anstrat.command.ActivatePlayerAbilityCommand;
@@ -128,14 +129,23 @@ public class ActionHandler {
 			if(command.isAllowed())
 				requestAbilityConfirm(gTile, gEngine.selectionHandler.selectedUnit, command, gEngine.selectionHandler.selectedTargetedAbility, clickedQuadrant);
 			else
+				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateTargetedAbilityCommand)command).getReason(gEngine.selectionHandler.selectedUnit.tileCoordinate)));
 				gEngine.selectionHandler.deselect();
 			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			if(command.isAllowed())
 				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, clickedQuadrant);
-			else
+			else{
+				if ("Target is a building".equals(((ActivateTargetedPlayerAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "target-building"));
+					gEngine.selectionHandler.deselect();
+				}
+				else {
+				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason() ));
 				gEngine.selectionHandler.deselect();
+				}
+			}
 			break;
 		case SelectionHandler.SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY:
 			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
@@ -148,6 +158,7 @@ public class ActionHandler {
 				if(command.isAllowed())
 					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, clickedQuadrant);
 				else
+					gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason() ));
 					gEngine.selectionHandler.deselect();
 			}
 			break;
