@@ -86,7 +86,7 @@ public final class Combat {
 		}
 		
 		// Check that attacker has enough AP
-		if(attacker.currentAP < attacker.getAPCostAttack()) return "Insufficient AP";
+		if(attacker.currentAP < attacker.getAPCostAttack()) return "Unit needs "+ attacker.getAPCostAttack() + " AP to attack";
 		
 		return "Can not attack this";
 	}
