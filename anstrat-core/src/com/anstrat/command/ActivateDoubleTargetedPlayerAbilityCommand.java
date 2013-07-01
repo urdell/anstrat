@@ -2,6 +2,8 @@ package com.anstrat.command;
 
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
+import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.abilities.Ability;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
@@ -47,6 +49,20 @@ public class ActivateDoubleTargetedPlayerAbilityCommand extends Command {
 	}
 
 	public String getReason() {
+		if (this.type.equals(PlayerAbilityType.SWAP)){
+			for (Unit u : State.activeState.unitList.values()){
+				if(u.tileCoordinate == target1){
+					if(u.ownerId == playerid){
+						return "Can only swap friendly units";
+					}
+				}
+				if(u.tileCoordinate == target2){
+					if(u.ownerId == playerid){
+						return "Can only swap friendly units";
+					}
+				}
+			}
+		}
 		return "Not possible";
 	}
 }

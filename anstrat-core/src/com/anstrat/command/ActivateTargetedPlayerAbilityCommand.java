@@ -1,7 +1,16 @@
 package com.anstrat.command;
 
+import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
+import com.anstrat.gameCore.Unit;
+import com.anstrat.gameCore.abilities.APHeal;
+import com.anstrat.gameCore.abilities.Ability;
+import com.anstrat.gameCore.abilities.ChainingAxe;
+import com.anstrat.gameCore.abilities.Heal;
+import com.anstrat.gameCore.abilities.Kamikaze;
+import com.anstrat.gameCore.abilities.Knockback;
+import com.anstrat.gameCore.abilities.LeapAttack;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityFactory;
 import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
@@ -46,6 +55,20 @@ public class ActivateTargetedPlayerAbilityCommand extends Command {
 
 	public String getReason() {
 		// TODO Auto-generated method stub
+		
+		State s = State.activeState;
+		PlayerAbilityType ability = type;
+		Player player = State.activeState.players[playerid];
+		if(player.mana < ability.manaCost){
+			return "Insufficient Mana";
+		}
+		if (ability.equals(PlayerAbilityType.COMETSTRIKE)){
+			if(null != s.map.getBuildingByTile(target)){
+				return "Target is a building";
+			}
+		}	
+		
+			
 		return "Not possible";
 	}
 	

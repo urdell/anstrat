@@ -300,6 +300,7 @@ public class GameUI extends UI {
 
         Cell portraitCell = table1.add(portraitFrame);
         
+        
 		//portraitCell.setWidget(table11);
 
 		table1.row();
