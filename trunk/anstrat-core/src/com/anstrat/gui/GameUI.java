@@ -18,7 +18,6 @@ import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
-import com.anstrat.popup.MagicPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
 import com.anstrat.popup.UnitInfoPopup;
@@ -26,6 +25,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -34,12 +35,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.esotericsoftware.tablelayout.Cell;
 
 public class GameUI extends UI {
 	
@@ -65,13 +65,14 @@ public class GameUI extends UI {
 	//Bottom panel
 	public Table bottomPanel;
 	private Button deselectButton;
-	private Label nameLabel;
+	private Label nameLabel, azerty;
 	private Image portraitFrame;
 	private Image unitTypeImage;
 	private APPieIcon apWheel;
 	private NumberIcon hpValue;
 	private Image unitNameLabel;
 	private Image tempCaptureImage;
+	private TextureRegion health_tens, health_ones;
 	
 	//Permanent panel
 	public Table permanentPanel;
@@ -111,7 +112,7 @@ public class GameUI extends UI {
             }
         });
         goldDisplay = new ValueDisplay(ValueDisplay.VALUE_GOLD);
-		manaDisplay = new ValueDisplay(ValueDisplay.VALUE_MANA);
+		//manaDisplay = new ValueDisplay(ValueDisplay.VALUE_MANA);
 		turnDisplay = new Label("",Assets.SKIN);
 		turntable = new ColorTable(Color.BLACK);
 		turntable.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
@@ -253,10 +254,16 @@ public class GameUI extends UI {
 		topPanel.row().left().pad(pad).fill().height(tph*0.8f);
 		topPanel.add(endTurnButton).width(tph*2f);
 		topPanel.add(turntable).pad(padv, padh, padv, padh).expand().fill();
-		Table displays = new Table();
-		displays.add(goldDisplay).align(Align.left);
-		displays.row();
-		displays.add(manaDisplay).align(Align.left);
+		Table displays = new ColorTable(new Color(0.559f,0.385f,0.055f,1.0f));
+		azerty = new Label("",Assets.SKIN);
+		//displays.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("attack-symbol"))));
+		displays.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
+		Image image = new Image(Assets.getTextureRegion("gold"));
+		displays.add(image);
+		//displays.add(azerty);
+		displays.add(goldDisplay).align(Align.right);
+		//displays.row();
+		//displays.add(manaDisplay).align(Align.left);
 		topPanel.add(displays);
 		
 		// Permanent Panel
@@ -298,13 +305,13 @@ public class GameUI extends UI {
         table11.add(hpValue).bottom().size(bph/6f).left();
 		//table1.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("portraitFrame"))));
 
-        Cell portraitCell = table1.add(portraitFrame);
+        //Cell portraitCell = table1.add(portraitFrame);
         
         
 		//portraitCell.setWidget(table11);
 
 		table1.row();
-		table1.add(unitNameLabel).align(Align.left);
+		//table1.add(unitNameLabel).align(Align.left);
         
         
         // Right table, effects + abilities
@@ -381,22 +388,23 @@ public class GameUI extends UI {
 		}
 		nrShownAbilities=0;
 		
-		//if(){
-		for(Ability a : unit.getAbilities()){
-			Actor actor = (abilityButtons[nrShownAbilities].getChildren().get(0));	//getactors
-			if(actor instanceof Image){  // to be removed
-				((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setDrawable(new TextureRegionDrawable(Assets.getTextureRegion(a.getIconName(unit))));
+		if(lastShownUnit.ownerId == State.activeState.currentPlayerId){
+			for(Ability a : unit.getAbilities()){
+				Actor actor = (abilityButtons[nrShownAbilities].getChildren().get(0));	//getactors
+				if(actor instanceof Image){  // to be removed
+					((com.badlogic.gdx.scenes.scene2d.ui.Image) actor).setDrawable(new TextureRegionDrawable(Assets.getTextureRegion(a.getIconName(unit))));
+				}
+				if(actor instanceof AbilityButton){
+					((AbilityButton) actor).setAbility(unit, a);
+					((AbilityButton) actor).updateIsAllowed();
+				}
+				
+				//abilityButtons[nrShownAbilities].clear();
+				//abilityButtons[nrShownAbilities].add(new AbilityButton(unit, a));
+				
+				abilityButtons[nrShownAbilities].setVisible(true);
+				nrShownAbilities++;
 			}
-			if(actor instanceof AbilityButton){
-				((AbilityButton) actor).setAbility(unit, a);
-				((AbilityButton) actor).updateIsAllowed();
-			}
-			
-			//abilityButtons[nrShownAbilities].clear();
-			//abilityButtons[nrShownAbilities].add(new AbilityButton(unit, a));
-			
-			abilityButtons[nrShownAbilities].setVisible(true);
-			nrShownAbilities++;
 		}
 		
 		// if a on a building
@@ -415,7 +423,7 @@ public class GameUI extends UI {
 	 */
 	public void update(){
 		goldDisplay.update(null);
-		manaDisplay.update(null);
+		//manaDisplay.update(null);
 		showUnit(lastShownUnit);
 		
 		int ma0n = State.activeState.players[State.activeState.currentPlayerId].mana;
@@ -499,6 +507,65 @@ public class GameUI extends UI {
 	public void draw(){
 		super.draw();
 		mbar.draw();
+		/* Bugfix xD lol */
+		if(unitTable.isVisible()) {
+			SpriteBatch batch = Main.getInstance().batch;
+			batch.begin();
+			float pw = Main.percentWidth;
+			unitTypeImage.getDrawable().draw(batch, pw*6.11f, pw*8.7f, pw*18.2f, pw*18.2f);
+			
+			Color temp = batch.getColor();
+			batch.setColor(Player.primaryColor[lastShownUnit.ownerId]);
+			batch.disableBlending();
+			TextureRegion tintThis = Assets.getTextureRegion("white-line-hard");
+			batch.draw(tintThis, pw*25f, pw*8.7f, pw*9.4f, pw*18.2f);
+			batch.enableBlending();
+			batch.setColor(temp);
+			
+			Drawable lol = portraitFrame.getDrawable();
+			lol.draw(batch, pw*3f, pw*6.2f, pw*33.83f, pw*23f);
+			Drawable lol2 = unitNameLabel.getDrawable();
+			lol2.draw(batch, 0, 0, lol2.getMinWidth(), lol2.getMinHeight());
+			
+			APPieDisplay.draw(pw*26f, pw*18.23f, pw*7f, lastShownUnit.currentAP, lastShownUnit.getMaxAP(), 
+					lastShownUnit.getAPReg(), 0, batch, true, 1f);
+			
+			Color oldColor = batch.getColor();
+			batch.setColor(Color.GREEN);
+			
+			int healthTens = lastShownUnit.currentHP/10;
+			int healthOnes = lastShownUnit.currentHP - healthTens*10;
+			
+			float TEXT_SCALE = 0.74326f;
+			float TEXT_X_BUGFIX = 6f;
+			float TEXT_X_OFFSET = pw*29.19f;
+			float TEXT_Y_OFFSET = pw*11f;
+			
+			if(healthTens > 0)
+			{
+				health_tens = Assets.getTextureRegion("ap-"+healthTens);
+				health_ones = Assets.getTextureRegion("ap-"+healthOnes);
+				
+				batch.draw(health_tens, TEXT_X_OFFSET-health_tens.getRegionWidth()*TEXT_SCALE+TEXT_X_BUGFIX*TEXT_SCALE, 
+						TEXT_Y_OFFSET, 0, 0, health_tens.getRegionWidth(), health_tens.getRegionHeight(), TEXT_SCALE, TEXT_SCALE, 0f);
+				batch.draw(health_ones, TEXT_X_OFFSET-TEXT_X_BUGFIX*TEXT_SCALE, TEXT_Y_OFFSET, 0, 0, 
+						health_ones.getRegionWidth(), health_ones.getRegionHeight(), TEXT_SCALE, TEXT_SCALE, 0f);
+			}
+			else if(healthOnes > 0)
+			{
+				health_ones = Assets.getTextureRegion("ap-"+healthOnes);
+
+				batch.draw(health_ones, TEXT_X_OFFSET-health_ones.getRegionWidth()*TEXT_SCALE/2f, TEXT_Y_OFFSET, 0, 0, 
+						health_ones.getRegionWidth(), health_ones.getRegionHeight(), TEXT_SCALE, TEXT_SCALE, 0f);
+			}
+			batch.setColor(oldColor);
+			
+			if(lastShownUnit.ownerId != State.activeState.currentPlayerId){
+				TextureRegion enemyUnit = Assets.getTextureRegion("enemyunit");
+				batch.draw(enemyUnit, pw*41.5f, pw*17f, pw*40f, pw*9f);
+			}
+			batch.end();
+		}
 	}
 	
 	/**

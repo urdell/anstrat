@@ -51,7 +51,7 @@ public class ValueDisplay extends Table {
 			bar.setColors(Color.GREEN, new Color(0f, 0.3f, 0f, 1f), Color.GRAY);
 		}
 		
-		this.add(icon).size(3f*Main.percentHeight).padRight(2f*Main.percentWidth);
+		//this.add(icon).size(3f*Main.percentHeight).padRight(2f*Main.percentWidth);
 		this.add(usesBar ? bar : label).expandX().fillX().height(3f*Main.percentHeight);
 	}
 	

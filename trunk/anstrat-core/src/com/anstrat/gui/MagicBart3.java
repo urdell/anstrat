@@ -45,11 +45,11 @@ public class MagicBart3 {
 		if(mAmt > 0)
 			sb.draw(mxf[mAmt-1], x_start, y_start, x_width, y_height);
 		
-		sb.draw(mAmt>=2?magic_one_g:magic_one, x_start + x_part * 1.5f - magic_one.getRegionWidth() / 2f + pw*0.65f, 
+		sb.draw(mAmt>=2?magic_one_g:magic_one, x_start + x_part * 2f - magic_one.getRegionWidth() / 2f + pw*0.65f, 
 				y_start - y_height/2f, magic_one.getRegionWidth(), y_height*2f);
-		sb.draw(mAmt>=4?magic_two_g:magic_two, x_start + x_part * 3.5f - magic_two.getRegionWidth() / 2f - pw*0.5f, 
+		sb.draw(mAmt>=4?magic_two_g:magic_two, x_start + x_part * 4f - magic_two.getRegionWidth() / 2f - pw*0.5f, 
 				y_start - y_height/2f, magic_two.getRegionWidth(), y_height*2f);
-		sb.draw(mAmt>=6?magic_three_g:magic_three, x_start + x_part * 5.5f - magic_three.getRegionWidth() / 2f - pw*1f, 
+		sb.draw(mAmt>=6?magic_three_g:magic_three, x_start + x_part * 6f - magic_three.getRegionWidth() / 2f - pw*1f, 
 				y_start - y_height/2f, magic_three.getRegionWidth(), y_height*2f);
 		sb.end();
 	}
