@@ -59,7 +59,7 @@ public class ActivateTargetedAbilityCommand extends Command {
 				&& ((TargetedAbility)ability).isAllowed(source, target);
 	}
 
-	public String getReason(TileCoordinate tileCoordinate) {
+	public String getReason() {
 		State s = State.activeState;
 		Unit source = s.unitList.get(sourceUnitId);
 		Ability ability = source.abilities.get(abilityId);
