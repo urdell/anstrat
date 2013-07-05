@@ -78,17 +78,17 @@ public final class Combat {
 		return attacker.currentAP >= attacker.getAPCostAttack();
 	}
 	
-	public static String failReason(Unit attacker, Unit defender){
+	public static int failReason(Unit attacker, Unit defender){
 		// Check range
 		int range = Pathfinding.getDistance(attacker.tileCoordinate, defender.tileCoordinate);
 		if(range > attacker.getMaxAttackRange() || range < attacker.getMinAttackRange()){
-			return "Out of attack range";
+			return -1;
 		}
 		
 		// Check that attacker has enough AP
-		if(attacker.currentAP < attacker.getAPCostAttack()) return "Unit needs "+ attacker.getAPCostAttack() + " AP to attack";
+		if(attacker.currentAP < attacker.getAPCostAttack()) return  attacker.getAPCostAttack();
 		
-		return "Can not attack this";
+		return -2;
 	}
 	
 	public static int minDamage(Unit attacker, Unit defender){

@@ -44,7 +44,7 @@ public class AttackCommand extends Command{
 				Combat.canAttack(attacker, defender);
 	}
 	
-	public String failReason(){
+	public int failReason(){
 		State s = State.activeState;
 		return Combat.failReason(s.unitList.get(attackerId), s.unitList.get(defenderId));
 	}

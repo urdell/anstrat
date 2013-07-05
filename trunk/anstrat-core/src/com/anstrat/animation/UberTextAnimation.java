@@ -32,6 +32,23 @@ public class UberTextAnimation extends Animation {
 		timePasd = 0f;
 	}
 	
+	public UberTextAnimation(TileCoordinate start, float xOffset, float yOffset, String textname){
+		this.tc = start;
+		this.tr = Assets.getTextureRegion(textname);
+		Vector2 pos = GEngine.getInstance().map.getTile(start).getPosition();
+		GMap map = GEngine.getInstance().map;
+		x = pos.x + map.TILE_WIDTH / 2f;
+		y = pos.y + map.TILE_HEIGHT / 2f;
+		x = x+xOffset;
+		y = y+yOffset;
+		length = 0f;
+		lifetimeLeft = 2.5f;
+		bugfix = lifetimeLeft;
+		alpha = 1f;
+		timePasd = 0f;
+	}
+	
+	
 	@Override
 	public void run(float delta){
 		timePasd += delta;

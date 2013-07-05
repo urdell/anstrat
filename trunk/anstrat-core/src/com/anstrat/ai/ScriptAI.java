@@ -30,10 +30,11 @@ public class ScriptAI implements IArtificialIntelligence {
 	/*
 	 * The AI will attempt to do different kind of actions in the following way.
 	 * 1. Buy units for the gold at hand.
-	 * 2. Attack enemy units in range, applying its attack algorithm to determine in which order to attack.
-	 * 3. Capture Buildings not owning, occupied by one of its own units.
-	 * 4. Walk for closest enemy unit, will only make the movement if it can make an attack this turn as well
-	 * 5. Walk for the closest building not already in possession, the AI need to have at least 2 AP to consider this move
+	 * 2. Activate abilities if profitable
+	 * 3. Attack enemy units in range, applying its attack algorithm to determine in which order to attack.
+	 * 4. Walk for the closest building not already in possession or occupied by one of its own units,
+	 * start with a unit which can reach a building prioritize unit closest to a building
+	 * 5. Walk for closest enemy unit, will only make the movement if it can make an attack this turn as well
 	 * 6. No enemy units in play nor any building not owned or occupied, 
 	 * walk towards enemy's mainbase, although always saves at least 3 ap
 	 * 7. End turn
