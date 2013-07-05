@@ -27,6 +27,7 @@ import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.geography.Pathfinding;
+import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 
 
@@ -99,8 +100,17 @@ public class ActionHandler {
 					if(c.isAllowed())
 						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					else {
-						gEngine.animationHandler.runParalell(new FullscreenTextAnimation(c.failReason()));
-						
+						//Fullscreen animation should be replacd by uber animations
+						//gEngine.animationHandler.runParalell(new FullscreenTextAnimation("c.failReason()"));
+							if (c.failReason() > 0){
+								// must originate from different tiles
+								//TileCoordinate leftCoordinate = new TileCoordinate(gTile.tile.coordinates.x-1,gTile.tile.coordinates.y);
+								//TileCoordinate rightCoordinate = new TileCoordinate(gTile.tile.coordinates.x+1,gTile.tile.coordinates.y);
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-120f,0f, "enemyunit"));
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,0f,-16f,"blue-"+c.failReason()));
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,120f,0f, "enemyunit"));
+								gEngine.selectionHandler.deselect();
+							}
 					}
 				}else{
 					gEngine.highlighter.highlightTiles(Pathfinding.getUnitRange(unit), false);
