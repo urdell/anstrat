@@ -100,15 +100,18 @@ public class ActionHandler {
 					if(c.isAllowed())
 						requestConfirm(gTile, selectedUnit, c, clickedQuadrant);
 					else {
-						//Fullscreen animation should be replacd by uber animations
-						//gEngine.animationHandler.runParalell(new FullscreenTextAnimation("c.failReason()"));
 							if (c.failReason() > 0){
-								// must originate from different tiles
-								//TileCoordinate leftCoordinate = new TileCoordinate(gTile.tile.coordinates.x-1,gTile.tile.coordinates.y);
-								//TileCoordinate rightCoordinate = new TileCoordinate(gTile.tile.coordinates.x+1,gTile.tile.coordinates.y);
-								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-120f,0f, "enemyunit"));
-								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,0f,-16f,"blue-"+c.failReason()));
-								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,120f,0f, "enemyunit"));
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "unitneeds"));
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,0f,-68f,"blue-"+c.failReason()));
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,185f,0f, "aptoattack"));
+								gEngine.selectionHandler.deselect();
+							}
+							if (c.failReason() == -1){
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "outofrange"));
+								gEngine.selectionHandler.deselect();
+							}
+							if (c.failReason() == -2){
+								gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "cantattack"));
 								gEngine.selectionHandler.deselect();
 							}
 					}
@@ -138,9 +141,32 @@ public class ActionHandler {
 													gEngine.selectionHandler.selectedUnit.abilities.indexOf(gEngine.selectionHandler.selectedTargetedAbility));
 			if(command.isAllowed())
 				requestAbilityConfirm(gTile, gEngine.selectionHandler.selectedUnit, command, gEngine.selectionHandler.selectedTargetedAbility, clickedQuadrant);
-			else
-				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateTargetedAbilityCommand)command).getReason(gEngine.selectionHandler.selectedUnit.tileCoordinate)));
+			else {
+				if ("Must target friendly unit".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "musttargetfriendly"));
+					gEngine.selectionHandler.deselect();
+				}
+				if ("Must target enemy unit".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+				gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "musttargetenemy"));
 				gEngine.selectionHandler.deselect();
+				}
+				if ("Target already at max AP".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "atmaxap"));
+					gEngine.selectionHandler.deselect();
+				}
+				if ("Target already at full health".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "atfullhealth"));
+					gEngine.selectionHandler.deselect();
+				}
+				if ("Leap tile not available".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "tilenotavailable"));
+					gEngine.selectionHandler.deselect();
+				}
+				if  ("not possible".equals(((ActivateTargetedAbilityCommand)command).getReason())){
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "notpossible"));
+					gEngine.selectionHandler.deselect();
+				}
+			}
 			break;
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
@@ -151,9 +177,9 @@ public class ActionHandler {
 					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "target-building"));
 					gEngine.selectionHandler.deselect();
 				}
-				else {
-				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason() ));
-				gEngine.selectionHandler.deselect();
+				if ("not possible".equals(((ActivateTargetedPlayerAbilityCommand)command).getReason())) {
+					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "notpossible"));
+					gEngine.selectionHandler.deselect();
 				}
 			}
 			break;
@@ -167,9 +193,16 @@ public class ActionHandler {
 				command = new ActivateDoubleTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility.type, temp.coords, gTile.tile.coordinates);
 				if(command.isAllowed())
 					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, clickedQuadrant);
-				else
-					gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason() ));
-					gEngine.selectionHandler.deselect();
+				else {
+					if( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason().equals("Can only swap friendly units")){
+						gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "cantswap"));
+						gEngine.selectionHandler.deselect();
+					}
+					if( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason().equals("not possible")) {
+						gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "notpossible"));
+						gEngine.selectionHandler.deselect();
+					}
+				}
 			}
 			break;
 		default:
