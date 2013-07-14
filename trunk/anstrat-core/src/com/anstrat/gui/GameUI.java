@@ -18,6 +18,7 @@ import com.anstrat.guiComponent.ValueDisplay;
 import com.anstrat.menu.MainMenu;
 import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
+import com.anstrat.popup.HelpPopup;
 import com.anstrat.popup.Popup;
 import com.anstrat.popup.TutorialPopup;
 import com.anstrat.popup.UnitInfoPopup;
@@ -149,7 +150,7 @@ public class GameUI extends UI {
         helpButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	new TutorialPopup().show();
+            	new HelpPopup().show();
             }
         } );
         
