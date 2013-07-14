@@ -46,7 +46,7 @@ public class MagicPopup extends Popup {
 			
 			Player player = State.activeState.getCurrentPlayer();
 			GEngine.getInstance().selectionHandler.selectPlayerAbility(
-					new CometStrike(player));
+					new CometStrike(player), "confirm-ability");
 			popup.close();
 		}
 	};

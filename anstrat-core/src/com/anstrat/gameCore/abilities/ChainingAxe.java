@@ -98,12 +98,11 @@ public class ChainingAxe extends TargetedAbility {
 	
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		ConfirmRow damageRow = new DamageRow(
 				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
 				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-chain", damageRow, ConfirmDialog.apcost, apRow);
 	}
 	
 	@Override

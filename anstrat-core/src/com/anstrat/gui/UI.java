@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class UI extends Stage{
 
-	private boolean visible = true;
+	protected boolean visible = true;
 	
 	public UI(SpriteBatch batch, OrthographicCamera camera) {
 		super(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, batch);

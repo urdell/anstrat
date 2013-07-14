@@ -63,7 +63,6 @@ public class ShadowImage extends TargetedAbility {
 
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		ConfirmRow damageRow = new DamageRow(
 				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
@@ -73,7 +72,7 @@ public class ShadowImage extends TargetedAbility {
 			HPAfterAttack = source.getMaxHP();
 		}
 		ConfirmRow healRow = new HealRow(source.currentHP, HPAfterAttack);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow,healRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-lifesteal", damageRow, healRow, ConfirmDialog.apcost, apRow);
 	}
 	
 	@Override

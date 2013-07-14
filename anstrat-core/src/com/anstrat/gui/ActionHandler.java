@@ -171,7 +171,8 @@ public class ActionHandler {
 		case SelectionHandler.SELECTION_TARGETED_PLAYER_ABILITY:
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			if(command.isAllowed())
-				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, clickedQuadrant);
+				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, 
+						gEngine.selectionHandler.abilityName, clickedQuadrant);
 			else{
 				if ("Target is a building".equals(((ActivateTargetedPlayerAbilityCommand)command).getReason())){
 					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "target-building"));
@@ -187,12 +188,13 @@ public class ActionHandler {
 			DoubleTargetedPlayerAbility temp = gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility;
 			if (temp.state == 0) {
 				temp.activateFirst(State.activeState.getCurrentPlayer(), gTile.tile.coordinates);
-				GEngine.getInstance().selectionHandler.selectPlayerAbility(temp);
+				GEngine.getInstance().selectionHandler.selectPlayerAbility(temp, "confirm-ability");
 			}
 			else {
 				command = new ActivateDoubleTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility.type, temp.coords, gTile.tile.coordinates);
 				if(command.isAllowed())
-					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, clickedQuadrant);
+					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, 
+							gEngine.selectionHandler.abilityName, clickedQuadrant);
 				else {
 					if( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason().equals("Can only swap friendly units")){
 						gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "cantswap"));
@@ -271,7 +273,7 @@ public class ActionHandler {
 				}
 				
 				if(ability instanceof TargetedAbility){
-					GEngine.getInstance().selectionHandler.selectAbility(unit, (TargetedAbility)ability);
+					GEngine.getInstance().selectionHandler.selectAbility(unit, (TargetedAbility)ability, "confirm-ability");
 				}
 			}
 			GEngine.getInstance().updateUI();
@@ -336,21 +338,22 @@ public class ActionHandler {
 	 * @param ability
 	 * @param command
 	 */
-	public void requestPlayerAbilityConfirm(GTile targetTile, Command command, PlayerAbility ability, int clickedQuadrant){	
+	public void requestPlayerAbilityConfirm(GTile targetTile, Command command, PlayerAbility ability, 
+			String abilName, int clickedQuadrant){	
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
 		confirmCommand = command;
 		showingConfirmDialog = true;
 		int dialogPosition = ConfirmDialog.invertQuadrant(clickedQuadrant);
 		if(command instanceof ActivatePlayerAbilityCommand){
-			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
+			gEngine.confirmDialog = ability.generateConfirmDialog(abilName, dialogPosition);
 
 		}
 		else if(command instanceof ActivateTargetedPlayerAbilityCommand){
-			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
+			gEngine.confirmDialog = ability.generateConfirmDialog(abilName, dialogPosition);
 		}
 		else if(command instanceof ActivateDoubleTargetedPlayerAbilityCommand){
-			gEngine.confirmDialog = ability.generateConfirmDialog(dialogPosition);
+			gEngine.confirmDialog = ability.generateConfirmDialog(abilName, dialogPosition);
 		}
 	}
 	

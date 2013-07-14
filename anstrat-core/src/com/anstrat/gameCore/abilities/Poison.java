@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.PoisonAnimation;
+import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -17,6 +18,7 @@ import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.DamageRow;
 import com.anstrat.gui.confirmDialog.TextRow;
+import com.anstrat.gui.confirmDialog.XxxPicRow;
 
 public class Poison extends TargetedAbility{
 	private static final long serialVersionUID = 1L;
@@ -70,12 +72,11 @@ public class Poison extends TargetedAbility{
 
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		ConfirmRow damageRow = new DamageRow(
 				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
 				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-poison", damageRow, ConfirmDialog.apcost, apRow);
 	}
 	
 	

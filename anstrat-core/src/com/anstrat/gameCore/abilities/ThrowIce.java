@@ -85,7 +85,7 @@ public class ThrowIce extends TargetedAbility{
 		ConfirmRow damageRow = new DamageRow(
 				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
 				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, damageRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-ice", damageRow, ConfirmDialog.apcost, apRow);
 	}
 	
 	@Override

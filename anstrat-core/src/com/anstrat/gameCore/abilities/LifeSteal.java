@@ -2,11 +2,18 @@ package com.anstrat.gameCore.abilities;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.LifeStealAnimation;
+import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
+import com.anstrat.gui.confirmDialog.APRow;
+import com.anstrat.gui.confirmDialog.ConfirmDialog;
+import com.anstrat.gui.confirmDialog.ConfirmRow;
+import com.anstrat.gui.confirmDialog.DamageRow;
+import com.anstrat.gui.confirmDialog.HealRow;
+import com.anstrat.gui.confirmDialog.TextRow;
 
 public class LifeSteal extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
@@ -55,6 +62,20 @@ public class LifeSteal extends TargetedAbility {
 			return "heal-button-active";
 		}
 		return "heal-button";
+	}
+	
+	@Override
+	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
+		ConfirmRow apRow = new APRow(source, apCost);
+		ConfirmRow damageRow = new DamageRow(
+				Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER), 
+				Combat.maxDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER));
+		int HPAfterAttack = source.currentHP+Combat.minDamage(source, StateUtils.getUnitByTile(target), DAMAGEMULTIPLIER);
+		if(source.currentHP+source.getAttack() > source.getMaxHP() ){
+			HPAfterAttack = source.getMaxHP();
+		}
+		ConfirmRow healRow = new HealRow(source.currentHP, HPAfterAttack);
+		return ConfirmDialog.abilityConfirm(position, "confirm-lifesteal", healRow, ConfirmDialog.apcost, apRow);
 	}
 }
 
