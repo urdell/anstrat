@@ -5,8 +5,11 @@ import com.anstrat.core.GameInstance;
 import com.anstrat.core.GameInstanceType;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.Player;
+import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.popup.ConfirmPopup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,7 +25,7 @@ public class GameInstanceView extends Table {
     	setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("games-frame")));
 
     	defaults().left().fillX().expandX();
-    	
+    	Table info = new Table();
     	Table top = new Table();
     	top.defaults().left().height(4f*Main.percentHeight);
     	top.add(players);
@@ -30,16 +33,20 @@ public class GameInstanceView extends Table {
     	Table bottom = new Table();
     	bottom.add(turn).pad(3f+Main.percentWidth);
     	
-    	add(top);
-    	row();
-    	add(bottom);
+    	info.add(top);
+    	info.row();
+    	info.add(bottom);
+    	add(info);
     	
-    	addListener(new ClickListener() {
-	        @Override
-	        public void clicked(InputEvent event, float x, float y) {
-	        	instance.showGame(false);
-	        }
-		});
+    	Button deleteGameButton = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), new ClickListener() {
+    		@Override
+    		public void clicked(InputEvent event, float x, float y) {
+    			new ConfirmPopup(instance).show();
+    		}
+    	});
+    	
+    	add(deleteGameButton).height(Main.percentHeight*6f).width(Main.percentWidth*10);
+    	
 	}
 	
 	private static String formatOpponent(GameInstance instance){
