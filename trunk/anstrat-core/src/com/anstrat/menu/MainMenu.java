@@ -5,11 +5,8 @@ import java.util.Random;
 import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
-import com.anstrat.core.GameInstanceType;
 import com.anstrat.core.Main;
-import com.anstrat.core.NetworkGameInstance;
 import com.anstrat.core.Options;
-import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
@@ -18,13 +15,10 @@ import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -100,7 +94,7 @@ public class MainMenu extends MenuScreen {
             	AudioAssets.playSound("dummy1");
             }
         });
-        Main.getInstance().invites.registerInviteButton(invitedButton);
+        //Main.getInstance().invites.registerInviteButton(invitedButton);
         
         NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
         TextButtonStyle tbst = new TextButtonStyle(emp,emp,emp);
@@ -207,7 +201,7 @@ public class MainMenu extends MenuScreen {
         for(final GameInstance gi : Main.getInstance().games.getActiveGames()){    	
         	Table table = gi.isUserCurrentPlayer() ? current : waiting;
         	table.row();
-        	table.add(new GameInstanceView(gi)).fillX().expandX().height(17f*Main.percentHeight);
+        	table.add(new GameInstanceView(gi)).fillX().expandX().height(9f*Main.percentHeight);
         }
 		
         // Game requests

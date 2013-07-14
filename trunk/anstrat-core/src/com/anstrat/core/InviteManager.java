@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.anstrat.menu.InvitesMenu;
 import com.anstrat.network.protocol.GameOptions;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 public class InviteManager {
 	
@@ -21,7 +19,6 @@ public class InviteManager {
 	 */
 	private List<Invite> outgoingInvites = new ArrayList<Invite>();
 	private FileHandle invitesFile;
-	public Button inviteButton;
 	
 	public InviteManager(FileHandle invitesFile){
 		this.invitesFile = invitesFile;
@@ -29,7 +26,6 @@ public class InviteManager {
 	
 	public void recievedInvite(long inviteId, String senderName, GameOptions gameInfo){
 		invites.add( new Invite(inviteId, senderName, gameInfo));
-		refresh();
 	}
 	
 	public void inviteCompleted(long inviteID, boolean accept) {
@@ -47,12 +43,10 @@ public class InviteManager {
 		}
 		outgoingInvites.remove(inviteToBeRemoved);
 		
-		refresh();
 	}
 
 	public void invitePending(long inviteID, String receiverDisplayName, GameOptions options) {
 		outgoingInvites.add( new Invite(inviteID, receiverDisplayName, options));
-		refresh();
 		
 	}
 	
@@ -61,23 +55,6 @@ public class InviteManager {
 	}
 	public List<Invite> getSentInvites(){
 		return outgoingInvites;
-	}
-	
-	private void refresh(){
-		if(inviteButton != null){
-			inviteButton.setVisible(( !invites.isEmpty() || !outgoingInvites.isEmpty() ));
-			inviteButton.setVisible(true); //TODO remove after finished with testing
-		}
-		
-		InvitesMenu.getInstance().refresh();
-	}
-	
-	/**
-	 * This button will be visible or invisible depending on invite state.
-	 */
-	public void registerInviteButton(Button inviteButton){
-		this.inviteButton = inviteButton;
-		refresh();
 	}
 	
 	public void saveInviteInstances(){
