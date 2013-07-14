@@ -63,6 +63,7 @@ public class SocialMessageHandler {
 			// Assumes that if INVITE_COMPLETED succeeds, GAME_STARTED will also succeed
 			// Assumes that if INVITE_COMPLETED fails, GAME_STARTED will also fail
 			// This however is currently not guaranteed, as it's impossible to make sure 2 or 0 NetworkMessage's reaches the end client.
+			logger.info("inviteAccept: Sending GAME_STARTED to both players.");
 			connectionManager.sendMessage(client, gameStarted);
 			connectionManager.sendMessage(invite.sender, gameStarted); 
 		}
@@ -97,9 +98,11 @@ public class SocialMessageHandler {
 		// Send invite completed to original sender of invite
 		if(connectionManager.sendMessage(invite.sender, inviteCompleted)){
 			// Invite completion was successfully sent, remove it from the database as it has been processed by both players
+			logger.info("inviteDecline: Invite completion successfully sent.");
 			db.removeInvites(inviteID);
 		}
 		else{
+			logger.info("inviteDecline: Recipient will be informed on his next login.");
 			// User is not available at the moment, the invite will be sent on his next login
 			db.updateInvite(inviteID, Invite.Status.REJECTED, null);
 		}
@@ -186,6 +189,7 @@ public class SocialMessageHandler {
 			// Notify user of accepted invite request
 			else if(userID == invite.sender && invite.status == Status.ACCEPTED){
 				NetworkMessage message = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, invite.inviteID, false);
+				logger.info("onUserLoggedIn: Sending GAME_STARTED to %s.", event.getClient());
 				
 				if(connectionManager.sendMessage(event.getClient(), message)){
 					// Message received, the invite has now been processed by both players and can be deleted
@@ -217,6 +221,7 @@ public class SocialMessageHandler {
 			// Notify user of declined invite request
 			else if(userID == invite.sender && invite.status == Status.REJECTED){
 				NetworkMessage message = new NetworkMessage(NetworkMessage.Command.INVITE_COMPLETED, invite.inviteID, false);
+				logger.info("Notifying user %s of declined invite (%d).", event.getClient(), invite.inviteID);
 				if(connectionManager.sendMessage(event.getClient(), message)){
 					// Message received, the invite has now been processed by both players and can be deleted
 					invitesToRemove.add(invite.inviteID);
