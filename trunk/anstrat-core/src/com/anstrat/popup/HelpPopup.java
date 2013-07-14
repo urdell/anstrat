@@ -4,7 +4,6 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class HelpPopup extends Popup{
 	
-	private Button basicButton, abilityButton, godPowerButton, creditButton;
+	private Button basicButton, abilityButton, /*godPowerButton,*/ creditButton;
 	
 	private static final ClickListener BASIC_BUTTON_LISTENER = new ClickListener() {
 		@Override
@@ -38,6 +37,7 @@ public class HelpPopup extends Popup{
 			new HelpAbilityPopup().show();
 		}
 	};
+	/*
 	private static final ClickListener GOD_POWER_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
@@ -45,13 +45,14 @@ public class HelpPopup extends Popup{
 			//TODO popup abilities tutorial
 			popup.close();
 		}
-	};
+	};*/
 	private static final ClickListener CREDIT_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			HelpPopup popup = (HelpPopup) Popup.getCurrentPopup();
-			//TODO popup abilities tutorial
+			
 			popup.close();
+			new CreditPopup().show();
 		}
 	};
 	
@@ -61,7 +62,7 @@ public class HelpPopup extends Popup{
 		
 		basicButton = ComponentFactory.createButton("Game Basics", BASIC_BUTTON_LISTENER);
 		abilityButton = ComponentFactory.createButton("Abilities", ABILITY_BUTTON_LISTENER);
-		godPowerButton = ComponentFactory.createButton("Powers of the Gods", GOD_POWER_BUTTON_LISTENER);
+		//godPowerButton = ComponentFactory.createButton("Powers of the Gods", GOD_POWER_BUTTON_LISTENER);
 		creditButton = ComponentFactory.createButton("Credits", CREDIT_BUTTON_LISTENER);
 		
 		Table buttonTable = new Table(Assets.SKIN);
@@ -81,8 +82,8 @@ public class HelpPopup extends Popup{
 		this.row();
 		this.add(abilityButton);			//space
 		this.row();
-		this.add(godPowerButton);			//space
-		this.row();
+		//this.add(godPowerButton);			//space
+		//this.row();
 		this.add(creditButton);			
 		this.row();
 		this.add(buttonCancel);

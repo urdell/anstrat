@@ -36,9 +36,9 @@ public class HelpAbilityPopupUnit extends Table {
 		
 		Image abilityImage = new Image(Assets.getTextureRegion(tempAbility.iconName));
 		
-		this.add(unitTypeTable).size(Main.percentWidth*30f, Main.percentHeight*15f).align(Align.left);
+		this.add(unitTypeTable).size(Main.percentWidth*33f, Main.percentHeight*15f).align(Align.left);
 		this.add(abilityImage).size(Main.percentWidth*11f, Main.percentHeight*7f);
-		this.add(descTable).size(Main.percentWidth*50f, Main.percentHeight*25f);
+		this.add(descTable).size(Main.percentWidth*56f, Main.percentHeight*25f);
 		
 		this.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("fadetoblack")));
 	}
