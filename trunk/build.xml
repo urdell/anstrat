@@ -31,7 +31,9 @@
         </javac>
         -->
         <!-- Server -->
-        <javac encoding="UTF-8" srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source" />
+        <javac encoding="UTF-8" srcdir="anstrat-server/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
+            <classpath refid="dependencies"/>
+        </javac>
 
         <!-- Desktop -->
         <javac encoding="UTF-8" srcdir="anstrat-desktop/src" destdir="${bin}" includeantruntime="false" debug="true" debuglevel="lines,source">
