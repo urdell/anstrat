@@ -3,8 +3,11 @@ package com.anstrat.menu;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
+import com.anstrat.gui.GEngine;
+import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,9 +26,12 @@ public class HotseatNextTurnScreen implements Screen {
 	private Table background;
 	private TextureAtlas atlas;
 	
+	private boolean begun = false;
+	
 	private HotseatNextTurnScreen(){
-		atlas = new TextureAtlas("textures-loadingscreen/pack.atlas");
-		splashscreen = atlas.findRegion("splashscreen");
+		//atlas = new TextureAtlas("textures-loadingscreen/pack.atlas");
+		//splashscreen = atlas.findRegion("splashscreen");
+		splashscreen = Assets.getTextureRegion("white-line-hard");
 
 		this.batch = Main.getInstance().batch;
 		this.stage = Main.getInstance().overlayStage;
@@ -36,6 +42,11 @@ public class HotseatNextTurnScreen implements Screen {
 		background.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            	for(GUnit gUnit : GEngine.getInstance().gUnits.values()){
+    				gUnit.updateHealthbar();
+    			}
+    			GEngine.getInstance().updateUI();
+    			GEngine.getInstance().userInterface.updateCurrentPlayer();
             	GameInstance.activeGame.showGame(false);
             }
         });
@@ -50,9 +61,19 @@ public class HotseatNextTurnScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		batch.begin();
-		batch.disableBlending();
-		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentWidth*175f,1f,1f,0f);
+		Color temp = batch.getColor();
 		batch.enableBlending();
+		batch.setColor(0f,0f,0f,1f);
+		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentHeight*100f,1f,1f,0f);
+		batch.setColor(temp);
+		String text = GEngine.getInstance().state.players[GEngine.getInstance().state.currentPlayerId].getDisplayName();
+		Assets.STANDARD_FONT.setScale(0.75f, -0.75f);
+		float width = Assets.STANDARD_FONT.getBounds(text).width;
+		Assets.STANDARD_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*80f);
+		text = "Touch screen to play.";
+		Assets.STANDARD_FONT.setScale(0.45f, -0.45f);
+		width = Assets.STANDARD_FONT.getBounds(text).width;
+		Assets.STANDARD_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*40f);
 		batch.end();
 	}
 
@@ -82,6 +103,6 @@ public class HotseatNextTurnScreen implements Screen {
 	@Override
 	public void dispose() {
 		me = null;
-		atlas.dispose();
+		if(atlas!=null) atlas.dispose();
 	}
 }

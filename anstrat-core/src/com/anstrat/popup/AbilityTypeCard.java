@@ -36,7 +36,7 @@ public class AbilityTypeCard extends Table {
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
 		
 		this.type = type;
-		name = new Label(type.name, Assets.SKIN);
+		name = new Label("\n"+type.name, Assets.SKIN);
 		cost = new Label(String.valueOf(type.manaCost), Assets.SKIN);
 		description = new Label(type.description, new LabelStyle(new BitmapFont(),Color.WHITE));
 		description.setWrap(true);
@@ -49,7 +49,7 @@ public class AbilityTypeCard extends Table {
 		float imageWidth = Gdx.graphics.getWidth()/3f;
 		
 		this.defaults().top();
-		this.add(name).center().padTop(-3f*Main.percentHeight).padBottom(-2f*Main.percentHeight);
+		this.add(name).center().padTop(3f*Main.percentHeight).padBottom(-2f*Main.percentHeight);
 		this.row();
 		this.add(image).left().width(imageWidth).height(imageHeight);
 		this.row();
@@ -58,8 +58,8 @@ public class AbilityTypeCard extends Table {
 		
 		Table inner = new Table();
 		inner.defaults().left();
-		inner.add(costIcon).height(3f*Main.percentHeight).width(6f*Main.percentWidth);
-		inner.add(cost);
+		//inner.add(costIcon).height(3f*Main.percentHeight).width(6f*Main.percentWidth);
+		//inner.add(cost);
 		
 		this.add(inner).left().height(3f*Main.percentHeight);
 	}
