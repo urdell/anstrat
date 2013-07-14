@@ -13,7 +13,7 @@ DAEMON="/usr/bin/java"
 
 JAVA_OPTS="-server -Xmx1g"
 CLASS=com.anstrat.server.MainServer
-CLASSPATH="libs/*:../build/classes"
+CLASSPATH="$ROOT_DIRECTORY/anstrat-server/libs/*:$ROOT_DIRECTORY/anstrat-core/libs/*:$ROOT_DIRECTORY/build/classes"
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 PIDFILE=/var/run/$NAME.pid
@@ -33,9 +33,11 @@ SCRIPTNAME=/etc/init.d/$NAME
 do_start()
 {
   # Update and compile server
-  (cd $ROOT_DIRECTORY; svn update; ant compile-server-only)
+  (cd $ROOT_DIRECTORY; svn update; ant compile)
 
-  start-stop-daemon --start --background --chdir "$SERVER_DIRECTORY" --pidfile "$PIDFILE" --chuid "$USER" --make-pidfile --exec $DAEMON -- $JAVA_OPTS -cp $CLASSPATH $CLASS
+  start-stop-daemon --start --background --chdir "$SERVER_DIRECTORY" \
+  --pidfile "$PIDFILE" --chuid "$USER" --make-pidfile \
+  --exec /bin/bash -- -c "$DAEMON $JAVA_OPTS -cp $CLASSPATH $CLASS > info.log 2> error.log"
 }
 
 #
@@ -43,6 +45,10 @@ do_start()
 #
 do_stop()
 {
+  # Kill child process spawned by /bin/bash -c
+  bashPID=$(cat $PIDFILE); [ -n "$bashPID" ] && pkill -P "$bashPID"
+
+  # Stop daemon
   start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
   RETVAL="$?"
   rm -f $PIDFILE
