@@ -60,7 +60,7 @@ public class SplashScreen implements Screen {
 	public void render(float delta) {
 		batch.begin();
 		batch.disableBlending();
-		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentHeight*100f,1f,1f,0f);
+		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentWidth*166.66f,1f,1f,0f);
 		batch.enableBlending();
 		batch.end();
 		
