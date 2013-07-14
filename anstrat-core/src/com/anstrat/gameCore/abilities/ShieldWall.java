@@ -43,7 +43,7 @@ public class ShieldWall extends Ability {
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		ConfirmRow healRow = new HealRow(1, 1/2);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, healRow);
+		return ConfirmDialog.abilityConfirm(position, nameRow, healRow, apRow);
 	}
 	
 	
