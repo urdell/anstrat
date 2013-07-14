@@ -39,6 +39,7 @@ public class ConfirmDialog {
 	ColorTable colorTable;
 	public Rectangle okBounds, cancelBounds, dialogBounds;
 	public boolean showingConfirmButtons = false;
+	public static ConfirmRow apcost = new XxxPicRow(Assets.getTextureRegion("apcost"));
 	
 	/**
 	 * Top left coordinates
@@ -139,15 +140,14 @@ public class ConfirmDialog {
 		}
 	}
 	
-	public static ConfirmDialog abilityConfirm(int dialogPosition, ConfirmRow... confirmRows){
+	public static ConfirmDialog abilityConfirm(int dialogPosition, String topLabel, ConfirmRow... confirmRows){
 		ConfirmDialog confirmDialog = new ConfirmDialog(dialogPosition);
 		
-		confirmDialog.topLabel = Assets.getTextureRegion("confirm-ability");
+		confirmDialog.topLabel = Assets.getTextureRegion(topLabel==null || topLabel.equals("")?"confirm-ability":topLabel);
 		confirmDialog.rows.add(new TextRow(""));//empty row to make room for top label
 		for(ConfirmRow row : confirmRows){
 			confirmDialog.rows.add(row);
 		}
-		
 		confirmDialog.refreshBounds();
 		return confirmDialog;
 	}
@@ -171,6 +171,7 @@ public class ConfirmDialog {
 		confirmDialog.topLabel = Assets.getTextureRegion("confirm-attack");
 		confirmDialog.rows.add(new TextRow(""));//empty row to make room for top label
 		confirmDialog.rows.add(new DamageRow(Combat.minDamage(attacker, target), Combat.maxDamage(attacker, target)));
+		confirmDialog.rows.add(apcost);
 		confirmDialog.rows.add(new APRow(attacker, attacker.getAPCostAttack()));
 		
 		confirmDialog.refreshBounds();

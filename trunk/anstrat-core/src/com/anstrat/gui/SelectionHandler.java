@@ -38,6 +38,7 @@ public class SelectionHandler {
 	public TargetedPlayerAbility selectedTargetedPlayerAbility = null;
 	public DoubleTargetedPlayerAbility selectedDoubleTargetedPlayerAbility = null;
 	public int selectionType = SELECTION_EMPTY;
+	public String abilityName;
 	
 	
 	public void selectUnit(Unit unit){
@@ -65,7 +66,7 @@ public class SelectionHandler {
 		}
 		
 	}
-	public void selectAbility(Unit source, TargetedAbility ability){
+	public void selectAbility(Unit source, TargetedAbility ability, String abilName){
 		selectedUnit = source;
 		selectedTargetedAbility = ability;
 		selectionType = SELECTION_TARGETED_ABILITY;
@@ -79,7 +80,7 @@ public class SelectionHandler {
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);	
 	}
 	
-	public void selectPlayerAbility(TargetedPlayerAbility ability){
+	public void selectPlayerAbility(TargetedPlayerAbility ability, String abilName){
 		selectedTargetedPlayerAbility = ability;
 		selectionType = SELECTION_TARGETED_PLAYER_ABILITY;
 		
@@ -93,7 +94,7 @@ public class SelectionHandler {
 		GEngine.getInstance().highlighter.setOutline(highlights, Highlighter.BORDER_ABILITY);
 	}
 	
-	public void selectPlayerAbility(DoubleTargetedPlayerAbility ability){
+	public void selectPlayerAbility(DoubleTargetedPlayerAbility ability, String abilName){
 		selectedDoubleTargetedPlayerAbility = ability;
 		selectionType = SELECTION_DOUBLE_TARGETED_PLAYER_ABILITY;
 		

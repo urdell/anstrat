@@ -50,13 +50,12 @@ public class Heal extends TargetedAbility {
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		Unit targetUnit = StateUtils.getUnitByTile(target);
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		int finalHealth = targetUnit.currentHP+HEAL_AMOUNT;
 		if(finalHealth > targetUnit.getUnitType().maxHP)
 			finalHealth = targetUnit.getUnitType().maxHP;
 		ConfirmRow healRow = new HealRow(StateUtils.getUnitByTile(target).currentHP, finalHealth);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, healRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-heal", healRow, ConfirmDialog.apcost, apRow);
 	}
 
 	@Override

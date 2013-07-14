@@ -52,10 +52,9 @@ public class APHeal extends TargetedAbility{
 	
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
 		ConfirmRow targetApRow = new APRow(StateUtils.getUnitByTile(target), -2);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow, targetApRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-energize", targetApRow, ConfirmDialog.apcost, apRow);
 	}
 
 	@Override

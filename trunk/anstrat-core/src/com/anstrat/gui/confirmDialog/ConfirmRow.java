@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class ConfirmRow {
 
-	public static final float ROW_HEIGHT = (Gdx.graphics.getHeight()*0.06f);
+	public static final float ROW_HEIGHT = (Gdx.graphics.getHeight()*0.04f);
 	public static final float ROW_WIDTH = ROW_HEIGHT*4;
 	
 	

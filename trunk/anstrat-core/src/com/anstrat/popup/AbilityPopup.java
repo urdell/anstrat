@@ -48,10 +48,10 @@ public class AbilityPopup extends Popup {
 			PlayerAbility ability = PlayerAbilityFactory.createAbility(type, State.activeState.getCurrentPlayer());
 			Gdx.app.log("AbilityPopup", String.format("User wants to cast '%s'.", type.name));
 			if (ability instanceof TargetedPlayerAbility) {
-				GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability);
+				GEngine.getInstance().selectionHandler.selectPlayerAbility((TargetedPlayerAbility) ability, "confirm-ability");
 			}
 			else if (ability instanceof DoubleTargetedPlayerAbility) {
-				GEngine.getInstance().selectionHandler.selectPlayerAbility((DoubleTargetedPlayerAbility) ability);
+				GEngine.getInstance().selectionHandler.selectPlayerAbility((DoubleTargetedPlayerAbility) ability, "confirm-ability");
 			}
 			else {
 				Command command = new ActivatePlayerAbilityCommand(ability.player, type);

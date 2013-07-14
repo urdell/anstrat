@@ -45,7 +45,7 @@ public abstract class TargetedAbility extends Ability{
 	public ConfirmDialog generateConfirmDialog(Unit source, TileCoordinate target, int position){
 		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-ability", nameRow, apRow);
 	}
 	
 	public void activate(Unit source, TileCoordinate tc){

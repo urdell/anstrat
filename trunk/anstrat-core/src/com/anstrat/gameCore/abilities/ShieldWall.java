@@ -40,10 +40,10 @@ public class ShieldWall extends Ability {
 	
 	@Override
 	public ConfirmDialog generateConfirmDialog(Unit source, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		ConfirmRow healRow = new HealRow(1, 1/2);
-		return ConfirmDialog.abilityConfirm(position, nameRow, healRow, apRow);
+		ConfirmRow textRow1 = new TextRow("Increased");
+		ConfirmRow textRow2 = new TextRow("defense.");
+		return ConfirmDialog.abilityConfirm(position, "confirm-shield", textRow1, textRow2, ConfirmDialog.apcost, apRow);
 	}
 	
 	

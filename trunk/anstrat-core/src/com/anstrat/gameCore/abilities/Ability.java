@@ -2,6 +2,7 @@ package com.anstrat.gameCore.abilities;
 
 import java.io.Serializable;
 
+import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.confirmDialog.APRow;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
@@ -32,9 +33,8 @@ public abstract class Ability implements Serializable {
 	}
 	
 	public ConfirmDialog generateConfirmDialog(Unit source, int position){
-		ConfirmRow nameRow = new TextRow(name);
 		ConfirmRow apRow = new APRow(source, apCost);
-		return ConfirmDialog.abilityConfirm(position, nameRow, apRow);
+		return ConfirmDialog.abilityConfirm(position, "confirm-boom", ConfirmDialog.apcost, apRow);
 	}
 	
 	public abstract String getIconName(Unit source);
