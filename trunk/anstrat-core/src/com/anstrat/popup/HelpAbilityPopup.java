@@ -5,8 +5,11 @@ import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
+import com.anstrat.guiComponent.ColorTable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -31,6 +34,7 @@ public class HelpAbilityPopup extends Popup{
 				unitTable.row();
 				Table table = new Table();
 				table.setColor(new Color(Color.BLUE));
+				//ColorTable table2 = new ColorTable(new Color(Color.BLUE));
 				//table.getColor().a = 0.1f;
 				unitTable.add(table).height(Main.percentHeight*10f).fillX();
 				unitTable.row();
@@ -40,6 +44,7 @@ public class HelpAbilityPopup extends Popup{
 				unitTable.row();
 				com.badlogic.gdx.scenes.scene2d.ui.Widget table = new com.badlogic.gdx.scenes.scene2d.ui.Widget();
 				table.setColor(new Color(Color.BLUE));
+				//ColorTable table2 = new ColorTable(new Color(Color.BLUE));
 				//table.getColor().a = 0.1f;
 				unitTable.add(table).height(Main.percentHeight*10f).fillX();
 				unitTable.row();
@@ -51,6 +56,7 @@ public class HelpAbilityPopup extends Popup{
 				unitTable.row();
 				Table table = new Table();
 				table.setColor(new Color(Color.BLUE));
+				//ColorTable table2 = new ColorTable(new Color(Color.BLUE));
 				//table.getColor().a = 0.1f;
 				unitTable.add(table).height(Main.percentHeight*10f).fillX();
 				unitTable.row();
@@ -59,6 +65,7 @@ public class HelpAbilityPopup extends Popup{
 				unitTable.add(new HelpAbilityPopupUnit(type)).align(Align.left);
 				unitTable.row();
 				Table table = new Table();
+				//ColorTable table2 = new ColorTable(new Color(Color.BLUE));
 				table.setColor(new Color(Color.BLUE));
 				//table.getColor().a = 0.1f;
 				unitTable.add(table).height(Main.percentHeight*10f).fillX();
@@ -75,7 +82,7 @@ public class HelpAbilityPopup extends Popup{
 		this.setHeight(Main.percentHeight*50f);
 		this.setWidth(Main.percentWidth*50f);
 		this.defaults().space(Main.percentHeight).top().center();
-		this.add(scroll).size(Main.percentWidth*100f, Main.percentHeight*0f);
+		this.add(scroll).size(Main.percentWidth*100f, Main.percentHeight*100f);
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty")));
 	}
 	
