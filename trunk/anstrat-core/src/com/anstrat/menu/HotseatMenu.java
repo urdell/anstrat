@@ -75,6 +75,9 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
 		contents.add(centerLogin).bottom();
+		
+
+		mapSelecter.sizeSelected(MapType.GENERATED_SIZE_MEDIUM);
 	}
 	
 	public static synchronized HotseatMenu getInstance() {
