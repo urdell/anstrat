@@ -32,7 +32,7 @@ public class Building implements Serializable {
 		case TYPE_RUNE:
 			typeName = "Runestone";
 			goldIncome = 0;
-			manaIncome = 3;
+			//manaIncome = 3;
 			captureCost = 1;
 			break;
 		case TYPE_VILLAGE:
