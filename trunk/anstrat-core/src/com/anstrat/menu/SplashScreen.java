@@ -60,7 +60,7 @@ public class SplashScreen implements Screen {
 	public void render(float delta) {
 		batch.begin();
 		batch.disableBlending();
-		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentWidth*175f,1f,1f,0f);
+		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentHeight*100f,1f,1f,0f);
 		batch.enableBlending();
 		batch.end();
 		
@@ -71,7 +71,7 @@ public class SplashScreen implements Screen {
 			background.clear();
 			Image startText = new Image(new TextureRegionDrawable(atlas.findRegion("splashscreen-startgame")));
 			startText.addAction(Actions.forever( Actions.sequence(Actions.fadeOut( animationLength ), Actions.fadeIn( animationLength ))));
-			background.bottom().right().add(startText).size(Main.percentWidth*38.5f,Main.percentWidth*13f)
+			background.bottom().right().add(startText).size(Main.percentWidth*38.5f,Main.percentHeight*8f)
 				.padBottom(-Main.percentWidth*0.25f);//.padRight(Main.percentWidth*1f);
 		}
 	}
