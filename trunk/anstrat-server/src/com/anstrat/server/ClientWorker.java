@@ -59,10 +59,14 @@ public class ClientWorker implements Runnable {
     }
     
     public synchronized boolean sendMessage(NetworkMessage message){
-    	if(socket.isClosed()) return false;
+    	if(socket.isClosed()){
+    		logger.info("Attempted to send %s to a closed socket (%s).", message.getCommand(), source);
+    		return false;
+    	}
     	
     	try{
     		out.writeObject(message);
+    		out.flush();
     		logger.info("Sent '%s' to %s.", message.getCommand(), source);
     		return true;
     	}
