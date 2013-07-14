@@ -59,8 +59,9 @@ public class Map implements Serializable{
 	 */
 	public Map(int xSize, int ySize, Random random){
 		this(xSize, ySize);
-		if (xSize > 15 || ySize > 15)
-			Gdx.app.log("Map", "Warning: Big map, may take a long time to generate (bad o(n2)-algorithms)");
+		// Can't use Gdx here since this code is used by the server too
+		// if (xSize > 15 || ySize > 15)
+		//	Gdx.app.log("Map", "Warning: Big map, may take a long time to generate (bad o(n2)-algorithms)");
 		while (!randomizeFairMap(random));
 		name = "Random";
 	}
@@ -300,9 +301,10 @@ public class Map implements Serializable{
 		
 		int x = tiles.length;
 		int y = tiles[0].length;
-		if (x%2 == 1 || y%2 == 1) {
-			Gdx.app.log("Map", "Varning: Generating map with odd numbers of x and/or y coordinates: Will likely result in unfair map");
-		}
+		// Can't use Gdx here since this code is used by the server too
+		// if (x%2 == 1 || y%2 == 1) {
+		//	Gdx.app.log("Map", "Varning: Generating map with odd numbers of x and/or y coordinates: Will likely result in unfair map");
+		// }
 		//The different parts of the map, first equals fourth, but mirrored, and second equals third but mirrored. Therefore the map will be fair. The castles will be placed in first and fourth. 
 		//[first][second]
 		//[third][fourth]
