@@ -9,28 +9,28 @@
 		<PlayerAbility>
 			<name>Odin's Blessing</name>
 			<manacost>2</manacost>
-			<description>Odin blesses all your units, restoring 3 AP for each of them.</description>
+			<description>Drawing from the powers of the Aesir, Odin blesses all your units, restoring 3 AP for each of them.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Hugin and Munin</name>
 			<manacost>15</manacost>
-			<description>Hugin and Munin harasses target enemy unit, making it regenerate less AP and take 1 damage for 3 turns.</description></PlayerAbility>
+			<description>Hugin and Munin harass target enemy unit, making it regenerate less AP and take 1 damage for 3 turns.</description></PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Thor">
 		<PlayerAbility>
 			<name>Thunderbolt</name>
 			<manacost>1</manacost>
-			<description>Thor makes a vengeful strike with Mjolnir and summons a powerful lightning bolt at target unit dealing 8 damage. If unit is in water, all units that stand in nearby water is struck by lightning bolt.</description>
+			<description>Thor strikes with the great hammer Mjolnir, summoning a powerful lightning bolt at target unit dealing 8 damage. If the unit is located inwater, all units that stand in nearby water are also struck by lightning.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Comet Strike</name>
 			<manacost>6</manacost>
-			<description>Thor summons a comet that strikes target location and destroys any terrain, even inpassable terrain such as mountains, on that location and creates a crater, with movement cost of 3. Destroys unit on target tile as well as area of effect damage to neighbouring tiles. Cannot target bases or villages.</description>
+			<description>Thor summons a comet that strikes the target location and destroys any terrain, including impassable terrain such as mountains, replacing it with a crater. Any unit on target tile will take great damage, and area of effect damage is distributed to neighbouring tiles. Cannot target bases or villages.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Thor's Rage</name>
 			<manacost>1</manacost>
-			<description>Target unit is blessed with Thors rage and has increased damage</description>
+			<description>Target unit is blessed with Thor's rage and has increased damage</description>
 		</PlayerAbility>
 	</PlayerAbilityGod>
 	<PlayerAbilityGod god="Hel">
@@ -54,7 +54,7 @@
 		<PlayerAbility>
 			<name>Swap</name>
 			<manacost>4</manacost>
-			<description>Loki swaps the position of 2 target friendly units</description>
+			<description>Cunningly, Loki swaps the position of two friendly units.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Freeze</name>

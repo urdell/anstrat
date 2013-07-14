@@ -69,32 +69,43 @@ public class AbilityPopup extends Popup {
 		abilities = new Button[types.length];
 		card = new AbilityTypeCard(types[0]);
 		Image tempImage; // used to instantiate images for buttons.
+		int ma0n = State.activeState.players[State.activeState.currentPlayerId].mana;
 		
 		for(int i=0; i<abilities.length; i++){
 			final int b = i;
 			//TODO 
-			tempImage = new Image();
-			abilities[i] = new Button(tempImage, Assets.SKIN.get("default", ButtonStyle.class));
-			tempImage.setFillParent(true);
+			if(i==0)
+				tempImage = new Image(Assets.getTextureRegion("apblessing-button"));
+			else if(i==1)
+				tempImage = new Image(Assets.getTextureRegion("swap-button"));
+			else
+				tempImage = new Image(Assets.getTextureRegion("comet-button"));
+			abilities[i] = new Button(tempImage, Assets.SKIN.get("empty", ButtonStyle.class));
+			tempImage.setFillParent(false);
 			tempImage.setAlign(Align.center);
+			tempImage.setAlign(Align.top);
 			abilities[i].addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 			        selectButton(b);
 			    }
 			});
+			abilities[i].setDisabled(true);
 		}
 		selectButton(0);
 		
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty")));
 		
-		float bh = Main.percentHeight*10;
-		float bw = bh * 2;
+		float bh = Main.percentHeight*10f;
+		float bw = bh*2f;
 		
 		Table abilityTable = new Table();
-		abilityTable.defaults().left().top().width(bw).height(bh);
+		abilityTable.defaults().left().top().width(bw/2f).height(bh);
+		abilityTable.add(new Image(Assets.getTextureRegion(ma0n>=2?"magic-one-glowing":"magic-one")));
 		abilityTable.add(abilities[0]);
+		abilityTable.add(new Image(Assets.getTextureRegion(ma0n>=4?"magic-two-glowing":"magic-two")));
 		abilityTable.add(abilities[1]);
+		abilityTable.add(new Image(Assets.getTextureRegion(ma0n>=6?"magic-three-glowing":"magic-three")));
 		abilityTable.add(abilities[2]);
 		
 		Table bottom = new Table();
