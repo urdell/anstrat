@@ -33,24 +33,29 @@ public class MagicBart3 {
 	public void draw(){
 		SpriteBatch sb = Main.getInstance().batch;
 		float pw = Main.percentWidth;
-		float x_start = pw*5f;
+		float ph = Main.percentHeight;
+		float x_start = pw*4f;
 		float x_width = pw*90f;
 		float x_part = x_width/6f;
-		float y_start = pw*148f;
-		float y_height = pw*5f;
+		float y_start = ph*88f;
+		float y_height = ph*4f;
 		sb.begin();
 		sb.draw(magic_empty, x_start, y_start, x_width, y_height);
 		int mAmt = State.activeState.players[State.activeState.currentPlayerId].mana;
 		
+		float magic_one_width = magic_one.getRegionWidth()*pw/4;
+		float magic_two_width = magic_two.getRegionWidth()*pw/4;
+		float magic_three_width = magic_three.getRegionWidth()*pw/4;
+		
 		if(mAmt > 0)
 			sb.draw(mxf[mAmt-1], x_start, y_start, x_width, y_height);
 		
-		sb.draw(mAmt>=2?magic_one_g:magic_one, x_start + x_part * 2f - magic_one.getRegionWidth() / 2f + pw*0.65f, 
-				y_start - y_height/2f, magic_one.getRegionWidth(), y_height*2f);
-		sb.draw(mAmt>=4?magic_two_g:magic_two, x_start + x_part * 4f - magic_two.getRegionWidth() / 2f - pw*0.5f, 
-				y_start - y_height/2f, magic_two.getRegionWidth(), y_height*2f);
-		sb.draw(mAmt>=6?magic_three_g:magic_three, x_start + x_part * 6f - magic_three.getRegionWidth() / 2f - pw*1f, 
-				y_start - y_height/2f, magic_three.getRegionWidth(), y_height*2f);
+		sb.draw(mAmt>=2?magic_one_g:magic_one, x_start + x_part * 2f - magic_one_width / 2f + pw*0.65f, 
+				y_start - y_height/2f, magic_one_width, y_height*2f);
+		sb.draw(mAmt>=4?magic_two_g:magic_two, x_start + x_part * 4f - magic_two_width / 2f - pw*0.5f, 
+				y_start - y_height/2f, magic_two_width, y_height*2f);
+		sb.draw(mAmt>=6?magic_three_g:magic_three, x_start + x_part * 6f - magic_three_width / 2f - pw*1f, 
+				y_start - y_height/2f, magic_three_width, y_height*2f);
 		sb.end();
 	}
 }
