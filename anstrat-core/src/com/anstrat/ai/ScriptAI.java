@@ -2,6 +2,7 @@ package com.anstrat.ai;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.anstrat.command.AttackCommand;
 import com.anstrat.command.CaptureCommand;
@@ -50,35 +51,97 @@ public class ScriptAI implements IArtificialIntelligence {
 	@Override
 	public Command generateNextCommand() {
 		
-		// Buy algorithm
+		/* Buy algorithm
+		 * 
+		 */
 		Command createCommand = null;
-		if(godlikeAI.gold >= UnitType.BERSERKER.cost){
-			if(getMyUnits().size() < 2){
-				createCommand = generateCreateCommand(UnitType.BERSERKER);
-				if(createCommand != null && createCommand.isAllowed())
-					return createCommand;
+		if(getEnemyUnits().size() < 3) {
+			int i =0;
+			try {
+				 i = Random.class.newInstance().nextInt(6);
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
+			if (i ==0){
+				if(godlikeAI.gold >= UnitType.SWORD.cost){
+					createCommand = generateCreateCommand(UnitType.SWORD);
+				}
+			}
+			if (i==1){
+				if(godlikeAI.gold >= UnitType.BERSERKER.cost){
+					createCommand = generateCreateCommand(UnitType.BERSERKER);
+				}
+			}
+			if (i==2){
+				if(godlikeAI.gold >= UnitType.SHAMAN.cost){
+					createCommand = generateCreateCommand(UnitType.SHAMAN);
+				}
+			}
+			if (i==3){
+				if(godlikeAI.gold >= UnitType.HAWK.cost){
+					createCommand = generateCreateCommand(UnitType.HAWK);
+				}
+			}
+			if (i==4){
+				if(godlikeAI.gold >= UnitType.AXE_THROWER.cost){
+					createCommand = generateCreateCommand(UnitType.AXE_THROWER);
+				}
+			}
+			if (i==5){
+				if(godlikeAI.gold >= UnitType.WOLF.cost){
+					createCommand = generateCreateCommand(UnitType.WOLF);
+				}
+			}
+			if(createCommand != null && createCommand.isAllowed())
+				return createCommand;
+			if(createCommand == null){
+				if(godlikeAI.gold >= UnitType.HAWK.cost){
+					return generateCreateCommand(UnitType.HAWK);	
+				}
+			}
 			
-		if (godlikeAI.gold >= UnitType.SWORD.cost){
-			if (getMyUnits().size() <= 3 || getMyUnits().size() >= 6 && getMyUnits().size() < 8){
-				createCommand = generateCreateCommand(UnitType.SWORD);
-			}
-			else if(getMyUnits().size() > 7){
-				createCommand = generateCreateCommand(UnitType.HAWK);
-			}
-			else {
-				createCommand = generateCreateCommand(UnitType.AXE_THROWER);
-			}
 		}
-		if (godlikeAI.gold >= UnitType.AXE_THROWER.cost)
-			if (getMyUnits().size() > 1 && getMyUnits().size() < 5)
-				createCommand = generateCreateCommand(UnitType.AXE_THROWER);
-		if(createCommand != null && createCommand.isAllowed())
-			return createCommand;
+		
+		if(getEnemyUnits().size() >= 3) {
+			if(godlikeAI.gold >= UnitType.SWORD.cost){
+				if(getMyUnits().size() < 2){
+					createCommand = generateCreateCommand(UnitType.SWORD);
+					if(createCommand != null && createCommand.isAllowed())
+						return createCommand;
+				}
+			}
+				
+			if (godlikeAI.gold >= UnitType.BERSERKER.cost){
+				if (getMyUnits().size() <= 3 || getMyUnits().size() >= 6 && getMyUnits().size() < 8){
+					createCommand = generateCreateCommand(UnitType.BERSERKER);
+				}
+				else if(getMyUnits().size() > 7){
+					createCommand = generateCreateCommand(UnitType.HAWK);
+				}
+				else {
+					createCommand = generateCreateCommand(UnitType.AXE_THROWER);
+				}
+			}
+			if (godlikeAI.gold >= UnitType.AXE_THROWER.cost)
+				if (getMyUnits().size() > 1 && getMyUnits().size() < 5)
+					createCommand = generateCreateCommand(UnitType.AXE_THROWER);
+			if(createCommand != null && createCommand.isAllowed())
+				return createCommand;
+		}
+		
+		/* Abilities Algoritm
+		 * Should only activate its ability if it has a good target or profitable
+		 */
 		
 		
-		// Attack Algoritm
+		
+		/* Attack Algoritm
+		 *  
+		 */
 		List<Unit> attackingOrder = sortInAttackingOrder(getMyUnits());
 		
 		
@@ -100,43 +163,9 @@ public class ScriptAI implements IArtificialIntelligence {
 			}
 		}
 		
-		// Capture Algorithm
-		for(Unit myUnit : getMyUnits()){
-			for (Building buildingsNotOwnedByMe : getBuildingsNotOwnedByMe()){
-				if(myUnit.tileCoordinate == buildingsNotOwnedByMe.tileCoordinate){
-					Command captureCommand = generateCaptureCommand(buildingsNotOwnedByMe, myUnit);
-					if(captureCommand.isAllowed()) return captureCommand;
-				}
-			}
-		}
-		
-		
-		// Walk to enemy unit algorithm
-		List<TileCoordinate> chosenCoordinates = new ArrayList<TileCoordinate>();
-		Command moveCommand;
-		
-		for(Unit myUnit : getMyUnits()){
-			int unitRange = myUnit.getMaxAttackRange();
-			actionMap.prepare(myUnit);
-				for(Tile t : getTilesPossibleForAttacks(unitRange)){  //find the nearest tile, with regard to the unit considered by AIKnowledge
-					if(actionMap.getActionType(t.coordinates) != ActionMap.ACTION_NULL &&
-							actionMap.getCost(t.coordinates) < (myUnit.currentAP-2)){
-						chosenCoordinates.add(t.coordinates);
-					}
-				}
-				List<TileCoordinate> walkOrder = sortInCostOrder(chosenCoordinates);
-				if (walkOrder != null){
-					for (TileCoordinate t : walkOrder){
-						moveCommand = generateMoveCommand(myUnit, t);
-						if(moveCommand.isAllowed()){
-							return moveCommand;		
-						}
-					}
-				}
-		}
-		
-		
-		// Walk for closest building algorithm
+		/* Walk for closest building algorithm
+		 * 
+		 */
 		int pathCost = Integer.MAX_VALUE;
 		Path chosenPath = null;
 		Path p = null;
@@ -178,6 +207,31 @@ public class ScriptAI implements IArtificialIntelligence {
 			moveforNearestBuildingCommand = generateMoveCommand(myUnit, lastTileInPath);
 			if(moveforNearestBuildingCommand.isAllowed())
 				return moveforNearestBuildingCommand;
+		}
+		
+		
+		// Walk to enemy unit algorithm
+		List<TileCoordinate> chosenCoordinates = new ArrayList<TileCoordinate>();
+		Command moveCommand;
+		
+		for(Unit myUnit : getMyUnits()){
+			int unitRange = myUnit.getMaxAttackRange();
+			actionMap.prepare(myUnit);
+				for(Tile t : getTilesPossibleForAttacks(unitRange)){  //find the nearest tile, with regard to the unit considered by AIKnowledge
+					if(actionMap.getActionType(t.coordinates) != ActionMap.ACTION_NULL &&
+							actionMap.getCost(t.coordinates) < (myUnit.currentAP-2)){
+						chosenCoordinates.add(t.coordinates);
+					}
+				}
+				List<TileCoordinate> walkOrder = sortInCostOrder(chosenCoordinates);
+				if (walkOrder != null){
+					for (TileCoordinate t : walkOrder){
+						moveCommand = generateMoveCommand(myUnit, t);
+						if(moveCommand.isAllowed()){
+							return moveCommand;		
+						}
+					}
+				}
 		}
 		
 		
@@ -248,7 +302,7 @@ public class ScriptAI implements IArtificialIntelligence {
 	
 	/**
 	 * Gives you all buildings not belonging to you
-	 *@return All buildings i don't own in an ArrayList 
+	 *@return All buildings not own in an ArrayList 
 	 */
 	private List<Building> getBuildingsNotOwnedByMe(){
 		List<Building> buildingsNotOwnedByMe = new ArrayList<Building>();
