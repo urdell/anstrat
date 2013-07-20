@@ -147,7 +147,7 @@ public class ScriptAI implements IArtificialIntelligence {
 		
 		for(Unit myUnit : attackingOrder){
 			int unitRange = myUnit.getMaxAttackRange();
-			if(myUnit.currentAP >= 2){
+			if(myUnit.currentAP >= myUnit.getAPCostAttack()){
 				for(Tile tile : getTilesPossibleForAttacks(unitRange)){
 					if(tile.coordinates.equals(myUnit.tileCoordinate)){
 						List<Unit> orderToAttack = sortInOrderToAttack(getEnemyUnits(),myUnit);
@@ -177,13 +177,14 @@ public class ScriptAI implements IArtificialIntelligence {
 		
 		
 		for (Unit myUnit : getMyUnits()){
-			if (myUnit.currentAP >= 2 && myUnit.getUnitType() != UnitType.HAWK && UnitType.WOLF != myUnit.getUnitType()){
+			if (myUnit.currentAP >= 2){
 				for (Building b : getBuildingsNotOwnedByMeAndNotYetOccupied()){ // Could change to enemybuildings if you want the AI to not pursuit neutral buildings
 					p = Pathfinding.getUnitPath(myUnit, b.tileCoordinate);
 					if (p.path != null){
 						if(pathCost > p.getPathCost(myUnit.getUnitType())){
 						pathCost = p.getPathCost(myUnit.getUnitType());
 						chosenPath = p;
+						//TODO if same pathcost prioritize enemybuilding?
 						}	
 					}
 				}
