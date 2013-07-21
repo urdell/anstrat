@@ -4,7 +4,6 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.network.protocol.GameOptions;
-import com.anstrat.network.protocol.GameOptions.MapType;
 import com.anstrat.popup.GeneratedMapPopup;
 import com.anstrat.popup.GeneratedMapPopup.GeneratedMapPopupHandler;
 import com.anstrat.popup.MapsPopup;

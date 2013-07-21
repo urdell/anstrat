@@ -26,8 +26,6 @@ public class HotseatNextTurnScreen implements Screen {
 	private Table background;
 	private TextureAtlas atlas;
 	
-	private boolean begun = false;
-	
 	private HotseatNextTurnScreen(){
 		//atlas = new TextureAtlas("textures-loadingscreen/pack.atlas");
 		//splashscreen = atlas.findRegion("splashscreen");
