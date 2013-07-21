@@ -521,7 +521,14 @@ public class DatabaseManager implements IDatabaseService {
 			conn = context.getConnection();
 			pst = conn.prepareStatement("UPDATE Invites SET status = ?, gameID = ? WHERE id = ?");
 			pst.setString(1, inviteStatus.toString());
-			pst.setLong(2, gameID);
+			
+			if (gameID == null) {
+				pst.setNull(2, java.sql.Types.BIGINT);
+			}
+			else {
+				pst.setLong(2, gameID);
+			}
+			
 			pst.setLong(3, inviteID);
 			pst.executeUpdate();
 			return true;
