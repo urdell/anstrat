@@ -6,7 +6,7 @@ import com.anstrat.gameCore.State;
 
 public class AIRunner {
 	
-	final static float TIME_BETWEEN_ACTIONS = 0.5f;
+	final static float TIME_BETWEEN_ACTIONS = 2.5f;
 	
 	static float timeToNextAction = TIME_BETWEEN_ACTIONS;
 
