@@ -44,11 +44,11 @@ public class Main extends Game implements ApplicationListener {
 	// Games
 	public GameManager games;
 	
-	// Invites
-	public InviteManager invites;
-	
 	//Friends
 	public FriendManager friends;
+	
+	// Invites
+	public InviteManager invites = new InviteManager();
 	
 	// Input handlers
 	private final InputMultiplexer inputMultiplexer;
@@ -117,9 +117,6 @@ public class Main extends Game implements ApplicationListener {
 
 		games = new GameManager(Gdx.files.local("games.bin"));
 		games.loadGameInstances(); // Loads all saved game instances
-		
-		invites = new InviteManager(Gdx.files.local("invites.bin"));
-		invites.loadInviteInstances(); // Loads all saved game instances
 		
 		friends = new FriendManager(Gdx.files.local("friends.bin"));
 		friends.loadFriends(); //Loads all saved friends
@@ -203,7 +200,6 @@ public class Main extends Game implements ApplicationListener {
 		
 		if(networkEngine != null) networkEngine.stop();
 		games.saveGameInstances();
-		invites.saveInviteInstances();
 		friends.saveFriends();
 		Options.savePreferences();
 		

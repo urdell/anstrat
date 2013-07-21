@@ -232,14 +232,11 @@ public class NetworkController {
 			@Override
 			public void inviteCompleted(long inviteID, boolean accept) {
 				Main.getInstance().invites.inviteCompleted(inviteID, accept);
-				
 			}
 
 			@Override
-			public void invitePending(long inviteID,
-					String receiverDisplayName, GameOptions options) {
+			public void invitePending(long inviteID, String receiverDisplayName, GameOptions options) {
 				Main.getInstance().invites.invitePending(inviteID, receiverDisplayName, options);
-				
 			}
 
 			@Override

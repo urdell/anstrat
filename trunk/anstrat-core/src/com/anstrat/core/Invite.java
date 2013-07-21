@@ -1,20 +1,12 @@
 package com.anstrat.core;
 
-import java.io.Serializable;
-
 import com.anstrat.network.protocol.GameOptions;
-import com.anstrat.network.protocol.GameSetup;
 
-public class Invite implements Serializable{
+public class Invite {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public long inviteId;
-	public GameOptions gameOptions;
-	public String otherPlayerName;
+	public final long inviteId;
+	public final GameOptions gameOptions;
+	public final String otherPlayerName;
 	
 	public Invite(long inviteId, String otherPlayerName, GameOptions gameOptions){
 		this.inviteId = inviteId;
@@ -22,6 +14,11 @@ public class Invite implements Serializable{
 		this.gameOptions = gameOptions;
 	}
 	
+	public void accept(int team, int god){
+		Main.getInstance().network.acceptInvite(inviteId, team, god);
+	}
 	
-	
+	public void decline(){
+		Main.getInstance().network.declineInvite(inviteId);
+	}
 }

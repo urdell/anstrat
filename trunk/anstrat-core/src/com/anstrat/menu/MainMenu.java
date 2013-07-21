@@ -87,13 +87,6 @@ public class MainMenu extends MenuScreen {
             }
         });
         
-        Button invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	Main.getInstance().setScreen(InvitesMenu.getInstance());
-            	AudioAssets.playSound("dummy1");
-            }
-        });
         //Main.getInstance().invites.registerInviteButton(invitedButton);
         
         NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
@@ -146,7 +139,6 @@ public class MainMenu extends MenuScreen {
         
         Table footer = new Table();
         footer.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
-        footer.add(invitedButton).height(buttonHeight).width(buttonHeight).align(Align.right);
         
         contents.row();
         contents.add(footer).fillX();

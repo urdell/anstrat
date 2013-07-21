@@ -11,6 +11,7 @@ import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.CameraController;
 import com.anstrat.core.GestureMultiplexer;
+import com.anstrat.core.InviteManager;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Building;
@@ -310,6 +311,7 @@ public class GEngine implements Screen{
 		m.gestureMultiplexer.removeProcessor(cameraController);
 		m.gestureMultiplexer.removeProcessor(inputHandler);
 		m.removeProcessor(userInterface);
+		m.getInstance().invites.playerLeftGameScreen();
 	}
 	@Override
 	public void pause() {
