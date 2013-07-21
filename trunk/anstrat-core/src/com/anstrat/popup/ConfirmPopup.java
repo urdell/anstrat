@@ -20,7 +20,7 @@ public class ConfirmPopup extends Popup {
 		Button yes = ComponentFactory.createMenuButton("Yes!", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Main.getInstance().games.endGame(game);
+				game.resign();
     			MainMenu.getInstance().updateGamesList();
     			Popup.getCurrentPopup().close();
 			}
