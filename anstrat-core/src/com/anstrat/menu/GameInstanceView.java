@@ -41,9 +41,19 @@ public class GameInstanceView extends Table {
     	Button deleteGameButton = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), new ClickListener() {
     		@Override
     		public void clicked(InputEvent event, float x, float y) {
+    			event.cancel();
     			new ConfirmPopup(instance).show();
     		}
     	});
+    	
+    	addListener(new ClickListener() {
+	        @Override
+	        public void clicked(InputEvent event, float x, float y) {
+	        	if (!event.isCancelled()) {
+	        		instance.showGame(false);	
+	        	}
+	        }
+		});
     	
     	add(deleteGameButton).height(Main.percentHeight*6f).width(Main.percentWidth*10);
     	
