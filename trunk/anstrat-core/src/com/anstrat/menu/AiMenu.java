@@ -41,7 +41,11 @@ public class AiMenu extends MenuScreen implements MapSelectionHandler {
 				if(mapType == GameOptions.MapType.SPECIFIC){
 					Map map = Assets.loadMap(mapName);
 					map.fogEnabled = fog.isChecked();
-					Main.getInstance().games.createAIGame(map, player1team, (player1team+1)%2);
+					player1team = player1Selecter.getTeam();
+					Main.getInstance().games.createAIGame(
+							map, 
+							player1team, 
+							1).showGame(true);
 				}
 				else if(mapType != null){
 					Dimension d = GameOptions.MapType.getMapSize(mapType, new Random());
@@ -51,7 +55,7 @@ public class AiMenu extends MenuScreen implements MapSelectionHandler {
 							d.width,
 							d.height,
 							player1team,
-							(player1team+1)%2).showGame(true);
+							1).showGame(true);
 				}
 		   }
 		});
