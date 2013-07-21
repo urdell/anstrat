@@ -69,7 +69,10 @@ public class SimpleGameMatcher {
 		if(players.size() > 0){
 			// Get display names
 			List<Long> userIDs = Lists.newArrayList();
-			for(WaitingPlayer player : players) userIDs.add(player.userID);
+			for(WaitingPlayer player : players) {
+				userIDs.add(player.userID);
+			}
+			
 			java.util.Map<Long, User> users = database.getUsers(Longs.toArray(userIDs));
 			
 			// Create GameSetup
