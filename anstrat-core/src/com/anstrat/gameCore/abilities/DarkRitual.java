@@ -25,7 +25,7 @@ public class DarkRitual extends Ability{
 	private static final int AP_DRAIN_AMOUNT = 2;
 	
 	public DarkRitual() {
-		super("Dark Ritual", "Performs a dark ritual sacrificing its life to drain Action Points from adjacent enemy units.", 0);
+		super("AP Boom", "Drains AP from nearby enemy units but also kills the \"fallen\".", 0);
 		iconName = "suicide-button";
 	}
 

@@ -22,7 +22,7 @@ public class LifeSteal extends TargetedAbility {
 	private static final float DAMAGEMULTIPLIER = 1.0f;
 	
 	public LifeSteal(){
-		super("LifeSteal","Gains the HP his target unit suffers",AP_COST, RANGE);
+		super("Life Steal", "Steals health from the targeted unit.", AP_COST, RANGE);
 		iconName = "lifesteal-button";
 	}
 	

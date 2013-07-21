@@ -17,7 +17,6 @@ import com.anstrat.gui.confirmDialog.APRow;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.DamageRow;
-import com.anstrat.gui.confirmDialog.TextRow;
 
 public class LeapAttack extends TargetedAbility{
 		/**
@@ -29,7 +28,7 @@ public class LeapAttack extends TargetedAbility{
 		private static final float DAMAGEMULTIPLIER = 1.5f;
 
 		public LeapAttack(){
-			super("Leap Attack","Rushes through target enemy, dealing tons of damage",AP_COST, RANGE);
+			super("Berserker Rush", "A rush attack that has the berserker run through an enemy and stop behind it.", AP_COST, RANGE);
 			iconName = "leap-button";
 		}
 		

@@ -20,7 +20,7 @@ public class Heal extends TargetedAbility {
 	private static final int RANGE = 2;
 	
 	public Heal(){
-		super("Heal", "Heal target unit " + HEAL_AMOUNT + " hp.", AP_COST, RANGE);
+		super("Heal", "Heals target.", AP_COST, RANGE);
 		iconName = "heal-button";
 	}
 

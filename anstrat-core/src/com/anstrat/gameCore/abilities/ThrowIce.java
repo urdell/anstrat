@@ -30,7 +30,7 @@ public class ThrowIce extends TargetedAbility{
 	private static final float DAMAGEMULTIPLIER = 1.5f;
 
 	public ThrowIce(){
-		super("Throwing Ice block","Throws a Ice spear which will cause AoE damage in adjacent Tiles",AP_COST, RANGE);
+		super("Ice Block", "Throws an ice block that does a lot of damage on the target and also damages nearby units.", AP_COST, RANGE);
 		iconName = "throw-ice-button";
 	}
 	
