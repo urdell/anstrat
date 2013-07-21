@@ -8,6 +8,6 @@
 	<classpathentry kind="lib" path="/anstrat-core/libs/gdx-freetype.jar" sourcepath="/anstrat-core/libs/gdx-freetype-sources.jar"/>
 	<classpathentry kind="lib" path="/anstrat-core/libs/gdx.jar" sourcepath="/anstrat-core/libs/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-android.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

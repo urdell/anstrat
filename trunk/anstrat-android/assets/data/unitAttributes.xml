@@ -9,7 +9,7 @@
 		<APReg>5</APReg>
 		<cost>33</cost>
 		<ability1>5</ability1><!-- Leap Attack -->
-		<description>The Berserker is a fierce offensive warrior who can sacrifice his health for increased damage.</description>
+		<description>The Berserker is a fierce offensive warrior who can rush through enemy units.</description>
 		<idleImage>berserker-idle-0001</idleImage>
 		<portrait>berserkerportrait</portrait>
 		<swingSfx>berserker_swing</swingSfx>
@@ -23,9 +23,9 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
-		<cost>30</cost>
+		<cost>25</cost>
 		<ability1>2</ability1><!-- Heal -->
-		<description>The Shaman can heal his allies and rain down fireballs upon the enemy.</description>
+		<description>The Shaman can heal his allies and summon fireballs onto the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
 		<portrait>shamanportrait</portrait>
 		<swingSfx>shaman_swing</swingSfx>
@@ -34,14 +34,14 @@
 	<UnitType>
 		<name>Axe Thrower</name>
 		<imageFolder>axethrower</imageFolder>
-		<maxHP>15</maxHP>
-		<attack>6</attack>
+		<maxHP>16</maxHP>
+		<attack>7</attack>
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
-		<cost>20</cost>
+		<cost>22</cost>
 		<ability1>7</ability1><!-- Chaining Axe -->
-		<description>Axe Throwers are great skirmishers who throw axes at distant enemies.</description>
+		<description>Axe Throwers are great skirmishers who throw axes at enemies.</description>
 		<idleImage>axethrower-idle-0001</idleImage>
 		<portrait>axethrowerportrait</portrait>
 		<movementSpeed>2.3</movementSpeed>
@@ -56,9 +56,9 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
-		<cost>18</cost>
+		<cost>15</cost>
 		<ability1>3</ability1><!-- Shadow image -->
-		<description>The Wolf is incredibly fast.</description>
+		<description>The Wolf is a highly mobile unit with the ability to steal life from enemy units.</description>
 		<idleImage>wolf-idle-0001</idleImage>
 		<portrait>wolfportrait</portrait>
 		<swingSfx>wolf_swing</swingSfx>
@@ -74,7 +74,7 @@
 		<APReg>5</APReg>
 		<cost>12</cost>
 		<ability1>1</ability1><!-- Kamikaze -->
-		<description>Hawks are fast and cheap, flying over any terrain bar volcanoes.</description>
+		<description>Hawks are fast and can fly over any terrain except volcanoes.</description>
 		<idleImage>hawk-idle-0001</idleImage>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
@@ -104,7 +104,7 @@
 		<APReg>3</APReg>
 		<cost>22</cost>
 		<ability1>6</ability1><!-- Shield Wall -->
-		<description>The Swordsman's block ability and resilience make him an exceptional duelist.</description>
+		<description>The Swordsman has a block ability. Together with his resilience, this make him an exceptional duelist.</description>
 		<idleImage>swordsman-idle-0001</idleImage>
 		<portrait>bigguyportrait</portrait>
 		<swingSfx>sword_swing</swingSfx>
@@ -118,7 +118,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
-		<cost>30</cost>
+		<cost>32</cost>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
 		<terrainPenaltyHill>1</terrainPenaltyHill>
@@ -134,7 +134,7 @@
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
 		<ability1>4</ability1><!-- Magic Spear -->
-		<description>Can fly over mountains and is powerful in most aspects.</description>
+		<description>The Valkyrie is a powerful warrior that can fly over any terrain .</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
 		<portrait>valkyrieportrait</portrait>
 		<swingSfx>valkyrie_swing</swingSfx>
@@ -150,7 +150,7 @@
 		<APReg>2</APReg>
 		<cost>8</cost>
 		<ability1>11</ability1><!-- Dark Ritual -->
-		<description>The Fallen Warrior is cheap unit, effective only in great numbers.</description>
+		<description>The Fallen Warrior is a cheap unit, effective only in great numbers.</description>
 		<idleImage>fallen-idle-0001</idleImage>
 		<portrait>fallenportrait</portrait>
 		<movementSpeed>1</movementSpeed>
@@ -167,7 +167,7 @@
 		<APReg>5</APReg>
 		<cost>22</cost>
 		<ability1>12</ability1><!-- Poison -->
-		<description>The Dark Elf is a powerful and mobile unit.</description>
+		<description>The Dark Elf is a quick, sharpshooting unit with the ability to weaken enemy units.</description>
 		<idleImage>elf-idle-0001</idleImage>
 		<portrait>elfportrait</portrait>
 		<swingSfx>elf_swing</swingSfx>
@@ -183,7 +183,7 @@
 		<APReg>3</APReg>
 		<cost>18</cost>
 		<ability1>8</ability1><!-- AP Heal -->
-		<description>The Goblin Shaman can regenerate AP for allies and has a ranged attack.</description>
+		<description>The Goblin Shaman can energize his allies and summon balls of fire that burn like hell.</description>
 		<idleImage>goblin-idle-0001</idleImage>
 		<portrait>goblinportrait</portrait>
 		<swingSfx>axe_swing</swingSfx>
@@ -192,14 +192,14 @@
 	<UnitType>
 		<name>Jotun</name>
 		<imageFolder>jotun</imageFolder>
-		<maxHP>45</maxHP>
-		<attack>14</attack>
+		<maxHP>25</maxHP>
+		<attack>12</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>4</APReg>
-		<cost>40</cost>
+		<cost>38</cost>
 		<ability1>9</ability1><!-- Throw Ice -->
-		<description>The Jotun is a very, very powerful unit.</description>
+		<description>The Jotun is a mighty ice giant who can throw ice blocks that shatter on impact.</description>
 		<idleImage>jotun-idle-0001</idleImage>
 		<portrait>jotunportrait</portrait>
 		<swingSfx>jotun_swing</swingSfx>
@@ -213,7 +213,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
-		<cost>25</cost>
+		<cost>27</cost>
 		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
 		<terrainPenaltyMountain>4</terrainPenaltyMountain>
