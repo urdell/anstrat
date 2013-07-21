@@ -1,18 +1,13 @@
 package com.anstrat.menu;
 
-import java.util.Random;
-
 import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
-import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
 import com.anstrat.popup.MapsPopup;
-import com.anstrat.popup.MapsPopup.MapsPopupHandler;
-import com.anstrat.popup.Popup;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -221,37 +216,6 @@ public class MainMenu extends MenuScreen {
         }
         	
         //gamesList.padBottom(Main.percentHeight*5f);
-	}
-	
-	public Popup getMapsPopup() {
-		String[] mapNames = Assets.getMapList(true, true);
-		
-		if (mapNames.length > 0) {
-			mapsPopup = new MapsPopup(new MapsPopupHandler() {
-				@Override
-				public void mapSelected(String mapName) {
-					Map map = null;
-					
-					if(mapName.equalsIgnoreCase("RANDOM")){
-						MapsPopup popup = (MapsPopup) Popup.getCurrentPopup();
-						map = new Map(popup.randWidth,popup.randHeight,new Random());
-					}
-					else{
-						map = Assets.loadMap(mapName);
-					}
-					
-			        /*if(versusAI == true){
-			        	Main.getInstance().games.createAIGame(map, 1).showGame(true);
-			        }
-			        else{
-			        	Main.getInstance().games.createHotseatGame(map).showGame(true);
-			        }*/
-				}
-			}, true, "Choose map", mapNames);
-			return mapsPopup;
-		}
-		else 
-			return null;
 	}
 	
 	// Formats the given time to a HH:MM:SS format, timeSpan is given in milliseconds
