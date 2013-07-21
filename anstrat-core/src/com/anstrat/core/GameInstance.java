@@ -51,6 +51,10 @@ public class GameInstance implements Serializable{
 		this.aiPlayerIDs = Arrays.asList(aiPlayerIDs);
 	}
 	
+	public boolean isAI(){
+		return this.aiPlayerIDs != null && !this.aiPlayerIDs.isEmpty();
+	}
+	
 	/**
 	 * Switch to the ingame screen using this game. This is the only way you should move to the ingame screen through.
 	 */

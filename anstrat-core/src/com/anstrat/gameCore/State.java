@@ -9,12 +9,14 @@ import java.util.Random;
 
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
+import com.anstrat.audio.AudioAssets;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
 import com.anstrat.gameCore.effects.TriggerOnTurnStart;
 import com.anstrat.geography.Map;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
+import com.anstrat.gui.GameUI;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
@@ -42,8 +44,6 @@ public class State implements Serializable{
 	
 	public final Player[] players;
 	public int[] baseCaps = {-1, -1};
-	public boolean losert3 = false;
-	public Player oldblah = null;
 	
 	/** Index in players */
 	public int currentPlayerId = 0;
@@ -78,7 +78,7 @@ public class State implements Serializable{
 		Fog.fogTurn(currentPlayerId, map);
 		Fog.recalculateFog(currentPlayerId, this); // needed to see anything at all.
 		
-		oldblah = State.activeState.getCurrentPlayer();
+		int endingPlayerId = currentPlayerId;
 		currentPlayerId = (currentPlayerId + 1) % players.length;  // Flip to new player
 		Player player = State.activeState.getCurrentPlayer();
 		
@@ -147,8 +147,10 @@ public class State implements Serializable{
 			}
 			else if(building.type == Building.TYPE_CASTLE){
 				for(Unit u : unitList.values()){
-					if(u.ownerId == currentPlayerId && u.tileCoordinate == building.tileCoordinate){
-						losert3 = true;
+					if(building.controllerId == endingPlayerId && 
+							u.tileCoordinate == building.tileCoordinate && u.ownerId != endingPlayerId){
+						GameUI.showVictoryPopup(activeState.players[u.ownerId].getDisplayName());
+						AudioAssets.playMusic("victory");
 					}
 				}
 			}

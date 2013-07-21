@@ -164,11 +164,6 @@ public class GEngine implements Screen{
 			animationHandler.runParalell(zoom);
 			animationHandler.runParalell(move);
 		}
-		
-		if(State.activeState.losert3){
-			GameUI.showVictoryPopup(State.activeState.oldblah.getDisplayName());
-			AudioAssets.playMusic("victory");
-		}
 	}
 	
 	/**
