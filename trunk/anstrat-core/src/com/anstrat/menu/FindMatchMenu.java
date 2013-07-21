@@ -48,17 +48,17 @@ public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
 			}
 		});
 		
-		goButton.setDisabled(true);
-		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
+		//goButton.setDisabled(true);
+		//Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
-		contents.padTop(3f * Main.percentHeight).center();
+		//contents.padTop(3f * Main.percentHeight).center();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
-		contents.add(mapSelecter);
-		contents.row();
+		//contents.add(mapSelecter);
+		//contents.row();
 		contents.add(playerSelecter);
 		contents.row();
-		contents.add(fog);
-		contents.row();
+		//contents.add(fog);
+		//contents.row();
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
