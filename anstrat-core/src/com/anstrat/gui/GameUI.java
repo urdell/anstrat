@@ -20,7 +20,6 @@ import com.anstrat.popup.AbilityPopup;
 import com.anstrat.popup.BuyUnitPopup;
 import com.anstrat.popup.HelpPopup;
 import com.anstrat.popup.Popup;
-import com.anstrat.popup.TutorialPopup;
 import com.anstrat.popup.UnitInfoPopup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -57,8 +56,10 @@ public class GameUI extends UI {
 	public Table topPanel;
 	private ColorTable turntable;
 	private Button endTurnButton;
-	private ValueDisplay goldDisplay, manaDisplay;
+	private ValueDisplay goldDisplay;
 	private Label turnDisplay;
+	
+	private Table goldDisplayTable;
 	
 	//Top magic bar
 	private MagicBart3 mbar;
@@ -66,7 +67,7 @@ public class GameUI extends UI {
 	//Bottom panel
 	public Table bottomPanel;
 	private Button deselectButton;
-	private Label nameLabel, azerty;
+	private Label nameLabel;
 	private Image portraitFrame;
 	private Image unitTypeImage;
 	private APPieIcon apWheel;
@@ -255,17 +256,14 @@ public class GameUI extends UI {
 		topPanel.row().left().pad(pad).fill().height(tph*0.8f);
 		topPanel.add(endTurnButton).width(tph*2f);
 		topPanel.add(turntable).pad(padv, padh, padv, padh).expand().fill();
-		Table displays = new ColorTable(new Color(0.559f,0.385f,0.055f,1.0f));
-		azerty = new Label("",Assets.SKIN);
-		//displays.setBackground(new NinePatchDrawable(new NinePatch(Assets.getTextureRegion("attack-symbol"))));
-		displays.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
+		goldDisplayTable = new ColorTable(new Color(0.559f,0.385f,0.055f,1.0f));
+
+		goldDisplayTable.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		Image image = new Image(Assets.getTextureRegion("gold"));
-		displays.add(image);
-		//displays.add(azerty);
-		displays.add(goldDisplay).align(Align.right);
-		//displays.row();
-		//displays.add(manaDisplay).align(Align.left);
-		topPanel.add(displays);
+		goldDisplayTable.add(image);
+		goldDisplayTable.add(goldDisplay).align(Align.right);
+
+		topPanel.add(goldDisplayTable);
 		
 		// Permanent Panel
 		float pwidth = bph*1.8f;
@@ -285,6 +283,8 @@ public class GameUI extends UI {
         bottomPanel.clear();
         bottomPanel.add(unitTable);
         bottomPanel.add(permanentPanel).ignore().bottom().right().height(bph/2f);
+        
+        updateCurrentPlayer();
 	}
 	
 	private void layoutUnitTable(){
@@ -470,6 +470,10 @@ public class GameUI extends UI {
 	 * Updates label of current player, also enables/disables the End Turn button.
 	 */
 	public void updateCurrentPlayer(){
+		if (State.activeState == null) {
+			return;
+		}
+		
 		Player player = State.activeState.getCurrentPlayer();
 		GameInstance game = GameInstance.activeGame;
 		
@@ -485,6 +489,9 @@ public class GameUI extends UI {
 		
 		turnDisplay.setText(text);
 		turntable.setColor(player.getColor());
+		
+		goldDisplayTable.setVisible(userCurrentPlayer);
+		mbar.setVisible(userCurrentPlayer);
 	}
 	
 	public void showBuyUnitPopup(){

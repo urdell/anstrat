@@ -3,18 +3,15 @@ package com.anstrat.gui;
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.State;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 public class MagicBart3 {
 	private TextureRegion magic_empty, 
 		magic_one, magic_two, magic_three,
 		magic_one_g, magic_two_g, magic_three_g;
 	private TextureRegion[] mxf = new TextureRegion[6];
-	private float mw;
+	private boolean visible = true;
 	
 	public MagicBart3(){
 		magic_empty = Assets.getTextureRegion("magic-bar-empty");
@@ -27,10 +24,11 @@ public class MagicBart3 {
 		magic_one_g = Assets.getTextureRegion("magic-one-glowing");
 		magic_two_g = Assets.getTextureRegion("magic-two-glowing");
 		magic_three_g = Assets.getTextureRegion("magic-three-glowing");
-		mw = magic_empty.getRegionWidth();
 	}
 	
 	public void draw(){
+		if (!visible) return;
+	
 		SpriteBatch sb = Main.getInstance().batch;
 		float pw = Main.percentWidth;
 		float ph = Main.percentHeight;
@@ -57,5 +55,9 @@ public class MagicBart3 {
 		sb.draw(mAmt>=6?magic_three_g:magic_three, x_start + x_part * 6f - magic_three_width / 2f - pw*1f, 
 				y_start - y_height/2f, magic_three_width, y_height*2f);
 		sb.end();
+	}
+	
+	public void setVisible(boolean visible){
+		this.visible = visible;
 	}
 }
