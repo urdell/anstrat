@@ -82,7 +82,11 @@ public class MainMenu extends MenuScreen {
             }
         });
         
-        //Main.getInstance().invites.registerInviteButton(invitedButton);
+        Button invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+        });
         
         NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
         TextButtonStyle tbst = new TextButtonStyle(emp,emp,emp);
@@ -134,6 +138,10 @@ public class MainMenu extends MenuScreen {
         
         Table footer = new Table();
         footer.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
+      
+        // The mysterious invite button, if removed or hidden the background dissapears :D
+        // Solution: Set height/width to 0...
+        footer.add(invitedButton).height(0).width(0).align(Align.right);
         
         contents.row();
         contents.add(footer).fillX();
