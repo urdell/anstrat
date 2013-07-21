@@ -407,7 +407,7 @@ public class MapEditorUI extends UI {
 		permanentTable.add(buildingsToggle);
 		permanentTable.add(loadButton);
 		permanentTable.add(saveButton);
-		permanentTable.add(newButton).height(size/1.2f);
+		//permanentTable.add(newButton).height(size/1.2f);
 		permanentTable.pack();
 		permanentTable.setBounds(0, 0, width, size*1.05f);
 
