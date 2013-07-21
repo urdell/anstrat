@@ -4,7 +4,6 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,26 +23,22 @@ public class HelpPopup extends Popup{
 	private static final ClickListener BASIC_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
-			HelpPopup popup = (HelpPopup) Popup.getCurrentPopup();
-			//TODO popup basic tutorial
-			popup.close();
+			Popup.getCurrentPopup().close();
+			new HelpBasicPopup().show();
 		}
 	};
 	private static final ClickListener ABILITY_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
-			HelpPopup popup = (HelpPopup) Popup.getCurrentPopup();
-			//TODO popup abilities tutorial
-			popup.close();
+			Popup.getCurrentPopup().close();
 			new HelpAbilityPopup().show();
 		}
 	};
 	private static final ClickListener CREDIT_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
-			HelpPopup popup = (HelpPopup) Popup.getCurrentPopup();
-			//TODO popup abilities tutorial
-			popup.close();
+			Popup.getCurrentPopup().close();
+			// TODO credits
 		}
 	};
 	

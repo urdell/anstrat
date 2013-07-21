@@ -5,11 +5,8 @@ import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
-import com.anstrat.guiComponent.ColorTable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -99,9 +96,6 @@ public class HelpAbilityPopup extends Popup{
 		super.draw(batch, parentAlpha);
 	}
 	
-	/**
-	 * Check if the unit is afforded before showing popup.
-	 */
 	@Override 
 	public void show(){
 		GEngine.getInstance().userInterface.setVisible(false);
