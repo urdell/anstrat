@@ -89,6 +89,7 @@ public class SplashScreen implements Screen {
 	public void hide() {
 		background.remove();
 		this.dispose();
+		Main.getInstance().invites.playerLeftSplashScreen();
 	}
 
 	@Override

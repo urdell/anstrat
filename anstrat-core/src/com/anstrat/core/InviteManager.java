@@ -1,93 +1,75 @@
 package com.anstrat.core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.anstrat.gui.GEngine;
+import com.anstrat.menu.GameInvitePopup;
+import com.anstrat.menu.SplashScreen;
 import com.anstrat.network.protocol.GameOptions;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.anstrat.popup.Popup;
 
 public class InviteManager {
 	
-	/**
-	 * Invites the user has recieved
-	 */
-	private List<Invite> invites = new ArrayList<Invite>();
-	/**
-	 * Invites the user has sent
-	 */
-	private List<Invite> outgoingInvites = new ArrayList<Invite>();
-	private FileHandle invitesFile;
+	private Map<Long, Invite> sentInvites = new HashMap<Long, Invite>();
+	private Collection<Invite> receivedInvitesQueue = new ArrayList<Invite>();
+	private Collection<Invite> declinedInvitesQueue = new ArrayList<Invite>();
 	
-	public InviteManager(FileHandle invitesFile){
-		this.invitesFile = invitesFile;
-	}
-	
-	public void recievedInvite(long inviteId, String senderName, GameOptions gameInfo){
-		invites.add( new Invite(inviteId, senderName, gameInfo));
+	public void recievedInvite(long inviteID, String senderName, GameOptions options){
+		Invite invite = new Invite(inviteID, senderName, options);
+		
+		if (queuePopup()) {
+			receivedInvitesQueue.add(invite);
+		}
+		else {
+			new GameInvitePopup(invite).show();
+		}
 	}
 	
 	public void inviteCompleted(long inviteID, boolean accept) {
-		Invite inviteToBeRemoved = null;
-		
-		for(Invite invite : invites){
-			if(invite.inviteId == inviteID)
-				inviteToBeRemoved = invite;	
+		Invite invite = sentInvites.remove(inviteID);
+
+		if (invite != null && !accept) {
+			// If player is in a game, queue popup
+			if (queuePopup()) {
+				declinedInvitesQueue.add(invite);
+			}
+			else {
+				Popup.showGenericPopup("Invite declined", String.format("%s has declined your invite.", invite.otherPlayerName));
+			}	
 		}
-		invites.remove(inviteToBeRemoved);
-		
-		for(Invite invite : outgoingInvites){
-			if(invite.inviteId == inviteID)
-				inviteToBeRemoved = invite;	
-		}
-		outgoingInvites.remove(inviteToBeRemoved);
-		
 	}
 
 	public void invitePending(long inviteID, String receiverDisplayName, GameOptions options) {
-		outgoingInvites.add( new Invite(inviteID, receiverDisplayName, options));
-		
-	}
-	
-	public List<Invite> getInvites(){
-		return invites;
-	}
-	public List<Invite> getSentInvites(){
-		return outgoingInvites;
-	}
-	
-	public void saveInviteInstances(){
-		Serialization.writeObject(new InviteInstanceList(invites, outgoingInvites), invitesFile);
-	}
-	
-	public void loadInviteInstances(){
-		Object obj = Serialization.readObject(invitesFile);
-		
-		if(obj == null){
-			Gdx.app.log("Invite", "No previous invite instances found.");
-		}
-		else{
-			invites = ((InviteInstanceList)obj).invites;
-			outgoingInvites = ((InviteInstanceList)obj).outgoingInvites;
-		}
-	}
-	
-	// Class used only to serialize/deserialize invites
-	private static class InviteInstanceList implements Serializable {
-		private static final long serialVersionUID = 1L;
-		
-		private List<Invite> invites;
-		private List<Invite> outgoingInvites;
-		
-		public InviteInstanceList(List<Invite> invites, List<Invite> outgoingInvites){
-			this.invites = invites;
-			this.outgoingInvites = outgoingInvites;
-		}
+		sentInvites.put(inviteID, new Invite(inviteID, receiverDisplayName, options));
+	}	
 
-		@Override
-		public String toString() {
-			return String.format("%s(size = %d + %d)", this.getClass().getSimpleName(), invites.size(), outgoingInvites.size());
+	public void playerLeftGameScreen() {
+		showPendingPopups();
+	}
+	
+	public void playerLeftSplashScreen(){
+		showPendingPopups();
+	}
+	
+	private void showPendingPopups(){
+		for(Invite invite : receivedInvitesQueue) {
+			new GameInvitePopup(invite).show();	
 		}
+		
+		for(Invite invite : declinedInvitesQueue) {
+			Popup.showGenericPopup("Invite declined", String.format("%s has declined your invite.", invite.otherPlayerName));	
+		}
+		
+		receivedInvitesQueue.clear();
+		declinedInvitesQueue.clear();
+	}
+	
+	private static boolean queuePopup(){
+		boolean inGame = Main.getInstance().getScreen() instanceof GEngine;
+		boolean inSplash = Main.getInstance().getScreen() instanceof SplashScreen;
+		return inGame || inSplash;
 	}
 }
