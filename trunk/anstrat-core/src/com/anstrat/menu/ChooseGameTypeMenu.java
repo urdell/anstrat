@@ -59,9 +59,11 @@ public class ChooseGameTypeMenu extends MenuScreen {
             }
         });
         		
-        /*Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
+        Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
             @Override
-            public void click(Actor actor,float x,float y ){
+            public void clicked(InputEvent event,float x,float y ){
+            	Main.getInstance().setScreen(AiMenu.getInstance());
+            	/*
             	MainMenu.versusAI = true;
             	Popup popup = MainMenu.getInstance().getMapsPopup();
             	
@@ -72,11 +74,11 @@ public class ChooseGameTypeMenu extends MenuScreen {
         		else{
         			// No maps found, create game with a random map
         			Main.getInstance().games.createAIGame(null, 1).showGame(true);
-        		}
+        		}*/
             }
             
         });
-        */
+        
         
 
         Label login = ComponentFactory.createLoginLabel();
@@ -90,7 +92,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
         contents.row();
         contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
-       // contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
         
         Table inner = new Table();

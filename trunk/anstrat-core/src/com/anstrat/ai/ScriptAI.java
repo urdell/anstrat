@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.anstrat.command.ActivateAbilityCommand;
+import com.anstrat.command.ActivateTargetedAbilityCommand;
 import com.anstrat.command.AttackCommand;
 import com.anstrat.command.CaptureCommand;
 import com.anstrat.command.Command;
@@ -136,13 +138,78 @@ public class ScriptAI implements IArtificialIntelligence {
 		/* Abilities Algoritm
 		 * Should only activate its ability if it has a good target or profitable
 		 */
+		List<Unit> attackingOrder = sortInAttackingOrder(getMyUnits());
 		
 		
+			for(Unit myUnit : attackingOrder){
+				
+				if(myUnit.currentAP >= myUnit.getAPCostToActivateAbility()){
+				/*
+				 * Berserk
+				 */
+						if(myUnit.getUnitType().equals(UnitType.BERSERKER)){
+							
+						}
+				/*
+				 * Axe-thrower
+				 */
+						if(myUnit.getUnitType().equals(UnitType.AXE_THROWER)){
+							
+						}
+				/*
+				 * Shaman
+				 */
+						if(myUnit.getUnitType().equals(UnitType.SHAMAN)){
+							
+						}
+				/*
+				 * Swordsman
+				 */
+						if(myUnit.getUnitType().equals(UnitType.SWORD)){
+							for(Tile tile : getAdjacentTiles(myUnit)){
+								Unit enemyUnit = StateUtils.getUnitByTile(tile.coordinates);
+								if(enemyUnit != null){
+									if (enemyUnit.ownerId != myUnit.ownerId){
+										Command abilityCommand = new ActivateAbilityCommand(myUnit, 6);
+										if(abilityCommand.isAllowed()){
+											return abilityCommand;
+										}
+									}
+								}
+							}	
+						}
+				/*
+				 * Hawk
+				 */
+						if(myUnit.getUnitType().equals(UnitType.HAWK)){
+							
+						}
+				/*
+				 * Wolf
+				 */
+						if(myUnit.getUnitType().equals(UnitType.WOLF)){
+							if (myUnit.currentHP<=(myUnit.getMaxHP()-5)){
+								for(Tile tile : getTilesPossibleForAttacks(myUnit.getMaxAttackRange())){
+									if(tile.coordinates.equals(myUnit.tileCoordinate)){
+										List<Unit> orderToAttack = sortInOrderToAttack(getEnemyUnits(),myUnit);
+										for(Unit enemyUnit : orderToAttack){ 
+											if (Pathfinding.getDistance(myUnit.tileCoordinate,enemyUnit.tileCoordinate) <= myUnit.getMaxAttackRange()){
+												Command targetedAbilityCommand = new ActivateTargetedAbilityCommand(myUnit, enemyUnit.tileCoordinate,3);
+												if(targetedAbilityCommand.isAllowed()){
+													return targetedAbilityCommand;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+				}
+			}
 		
 		/* Attack Algoritm
 		 *  
 		 */
-		List<Unit> attackingOrder = sortInAttackingOrder(getMyUnits());
 		
 		
 		for(Unit myUnit : attackingOrder){
@@ -353,6 +420,15 @@ public class ScriptAI implements IArtificialIntelligence {
 		for(Unit enemyUnit : getEnemyUnits()){  
 			nearbyTiles.addAll(State.activeState.map.getNeighbors(enemyUnit.tileCoordinate));
 		}
+		return nearbyTiles;
+	}
+	
+	/**
+	 * @ArrayList of tiles which is adjacent to specified unit
+	 */
+	private List<Tile> getAdjacentTiles(Unit unit){
+		List<Tile> nearbyTiles = new ArrayList<Tile>();  
+			nearbyTiles.addAll(State.activeState.map.getNeighbors(unit.tileCoordinate));
 		return nearbyTiles;
 	}
 	
