@@ -125,6 +125,13 @@ public class Unit implements Serializable {
 		return this.type.APCostAttacking+attacksThisTurn;
 	}
 	
+	public int getAPCostToActivateAbility(){
+		for (Ability a : this.getAbilities()){
+			return a.apCost;
+		}
+		return Integer.MAX_VALUE;
+	}
+	
 	public int getHPReg(){
 		return this.type.HPReg;
 	}

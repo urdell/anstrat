@@ -14,7 +14,7 @@ public class OdinsBlessing extends PlayerAbility {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static final int apRestored = 3;
+	public static final int apRestored = 1;
 	
 	public OdinsBlessing(Player player) {
 		super(player, PlayerAbilityType.ODINS_BLESSING);

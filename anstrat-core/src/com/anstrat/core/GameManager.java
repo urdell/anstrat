@@ -32,6 +32,14 @@ public class GameManager {
 		gi.setAIPlayers(aiPlayerIds);
 		return gi;
 	}
+	public GameInstance createAIGame(boolean fog, int sizeX, int sizeY, int player1team,
+			Integer... aiPlayerIds) {
+		Map map = new Map(sizeX, sizeY, new Random());
+		map.fogEnabled = fog;
+		GameInstance gi = createHotseatGame(map, player1team, Player.getRandomTeam());
+		gi.setAIPlayers(aiPlayerIds);
+		return gi;
+	}
 	
 	public GameInstance createHotseatGame(Map map, int player1team, int player2team){
 		return createHotseatGame(map, 2, new int[]{player1team, player2team});
