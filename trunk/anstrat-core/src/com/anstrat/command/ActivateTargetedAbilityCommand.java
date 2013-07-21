@@ -51,6 +51,7 @@ public class ActivateTargetedAbilityCommand extends Command {
 	public boolean isAllowed(){
 		State s = State.activeState;
 		Unit source = s.unitList.get(sourceUnitId);
+		System.out.println(source.abilities.get(abilityId));
 		Ability ability = source.abilities.get(abilityId);
 		
 		return super.isAllowed()
