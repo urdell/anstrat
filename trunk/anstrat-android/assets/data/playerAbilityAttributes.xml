@@ -9,7 +9,7 @@
 		<PlayerAbility>
 			<name>Odin's Blessing</name>
 			<manacost>2</manacost>
-			<description>Drawing from the powers of the Aesir, Odin blesses all your units, restoring 3 AP for each of them.</description>
+			<description>Drawing from the powers of the Aesir, Odin blesses all your units, restoring 1 AP for each of them.</description>
 		</PlayerAbility>
 		<PlayerAbility>
 			<name>Hugin and Munin</name>
