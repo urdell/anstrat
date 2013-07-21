@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.anstrat.command.ActivateAbilityCommand;
+import com.anstrat.command.ActivatePlayerAbilityCommand;
 import com.anstrat.command.ActivateTargetedAbilityCommand;
 import com.anstrat.command.AttackCommand;
 import com.anstrat.command.CaptureCommand;
@@ -18,6 +19,7 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gameCore.UnitType;
+import com.anstrat.gameCore.playerAbilities.PlayerAbilityType;
 import com.anstrat.geography.Path;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.Tile;
@@ -32,15 +34,16 @@ public class ScriptAI implements IArtificialIntelligence {
 	
 	/*
 	 * The AI will attempt to do different kind of actions in the following way.
-	 * 1. Buy units for the gold at hand.
-	 * 2. Activate abilities if profitable
-	 * 3. Attack enemy units in range, applying its attack algorithm to determine in which order to attack.
-	 * 4. Walk for the closest building not already in possession or occupied by one of its own units,
+	 * 1. Using Divine Intervention
+	 * 2. Buy units for the gold at hand.
+	 * 3. Activate abilities if profitable
+	 * 4. Attack enemy units in range, applying its attack algorithm to determine in which order to attack.
+	 * 5. Walk for the closest building not already in possession or occupied by one of its own units,
 	 * start with a unit which can reach a building prioritize unit closest to a building
-	 * 5. Walk for closest enemy unit, will only make the movement if it can make an attack this turn as well
-	 * 6. No enemy units in play nor any building not owned or occupied, 
+	 * 6. Walk for closest enemy unit, will only make the movement if it can make an attack this turn as well
+	 * 7. No enemy units in play nor any building not owned or occupied, 
 	 * walk towards enemy's mainbase, although always saves at least 3 ap
-	 * 7. End turn
+	 * 8. End turn
 	 */
 	
 	private Player godlikeAI;
@@ -52,6 +55,15 @@ public class ScriptAI implements IArtificialIntelligence {
 	
 	@Override
 	public Command generateNextCommand() {
+		
+		/*Divine Intervention
+		 * 
+		 */
+		
+		Command DivineIntervention = new ActivatePlayerAbilityCommand(this.godlikeAI,PlayerAbilityType.ODINS_BLESSING);
+		if(DivineIntervention.isAllowed()){
+			return DivineIntervention;
+		}
 		
 		/* Buy algorithm
 		 * 
@@ -100,28 +112,23 @@ public class ScriptAI implements IArtificialIntelligence {
 			}
 			if(createCommand != null && createCommand.isAllowed())
 				return createCommand;
-			if(createCommand == null){
-				if(godlikeAI.gold >= UnitType.HAWK.cost){
-					return generateCreateCommand(UnitType.HAWK);	
-				}
-			}
 			
 		}
 		
 		if(getEnemyUnits().size() >= 3) {
-			if(godlikeAI.gold >= UnitType.SWORD.cost){
+			if(godlikeAI.gold >= UnitType.BERSERKER.cost){
 				if(getMyUnits().size() < 2){
-					createCommand = generateCreateCommand(UnitType.SWORD);
+					createCommand = generateCreateCommand(UnitType.BERSERKER);
 					if(createCommand != null && createCommand.isAllowed())
 						return createCommand;
 				}
 			}
 				
-			if (godlikeAI.gold >= UnitType.BERSERKER.cost){
+			if (godlikeAI.gold >= UnitType.SWORD.cost){
 				if (getMyUnits().size() <= 3 || getMyUnits().size() >= 6 && getMyUnits().size() < 8){
-					createCommand = generateCreateCommand(UnitType.BERSERKER);
+					createCommand = generateCreateCommand(UnitType.SWORD);
 				}
-				else if(getMyUnits().size() > 7){
+				else if(getMyUnits().size() > 7 || getMyUnits().size() < 3){
 					createCommand = generateCreateCommand(UnitType.HAWK);
 				}
 				else {
@@ -144,33 +151,68 @@ public class ScriptAI implements IArtificialIntelligence {
 			for(Unit myUnit : attackingOrder){
 				
 				if(myUnit.currentAP >= myUnit.getAPCostToActivateAbility()){
-				/*
-				 * Berserk
+					
+				/* Berserk
+				 * Will not attempt his ability in this version
 				 */
 						if(myUnit.getUnitType().equals(UnitType.BERSERKER)){
 							
 						}
-				/*
-				 * Axe-thrower
+				/* Axe-thrower
+				 * Attempts chain axe if at least two enemies stands adjacent
 				 */
 						if(myUnit.getUnitType().equals(UnitType.AXE_THROWER)){
-							
-						}
-				/*
-				 * Shaman
+								int unitRange = myUnit.getMaxAttackRange();
+								
+									for(Tile tile : getTilesPossibleForAttacks(unitRange)){
+										if(tile.coordinates.equals(myUnit.tileCoordinate)){
+											List<Unit> orderToAttack = sortInOrderToAttack(getEnemyUnits(),myUnit);
+											for(Unit enemyUnit : orderToAttack){ 
+												if (Pathfinding.getDistance(myUnit.tileCoordinate,enemyUnit.tileCoordinate) <= unitRange){
+													for(Tile tile42 : getAdjacentTiles(enemyUnit)){
+														Unit unit42 = StateUtils.getUnitByTile(tile42.coordinates);
+														if(unit42 != null){
+															if(unit42.ownerId == enemyUnit.ownerId){
+																Command targetedAbilityCommand = new ActivateTargetedAbilityCommand(myUnit, enemyUnit.tileCoordinate,0);
+																if(targetedAbilityCommand.isAllowed()){
+																	return targetedAbilityCommand;
+																} 
+															}
+														}
+													}
+												}
+											}
+										}
+									}	
+								
+							}
+						
+				/* Shaman 
+				 * Only heals units currently in range lacking at least 10 hp
 				 */
 						if(myUnit.getUnitType().equals(UnitType.SHAMAN)){
-							
+							for(Tile tile : getTilesPossibleToHeal(myUnit)){
+								Unit unit = StateUtils.getUnitByTile(tile.coordinates);
+								if(unit != null){
+									if(unit.ownerId == myUnit.ownerId && (unit.getMaxHP()-10)>= unit.currentHP ){
+										Command targetedAbilityCommand = new ActivateTargetedAbilityCommand(myUnit, unit.tileCoordinate,0);
+										if(targetedAbilityCommand.isAllowed()){
+											return targetedAbilityCommand;
+										}
+									}
+								}
+							}
 						}
-				/*
-				 * Swordsman
+				/* Swordsman
+				 *  Uses his ability if any enemy unit is adjacent 
+				 *  Could be potientially include if any ranged is in attack range
 				 */
 						if(myUnit.getUnitType().equals(UnitType.SWORD)){
 							for(Tile tile : getAdjacentTiles(myUnit)){
 								Unit enemyUnit = StateUtils.getUnitByTile(tile.coordinates);
 								if(enemyUnit != null){
 									if (enemyUnit.ownerId != myUnit.ownerId){
-										Command abilityCommand = new ActivateAbilityCommand(myUnit, 6);
+										Command abilityCommand = new ActivateAbilityCommand(myUnit, 0);
 										if(abilityCommand.isAllowed()){
 											return abilityCommand;
 										}
@@ -178,14 +220,14 @@ public class ScriptAI implements IArtificialIntelligence {
 								}
 							}	
 						}
-				/*
-				 * Hawk
+				/* Hawk
+				 * AI will not attempt this in this version
 				 */
 						if(myUnit.getUnitType().equals(UnitType.HAWK)){
 							
 						}
-				/*
-				 * Wolf
+				/* Wolf
+				 * Attempt to use his ability if he lacks at least 5 hp
 				 */
 						if(myUnit.getUnitType().equals(UnitType.WOLF)){
 							if (myUnit.currentHP<=(myUnit.getMaxHP()-5)){
@@ -194,7 +236,7 @@ public class ScriptAI implements IArtificialIntelligence {
 										List<Unit> orderToAttack = sortInOrderToAttack(getEnemyUnits(),myUnit);
 										for(Unit enemyUnit : orderToAttack){ 
 											if (Pathfinding.getDistance(myUnit.tileCoordinate,enemyUnit.tileCoordinate) <= myUnit.getMaxAttackRange()){
-												Command targetedAbilityCommand = new ActivateTargetedAbilityCommand(myUnit, enemyUnit.tileCoordinate,3);
+												Command targetedAbilityCommand = new ActivateTargetedAbilityCommand(myUnit, enemyUnit.tileCoordinate,0);
 												if(targetedAbilityCommand.isAllowed()){
 													return targetedAbilityCommand;
 												}
@@ -452,6 +494,24 @@ public class ScriptAI implements IArtificialIntelligence {
 		}
 		
 		return TilesPossibleForRangedAttacks;
+		
+	}
+	
+	private List<Tile> getTilesPossibleToHeal (Unit unit){
+		List<Tile> TilesPossibleToRangedHeals = new ArrayList<Tile>();
+		List<Tile> temp = new ArrayList<Tile>();
+		TilesPossibleToRangedHeals.add(State.activeState.map.getTile(unit.tileCoordinate));
+		TilesPossibleToRangedHeals.addAll(getAdjacentTiles(unit));
+		
+		for(int i=1; i < unit.getMaxAttackRange(); i++){
+			for (Tile t : TilesPossibleToRangedHeals){
+				temp.addAll(State.activeState.map.getNeighbors(t.coordinates));
+			}
+			TilesPossibleToRangedHeals.addAll(temp);
+			temp.clear();
+		}
+		
+		return TilesPossibleToRangedHeals;
 		
 	}
 	
