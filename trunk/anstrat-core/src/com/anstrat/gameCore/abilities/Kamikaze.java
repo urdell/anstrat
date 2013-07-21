@@ -24,7 +24,7 @@ public class Kamikaze extends TargetedAbility {
 	private static final float DAMAGEMULTIPLIER = 2.0f;
 
 	public Kamikaze(){
-		super("Kamikaze","Making a suicideattack dealing additional damage",AP_COST, RANGE);
+		super("Kamikaze", "An attack that deals extra damage but also kills the hawk unit.", AP_COST, RANGE);
 		iconName = "kamikaze-button";
 	}
 	

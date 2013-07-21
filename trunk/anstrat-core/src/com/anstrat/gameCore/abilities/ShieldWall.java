@@ -22,7 +22,7 @@ public class ShieldWall extends Ability {
 	
 	
 	public ShieldWall() {
-		super("Shield Wall", "Halves all incoming damage for the duration of the turn",2);
+		super("Shield", "Halves all incoming damage for the duration of the turn.", 2);
 		iconName = "shield-button";
 	}
 

@@ -3,7 +3,6 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.AttackAnimation;
 import com.anstrat.animation.PoisonAnimation;
-import com.anstrat.core.Assets;
 import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.State;
@@ -17,8 +16,6 @@ import com.anstrat.gui.confirmDialog.APRow;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 import com.anstrat.gui.confirmDialog.ConfirmRow;
 import com.anstrat.gui.confirmDialog.DamageRow;
-import com.anstrat.gui.confirmDialog.TextRow;
-import com.anstrat.gui.confirmDialog.XxxPicRow;
 
 public class Poison extends TargetedAbility{
 	private static final long serialVersionUID = 1L;
@@ -28,7 +25,7 @@ public class Poison extends TargetedAbility{
 	private static final float DAMAGEMULTIPLIER = 0.7f;
 	
 	public Poison() {
-		super("Poison", "Fires a poisonous arrow that reduces the targets damage for the next round", AP_COST, RANGE);
+		super("Poison", "The targeted unit can only do half as much damage as usual for the next turn.", AP_COST, RANGE);
 		iconName = "poison-button";
 	}
 

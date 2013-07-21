@@ -27,7 +27,7 @@ public class ChainingAxe extends TargetedAbility {
 	private static final float DAMAGEMULTIPLIER = 1.2f;
 
 	public ChainingAxe(){
-		super("Chaining Axe","Throws a magic axe jumping between up to 4 adjacent enemies, damage is reduced by for each succesive hit",AP_COST, RANGE);
+		super("Chain Axe", "A chain attack that hits the targeted enemy and continues to hit adjacent targets. Damage is reduced for each successive hit.",AP_COST, RANGE);
 		iconName = "chainaxe-button";
 	}
 	
