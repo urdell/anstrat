@@ -1,8 +1,10 @@
 package com.anstrat.gui;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
 import com.anstrat.geography.TerrainType;
@@ -116,8 +118,10 @@ public class GBuilding extends GObject {
 			lastOwner = building.controllerId;
 		}
 		
-		// Render flag (if the village is owned by a player)
-		if(lastOwner != -1){
+		// Render flag (if the village is owned by a player and village is not fogged)
+		if(building.type == Building.TYPE_CASTLE || 
+				lastOwner != -1 && 
+				Fog.isVisible(building.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId)){
 			
 			
 			// Player0 = blue, Player0 = red
