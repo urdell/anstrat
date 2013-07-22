@@ -28,6 +28,7 @@ public class MapsPopup extends Popup {
 		ok = ComponentFactory.createButton("Ok", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				if(maplist.getSelected()==null) return;
 	        	returnSelection();
 				Popup.getCurrentPopup().close();
 	        }
