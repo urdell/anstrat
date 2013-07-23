@@ -19,7 +19,7 @@ import com.anstrat.gui.confirmDialog.DamageRow;
 
 public class Poison extends TargetedAbility{
 	private static final long serialVersionUID = 1L;
-	private static final int AP_COST = 3;
+	private static final int AP_COST = 5;
 	private static final int RANGE = 2;
 	private static final int nrOfRounds = 3;
 	private static final float DAMAGEMULTIPLIER = 0.7f;
