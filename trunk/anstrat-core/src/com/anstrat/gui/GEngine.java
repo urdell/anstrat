@@ -15,6 +15,7 @@ import com.anstrat.core.InviteManager;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.gameCore.Building;
+import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
@@ -125,7 +126,6 @@ public class GEngine implements Screen{
 		userInterface.updateCurrentPlayer();
 		map = new GMap(state.map, camera);
 		actionMap = new ActionMap();
-		
 		
 		cameraController.setBounds(map.getWidth(), map.getHeight());
 		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), map.TILE_WIDTH * 2.5f, map.TILE_HEIGHT * 2.5f);

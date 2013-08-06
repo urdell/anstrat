@@ -23,13 +23,14 @@ public class EndTurnCommand extends Command{
 		State.activeState.endTurn();
 		GameInstance active = GameInstance.activeGame;
 		
-		if (active.getGameType().equals(GameInstanceType.HOTSEAT) && !active.isAI()) {
+		if (!State.activeState.keyser_soze && 
+				active.getGameType().equals(GameInstanceType.HOTSEAT) && !active.isAI()) {
 			Main.getInstance().setScreen(HotseatNextTurnScreen.getInstance());
 			//HotAnimation hanimation = new HotAnimation();
 			//GEngine.getInstance().animationHandler.enqueue(hanimation);
 			//GEngine.getInstance().selectionHandler.deselect();
 		}
-		else {
+		else if(!State.activeState.keyser_soze) {
 			EndTurnAnimation animation = new EndTurnAnimation();
 			GEngine.getInstance().animationHandler.enqueue(animation);
 			GEngine.getInstance().selectionHandler.deselect();

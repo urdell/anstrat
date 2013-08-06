@@ -10,6 +10,8 @@ import java.util.Random;
 import com.anstrat.animation.DeathAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.audio.AudioAssets;
+import com.anstrat.core.GameInstance;
+import com.anstrat.core.Main;
 import com.anstrat.gameCore.effects.Effect;
 import com.anstrat.gameCore.effects.TriggerOnTurnEnd;
 import com.anstrat.gameCore.effects.TriggerOnTurnStart;
@@ -41,6 +43,7 @@ public class State implements Serializable{
 	public int nextUnitId;
 	public int turnNr = 1;
 	public Random random;
+	public boolean keyser_soze = false;
 	
 	public final Player[] players;
 	public int[] baseCaps = {-1, -1};
@@ -147,8 +150,10 @@ public class State implements Serializable{
 			}
 			else if(building.type == Building.TYPE_CASTLE){
 				for(Unit u : unitList.values()){
-					if(building.controllerId == endingPlayerId && 
+					if(!keyser_soze && building.controllerId == endingPlayerId && 
 							u.tileCoordinate == building.tileCoordinate && u.ownerId != endingPlayerId){
+						keyser_soze = true;
+						Main.getInstance().games.endGame(GameInstance.activeGame);
 						GameUI.showVictoryPopup(activeState.players[u.ownerId].getDisplayName());
 						AudioAssets.playMusic("victory");
 					}
