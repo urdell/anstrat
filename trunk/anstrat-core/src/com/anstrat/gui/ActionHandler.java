@@ -267,9 +267,14 @@ public class ActionHandler {
 			Ability ability = unit.getAbilities().get(i);
 			if(ability != null){
 				if(!(ability instanceof TargetedAbility)){ // not targeted
-					Command c = new ActivateAbilityCommand(unit, i);
-					requestAbilityConfirm(GEngine.getInstance().getMap().getTile(unit.tileCoordinate), unit, c, ability, ConfirmDialog.BOTTOM_RIGHT);
-					//CommandHandler.execute(c);
+					if (unit.currentAP >= ability.apCost) {
+						Command c = new ActivateAbilityCommand(unit, i);
+						requestAbilityConfirm(GEngine.getInstance().getMap().getTile(unit.tileCoordinate), unit, c, ability, ConfirmDialog.BOTTOM_RIGHT);
+						//CommandHandler.execute(c);
+					}
+					else {
+						deselectPress();
+					}
 				}
 				
 				if(ability instanceof TargetedAbility){
@@ -288,7 +293,6 @@ public class ActionHandler {
 	 * @param clickedQuadrant
 	 */
 	public void requestConfirm(GTile targetTile, Unit unit, Command command, int clickedQuadrant){
-		
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
 		confirmCommand = command;
@@ -317,14 +321,16 @@ public class ActionHandler {
 	 * @param ability
 	 * @param command
 	 */
-	public void requestAbilityConfirm(GTile targetTile, Unit unit, Command command, Ability ability, int clickedQuadrant){	
+	public void requestAbilityConfirm(GTile targetTile, Unit unit, Command command, Ability ability, int clickedQuadrant){
 		GEngine gEngine = GEngine.getInstance();
 		confirmTile = targetTile;
 		confirmCommand = command;
 		showingConfirmDialog = true;
 		int dialogPosition = ConfirmDialog.invertQuadrant(clickedQuadrant);
 		if(command instanceof ActivateAbilityCommand){
-			gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+			if (unit.currentAP >= ability.apCost) {
+				gEngine.confirmDialog = ability.generateConfirmDialog(unit, dialogPosition);
+			}
 
 		}
 		else if(command instanceof ActivateTargetedAbilityCommand){
