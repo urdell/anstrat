@@ -3,6 +3,8 @@ package com.anstrat.command;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.FullscreenTextAnimation;
 import com.anstrat.core.GameInstance;
+import com.anstrat.gameCore.Fog;
+import com.anstrat.gameCore.State;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -19,7 +21,6 @@ public final class CommandHandler {
 			Gdx.app.log("CommandHandler", String.format("Executing valid '%s' command.", command));
 			GameInstance.activeGame.onCommandExecute(command);
 			command.execute();
-			System.out.println("CometStriking");
 			Pathfinding.ranges.clear();
 		}
 		else{
