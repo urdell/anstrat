@@ -288,7 +288,7 @@ public class GameUI extends UI {
 	}
 	
 	private void layoutUnitTable(){
-		float bph = Main.percentWidth * 30;
+		float bph = Main.percentWidth * 30f;
         
         unitTable.clear();
         unitTable.row().expand().top();
