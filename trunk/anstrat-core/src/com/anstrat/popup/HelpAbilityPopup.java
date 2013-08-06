@@ -72,11 +72,13 @@ public class HelpAbilityPopup extends Popup{
 			}
 		}
 		*/
-		unitTable.add(new Image(Assets.getTextureRegion("abilitiesmenu")));
+		Image image = new Image(Assets.getTextureRegion("abilitiesmenu"));
+		image.setWidth(Main.percentWidth*50);
+		//unitTable.add(image);
 		NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
 		ScrollPaneStyle spst = new ScrollPaneStyle(emp,emp,emp,emp,emp); //first one is PERHAPS background :)
 		
-		ScrollPane scroll = new ScrollPane(unitTable, spst);
+		ScrollPane scroll = new ScrollPane(image, spst);
 		scroll.setFlickScroll(true);
 		scroll.setScrollingDisabled(true, false);
 		this.setHeight(Main.percentHeight*50f);

@@ -18,6 +18,7 @@ public class HelpBasicPopup extends Popup {
 		ScrollPaneStyle spst = new ScrollPaneStyle(emp,emp,emp,emp,emp);
 		
 		Table table = new Table();
+		table.setWidth(Main.percentWidth*100f);
 		table.add(new Image(Assets.getTextureRegion("help1")));
 		table.row();
 		table.add(new Image(Assets.getTextureRegion("help2")));

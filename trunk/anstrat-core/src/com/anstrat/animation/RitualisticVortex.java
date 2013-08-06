@@ -85,5 +85,8 @@ public class RitualisticVortex extends Animation {
 	public void postAnimationAction()
 	{
 		GEngine.getInstance().gUnits.remove(source.unit.id);
+		for(GUnit target : targets) {
+			target.updateHealthbar();
+		}
 	}
 }
