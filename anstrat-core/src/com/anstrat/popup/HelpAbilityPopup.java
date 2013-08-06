@@ -7,6 +7,7 @@ import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,6 +26,7 @@ public class HelpAbilityPopup extends Popup{
 		
 		//TODO not extremely dynamic atm... Can't handle more than two teams etc.
 		Table unitTable = new Table();
+		/*
 		if (GameInstance.activeGame.getUserPlayer().team == 0) {
 			for (UnitType type : UnitType.TEAMS[0]) {
 				unitTable.add(new HelpAbilityPopupUnit(type)).align(Align.left);
@@ -69,7 +71,8 @@ public class HelpAbilityPopup extends Popup{
 				unitTable.row();
 			}
 		}
-		
+		*/
+		unitTable.add(new Image(Assets.getTextureRegion("abilitiesmenu")));
 		NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
 		ScrollPaneStyle spst = new ScrollPaneStyle(emp,emp,emp,emp,emp); //first one is PERHAPS background :)
 		
