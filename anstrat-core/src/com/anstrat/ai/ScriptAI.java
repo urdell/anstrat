@@ -80,7 +80,9 @@ public class ScriptAI implements IArtificialIntelligence {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (i ==0){
+			//List<Enum> unitTypes = new ArrayList<Enum>(UnitType.SWORD,UnitType.BERSERKER,UnitType.SHAMAN,UnitType.HAWK,UnitType.AXE_THROWER,UnitType.WOLF);
+			
+			if (i==0){
 				if(godlikeAI.gold >= UnitType.SWORD.cost){
 					createCommand = generateCreateCommand(UnitType.SWORD);
 				}
@@ -129,15 +131,22 @@ public class ScriptAI implements IArtificialIntelligence {
 					createCommand = generateCreateCommand(UnitType.SWORD);
 				}
 				else if(getMyUnits().size() > 7 || getMyUnits().size() < 3){
-					createCommand = generateCreateCommand(UnitType.HAWK);
+					createCommand = generateCreateCommand(UnitType.WOLF);
 				}
 				else {
-					createCommand = generateCreateCommand(UnitType.AXE_THROWER);
+					createCommand = generateCreateCommand(UnitType.HAWK);
 				}
 			}
 			if (godlikeAI.gold >= UnitType.AXE_THROWER.cost)
-				if (getMyUnits().size() > 1 && getMyUnits().size() < 5)
+				if (getMyUnits().size() > 1 && getMyUnits().size() < 3)
 					createCommand = generateCreateCommand(UnitType.AXE_THROWER);
+			Unit enemyOnBase = StateUtils.getUnitByTile(StateUtils.getCurrentPlayerCastle().tileCoordinate);
+			if(enemyOnBase != null){
+				if (enemyOnBase.ownerId != godlikeAI.playerId){
+					createCommand = generateCreateCommand(UnitType.HAWK);
+				}	
+			}
+			
 			if(createCommand != null && createCommand.isAllowed())
 				return createCommand;
 		}
@@ -621,7 +630,6 @@ public class ScriptAI implements IArtificialIntelligence {
 		castleCoordinate = StateUtils.getCurrentPlayerCastle().tileCoordinate;
 		
 		// First check if castle position is free
-		// TODO: Check terrain and buildings too?
 		if(StateUtils.getUnitByTile(castleCoordinate) == null){
 			CreateUnitCommand createUnit = new CreateUnitCommand(godlikeAI.playerId, castleCoordinate, type);
 			if(createUnit.isAllowed())
@@ -632,7 +640,6 @@ public class ScriptAI implements IArtificialIntelligence {
 			if(State.activeState.map.isAdjacent(t.coordinates, castleCoordinate))
 				
 			// Check if something's in the way
-			// TODO: Check terrain and buildings too?
 			if(StateUtils.getUnitByTile(t.coordinates) == null){
 				CreateUnitCommand createUnitC = new CreateUnitCommand(godlikeAI.playerId, t.coordinates, type);
 				if(createUnitC.isAllowed()){
@@ -642,8 +649,9 @@ public class ScriptAI implements IArtificialIntelligence {
 				}
 			}
 		}
-		
-		throw new RuntimeException("AI: Failed to generate a create unit command, could not find a free tile.");
+		// Could not find any tiles, just move on with other commands
+		//throw new RuntimeException("AI: Failed to generate a create unit command, could not find a free tile.");
+		return null;
 	}
 }
 
