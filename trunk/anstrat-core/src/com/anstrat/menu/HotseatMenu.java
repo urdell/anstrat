@@ -68,8 +68,8 @@ public class HotseatMenu extends MenuScreen implements MapSelectionHandler {
 		contents.row();
 		contents.add(player2Selecter);
 		contents.row();
-		contents.add(fog);
-		contents.row();
+		//contents.add(fog);
+		//contents.row();
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
