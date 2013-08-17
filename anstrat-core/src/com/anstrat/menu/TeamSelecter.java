@@ -1,59 +1,65 @@
 package com.anstrat.menu;
 
-import com.anstrat.gameCore.UnitType;
-import com.anstrat.gui.GUnit;
-import com.anstrat.guiComponent.ComponentFactory;
+import com.anstrat.core.Assets;
 import com.anstrat.popup.TeamPopup;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class TeamSelecter extends Table {
 	private int team;
 	
 	public TeamSelecter(){	
-		final CheckBox teamVV = ComponentFactory.createCheckBox("");;
-		final CheckBox teamDD = ComponentFactory.createCheckBox("");
 		
-		Image vv =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.SWORD)));
-		Image dd =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.JOTUN)));
+		final CheckBox teamGood = new CheckBox("", createCheckboxStyle("teamgood-on", "teamgood-off"));
+		final CheckBox teamBad = new CheckBox("", createCheckboxStyle("teambad-on", "teambad-off"));
 		
-		vv.setScaleX(0.6f);
-		dd.setScaleX(0.6f);
+		//Image vv =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.SWORD)));
+		//Image dd =  new Image(new NinePatch(GUnit.getTextureRegion(UnitType.JOTUN)));
 		
-		teamVV.setChecked(true);
+		//vv.setScaleX(0.6f);
+		//dd.setScaleX(0.6f);
+		
+		teamGood.setChecked(true);
 		team = TeamPopup.TEAM_VV;
 		
-		teamDD.setChecked(false);
+		teamBad.setChecked(false);
 		
-		teamVV.addListener(new ClickListener() {
+		teamGood.addListener(new ClickListener() {
 			 @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	         	teamVV.setChecked(true);
-	         	teamDD.setChecked(false);
+	         	teamGood.setChecked(false);
+	         	teamBad.setChecked(true);
 	         	team = TeamPopup.TEAM_VV;
 	         }
 		});
 		
-		teamDD.addListener(new ClickListener() {
+		teamBad.addListener(new ClickListener() {
 			 @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	         	teamVV.setChecked(false);
-	         	teamDD.setChecked(true);
+				teamBad.setChecked(false);
+	         	teamGood.setChecked(true);
 	         	team = TeamPopup.TEAM_DD;
 	         }
 		});
 		
-		add(teamVV);
-		add(vv);
-		add(teamDD);
-		add(dd);
+		add(teamGood);
+		add(teamBad);
 	}
 	
 	public int getTeam(){
 		return team;
+	}
+	
+	private static CheckBoxStyle createCheckboxStyle(String on, String off){
+		return new CheckBoxStyle(
+				new TextureRegionDrawable(Assets.getTextureRegion(on)),
+				new TextureRegionDrawable(Assets.getTextureRegion(off)),
+				Assets.MENU_FONT,
+				Color.WHITE);
 	}
 }
