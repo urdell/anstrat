@@ -32,8 +32,8 @@ public class TeamSelecter extends Table {
 		teamGood.addListener(new ClickListener() {
 			 @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	         	teamGood.setChecked(false);
-	         	teamBad.setChecked(true);
+	         	teamGood.setChecked(true);
+	         	teamBad.setChecked(false);
 	         	team = TeamPopup.TEAM_VV;
 	         }
 		});
@@ -41,8 +41,8 @@ public class TeamSelecter extends Table {
 		teamBad.addListener(new ClickListener() {
 			 @Override
 	         public void clicked(InputEvent event, float x, float y) {
-				teamBad.setChecked(false);
-	         	teamGood.setChecked(true);
+				teamBad.setChecked(true);
+	         	teamGood.setChecked(false);
 	         	team = TeamPopup.TEAM_DD;
 	         }
 		});
@@ -57,8 +57,8 @@ public class TeamSelecter extends Table {
 	
 	private static CheckBoxStyle createCheckboxStyle(String on, String off){
 		return new CheckBoxStyle(
-				new TextureRegionDrawable(Assets.getTextureRegion(on)),
 				new TextureRegionDrawable(Assets.getTextureRegion(off)),
+				new TextureRegionDrawable(Assets.getTextureRegion(on)),
 				Assets.MENU_FONT,
 				Color.WHITE);
 	}
