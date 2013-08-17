@@ -4,20 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
+import com.anstrat.guiComponent.ScrollChoiceList;
+import com.anstrat.guiComponent.TabPane;
 import com.anstrat.network.protocol.GameOptions;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 /**
  * Popup for choosing a {@link GameOptions.MapType}.
@@ -93,119 +88,6 @@ public class MapTypePopup extends Popup {
 	
 	public static interface MapSelectionListener {
 		public void mapSelection(GameOptions.MapType type, String mapName);
-	}
-	
-	public static class ScrollChoiceList extends ScrollPane {
-		private Table selectedTable;
-		private List<SelectionChangeListener> listeners;
-		
-		public ScrollChoiceList(List<String> labels, List<Object> states, Object preselected) {
-			super(new Table(Assets.SKIN).top());
-		
-			this.listeners = new ArrayList<SelectionChangeListener>();
-			Table list = ((Table) this.getWidget());
-			
-			for(int i = 0; i < labels.size(); i++) {
-				String name = labels.get(i);
-				final Object state = states.get(i);
-				
-				final Table table = new Table();
-				
-				if (state == preselected) {
-					selectedTable = table;
-				}
-				
-				setBackground(table, state == preselected);
-				table.defaults().align(Align.left).height(4f * Main.percentHeight);
-				table.add(ComponentFactory.createLabel(name));
-				list.add(table).fillX().expandX().height(10f * Main.percentHeight);
-				list.row();
-				
-				table.addListener(new ClickListener(){
-					@Override
-					public void clicked (InputEvent event, float x, float y) {
-						if (selectedTable != null) {
-							setBackground(selectedTable, false);
-						}
-						
-						setBackground(table, true);
-						selectedTable = table;
-						
-						for (SelectionChangeListener listener : listeners) {
-							listener.selectionChanged(state);
-						}
-					}
-				});
-				
-				table.setTouchable(Touchable.enabled);
-			}
-			
-			this.setScrollingDisabled(true, false);
-			this.setFlickScroll(true);
-		}
-		
-		private void setBackground(Table table, boolean isSelected) {
-			if (isSelected) {
-				table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("double-border")));
-			}
-			else {
-				table.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
-			}	
-		}
-		
-		public void clearSelection() {
-			if (this.selectedTable != null) {
-				this.setBackground(this.selectedTable, false);
-			}
-
-			this.selectedTable = null;
-		}
-		
-		public void addSelectionListener(SelectionChangeListener listener) {
-			this.listeners.add(listener);
-		}
-		
-		public static interface SelectionChangeListener {
-			public void selectionChanged(Object state);
-		}
-	}
-	
-	public static class TabPane extends Table {
-		private List<Actor> tabs;
-		private Table content = new Table();
-		
-		public TabPane(List<String> labels, List<Actor> tabs){
-			this.tabs = tabs;
-			
-			for (int i = 0; i < labels.size(); i++) {
-				addButton(labels.get(i), i);
-			}
-			
-			this.row();
-			this.add(content).fill().expand().colspan(labels.size());
-			content.top();
-			setActiveTab(0);
-		}
-		
-		private void setActiveTab(int index){		
-			Actor tab = this.tabs.get(index);
-			this.content.clear();
-			this.content.add(tab).fillX().expandX();
-		}
-		
-		private void addButton(String text, final int index) {
-			Button button = ComponentFactory.createButton(text);
-			final TabPane pane = this;
-
-			button.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					pane.setActiveTab(index);
-				}
-			});
-			
-			add(button).size(Main.percentWidth * 40, Main.percentHeight * 8f);
-		}
 	}
 }
 
