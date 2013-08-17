@@ -568,7 +568,7 @@ public class GameUI extends UI {
 			}
 			batch.setColor(oldColor);
 			
-			if(lastShownUnit.ownerId != State.activeState.currentPlayerId){
+			if(lastShownUnit.ownerId != GameInstance.activeGame.getUserPlayer().playerId){
 				TextureRegion enemyUnit = Assets.getTextureRegion("enemyunit");
 				batch.draw(enemyUnit, pw*41.5f, pw*17f, pw*40f, pw*9f);
 			}

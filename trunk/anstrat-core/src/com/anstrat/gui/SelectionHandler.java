@@ -6,6 +6,7 @@ import java.util.List;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.MoveCameraAnimation;
 import com.anstrat.audio.AudioAssets;
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
@@ -51,7 +52,7 @@ public class SelectionHandler {
 			gEngine.userInterface.showUnit(unit);
 			
 			
-			if(unit.ownerId == State.activeState.currentPlayerId){
+			if(unit.ownerId == State.activeState.currentPlayerId && unit.ownerId == GameInstance.activeGame.getUserPlayer().playerId){
 				if(prevSel == SELECTION_EMPTY)
 					AudioAssets.playSound("selectUnit");
 				gEngine.highlighter.showRange(unit.tileCoordinate, unit.getMaxAttackRange());
