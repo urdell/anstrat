@@ -281,7 +281,7 @@ public class GameUI extends UI {
 		// Bottom panel
         bottomPanel.setBounds(0,0 ,width,bph);
         bottomPanel.clear();
-        bottomPanel.add(unitTable);
+        bottomPanel.add(unitTable).width(width).height(bph).expand().fill();
         bottomPanel.add(permanentPanel).ignore().bottom().right().height(bph/2f);
         
         updateCurrentPlayer();
@@ -312,6 +312,8 @@ public class GameUI extends UI {
 		//portraitCell.setWidget(table11);
 
 		table1.row();
+		
+		//Unit name should have been added here if properly done, now printed later on
 		//table1.add(unitNameLabel).align(Align.left);
         
         
