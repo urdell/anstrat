@@ -9,30 +9,37 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
-public class HelpBasicPopup extends Popup {
+public class HelpScrollPopup extends Popup {
 
-	public HelpBasicPopup(){
+	public HelpScrollPopup(Image... images){
 		this.drawOverlay = false;
 		
 		NinePatchDrawable emp = new NinePatchDrawable(Assets.SKIN.getPatch("empty"));
 		ScrollPaneStyle spst = new ScrollPaneStyle(emp,emp,emp,emp,emp);
 		
-		Table table = new Table();
-		table.setWidth(Main.percentWidth*100f);
-		table.add(new Image(Assets.getTextureRegion("help1")));
-		table.row();
-		table.add(new Image(Assets.getTextureRegion("help2")));
-		table.row();
-		table.add(new Image(Assets.getTextureRegion("help3")));
-		
-		ScrollPane scroll = new ScrollPane(table, spst);
+		ScrollPane scroll = new ScrollPane(imageTable(images), spst);
 		scroll.setFlickScroll(true);
 		scroll.setScrollingDisabled(true, false);
-		this.setHeight(Main.percentHeight*50f);
-		this.setWidth(Main.percentWidth*50f);
-		this.defaults().space(Main.percentHeight).top().center();
-		this.add(scroll).size(Main.percentWidth*100f, Main.percentHeight*100f);
+		scroll.setOverscroll(false, false);
+		scroll.setSmoothScrolling(true);
+
+		this.add(scroll).size(Main.percentWidth * 100f, Main.percentHeight * 100f);
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty")));
+	}
+	
+	private static Table imageTable(Image... images) {
+		Table table = new Table();
+		
+		for(Image image : images) {
+			float aspectRatio = image.getWidth() / image.getHeight();
+			float width = Main.percentWidth * 100f;
+			float height = width / aspectRatio;
+			
+			table.add(image).size(width, height);
+			table.row();
+		}
+		
+		return table;
 	}
 	
 	@Override
@@ -52,5 +59,17 @@ public class HelpBasicPopup extends Popup {
 	public void close(){
 		GEngine.getInstance().userInterface.setVisible(true);
 		super.close();
+	}
+	
+	public static Popup basic(){
+		return new HelpScrollPopup(
+				new Image(Assets.getTextureRegion("help1")),
+				new Image(Assets.getTextureRegion("help2")),
+				new Image(Assets.getTextureRegion("help3")));
+	}
+	
+	public static Popup ability(){
+		return new HelpScrollPopup(
+				new Image(Assets.getTextureRegion("abilitiesmenu")));
 	}
 }

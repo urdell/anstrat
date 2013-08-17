@@ -24,14 +24,14 @@ public class HelpPopup extends Popup{
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			Popup.getCurrentPopup().close();
-			new HelpBasicPopup().show();
+			HelpScrollPopup.basic().show();
 		}
 	};
 	private static final ClickListener ABILITY_BUTTON_LISTENER = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			Popup.getCurrentPopup().close();
-			new HelpAbilityPopup().show();
+			HelpScrollPopup.ability().show();
 		}
 	};
 	private static final ClickListener CREDIT_BUTTON_LISTENER = new ClickListener() {
