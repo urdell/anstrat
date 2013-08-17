@@ -86,7 +86,7 @@ public class GameUI extends UI {
 	//private ValueDisplay apDisplay;
 	private Button[] abilityButtons = new Button[MAX_ABILITIES];
 	private Image[] effectImage = new Image[MAX_EFFECTS];
-	private Button captureButton;
+	//private Button captureButton;
 	
 	private BuyUnitPopup[] buyUnitPopups = new BuyUnitPopup[UnitType.TEAMS.length];
 	private BuyUnitPopup openBuyUnitPopup;
@@ -169,6 +169,7 @@ public class GameUI extends UI {
         //hpValue = ;
         //hpDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_HP);
 		//apDisplay = new ValueDisplay(ValueDisplay.VALUE_UNIT_AP);
+        /*
         tempCaptureImage = new Image(Assets.getTextureRegion("capture-button-blue"));
         captureButton = new Button(tempCaptureImage, Assets.SKIN.get("image", ButtonStyle.class));
         captureButton.addListener(new ClickListener() {
@@ -177,6 +178,7 @@ public class GameUI extends UI {
             	GEngine.getInstance().actionHandler.capturePress();
             }
         } );
+        */
         deselectButton = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.get("image", ButtonStyle.class));
         deselectButton.addListener(new ClickListener() {
             @Override
@@ -325,8 +327,8 @@ public class GameUI extends UI {
 			if(b.isVisible()) table2.add(b).size(bph/2f);
 		}
 		
-		// Capture button
-		if(captureButton.isVisible()) table2.add(captureButton).size(bph/2f);
+		// Capture button *Legacy from 2013-08-17
+		//if(captureButton.isVisible()) table2.add(captureButton).size(bph/2f);
 		
 		// Deselect button
 		table2.add(deselectButton).size(bph/2f).right();
@@ -353,7 +355,7 @@ public class GameUI extends UI {
 			b.setVisible(false);
 		}
 		nrShownAbilities=0;
-		captureButton.setVisible(false);
+		//captureButton.setVisible(false);
 	}
 	
 	/**
@@ -368,12 +370,14 @@ public class GameUI extends UI {
 		}
 		unitTable.setVisible(true);
 		unitTypeImage.setDrawable(new TextureRegionDrawable( GUnit.getUnitPortrait(unit.getUnitType())));
+		/*
 		if(State.activeState.currentPlayerId%2==0){
 			tempCaptureImage.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("capture-button-blue")));
 		}
 		else{
 			tempCaptureImage.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("capture-button-red")));	
 		}
+		*/
 		unitNameLabel.setDrawable(new TextureRegionDrawable(GUnit.getUnitName(unit.getUnitType())));
 		portraitFrame.setDrawable(new TextureRegionDrawable(Assets.getTextureRegion("portraitFrame")));
 		apWheel = new APPieIcon(unit.getMaxAP(),unit.currentAP);
@@ -412,12 +416,14 @@ public class GameUI extends UI {
 		
 		// if a on a building
 		Building building = State.activeState.map.getBuildingByTile(unit.tileCoordinate);
+		/*
+		 * Capture by spending ap is deprecated
 		if(building != null && new CaptureCommand(building, unit).isAllowed()){
 			captureButton.setVisible(true);
 		}else{
 			captureButton.setVisible(false);
 		}
-		
+		*/
 		resize(); // update positions of buttons etc.
 	}
 	
