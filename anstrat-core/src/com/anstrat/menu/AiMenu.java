@@ -6,9 +6,9 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameOptions.MapType;
+import com.anstrat.popup.MapTypePopup.MapSelectionListener;
 import com.anstrat.util.Dimension;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class AiMenu extends MenuScreen implements MapSelectionHandler {
+public class AiMenu extends MenuScreen implements MapSelectionListener {
 	private static AiMenu me;
 	public int player1team, player2team;
 
@@ -27,8 +27,6 @@ public class AiMenu extends MenuScreen implements MapSelectionHandler {
 	private Button goButton;
 	
 	private AiMenu(){
-		mapSelecter = new MapSelecter(this);
-		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
@@ -59,9 +57,12 @@ public class AiMenu extends MenuScreen implements MapSelectionHandler {
 				}
 		   }
 		});
+		
 		goButton.setDisabled(true);
 		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
+		mapSelecter = new MapSelecter(this);
+	
 		contents.padTop(3f*Main.percentHeight).center();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(mapSelecter);
@@ -75,9 +76,6 @@ public class AiMenu extends MenuScreen implements MapSelectionHandler {
 		Table centerLogin = new Table(Assets.SKIN);
 		centerLogin.add(ComponentFactory.createLoginLabel());
 		contents.add(centerLogin).bottom();
-		
-
-		mapSelecter.sizeSelected(MapType.GENERATED_SIZE_MEDIUM);
 	}
 	
 	public static synchronized AiMenu getInstance() {

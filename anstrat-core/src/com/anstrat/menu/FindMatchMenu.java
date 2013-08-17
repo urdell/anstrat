@@ -4,19 +4,16 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
-import com.anstrat.network.protocol.GameOptions.MapType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
+public class FindMatchMenu extends MenuScreen {
 	private static FindMatchMenu me;
 	
-	private MapSelecter mapSelecter;
 	private PlayerSelecter playerSelecter;
 	private Button goButton;
 	
@@ -24,7 +21,6 @@ public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
 	private GameOptions.MapType mapType;
 	
 	private FindMatchMenu(){
-		mapSelecter = new MapSelecter(this);
 		playerSelecter = new PlayerSelecter();
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
@@ -77,13 +73,5 @@ public class FindMatchMenu extends MenuScreen implements MapSelectionHandler {
 	public void dispose() {
 		super.dispose();
 		me = null;
-	}
-
-	@Override
-	public void mapSelected(MapType type, String mapName) {
-		this.mapType = type;
-		this.mapName = mapName;
-		this.goButton.setDisabled(false);
-		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 	}
 }
