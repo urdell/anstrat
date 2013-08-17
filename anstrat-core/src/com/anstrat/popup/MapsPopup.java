@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 /**
  * Popup for showing maps.
  * @author Kalle
+ * @deprecated Use {@link MapTypePopup} instead.
  */
 public class MapsPopup extends Popup {
 	
