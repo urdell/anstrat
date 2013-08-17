@@ -4,11 +4,11 @@ import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
-import com.anstrat.menu.MapSelecter.MapSelectionHandler;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameOptions.MapType;
 import com.anstrat.popup.InvitePopup;
 import com.anstrat.popup.InvitePopup.InvitePopupHandler;
+import com.anstrat.popup.MapTypePopup.MapSelectionListener;
 import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class InviteMatchMenu extends MenuScreen implements MapSelectionHandler {
+public class InviteMatchMenu extends MenuScreen implements MapSelectionListener {
 	private static InviteMatchMenu me;
 	
 	private TextButton friendButton;
@@ -31,7 +31,6 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionHandler {
 	private GameOptions.MapType mapType;
 	
 	private InviteMatchMenu(){      
-		mapSelecter = new MapSelecter(this);
 		playerSelecter = new PlayerSelecter();
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
@@ -74,6 +73,8 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionHandler {
 				popup.show();	
 			}
 		});
+		
+		mapSelecter = new MapSelecter(this);
 		
 		contents.padTop(3f * Main.percentHeight).center();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);

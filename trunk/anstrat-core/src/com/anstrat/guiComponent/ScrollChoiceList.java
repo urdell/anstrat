@@ -15,12 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class ScrollChoiceList extends ScrollPane {
 	private Table selectedTable;
+	private Object selected;
 	private List<SelectionChangeListener> listeners;
 	
-	public ScrollChoiceList(List<String> labels, List<Object> states, Object preselected) {
+	public ScrollChoiceList(List<String> labels, List<?> states, Object preselected) {
 		super(new Table(Assets.SKIN).top());
 	
+		this.selected = preselected;
 		this.listeners = new ArrayList<SelectionChangeListener>();
+		
 		Table list = ((Table) this.getWidget());
 		
 		for(int i = 0; i < labels.size(); i++) {
@@ -48,6 +51,7 @@ public class ScrollChoiceList extends ScrollPane {
 					
 					setBackground(table, true);
 					selectedTable = table;
+					selected = state;
 					
 					for (SelectionChangeListener listener : listeners) {
 						listener.selectionChanged(state);
@@ -77,6 +81,11 @@ public class ScrollChoiceList extends ScrollPane {
 		}
 
 		this.selectedTable = null;
+		this.selected = null;
+	}
+	
+	public Object getSelected() {
+		return this.selected;
 	}
 	
 	public void addSelectionListener(SelectionChangeListener listener) {
