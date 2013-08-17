@@ -82,6 +82,10 @@ public class ComponentFactory {
 		return tf;
 	}
 	
+	public static Label createLabel(String text){
+		return new Label(text, Assets.SKIN);
+	}
+	
 	public static Button createNetworkMenuButton(String caption, ClickListener cl){
 		Button button = createMenuButton(caption, cl);
 		Main.getInstance().network.registerNetworkButton(button);
