@@ -172,11 +172,12 @@ public class AttackAnimation extends Animation{
 		if(type == UnitType.SHAMAN){
 			if(light==null){
 				light = Assets.getAnimation("lightning");
-				start.y -= light.getKeyFrame(0).getRegionHeight()*1.15f;
+				start.y -= light.getKeyFrame(0).getRegionHeight()*1.05;
 			}
-			region = light.getKeyFrame(animationTimePassed, false);
-			if(animationTimePassed > impactTime && animationTimePassed < impactTime +  light.animationDuration)
+			if(animationTimePassed > impactTime && animationTimePassed < impactTime +  light.animationDuration){
+				region = light.getKeyFrame(animationTimePassed-impactTime, false);
 				batch.draw(region, start.x - region.getRegionWidth()/2, start.y + region.getRegionWidth()/2);
+			}
 		}	
 		// Has the projectile reached its target?
 		else if(animationTimePassed > rangedDelay){			

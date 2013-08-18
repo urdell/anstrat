@@ -56,7 +56,7 @@ public class BuyUnitPopup extends Popup{
 		this.types = types;
 		this.drawOverlay = false;
 		
-		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", BUY_BUTTON_LISTENER);
+		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("hire-button"), "image", BUY_BUTTON_LISTENER);
 		Button buttonCancel = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		//buyButton = new TextButton("Buybrrarggaggalghlll",Assets.SKIN);
 		
@@ -95,7 +95,7 @@ public class BuyUnitPopup extends Popup{
 		
 		buttonTable.align(Align.right);
 		buttonTable.defaults().size(buttonHeight);
-		buttonTable.add(buyButton);
+		buttonTable.add(buyButton).width(buttonHeight*2f);
 		buttonTable.add(buttonCancel);
 		
 		// Put all components together into the main table

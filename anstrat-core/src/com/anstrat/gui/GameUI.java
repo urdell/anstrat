@@ -528,6 +528,13 @@ public class GameUI extends UI {
 					0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 			batch.end();
 		}
+		else if(Popup.getCurrentPopup() instanceof AbilityPopup){
+			SpriteBatch batch = Main.getInstance().batch;
+			batch.begin();
+			batch.draw(Assets.getTextureRegion("magic-purple"),
+					0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+			batch.end();
+		}
 		super.draw();
 		if(visible) mbar.draw();
 		if(Popup.getCurrentPopup() instanceof BuyUnitPopup /* u has problem? */){
@@ -554,7 +561,9 @@ public class GameUI extends UI {
 			Drawable lol = portraitFrame.getDrawable();
 			lol.draw(batch, pw*3f, pw*6.2f, pw*33.83f, pw*23f);
 			Drawable lol2 = unitNameLabel.getDrawable();
-			lol2.draw(batch, 0, 0, lol2.getMinWidth(), lol2.getMinHeight());
+			float lolRatio = lol2.getMinWidth()/lol2.getMinHeight();
+			float textHeight = Gdx.graphics.getHeight()*0.035f;
+			lol2.draw(batch, 0, 0, textHeight*lolRatio, textHeight);
 			
 			APPieDisplay.draw(pw*26f, pw*18.23f, pw*7f, lastShownUnit.currentAP, lastShownUnit.getMaxAP(), 
 					lastShownUnit.getAPReg(), 0, batch, true, 1f);
