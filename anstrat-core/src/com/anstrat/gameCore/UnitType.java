@@ -179,40 +179,31 @@ public enum UnitType {
 		return null;
 	}
 	
+	/*depracated crap?
 	public static double getAttackModifier(UnitType attacker, UnitType defender) {
 		double ret = 1;
 		if (attacker.equals(AXE_THROWER)) {
-			if (defender.equals(BERSERKER))
-				ret = 1.5;
-			else if (defender.equals(SHAMAN))
-				ret = 2.0;
-			else if (defender.equals(WOLF))
-				ret = 1.25;
-			else if (defender.equals(SWORD))
-				ret = 0.7;
+			if (defender.equals(VALKYRIE) || defender.equals(HAWK)) 
+				ret = 1.2;
 		}
-		
 		else if (attacker.equals(HAWK)) {
-			if (defender.equals(SWORD))
-				ret = 0.5;
+			if (defender.equals(SHAMAN) || defender.equals(GOBLIN_SHAMAN))
+				ret = 1.3;
 		}
 		else if (attacker.equals(SHAMAN)) {
-			if (defender.equals(SWORD))
-				ret = 2.0;
+			if (defender.equals(SWORD) || defender.equals(TROLL))
+				ret = 1.5;
 		}
 		else if (attacker.equals(SWORD)) {
-			if (defender.equals(SWORD))
-				ret = 0.5;
+			if (defender.equals(BERSERKER) || defender.equals(JOTUN))
+				ret = 1.3;
 		}
 		else if (attacker.equals(WOLF)) {
-			if (defender.equals(SWORD))
-				ret = 0.7;
-			else if (defender.equals(AXE_THROWER))
-				ret = 1.5;
-			else if (defender.equals(SHAMAN))
-				ret = 1.7;
+			if (defender.equals(AXE_THROWER) || defender.equals(DARK_ELF))
+				ret = 1.3;
 		} 
 		
 		return ret;
 	}
+	*/
 }
