@@ -29,6 +29,7 @@ public class OdinsBlessing extends PlayerAbility {
 		}
 		Animation animation = new OdinsBlessingAnimation(targets);
 		GEngine.getInstance().animationHandler.enqueue(animation);
+		GEngine.getInstance().selectionHandler.deselect();
 		Gdx.app.log("PlayerAbility", "Odin's blessing was cast");
 	}
 	
