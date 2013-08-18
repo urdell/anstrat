@@ -26,14 +26,12 @@ public class PlayerSelecter extends Table {
 	private PlayerSelecter(boolean nameSelection, String defaultName){
 		playerNameButton = ComponentFactory.createTextField(defaultName, false);
 		teamTable = new TeamSelecter(); 
-				
-		defaults().height(Main.percentHeight*8f);
-		
+
 		if(nameSelection){
-			add(playerNameButton).fillX().expandX();
+			add(playerNameButton).fillX().expandX().height(Main.percentHeight * 8f);
 			row();
 		}
-		
+
 		add(teamTable).fillX().expandX();
 	}
 	
