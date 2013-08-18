@@ -70,13 +70,28 @@ public class MapEditorUI extends UI {
 		buildingsTable.padTop((size-bsize)/2f);
 		buildingsTable.defaults().center().space(padding);
 		
-		Button village = ComponentFactory.createButton(Assets.getTextureRegion("village"), "image", new ClickListener() {
+		Button greenVillage = ComponentFactory.createButton(Assets.getTextureRegion("village-green"), "image", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	MapEditor.getInstance().actionHandler.select(Building.TYPE_VILLAGE);
+            	MapEditor.getInstance().actionHandler.select(Building.TYPE_GREENVILLAGE);
             }
         });
-        buildingsTable.add(village).size(bsize);
+		Button rockyVillage = ComponentFactory.createButton(Assets.getTextureRegion("village-rocky"), "image", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	MapEditor.getInstance().actionHandler.select(Building.TYPE_ROCKVILLAGE);
+            }
+        });
+		Button snowVillage = ComponentFactory.createButton(Assets.getTextureRegion("village-snow"), "image", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	MapEditor.getInstance().actionHandler.select(Building.TYPE_SNOWVILLAGE);
+            }
+        });
+        buildingsTable.add(greenVillage).size(bsize);
+        buildingsTable.add(rockyVillage).size(bsize);
+        buildingsTable.add(snowVillage).size(bsize);
+        
 
         Button castle = ComponentFactory.createButton(Assets.getTextureRegion("castle"), "image", new ClickListener() {
             @Override
@@ -97,7 +112,7 @@ public class MapEditorUI extends UI {
 		terrainTable.defaults().space(padding);
 		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
-			if(t==TerrainType.CASTLE || t==TerrainType.VILLAGE)
+			if(t==TerrainType.CASTLE || t==TerrainType.GREENVILLAGE || t==TerrainType.ROCKVILLAGE || t==TerrainType.SNOWVILLAGE)
 				continue;
 			Button button = ComponentFactory.createButton(GTile.getTextures(t)[0], "image", new ClickListener() {
 		        @Override

@@ -327,10 +327,10 @@ public class Map implements Serializable{
 			int ry = Math.abs(random.nextInt(tiles[0].length)); 	// 0 to height
 			setBuilding(
 					new TileCoordinate(rx, ry), 
-					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+					new Building(Building.TYPE_GREENVILLAGE, nextBuildingId++, -1));
 			setBuilding(
 					new TileCoordinate(tiles.length-rx-1, tiles[0].length-ry-1), 
-					new Building(Building.TYPE_VILLAGE, nextBuildingId++, -1));
+					new Building(Building.TYPE_GREENVILLAGE, nextBuildingId++, -1));
 		}
 		
 		int distanceFromBorder = (int)Math.sqrt(tiles.length * tiles[0].length)/4;

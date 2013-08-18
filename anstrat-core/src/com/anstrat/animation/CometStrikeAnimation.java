@@ -54,7 +54,7 @@ public class CometStrikeAnimation extends Animation {
 	}
 	
 	private static List<TerrainType> unaffectedTerrain = 
-			Arrays.asList(new TerrainType[]{TerrainType.DEEP_WATER, TerrainType.VILLAGE, TerrainType.CASTLE});
+			Arrays.asList(new TerrainType[]{TerrainType.DEEP_WATER, TerrainType.GREENVILLAGE,TerrainType.ROCKVILLAGE,TerrainType.SNOWVILLAGE, TerrainType.CASTLE});
 	
 	@Override
 	public void run(float deltaTime) {

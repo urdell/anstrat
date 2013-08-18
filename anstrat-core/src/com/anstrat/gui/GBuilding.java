@@ -65,10 +65,24 @@ public class GBuilding extends GObject {
 			
 			flagScale = FLAG_SCALE_CASTLE;
 		}
-		else if(building.type == Building.TYPE_VILLAGE) {
+		else if(building.type == Building.TYPE_GREENVILLAGE) {
 			sprite.setColor(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 0);
-			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.VILLAGE;
-			map.getTile(building.tileCoordinate).setTexture(TerrainType.VILLAGE);
+			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.GREENVILLAGE;
+			map.getTile(building.tileCoordinate).setTexture(TerrainType.GREENVILLAGE);
+			 
+			flagScale = FLAG_SCALE_VILLAGE;
+		}
+		else if(building.type == Building.TYPE_ROCKVILLAGE) {
+			sprite.setColor(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 0);
+			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.ROCKVILLAGE;
+			map.getTile(building.tileCoordinate).setTexture(TerrainType.ROCKVILLAGE);
+			 
+			flagScale = FLAG_SCALE_VILLAGE;
+		}
+		else if(building.type == Building.TYPE_SNOWVILLAGE) {
+			sprite.setColor(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 0);
+			map.getTile(building.tileCoordinate).tile.terrain = TerrainType.SNOWVILLAGE;
+			map.getTile(building.tileCoordinate).setTexture(TerrainType.SNOWVILLAGE);
 			 
 			flagScale = FLAG_SCALE_VILLAGE;
 		}
@@ -93,10 +107,14 @@ public class GBuilding extends GObject {
 			else{
 				return Assets.getTextureRegion("portal-base");
 			}
-		case Building.TYPE_VILLAGE:
-			return Assets.getTextureRegion("village");
+		case Building.TYPE_GREENVILLAGE:
+			return Assets.getTextureRegion("village-green");
+		case Building.TYPE_ROCKVILLAGE:
+			return Assets.getTextureRegion("village-rocky");
+		case Building.TYPE_SNOWVILLAGE:
+			return Assets.getTextureRegion("village-snow");
 		default:
-			return Assets.getTextureRegion("village");
+			return Assets.getTextureRegion("village-green");
 		}
 	}
 	
@@ -173,7 +191,15 @@ public class GBuilding extends GObject {
 			this.flagX = sprite.getOriginX() + sprite.getX() + 27f;
 			this.flagY = sprite.getOriginY() + sprite.getY() - 80f;	//- 5f
 		}
-		else if(building.type == Building.TYPE_VILLAGE){
+		else if(building.type == Building.TYPE_GREENVILLAGE){
+			this.flagX = sprite.getOriginX() + sprite.getX() + 33f;
+			this.flagY = sprite.getOriginY() + sprite.getY() - 93f;	//+ 3f
+		}
+		else if(building.type == Building.TYPE_ROCKVILLAGE){
+			this.flagX = sprite.getOriginX() + sprite.getX() + 33f;
+			this.flagY = sprite.getOriginY() + sprite.getY() - 93f;	//+ 3f
+		}
+		else if(building.type == Building.TYPE_SNOWVILLAGE){
 			this.flagX = sprite.getOriginX() + sprite.getX() + 33f;
 			this.flagY = sprite.getOriginY() + sprite.getY() - 93f;	//+ 3f
 		}

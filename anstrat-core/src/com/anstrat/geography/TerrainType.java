@@ -29,7 +29,9 @@ public enum TerrainType {
 	//Buildings
 	CASTLE("Castle", 1, "castle"),
 	PORTAL("Portal", 1, "portal-base"),
-	VILLAGE("Village", 1, "village");
+	GREENVILLAGE("GreenVillage", 1, "village-green"),
+	ROCKVILLAGE("RockVillage", 1, "village-rocky"),
+	SNOWVILLAGE("SnowVillage", 1, "village-snow");
 	//RUNE("Runestone", 1, "runestone-red");
 	
 	public transient final String name;
