@@ -1,5 +1,6 @@
 package com.anstrat.gui;
 
+import com.anstrat.animation.Animation;
 import com.anstrat.animation.FullscreenTextAnimation;
 import com.anstrat.animation.UberTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
@@ -27,7 +28,6 @@ import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.PlayerAbility;
 import com.anstrat.geography.Pathfinding;
-import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.confirmDialog.ConfirmDialog;
 
 
@@ -131,7 +131,15 @@ public class ActionHandler {
 			if(command.isAllowed())
 				requestConfirm(gTile, null, command, clickedQuadrant);
 			else{
-				gEngine.animationHandler.runParalell(new FullscreenTextAnimation( ((CreateUnitCommand)command).getReason() ));
+				String reason = ((CreateUnitCommand)command).getReason();
+				Animation animation = null;
+				if(reason.equals("toofar"))
+					animation = new UberTextAnimation("toofar");
+				else
+					animation = new UberTextAnimation("notpossible");
+				
+				if(animation!=null)
+					gEngine.animationHandler.runParalell(animation);
 				deselectPress();
 			}
 			break;

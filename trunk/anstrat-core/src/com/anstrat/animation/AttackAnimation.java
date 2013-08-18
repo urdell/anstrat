@@ -8,6 +8,7 @@ import com.anstrat.gameCore.CombatLog;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
+import com.anstrat.gui.GMap;
 import com.anstrat.gui.GUnit;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -74,11 +75,17 @@ public class AttackAnimation extends Animation{
 		current = new Vector2();
 		
 		if(attackUnitType == UnitType.GOBLIN_SHAMAN){
-			// Origin of fireball is slightly above center
-			start.add(0, -20);
+			GMap map = GEngine.getInstance().map;
+			start.y -= map.TILE_HEIGHT / 3f;
+			target.y -= map.TILE_HEIGHT / 3f;
 		}
 		else if(attackUnitType == UnitType.SHAMAN){
 			start = target;
+		}
+		else if(attackUnitType == UnitType.AXE_THROWER){
+			GMap map = GEngine.getInstance().map;
+			start.y -= map.TILE_HEIGHT / 2f;
+			target.y -= map.TILE_HEIGHT / 2f;
 		}
 	}
 	
