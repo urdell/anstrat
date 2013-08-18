@@ -2,6 +2,7 @@ package com.anstrat.command;
 
 import com.anstrat.animation.MoveAnimation;
 import com.anstrat.animation.UberTextAnimation;
+import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Fog;
 import com.anstrat.gameCore.State;
@@ -49,12 +50,26 @@ public class MoveCommand extends Command {
 			TileCoordinate tc = path.path.get(i);
 			Building buildbob = StateUtils.getBuildingByTile(tc);
 			int curid = State.activeState.currentPlayerId;
+			boolean wasNeutral = false;
+			
 			if(	buildbob!=null && 
 				buildbob.type != Building.TYPE_CASTLE && 
 				buildbob.controllerId != curid){
+				if (buildbob.controllerId == -1) {
+					wasNeutral = true;
+				}
 				buildbob.controllerId = curid;
-				UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
-				GEngine.getInstance().animationHandler.runParalell(utah);
+				UberTextAnimation utah;
+				
+				if (GameInstance.activeGame.isUserCurrentPlayer()) {
+					utah = new UberTextAnimation(tc, "captured-player");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+				}
+				else if (!wasNeutral){
+					utah = new UberTextAnimation(tc, "captured-enemy");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+				}
+				
 			}
 			
 			MoveAnimation animation = new MoveAnimation(unit, previousTile, tc);
