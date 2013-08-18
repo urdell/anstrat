@@ -123,8 +123,8 @@ public class MapEditorActionHandler {
 			MapEditorUI ui = MapEditor.getInstance().userInterface;
 			int owner = building.controllerId;
 			
-			ui.changeOwner0.setText(owner==0?("[ "+0+" ]"):String.valueOf(0));
-			ui.changeOwner1.setText(owner==1?("[ "+1+" ]"):String.valueOf(1));
+			ui.changeOwner0.setText(owner==0?("[ blue ]"):("blue"));
+			ui.changeOwner1.setText(owner==1?("[ red  ]"):("red"));
 			
 			TextButton none = ui.changeOwnerNone;
 			none.setText(owner==-1?"[ none ]":"none");
@@ -139,12 +139,21 @@ public class MapEditorActionHandler {
 	public void changeOwner(String newOwner){
 		Map map = MapEditor.getInstance().map;
 		Building b = map.getBuildingByTile(selectedTile.tile.coordinates);
-		
+		int contr = -1;
 		if(newOwner.equals("none") && b.type == Building.TYPE_CASTLE){
 			return;
 		}
+		if (newOwner.equals("red")){
+			contr = 1;
+		}
+		else if(newOwner.equals("blue")){
+			contr = 0;
+		}
+		else if(newOwner.equals("none")){
+			contr= -1;
+		}
 		
-		int contr = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
+		//int contr = newOwner.equals("none") ? -1 : Integer.parseInt(newOwner);
 		
 		// make sure both castles don't have the same owner by switching
 		if(b.type == Building.TYPE_CASTLE && map.getPlayersCastle(contr) !=null && map.buildingList.containsKey(map.getPlayersCastle(contr).id)){

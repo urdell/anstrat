@@ -119,21 +119,36 @@ public class GBuilding extends GObject {
 		}
 		
 		// Render flag (if the village is owned by a player and village is not fogged)
-		if(building.type == Building.TYPE_CASTLE || 
-				lastOwner != -1 && 
-				Fog.isVisible(building.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId)){
-			
-			
-			// Player0 = blue, Player0 = red
-			TextureRegion region = Assets.getAnimation(lastOwner == 0 ? "flag-inplace-blue" : "flag-inplace-red").getKeyFrame(flagAnimationStateTime, true);
-			batch.draw(region, flagX, flagY, 
-					0f,			 				// originX
-					region.getRegionHeight(), 	// originY
-					region.getRegionWidth(),	// width 
-					region.getRegionHeight(),	// height
-					flagScale, 					// scaleX
-					flagScale,					// scaleY 
-					0f);						// rotation
+		if (null != GameInstance.activeGame){
+			if(building.type == Building.TYPE_CASTLE || 
+					lastOwner != -1 && 
+					Fog.isVisible(building.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId)){
+				
+				
+				// Player0 = blue, Player0 = red
+				TextureRegion region = Assets.getAnimation(lastOwner == 0 ? "flag-inplace-blue" : "flag-inplace-red").getKeyFrame(flagAnimationStateTime, true);
+				batch.draw(region, flagX, flagY, 
+						0f,			 				// originX
+						region.getRegionHeight(), 	// originY
+						region.getRegionWidth(),	// width 
+						region.getRegionHeight(),	// height
+						flagScale, 					// scaleX
+						flagScale,					// scaleY 
+						0f);						// rotation
+			}
+		}
+		else {
+			if(building.type == Building.TYPE_CASTLE || lastOwner != -1){
+				TextureRegion region = Assets.getAnimation(lastOwner == 0 ? "flag-inplace-blue" : "flag-inplace-red").getKeyFrame(flagAnimationStateTime, true);
+				batch.draw(region, flagX, flagY, 
+						0f,			 				// originX
+						region.getRegionHeight(), 	// originY
+						region.getRegionWidth(),	// width 
+						region.getRegionHeight(),	// height
+						flagScale, 					// scaleX
+						flagScale,					// scaleY 
+						0f);						// rotation
+			}
 		}
 		
 		if(Options.DEBUG_SHOW_OWNER && building.controllerId >= 0){
