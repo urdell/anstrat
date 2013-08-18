@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -40,6 +41,7 @@ public class MainMenu extends MenuScreen {
 	
 	public static boolean versusAI = false;
 	
+	public static int pendingGames = 0;
 	private Table gamesList;
 	
 	private MainMenu() {
@@ -198,8 +200,9 @@ public class MainMenu extends MenuScreen {
 		
         // Game requests
 		Table requests = new Table(Assets.SKIN);
-		requests.add("Game requests:").height(height).padTop(paddingTop);
-		
+		if (pendingGames > 0) {
+			requests.add("Looking for opponent...");
+		}
 		/*
         for(GameRequest request : Main.getInstance().network.getGameRequests()){
         	requests.row();
@@ -216,7 +219,7 @@ public class MainMenu extends MenuScreen {
          	gamesList.row();
         }
         
-        if(requests.getChildren().size > 1){
+        if(pendingGames > 0){
         	gamesList.add(requests).fillX().expandX();
         }
         	
