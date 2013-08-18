@@ -76,7 +76,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
-		<APStart>5</APStart>
+		<APStart>2</APStart>
 		<cost>12</cost>
 		<ability1>1</ability1><!-- Kamikaze -->
 		<description>Hawks are fast and can fly over any terrain except volcanoes.</description>
