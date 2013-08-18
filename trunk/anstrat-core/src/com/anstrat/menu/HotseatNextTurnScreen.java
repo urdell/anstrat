@@ -58,6 +58,8 @@ public class HotseatNextTurnScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
+		float prevX = Assets.MENU_FONT.getScaleX();
+		float prevY = Assets.MENU_FONT.getScaleY();
 		batch.begin();
 		Color temp = batch.getColor();
 		batch.enableBlending();
@@ -65,13 +67,14 @@ public class HotseatNextTurnScreen implements Screen {
 		batch.draw(splashscreen,0f,0f,0f,0f,Main.percentWidth*100f,Main.percentHeight*100f,1f,1f,0f);
 		batch.setColor(temp);
 		String text = GEngine.getInstance().state.players[GEngine.getInstance().state.currentPlayerId].getDisplayName();
-		Assets.STANDARD_FONT.setScale(0.75f, -0.75f);
-		float width = Assets.STANDARD_FONT.getBounds(text).width;
-		Assets.STANDARD_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*80f);
+		Assets.MENU_FONT.setScale(1.5f, 1.5f);
+		float width = Assets.MENU_FONT.getBounds(text).width;
+		Assets.MENU_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*80f);
 		text = "Touch screen to play.";
-		Assets.STANDARD_FONT.setScale(0.45f, -0.45f);
-		width = Assets.STANDARD_FONT.getBounds(text).width;
-		Assets.STANDARD_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*40f);
+		Assets.MENU_FONT.setScale(1.25f, 1.25f);
+		width = Assets.MENU_FONT.getBounds(text).width;
+		Assets.MENU_FONT.draw(batch, text, Main.percentWidth*50f-width/2, Main.percentHeight*40f);
+		Assets.MENU_FONT.setScale(prevX,prevY);
 		batch.end();
 	}
 
