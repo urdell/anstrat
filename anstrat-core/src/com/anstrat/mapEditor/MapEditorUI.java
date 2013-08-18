@@ -136,8 +136,8 @@ public class MapEditorUI extends UI {
 
 		Table tblChangeOwnerInner = new Table();
 		tblChangeOwnerInner.defaults().minSize(1).height(bsize);
-		tblChangeOwnerInner.add(changeOwner0 = ComponentFactory.createButton("0", getChangeOwnerClickListener("0")));
-		tblChangeOwnerInner.add(changeOwner1 = ComponentFactory.createButton("1", getChangeOwnerClickListener("1")));
+		tblChangeOwnerInner.add(changeOwner0 = ComponentFactory.createButton("blue", getChangeOwnerClickListener("blue")));
+		tblChangeOwnerInner.add(changeOwner1 = ComponentFactory.createButton("red", getChangeOwnerClickListener("red")));
 		tblChangeOwnerInner.add(changeOwnerNone = ComponentFactory.createButton("none", getChangeOwnerClickListener("none")));
 		tblChangeOwnerInner.add(ComponentFactory.createButton("Cancel", clHidePanel));
 		
