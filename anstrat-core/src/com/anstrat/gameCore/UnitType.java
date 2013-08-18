@@ -57,6 +57,7 @@ public enum UnitType {
 	// AP
 	public transient int maxAP;
 	public transient int APReg;
+	public transient int APStart;
 	public transient int APCostAttacking;
 	
 	public transient int cost;
@@ -133,6 +134,7 @@ public enum UnitType {
 		type.maxAttackRange = element.getInt("maxAttackRange", type.maxAttackRange);
 		type.maxAP = element.getInt("maxAP", type.maxAP);
 		type.APReg = element.getInt("APReg", type.APReg);
+		type.APStart = element.getInt("APStart", type.APStart);
 		type.APCostAttacking = element.getInt("APCostAttacking", type.APCostAttacking);
 		type.movementSpeed = element.getFloat("movementSpeed", 2f);
 		
