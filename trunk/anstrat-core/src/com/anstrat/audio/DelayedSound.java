@@ -26,8 +26,8 @@ public class DelayedSound {
 			
 			if(delay<0f)
 			{
-				if(Options.soundOn)
-					sound.play();
+				//if(Options.soundOn)
+					//sound.play();
 				finished = true;
 			}
 		}

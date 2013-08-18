@@ -45,7 +45,7 @@ public class ConfirmDialog {
 	 * Top left coordinates
 	 */
 	float x, y; 
-	
+		
 	public ConfirmDialog(int position){
 		
 		switch(position){
@@ -196,7 +196,7 @@ public class ConfirmDialog {
 		
 		confirmDialog.topLabel = Assets.getTextureRegion("confirm-create");
 		confirmDialog.rows.add(new TextRow(""));//empty row to make room for top label
-		confirmDialog.rows.add(new TextRow(type.name));
+		//confirmDialog.rows.add(new TextRow(type.name));
 		confirmDialog.rows.add(new CostRow(State.activeState.getCurrentPlayer().gold, type.cost, true));
 		
 		confirmDialog.refreshBounds();
