@@ -3001,20 +3001,6 @@ runeBackground
   orig: 512, 512
   offset: 0, 0
   index: -1
-sound-off
-  rotate: false
-  xy: 1973, 84
-  size: 36, 36
-  orig: 36, 36
-  offset: 0, 0
-  index: -1
-sound-on
-  rotate: false
-  xy: 2011, 84
-  size: 36, 36
-  orig: 36, 36
-  offset: 0, 0
-  index: -1
 white-line
   rotate: false
   xy: 1459, 59
@@ -3272,6 +3258,20 @@ rightArrow
   orig: 64, 64
   offset: 0, 0
   index: -1
+sound-off
+  rotate: false
+  xy: 1890, 809
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound-on
+  rotate: false
+  xy: 1956, 809
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 tutorialImage1
   rotate: false
   xy: 1233, 1013
@@ -3281,7 +3281,7 @@ tutorialImage1
   index: -1
 white-flag
   rotate: false
-  xy: 1890, 809
+  xy: 1673, 412
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -3567,6 +3567,34 @@ movement-line-arrows-0008
 movement-line-arrows-0009
   rotate: false
   xy: 1395, 863
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+teambad-off
+  rotate: false
+  xy: 1265, 733
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+teambad-on
+  rotate: false
+  xy: 1395, 733
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+teamgood-off
+  rotate: false
+  xy: 515, 830
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+teamgood-on
+  rotate: false
+  xy: 645, 830
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
