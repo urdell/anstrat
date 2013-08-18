@@ -97,6 +97,9 @@ public abstract class NetworkWorker {
 	public void stop(){
 		sender.stopThread();
 		reader.stopThread();
+		
+		sender.interrupt();
+		reader.interrupt();
 	}
 	
 	public GameSocket getSocket(){
