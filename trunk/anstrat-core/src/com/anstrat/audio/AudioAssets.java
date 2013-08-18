@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import com.anstrat.core.Options;
+import com.anstrat.gameCore.State;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -178,6 +180,24 @@ public class AudioAssets {
 			
 			if(musicName.equalsIgnoreCase("victory") || musicName.equalsIgnoreCase("defeat"))
 				FADE_PROGRESS = FADE_DELAY / 2.0f;
+		}
+	}
+	
+	public static void playTeamMusic(){
+		int tem = State.activeState.players[State.activeState.currentPlayerId].team;
+		Random rand = new Random();
+		
+		if(tem == 0){
+			if(rand.nextFloat() > 0.5f)
+				AudioAssets.playMusic("vv_ingame_1");
+			else
+				AudioAssets.playMusic("vv_ingame_2");
+		}
+		else{
+			if(rand.nextFloat() > 0.5f)
+				AudioAssets.playMusic("dd_ingame_1");
+			else
+				AudioAssets.playMusic("dd_ingame_2");
 		}
 	}
 
