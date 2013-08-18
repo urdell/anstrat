@@ -19,7 +19,6 @@ public class MapSelecter extends Table {
 	
 	public MapSelecter(final MapTypePopup.MapSelectionListener listener){
 		super(Assets.SKIN);
-		setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("single-border")));
 		
 		this.button = ComponentFactory.createMenuButton("Select a map", new ClickListener() {
 			@Override

@@ -76,7 +76,7 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 		
 		mapSelecter = new MapSelecter(this);
 		
-		contents.padTop(Main.percentHeight);
+		contents.padTop(Main.percentHeight * 4f);
 		contents.top();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(mapSelecter);
