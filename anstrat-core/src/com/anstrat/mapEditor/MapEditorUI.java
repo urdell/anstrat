@@ -11,6 +11,7 @@ import com.anstrat.gui.GTile;
 import com.anstrat.gui.UI;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.guiComponent.Row;
+import com.anstrat.popup.NewMapPopup;
 import com.anstrat.popup.MapsPopup;
 import com.anstrat.popup.MapsPopup.MapsPopupHandler;
 import com.anstrat.popup.Popup;
@@ -37,7 +38,7 @@ public class MapEditorUI extends UI {
 	private Button terrainToggle, buildingsToggle, clearButton, newButton, saveButton, loadButton;
 	private Image ttImg, btImg;
 	
-	public Popup popupLoadMap,	popupSaveMap, popupChangeOwner, popupNewMap, popupClearMap;
+	public Popup popupLoadMap,	popupSaveMap, popupNewMap;
 
 	private Table permanentTable;
 	private float size;
@@ -269,6 +270,7 @@ public class MapEditorUI extends UI {
 				saveMapTextfield,
 				new Row(saveMapOKButton, ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER)));
 
+		popupNewMap = new NewMapPopup();
 		
 		Table table1 = new Table();
 		Table table2 = new Table();
@@ -407,7 +409,7 @@ public class MapEditorUI extends UI {
 		permanentTable.add(buildingsToggle);
 		permanentTable.add(loadButton);
 		permanentTable.add(saveButton);
-		//permanentTable.add(newButton).height(size/1.2f);
+		permanentTable.add(newButton).height(size/1.2f);
 		permanentTable.pack();
 		permanentTable.setBounds(0, 0, width, size*1.05f);
 
