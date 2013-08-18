@@ -32,7 +32,6 @@ public class NetworkController {
 	private List<Button> networkButtons = new ArrayList<Button>();
 	
 	private Label networkLoginLabel;
-	private String networkLabelText = "Not connected.";
 	
 	public NetworkController(final Network network){
 		this.network = network;
@@ -57,8 +56,7 @@ public class NetworkController {
 					Assets.SKIN.setEnabled(b, true);
 				}
 				
-				// Update login label to reflect the new status
-				setNetworkLabelText(String.format("Logged in as: %s", network.getUser().displayName));
+				updateNetworkStatusText();
 			}
 		});
 		
@@ -70,9 +68,7 @@ public class NetworkController {
 					Assets.SKIN.setEnabled(b, false);
 				}
 				
-				setNetworkLabelText("Not connected.");
-				networkLabelText = "Not connected.";
-				if(networkLoginLabel != null) networkLoginLabel.setText(networkLabelText);
+				updateNetworkStatusText();
 			}
 		});
 		
@@ -88,12 +84,18 @@ public class NetworkController {
 	
 	public void setNetworkLabel(Label label){
 		this.networkLoginLabel = label;
-		label.setText(networkLabelText);
+		updateNetworkStatusText();
 	}
 	
-	private void setNetworkLabelText(String text){
-		networkLabelText = text;
-		if(networkLoginLabel != null) networkLoginLabel.setText(text);
+	private void updateNetworkStatusText(){
+		if(networkLoginLabel != null) {
+			if (network.isLoggedIn()) {
+				networkLoginLabel.setText(String.format("Logged in as: %s", network.getUser().displayName));
+			}
+			else {
+				networkLoginLabel.setText("Not connected.");
+			}
+		}
 	}
 	
 	public void registerNetworkButton(Button button){
@@ -175,7 +177,7 @@ public class NetworkController {
 			
 			@Override
 			public void displayNameChanged(String name) {
-				setNetworkLabelText(String.format("Logged in as: %s", name));
+				updateNetworkStatusText();
 				
 				Popup p = Popup.getCurrentPopup();
 				if(p instanceof DisplayNameChangePopup){
