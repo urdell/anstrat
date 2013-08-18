@@ -25,7 +25,7 @@
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
 		<APStart>4</APStart>
-		<cost>25</cost>
+		<cost>30</cost>
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and summon fireballs onto the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
