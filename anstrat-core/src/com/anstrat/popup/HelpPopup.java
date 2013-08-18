@@ -2,8 +2,10 @@ package com.anstrat.popup;
 
 import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
+import com.anstrat.gameCore.State;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -56,12 +58,12 @@ public class HelpPopup extends Popup{
 		Button buttonCancel = ComponentFactory.createButton("Cancel", Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		
 		
-		Label title = new Label("Help Menu", Assets.SKIN);
-		title.setStyle(new LabelStyle(Assets.MENU_FONT, Color.BLACK));
-		title.setWidth(Main.percentWidth*90);
+		//Label title = new Label("Help Menu", Assets.SKIN);
+		//title.setStyle(new LabelStyle(Assets.MENU_FONT, Color.BLACK));
+		//title.setWidth(Main.percentWidth*90);
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty"))); // Overrides the default background with an empty one
-		this.row();
-		this.add(title).align(Align.center);
+		//this.row();
+		//this.add(title).align(Align.center);
 		this.row();
 		this.add(basicButton);			//space
 		this.row();
@@ -82,6 +84,8 @@ public class HelpPopup extends Popup{
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
+		batch.draw(Assets.getTextureRegion(State.activeState.currentPlayerId==0?"buy-blue":"buy-red"),
+				0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		batch.setColor(1f, 1f, 1f, 0.5f * parentAlpha);
 		super.draw(batch, parentAlpha);
 	}

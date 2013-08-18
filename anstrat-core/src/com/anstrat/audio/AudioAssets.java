@@ -157,7 +157,7 @@ public class AudioAssets {
 				return;
 			}
 
-			s.sound.play();
+			//s.sound.play();
 		}
 	}
 
