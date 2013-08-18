@@ -75,7 +75,7 @@ public class AiMenu extends MenuScreen implements MapSelectionListener {
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(ComponentFactory.createLoginLabel());
+		centerLogin.add(ComponentFactory.getNetworkStatusLabel());
 		contents.add(centerLogin).bottom();
 	}
 	

@@ -81,7 +81,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
         
         
 
-        Label login = ComponentFactory.createLoginLabel();
+        Label login = ComponentFactory.getNetworkStatusLabel();
         
         contents.padTop(3f*Main.percentHeight);
         contents.defaults().space(Main.percentWidth).pad(0).top().center();
