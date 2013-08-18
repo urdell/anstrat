@@ -21,6 +21,10 @@ public class ScrollChoiceList extends ScrollPane {
 	public ScrollChoiceList(List<String> labels, List<?> states, Object preselected) {
 		super(new Table(Assets.SKIN).top());
 	
+		if (labels.size() != states.size()) {
+			throw new IllegalArgumentException("Labels and states have to be of the same length.");
+		}
+		
 		this.selected = preselected;
 		this.listeners = new ArrayList<SelectionChangeListener>();
 		
