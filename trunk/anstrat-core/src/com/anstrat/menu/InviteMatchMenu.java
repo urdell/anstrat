@@ -30,8 +30,11 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 	private String mapName;
 	private GameOptions.MapType mapType;
 	
+	private NetworkStatus networkStatus;
+	
 	private InviteMatchMenu(){      
 		playerSelecter = new PlayerSelecter();
+		networkStatus = new NetworkStatus();
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
@@ -90,7 +93,7 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(ComponentFactory.getNetworkStatusLabel());
+		centerLogin.add(networkStatus);
 		contents.add(centerLogin).bottom();
 		
 		checkGoButtonStatus();
@@ -108,6 +111,12 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 		super.dispose();
 		friendButton = null;
 		me = null;
+	}
+	
+	@Override
+	public void show() {
+		super.show();
+		networkStatus.update();
 	}
 	
 	private void checkGoButtonStatus(){

@@ -1,12 +1,10 @@
 package com.anstrat.menu;
 
-import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -35,11 +33,6 @@ public class DebugMenu extends MenuScreen {
         		Main.getInstance().setScreen(AccountMenu.getInstance());
             }
         })).fillY().expandY();
-        contents.row();
-        
-        Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(ComponentFactory.getNetworkStatusLabel());
-		contents.add(centerLogin);
 	}
 	
 	private static MenuScreen instance;

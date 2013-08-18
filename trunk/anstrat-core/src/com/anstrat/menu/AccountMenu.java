@@ -9,7 +9,6 @@ import com.anstrat.popup.Popup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -64,9 +63,7 @@ public class AccountMenu extends MenuScreen {
             	AudioAssets.playSound("dummy1");
             }
         });
-        
-        Label login = ComponentFactory.getNetworkStatusLabel();
-        
+
         contents.padTop(3f*Main.percentHeight);
         contents.defaults().space(2f*Main.percentWidth).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         
@@ -77,13 +74,6 @@ public class AccountMenu extends MenuScreen {
         contents.add(registerButton);
         contents.row();
         contents.add(debugMenuButton).expandY();
-        
-        Table contentsInnerTable = new Table();
-        contentsInnerTable.defaults().center();
-        contentsInnerTable.add(login);
-        
-        contents.row();
-        contents.add(contentsInnerTable);
 	}
 	
 	public static AccountMenu getInstance() {

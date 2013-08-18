@@ -7,7 +7,6 @@ import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
-import com.anstrat.popup.MapsPopup;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -37,7 +36,6 @@ public class MainMenu extends MenuScreen {
 	public static TextField usernameInput = ComponentFactory.createTextField("Login", false);
 	public static TextField passwordInput = ComponentFactory.createTextField("Password", true);
 	
-	public static MapsPopup mapsPopup;
 	public static String HOTSEAT = "Hotseat", INTERNET = "Internet";
 	
 	public static boolean versusAI = false;
@@ -137,7 +135,6 @@ public class MainMenu extends MenuScreen {
         contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);
         
         Table footer = new Table();
-        footer.add(ComponentFactory.getNetworkStatusLabel()).center().expandX().bottom();
       
         // The mysterious invite button, if removed or hidden the background dissapears :D
         // Solution: Set height/width to 0...

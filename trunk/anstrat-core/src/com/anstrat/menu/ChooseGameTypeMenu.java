@@ -6,8 +6,6 @@ import com.anstrat.popup.DisplayNameChangePopup;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ChooseGameTypeMenu extends MenuScreen {
@@ -79,11 +77,8 @@ public class ChooseGameTypeMenu extends MenuScreen {
             
         });
         
-        
-
-        Label login = ComponentFactory.getNetworkStatusLabel();
-        
-        contents.padTop(3f*Main.percentHeight);
+        contents.padTop(4f * Main.percentHeight);
+        contents.top();
         contents.defaults().space(Main.percentWidth).pad(0).top().center();
         contents.row();
         contents.add(findMatchButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
@@ -94,14 +89,6 @@ public class ChooseGameTypeMenu extends MenuScreen {
         contents.row();
         contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
-        
-        Table inner = new Table();
-        inner.defaults().center();
-        inner.add(login);
-        
-        contents.add().fillY().expandY();
-        contents.row();
-        contents.add(inner);
 	}
 	
 	private void showIfUserNamed(final Screen screen){
