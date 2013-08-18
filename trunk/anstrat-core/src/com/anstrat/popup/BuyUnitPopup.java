@@ -10,7 +10,6 @@ import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.UnitType;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
-import com.anstrat.guiComponent.ColorTable;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -19,11 +18,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class BuyUnitPopup extends Popup{
 	
@@ -36,7 +38,7 @@ public class BuyUnitPopup extends Popup{
 	private Button[] units;
 	private NinePatch[] unitSilhouettes;
 	private UnitType[] types;
-	private ColorTable unitTable;
+	private Table unitTable, asdf;
 	
 	private static final ClickListener BUY_BUTTON_LISTENER = new ClickListener() {
 		@Override
@@ -56,6 +58,7 @@ public class BuyUnitPopup extends Popup{
 		
 		buyButton = ComponentFactory.createButton(Assets.getTextureRegion("buy"), "image", BUY_BUTTON_LISTENER);
 		Button buttonCancel = ComponentFactory.createButton(Assets.getTextureRegion("cancel"), "image", Popup.POPUP_CLOSE_BUTTON_HANDLER);
+		//buyButton = new TextButton("Buybrrarggaggalghlll",Assets.SKIN);
 		
 		units = new Button[6];
 		unitSilhouettes = new NinePatch[6];
@@ -76,9 +79,9 @@ public class BuyUnitPopup extends Popup{
 		float unitPad   = -unitWidth*0.15f;
 		
 		// The silhouettes of the purchasable units
-		unitTable = new ColorTable(Color.BLUE);
+		unitTable = new Table(Assets.SKIN);
 		NinePatch unitTableBackgroundPatch = Assets.SKIN.getPatch("border-thick-updown");
-		unitTable.setBackground(new NinePatchDrawable(unitTableBackgroundPatch));
+		//unitTable.setBackground(new NinePatchDrawable(unitTableBackgroundPatch));
 		unitTable.defaults().size(unitWidth).padLeft(unitPad).padRight(unitPad);
 		
 		for(Button unit : units)
@@ -96,19 +99,21 @@ public class BuyUnitPopup extends Popup{
 		buttonTable.add(buttonCancel);
 		
 		// Put all components together into the main table
-		float cardH = Main.percentHeight*65f;
+		float cardH = Main.percentHeight*50f;
 		
 		float space = (Gdx.graphics.getHeight() - cardH - unitWidth - buttonHeight
-				- unitTableBackgroundPatch.getBottomHeight()
-				- unitTableBackgroundPatch.getTopHeight()/4f
+				//- unitTableBackgroundPatch.getBottomHeight()
+				//- unitTableBackgroundPatch.getTopHeight()/4f
 				) / 2f;
 		
 		this.setBackground(new NinePatchDrawable(Assets.SKIN.getPatch("empty"))); // Overrides the default background with an empty one
-		this.top().add(unitTable).width(Gdx.graphics.getWidth());
+		this.add(unitTable).width(Gdx.graphics.getWidth()).padTop(Main.percentHeight*10f);
 		this.row();
 		this.add().height(space).uniform();	//space
 		this.row();
-		this.add(card).height(cardH).width(Gdx.graphics.getWidth());
+		asdf = new Table();
+		this.add(asdf).height(cardH).width(Gdx.graphics.getWidth()).padTop(-Main.percentHeight*10f);
+		//this.add(card).height(cardH).width(Gdx.graphics.getWidth());
 		this.row();
 		this.add().uniform();				//space
 		this.row();
@@ -155,6 +160,51 @@ public class BuyUnitPopup extends Popup{
 	 */
 	public void selectButton(Button button) {
 		card.setType(types[Arrays.asList(units).indexOf(button)]);
+		
+		UnitType ut = types[Arrays.asList(units).indexOf(button)];
+		String stuf = "";
+		
+		switch(ut){
+			case AXE_THROWER:
+				stuf = "axethrower";
+				break;
+			case BERSERKER:
+				stuf = "berserker";
+				break;
+			case DARK_ELF:
+				stuf = "elf";
+				break;
+			case FALLEN_WARRIOR:
+				stuf = "fallen";
+				break;
+			case GOBLIN_SHAMAN:
+				stuf = "goblin";
+				break;
+			case HAWK:
+				stuf = "hawk";
+				break;
+			case JOTUN:
+				stuf = "jotun";
+				break;
+			case SHAMAN:
+				stuf = "shaman";
+				break;
+			case SWORD:
+				stuf = "swordsman";
+				break;
+			case TROLL:
+				stuf = "troll";
+				break;
+			case VALKYRIE:
+				stuf = "valkyrie";
+				break;
+			case WOLF:
+				stuf = "wolf";
+				break;
+		}
+		
+		asdf.setBackground(new TextureRegionDrawable(Assets.getTextureRegion("buy-"+stuf)));
+		
 		update();
 	}
 	
