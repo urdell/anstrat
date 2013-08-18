@@ -137,7 +137,7 @@ public class MainMenu extends MenuScreen {
         contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);
         
         Table footer = new Table();
-        footer.add(ComponentFactory.createLoginLabel()).center().expandX().bottom();
+        footer.add(ComponentFactory.getNetworkStatusLabel()).center().expandX().bottom();
       
         // The mysterious invite button, if removed or hidden the background dissapears :D
         // Solution: Set height/width to 0...

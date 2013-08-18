@@ -50,7 +50,7 @@ public class JoinGameMenu extends MenuScreen {
 		contents.row();
 		
 		Table inner = new Table();
-		inner.add(ComponentFactory.createLoginLabel()).center();
+		inner.add(ComponentFactory.getNetworkStatusLabel()).center();
 		
 		contents.add(inner);
 	}

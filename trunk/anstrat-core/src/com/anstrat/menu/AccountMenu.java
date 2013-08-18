@@ -65,7 +65,7 @@ public class AccountMenu extends MenuScreen {
             }
         });
         
-        Label login = ComponentFactory.createLoginLabel();
+        Label login = ComponentFactory.getNetworkStatusLabel();
         
         contents.padTop(3f*Main.percentHeight);
         contents.defaults().space(2f*Main.percentWidth).pad(0).top().width(BUTTON_WIDTH).height(BUTTON_HEIGHT);

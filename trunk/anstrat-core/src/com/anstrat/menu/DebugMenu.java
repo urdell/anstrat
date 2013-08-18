@@ -38,7 +38,7 @@ public class DebugMenu extends MenuScreen {
         contents.row();
         
         Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(ComponentFactory.createLoginLabel());
+		centerLogin.add(ComponentFactory.getNetworkStatusLabel());
 		contents.add(centerLogin);
 	}
 	
