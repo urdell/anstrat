@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  *
  */
 public class Row extends Table {
-	public Row(Actor a, Actor b){
-		add(a).minWidth(1).height(Main.percentHeight*8f);
-		add(b).minWidth(1).height(Main.percentHeight*8f);
+	public Row(Actor... actors) {
+		for (Actor a : actors) {
+			add(a).minWidth(1).height(Main.percentHeight * 8f);
+		}
+		
 		pack();
 	}
 	
