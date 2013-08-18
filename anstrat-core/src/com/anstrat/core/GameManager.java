@@ -10,6 +10,7 @@ import java.util.Random;
 import com.anstrat.core.NetworkGameInstance.NetworkPlayer;
 import com.anstrat.gameCore.Player;
 import com.anstrat.geography.Map;
+import com.anstrat.menu.MainMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -43,6 +44,9 @@ public class GameManager {
 	
 	public GameInstance createNetworkGame(long gameID, NetworkPlayer[] players, Map map, long seed){
 		NetworkGameInstance gi = new NetworkGameInstance(gameID, players, map, seed);
+		
+		MainMenu.getInstance().pendingGames = 0;
+		
 		
 		networkGameByID.put(gameID, gi);
 		games.add(gi);
