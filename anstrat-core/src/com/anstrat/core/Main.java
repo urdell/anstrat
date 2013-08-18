@@ -249,16 +249,18 @@ public class Main extends Game implements ApplicationListener {
 			overlayStage.addActor(new TransitionEffect());
 			if(Options.soundOn)
 			{
-				Random rand = new Random();
+				AudioAssets.playTeamMusic();
+				//Random rand = new Random();
 				// Binomial distr0
-				if(rand.nextFloat() > 0.5f)
-					AudioAssets.playMusic("vv_ingame_1");
-				else if(rand.nextFloat() > 0.5f)
-					AudioAssets.playMusic("vv_ingame_2");
-				else if(rand.nextFloat() > 0.5f)
-					AudioAssets.playMusic("dd_ingame_1");
-				else
-					AudioAssets.playMusic("dd_ingame_2");
+				//int tem = State.activeState.players[State.activeState.currentPlayerId].team;
+				//if(rand.nextFloat() > 0.5f)
+				//	AudioAssets.playMusic("vv_ingame_1");
+				//else if(rand.nextFloat() > 0.5f)
+				//	AudioAssets.playMusic("vv_ingame_2");
+				////else if(rand.nextFloat() > 0.5f)
+				//	AudioAssets.playMusic("dd_ingame_1");
+				//else
+				//	AudioAssets.playMusic("dd_ingame_2");
 			}
 		}
 		else if(screen instanceof MainMenu){
