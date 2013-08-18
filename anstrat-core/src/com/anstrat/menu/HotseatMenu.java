@@ -61,7 +61,7 @@ public class HotseatMenu extends MenuScreen implements MapSelectionListener {
 		
 		mapSelecter = new MapSelecter(this);
 		
-		contents.top().padTop(Main.percentHeight);
+		contents.top().padTop(Main.percentHeight * 4f);
 		contents.defaults().space(0).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(mapSelecter);
 		contents.row();
