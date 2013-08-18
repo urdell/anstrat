@@ -19,9 +19,12 @@ public class FindMatchMenu extends MenuScreen {
 	
 	private String mapName;
 	private GameOptions.MapType mapType;
+
+	private NetworkStatus networkStatus;
 	
 	private FindMatchMenu(){
 		playerSelecter = new PlayerSelecter();
+		networkStatus = new NetworkStatus();
 		
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
@@ -58,7 +61,7 @@ public class FindMatchMenu extends MenuScreen {
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
 		contents.row();
 		Table centerLogin = new Table(Assets.SKIN);
-		centerLogin.add(ComponentFactory.getNetworkStatusLabel());
+		centerLogin.add(networkStatus);
 		contents.add(centerLogin).bottom();
 	}
 	
@@ -67,6 +70,12 @@ public class FindMatchMenu extends MenuScreen {
 			me = new FindMatchMenu();
 		}
 		return me;
+	}
+	
+	@Override
+	public void show() {
+		super.show();
+		networkStatus.update();
 	}
 	
 	@Override

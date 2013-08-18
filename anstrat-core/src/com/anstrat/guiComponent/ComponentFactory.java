@@ -91,14 +91,4 @@ public class ComponentFactory {
 		Main.getInstance().network.registerNetworkButton(button);
 		return button;
 	}
-	
-	private static Label networkLabel;
-	public static synchronized Label getNetworkStatusLabel(){
-		if(networkLabel == null){
-			networkLabel = new Label("",Assets.SKIN);
-			Main.getInstance().network.setNetworkLabel(networkLabel);
-		}
-		
-		return networkLabel;
-	}
 }

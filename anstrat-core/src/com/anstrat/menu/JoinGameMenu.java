@@ -47,12 +47,6 @@ public class JoinGameMenu extends MenuScreen {
 		contents.add(settings);
 		contents.row();
 		contents.add(join).fillY().expandY().height(BUTTON_HEIGHT);
-		contents.row();
-		
-		Table inner = new Table();
-		inner.add(ComponentFactory.getNetworkStatusLabel()).center();
-		
-		contents.add(inner);
 	}
 	
 	public static synchronized JoinGameMenu getInstance() {
