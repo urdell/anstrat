@@ -36,8 +36,6 @@ public class HotseatMenu extends MenuScreen implements MapSelectionListener {
 				
 				Player[] players = new Player[]{ p1, p2 };
 				
-				Popup.showGenericPopup(player1Selecter.getPlayerName(), "asdas");
-				
 				// Load named map (if selected)
 				if(mapType == GameOptions.MapType.SPECIFIC){
 					Map map = Assets.loadMap(mapName);
