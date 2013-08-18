@@ -29,6 +29,7 @@ public class HealAnimation extends Animation{
 		this.source = engine.getUnit(source);
 		this.target = engine.getUnit(target);
 		length = START_DELAY + sourceAnimation.animationDuration + targetAnimation.animationDuration;
+		System.out.println("sourceDuration: " + sourceAnimation.animationDuration + "targetDuraion: " + targetAnimation.animationDuration);
 		lifetimeLeft = length;
 	}
 	

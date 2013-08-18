@@ -71,7 +71,17 @@ public class LeapAttack extends TargetedAbility{
 			Building buildbob = StateUtils.getBuildingByTile(tc);
 			int curid = State.activeState.currentPlayerId;
 			if(	buildbob!=null && buildbob.controllerId != curid) {
-				if(buildbob.type == Building.TYPE_VILLAGE){
+				if(buildbob.type == Building.TYPE_GREENVILLAGE){
+					buildbob.controllerId = curid;
+					UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+				}
+				else if(buildbob.type == Building.TYPE_ROCKVILLAGE){
+					buildbob.controllerId = curid;
+					UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
+					GEngine.getInstance().animationHandler.runParalell(utah);
+				}
+				else if(buildbob.type == Building.TYPE_SNOWVILLAGE){
 					buildbob.controllerId = curid;
 					UberTextAnimation utah = new UberTextAnimation(tc, "captured-player");
 					GEngine.getInstance().animationHandler.runParalell(utah);

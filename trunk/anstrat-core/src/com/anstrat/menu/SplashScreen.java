@@ -37,6 +37,7 @@ public class SplashScreen implements Screen {
 		
 		background = new Table();
 		Image loadingText = new Image(new TextureRegionDrawable(atlas.findRegion("loading")));
+		//loadingText.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/2);
 		loadingText.addAction(Actions.forever( Actions.sequence(Actions.fadeIn( animationLength ), Actions.fadeOut( animationLength ))));
 		background.add(loadingText);
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
