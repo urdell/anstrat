@@ -44,7 +44,7 @@ public class Unit implements Serializable {
 	{
 		this.type = type;
 		currentHP = type.maxHP;
-		currentAP = type.APReg;
+		currentAP = type.APStart;
 		
 		// Abilities
 		abilities = new ArrayList<Ability>();

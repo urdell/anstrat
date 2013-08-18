@@ -7,6 +7,7 @@
 		<attack>10</attack>
 		<maxAP>7</maxAP>
 		<APReg>5</APReg>
+		<APStart>5</APStart>
 		<cost>33</cost>
 		<ability1>5</ability1><!-- Leap Attack -->
 		<description>The Berserker is a fierce offensive warrior who can rush through enemy units.</description>
@@ -23,6 +24,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
+		<APStart>4</APStart>
 		<cost>25</cost>
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and summon fireballs onto the enemy.</description>
@@ -39,6 +41,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
+		<APStart>4</APStart>
 		<cost>22</cost>
 		<ability1>7</ability1><!-- Chaining Axe -->
 		<description>Axe Throwers are great skirmishers who throw axes at enemies.</description>
@@ -56,6 +59,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
+		<APStart>5</APStart>
 		<cost>15</cost>
 		<ability1>3</ability1><!-- Shadow image -->
 		<description>The Wolf is a highly mobile unit with the ability to steal life from enemy units.</description>
@@ -72,6 +76,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>9</maxAP>
 		<APReg>5</APReg>
+		<APStart>5</APStart>
 		<cost>12</cost>
 		<ability1>1</ability1><!-- Kamikaze -->
 		<description>Hawks are fast and can fly over any terrain except volcanoes.</description>
@@ -102,6 +107,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
+		<APStart>3</APStart>
 		<cost>22</cost>
 		<ability1>6</ability1><!-- Shield Wall -->
 		<description>The Swordsman has a block ability. Together with his resilience, this makes him an exceptional duelist.</description>
@@ -118,6 +124,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
+		<APStart>4</APStart>
 		<cost>32</cost>
 		<terrainPenaltyMountain>1</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
@@ -148,6 +155,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>2</APReg>
+		<APStart>2</APStart>
 		<cost>8</cost>
 		<ability1>11</ability1><!-- Dark Ritual -->
 		<description>The Fallen Warrior is a cheap unit, effective only in great numbers.</description>
@@ -165,6 +173,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
+		<APStart>5</APStart>
 		<cost>22</cost>
 		<ability1>12</ability1><!-- Poison -->
 		<description>The Dark Elf is a quick, sharpshooting unit with the ability to weaken enemy units.</description>
@@ -181,6 +190,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>6</maxAP>
 		<APReg>3</APReg>
+		<APStart>3</APStart>
 		<cost>18</cost>
 		<ability1>8</ability1><!-- AP Heal -->
 		<description>The Goblin Shaman can energize his allies and summon balls of fire that burn like hell.</description>
@@ -197,6 +207,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>4</APReg>
+		<APStart>4</APStart>
 		<cost>38</cost>
 		<ability1>9</ability1><!-- Throw Ice -->
 		<description>The Jotun is a mighty ice giant who can throw ice blocks that shatter on impact.</description>
@@ -213,6 +224,7 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
+		<APStart>3</APStart>
 		<cost>27</cost>
 		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
