@@ -180,5 +180,11 @@ public class Unit implements Serializable {
 			return true;
 		return map.getTile(tileCoordinate).visible[playerId] >= 1;
 	}
+	
+	public boolean equals(Object o){
+		if(!(o instanceof Unit)) return false;
+		Unit un0t = (Unit) o;
+		return this.id == un0t.id;
+	}
 
 }

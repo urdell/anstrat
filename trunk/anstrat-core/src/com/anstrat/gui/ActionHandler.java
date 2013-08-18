@@ -53,7 +53,7 @@ public class ActionHandler {
 			else
 				confirmCancelPress();
 			return;
-		}
+		}		
 		
 		switch(gEngine.selectionHandler.selectionType){
 		case SelectionHandler.SELECTION_EMPTY: {
