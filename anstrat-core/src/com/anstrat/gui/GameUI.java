@@ -521,8 +521,21 @@ public class GameUI extends UI {
 	
 	@Override
 	public void draw(){
+		if(Popup.getCurrentPopup() instanceof BuyUnitPopup /* u has problem? */){
+			SpriteBatch batch = Main.getInstance().batch;
+			batch.begin();
+			batch.draw(Assets.getTextureRegion(State.activeState.currentPlayerId==0?"buy-blue":"buy-red"),
+					0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+			batch.end();
+		}
 		super.draw();
-		if(visible)mbar.draw();
+		if(visible) mbar.draw();
+		if(Popup.getCurrentPopup() instanceof BuyUnitPopup /* u has problem? */){
+			if(!visible) mbar.draw();
+			Main.getInstance().batch.begin();
+			topPanel.draw(Main.getInstance().batch, 1.0f);
+			Main.getInstance().batch.end();
+		}
 		/* Bugfix xD lol */
 		if(visible && unitTable.isVisible() && lastShownUnit != null) {
 			SpriteBatch batch = Main.getInstance().batch;
