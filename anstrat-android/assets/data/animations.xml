@@ -521,6 +521,8 @@
         <frame image="speedup-0001" number="1"/>
         <frame image="speedup-0002" number="2"/>
         <frame image="speedup-0003" number="3"/>
+        <frame image="speedup-0004" number="4"/>
+        <frame image="speedup-0005" number="5"/>
     </animation>
     <animation name="speedupactive">
         <frame image="speedupactive-0001" number="1"/>
