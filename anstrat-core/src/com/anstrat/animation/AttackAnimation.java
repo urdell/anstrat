@@ -30,6 +30,7 @@ public class AttackAnimation extends Animation{
 	private GUnit gAttacker, gDefender;
 	private CombatLog cl;
 	private DelayedSound swingSfx;
+	private com.badlogic.gdx.graphics.g2d.Animation light = null;
 	
 	public AttackAnimation(CombatLog combatLog){
 		this.cl = combatLog;
@@ -42,12 +43,15 @@ public class AttackAnimation extends Animation{
 				break;
 			}
 			case GOBLIN_SHAMAN: {
-				// Fall through
+				rangedDelay = 0.3f;
+				attackSpeed = 1.2f;
+				impactTime = 1f;
+				break;
 			}
 			case SHAMAN: {
 				rangedDelay = 0.3f;
 				attackSpeed = 1.2f;
-				impactTime = 1f;
+				impactTime = 4f/9f;
 				break;
 			}
 		}
@@ -62,17 +66,20 @@ public class AttackAnimation extends Animation{
 		start = ge.getMap().getTile(cl.attacker.tileCoordinate).getCenter();
 		UnitType attackUnitType = cl.attacker.getUnitType();
 		
-		if(attackUnitType == UnitType.SHAMAN || attackUnitType == UnitType.GOBLIN_SHAMAN){
-			// Origin of fireball is slightly above center
-			start.add(0, -20);
-		}
-		
 		target = ge.getMap().getTile(cl.defender.tileCoordinate).getCenter();
 		gAttacker = ge.getUnit(cl.attacker);
 		gDefender = ge.getUnit(cl.defender);
 		xoffset = target.x - start.x;
 		yoffset = target.y - start.y;
 		current = new Vector2();
+		
+		if(attackUnitType == UnitType.GOBLIN_SHAMAN){
+			// Origin of fireball is slightly above center
+			start.add(0, -20);
+		}
+		else if(attackUnitType == UnitType.SHAMAN){
+			start = target;
+		}
 	}
 	
 	@Override
@@ -102,7 +109,9 @@ public class AttackAnimation extends Animation{
 		
 		if(!pastImpact && length - lifetimeLeft > impactTime){ // Time of impact
 			// Start impact animation
-			GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName), target, 100)); // size 100 is slightly smaller than a tile
+			if(cl.attacker.getUnitType() != UnitType.SHAMAN)
+				GEngine.getInstance().animationHandler.runParalell(new GenericVisualAnimation(Assets.getAnimation(impactAnimationName),
+						target, 100)); // size 100 is slightly smaller than a tile
 			AudioAssets.playSound(cl.attacker.getUnitType().impactSfx);
 	
 			// Show damage taken etc.
@@ -141,8 +150,9 @@ public class AttackAnimation extends Animation{
 				current.set(start.x + xoffset * amtOffset, start.y + yoffset * amtOffset);
 				break;
 			}
-			case GOBLIN_SHAMAN: // Fall through
-			case SHAMAN: {
+			case SHAMAN:
+				break;
+			case GOBLIN_SHAMAN: {
 				// Fireball
 				float timeTaken = attackSpeed - lifetimeLeft;
 				float amtOffset = (timeTaken - rangedDelay) / (impactTime - rangedDelay);
@@ -156,17 +166,24 @@ public class AttackAnimation extends Animation{
 		super.draw(deltaTime, batch);
 		
 		float animationTimePassed = length - lifetimeLeft;
+		UnitType type = cl.attacker.getUnitType();
+		TextureRegion region = null;
 		
-		// Have the projectile reached its target?
-		if(animationTimePassed > rangedDelay){
-			
-			UnitType type = cl.attacker.getUnitType();
-			TextureRegion region = null;
-			
+		if(type == UnitType.SHAMAN){
+			if(light==null){
+				light = Assets.getAnimation("lightning");
+				start.y -= light.getKeyFrame(0).getRegionHeight()*1.15f;
+			}
+			region = light.getKeyFrame(animationTimePassed, false);
+			if(animationTimePassed > impactTime && animationTimePassed < impactTime +  light.animationDuration)
+				batch.draw(region, start.x - region.getRegionWidth()/2, start.y + region.getRegionWidth()/2);
+		}	
+		// Has the projectile reached its target?
+		else if(animationTimePassed > rangedDelay){			
 			if(type == UnitType.AXE_THROWER){
 				region = Assets.getAnimation("axe-effect").getKeyFrame(animationTimePassed, true);
 			}
-			else if((type == UnitType.SHAMAN || type == UnitType.GOBLIN_SHAMAN) && length - lifetimeLeft < impactTime){
+			else if(type == UnitType.GOBLIN_SHAMAN && length - lifetimeLeft < impactTime){
 				region = Assets.getAnimation("shaman-fireball").getKeyFrame(animationTimePassed, true);
 			}
 			
