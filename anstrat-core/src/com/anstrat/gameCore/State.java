@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.anstrat.animation.DeathAnimation;
+import com.anstrat.animation.FloatingNumberAnimation;
 import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.audio.AudioAssets;
 import com.anstrat.core.GameInstance;
@@ -120,7 +121,7 @@ public class State implements Serializable{
 					u.currentHP += HPReg;
 					
 					// Show animation
-					if(HPReg > 0) GEngine.getInstance().animationHandler.enqueue(new FloatingTextAnimation(u.tileCoordinate, String.valueOf(HPReg), Color.GREEN));
+					if(HPReg > 0) GEngine.getInstance().animationHandler.enqueue(new FloatingNumberAnimation(u.tileCoordinate, HPReg, 24, Color.GREEN));
 				}
 			}
 			if(u.currentHP <= 0)
