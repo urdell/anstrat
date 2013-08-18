@@ -1,10 +1,8 @@
 package com.anstrat.command;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.FullscreenTextAnimation;
+import com.anstrat.animation.UberTextAnimation;
 import com.anstrat.core.GameInstance;
-import com.anstrat.gameCore.Fog;
-import com.anstrat.gameCore.State;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
@@ -32,25 +30,28 @@ public final class CommandHandler {
 			System.out.println("CometStrike Not Valid");
 			Gdx.app.log("CommandHandler", String.format("Attempted to execute an invalid '%s' command. Disallowed.", command));
 			
-			if (command instanceof CreateUnitCommand) {
-				Animation animation = new FullscreenTextAnimation(((CreateUnitCommand) command).getReason());
+			String reason = "";
+			
+			if (command instanceof CreateUnitCommand)
+				reason = ((CreateUnitCommand) command).getReason();
+			else if (command instanceof ActivateTargetedPlayerAbilityCommand)
+				reason = ((ActivateTargetedPlayerAbilityCommand) command).getReason();
+			else if ( command instanceof ActivateDoubleTargetedPlayerAbilityCommand)
+				reason = ((ActivateDoubleTargetedPlayerAbilityCommand) command).getReason();
+			else if ( command instanceof ActivatePlayerAbilityCommand)
+				reason = ((ActivatePlayerAbilityCommand) command).getReason();
+			
+			Animation animation = null;
+			
+			System.out.println("Failed due to: " + reason);
+			
+			if(reason.equals("toofar"))
+				animation = new UberTextAnimation("toofar");
+			else
+				animation = new UberTextAnimation("notpossible");
+			
+			if(animation!=null)
 				GEngine.getInstance().animationHandler.runParalell(animation);
-			}
-			else if (command instanceof ActivateTargetedPlayerAbilityCommand) {
-				System.out.println(command.toString());
-				Animation animation = new FullscreenTextAnimation(((ActivateTargetedPlayerAbilityCommand) command).getReason());
-				GEngine.getInstance().animationHandler.runParalell(animation);
-			}
-			else if ( command instanceof ActivateDoubleTargetedPlayerAbilityCommand) {
-				System.out.println(command.toString());
-				Animation animation = new FullscreenTextAnimation(((ActivateDoubleTargetedPlayerAbilityCommand) command).getReason());
-				GEngine.getInstance().animationHandler.runParalell(animation);
-			}
-			else if ( command instanceof ActivatePlayerAbilityCommand) {
-				System.out.println(command.toString());
-				Animation animation = new FullscreenTextAnimation(((ActivatePlayerAbilityCommand) command).getReason());
-				GEngine.getInstance().animationHandler.runParalell(animation);
-			}
 		}
 	}
 	

@@ -165,6 +165,7 @@ public class AbilityPopup extends Popup {
 	 */
 	@Override public void show(){
 		update();
+		updateCast(0);
 		super.show();
 	}
 	

@@ -65,18 +65,19 @@ public class CreateUnitCommand extends Command {
 	
 	public String getReason() {
 		if (tileCoord == null) 
-			return "Cannot recruit";
+			return "norecruit";
 		else if (StateUtils.getUnitByTile(tileCoord) != null)
-			return "Already occupied";
+			return "occupied";
 		else if (unitType.getTerrainPenalty(State.activeState.map.getTile(tileCoord).terrain) == Integer.MAX_VALUE)
-			return "Impassable terrain";
+			return "impassable";
 		else if (State.activeState.players[playerID].gold < unitType.cost)
-			return "Not enough gold";
+			return "nogold";
 		else if (Pathfinding.getDistance(StateUtils.getCurrentPlayerCastle().tileCoordinate, tileCoord) > 1)
-			return "Too far away";
+			return "toofar";
 		
 		return "";
 	}
+	
 	public UnitType getUnitType(){
 		return unitType;
 	}
