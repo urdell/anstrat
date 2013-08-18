@@ -19,7 +19,7 @@ public class HealAnimation extends Animation{
 	private com.badlogic.gdx.graphics.g2d.Animation sourceAnimation, targetAnimation;
 	private int heal;
 	
-	private static final float START_DELAY = 0.5f;
+	private static final float START_DELAY = 3f/6f;
 	
 	public HealAnimation(Unit source, Unit target, int heal){
 		sourceAnimation = Assets.getAnimation("shaman-heal");
@@ -28,7 +28,7 @@ public class HealAnimation extends Animation{
 		GEngine engine = GEngine.getInstance();
 		this.source = engine.getUnit(source);
 		this.target = engine.getUnit(target);
-		length = sourceAnimation.animationDuration + targetAnimation.animationDuration;
+		length = START_DELAY + sourceAnimation.animationDuration + targetAnimation.animationDuration;
 		lifetimeLeft = length;
 	}
 	
@@ -55,8 +55,7 @@ public class HealAnimation extends Animation{
 		com.badlogic.gdx.graphics.g2d.Animation animation = null;
 		Vector2 position = null;
 		
-		if(timePassed >= START_DELAY + sourceAnimation.animationDuration){
-			
+		if(timePassed >= START_DELAY + sourceAnimation.animationDuration){	
 			if(!displayedHeal){
 				displayedHeal = true;
 				GEngine ge = GEngine.getInstance();
@@ -68,14 +67,15 @@ public class HealAnimation extends Animation{
 			animation = targetAnimation;
 			position = target.getPosition();
 			
-			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
+			TextureRegion region = animation.getKeyFrame(animationStateTime - 
+					sourceAnimation.animationDuration - START_DELAY, true);
 			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
-		else if(timePassed >= START_DELAY){			
+		else if(timePassed > START_DELAY && timePassed < START_DELAY + sourceAnimation.animationDuration){				
 			animation = sourceAnimation;
 			position = source.getPosition();
 			
-			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
+			TextureRegion region = animation.getKeyFrame(animationStateTime - START_DELAY, true);
 			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y - region.getRegionHeight());
 		}
 		

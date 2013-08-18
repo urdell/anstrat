@@ -480,7 +480,7 @@
         <frame image="shaman-heal-0003" number="3"/>
         <frame image="shaman-heal-0004" number="4"/>
         <frame image="shaman-heal-0005" number="5"/>
-	<frame image="shaman-heal-0006" number="6"/>
+		<frame image="shaman-heal-0006" number="6"/>
     </animation>
     <animation name="shaman-hurt">
         <frame image="shaman-death-0001" number="1" count="2"/>
@@ -500,10 +500,10 @@
     </animation>
     <animation name="shaman-magic">
         <frame image="shaman-magic-0001" number="1"/>
-        <frame image="shaman-magic-0002" number="2" count="2"/>
+        <frame image="shaman-magic-0002" number="2"/>
         <frame image="shaman-magic-0003" number="3"/>
         <frame image="shaman-magic-0004" number="4"/>
-        <frame image="shaman-magic-0005" number="5" count="12"/>
+        <frame image="shaman-magic-0005" number="5" count="10"/>
         <frame image="shaman-magic-0006" number="6"/>
         <frame image="shaman-magic-0007" number="7"/>
         <frame image="shaman-magic-0008" number="8"/>
