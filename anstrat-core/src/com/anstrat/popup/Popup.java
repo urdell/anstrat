@@ -121,11 +121,17 @@ public class Popup extends Window {
 	 */
 	public void close(){
 		stack.removeActor(this);
+		Array<Actor> children = stack.getChildren();
 
-		if(stack.getChildren().size==0){
+		if(children.size == 0){
 			// Last Popup gone - return control
 			gestureHandler.setOverridesInput(false);
 			inputMultiplexer.setOverridesInput(false);
+		}
+		else {
+			// Resize next popup
+			Popup next = (Popup) children.get(children.size - 1);
+			next.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		}
 		
 		stage.unfocusAll();
