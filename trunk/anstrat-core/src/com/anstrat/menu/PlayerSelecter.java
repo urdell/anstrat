@@ -36,7 +36,8 @@ public class PlayerSelecter extends Table {
 	}
 	
 	public String getPlayerName(){
-		return playerNameButton.getText();
+		String name = playerNameButton.getText();
+		return name.equals("") ? playerNameButton.getMessageText() : name;
 	}
 	
 	public int getGod(){

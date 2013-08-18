@@ -41,25 +41,23 @@ public class GameManager {
 		return gi;
 	}
 	
-	public GameInstance createHotseatGame(Map map, int player1team, int player2team){
-		return createHotseatGame(map, 2, new int[]{player1team, player2team});
+	public GameInstance createNetworkGame(long gameID, NetworkPlayer[] players, Map map, long seed){
+		NetworkGameInstance gi = new NetworkGameInstance(gameID, players, map, seed);
+		
+		networkGameByID.put(gameID, gi);
+		games.add(gi);
+		
+		return gi;
 	}
 	
-	public GameInstance createHotseatGame(boolean fog, int sizeX, int sizeY, int player1team,
-			int player2team) {
-		Map map = new Map(sizeX, sizeY, new Random());
-		map.fogEnabled = fog;
-		return createHotseatGame(map, player1team, player2team);
+	public GameInstance createHotseatGame(int width, int height, Player[] players){
+		GameInstance gi = new GameInstance(games.size() + 1, new Map(width, height, new Random()), players, GameInstanceType.HOTSEAT);
+		games.add(gi);
+		
+		return gi;
 	}
 	
-	public GameInstance createHotseatGame(Map map, int numPlayers, int[] teams){
-		
-		Player[] players = new Player[numPlayers];
-		
-		for(int i = 0; i < players.length; i++){
-			players[i] = new Player(i, "Player " + i, teams[i]);
-		}
-		
+	public GameInstance createHotseatGame(Map map, Player[] players) {
 		// If no map given, create a random one
 		if(map == null) map = new Map(10, 10, new Random());
 		
@@ -69,13 +67,13 @@ public class GameManager {
 		return gi;
 	}
 	
-	public GameInstance createNetworkGame(long gameID, NetworkPlayer[] players, Map map, long seed){
-		NetworkGameInstance gi = new NetworkGameInstance(gameID, players, map, seed);
-		
-		networkGameByID.put(gameID, gi);
-		games.add(gi);
-		
-		return gi;
+	public GameInstance createHotseatGame(Map map, int player1team, int player2team){
+		Player[] players = new Player[]{
+			new Player(0, "Player 1", player1team),
+			new Player(1, "Player 2", player2team)
+		};
+
+		return createHotseatGame(map, players);
 	}
 	
 	public void endGame(GameInstance game){
