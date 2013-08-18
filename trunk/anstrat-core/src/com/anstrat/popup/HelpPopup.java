@@ -40,7 +40,7 @@ public class HelpPopup extends Popup{
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			Popup.getCurrentPopup().close();
-			// TODO credits
+			(new CreditPopup()).show();
 		}
 	};
 	
