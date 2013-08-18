@@ -48,7 +48,7 @@ public class AiMenu extends MenuScreen implements MapSelectionListener {
 					Dimension d = GameOptions.MapType.getMapSize(mapType, new Random());
 					player1team = player1Selecter.getTeam();
 					Main.getInstance().games.createAIGame(
-							fog.isChecked(),
+							true,
 							d.width,
 							d.height,
 							player1team,
