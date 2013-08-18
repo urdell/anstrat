@@ -72,6 +72,11 @@ public final class Assets {
 	public static void startLoadingTextures(){
 		// Load loading screen textures synchronously
 		manager = new AssetManager();
+
+		// Tells Libgdx that we will manually handle the loading of
+		// all textures. Makes it possible to add a loading screen on resume
+		Texture.setAssetManager(manager);
+
 		manager.load("textures-loadingscreen/pack.atlas", TextureAtlas.class);
 		manager.finishLoading();
 		

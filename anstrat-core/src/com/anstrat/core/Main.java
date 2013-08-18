@@ -100,7 +100,7 @@ public class Main extends Game implements ApplicationListener {
 		
 		// Init menu, show splash
 		Assets.startLoadingTextures();
-		setScreen(SplashScreen.getInstance());
+		setScreen(new SplashScreen(null));
 	}
 	
 	public void init(){
@@ -184,14 +184,23 @@ public class Main extends Game implements ApplicationListener {
 	public void pause() {
 		Gdx.app.log("Main", "Paused");
 		if(networkEngine != null) networkEngine.pause();
+		
+		// Hide current popup
+		if (Popup.getCurrentPopup() != null) {
+			Popup.getCurrentPopup().close();
+		}
+		
 		Assets.onApplicationPause();
 	}
 
 	@Override
 	public void resume() {
+		setScreen(new SplashScreen(getScreen()));
+		
+		Assets.onApplicationResume();
+		
 		Gdx.app.log("Main", "Resumed");
 		if(networkEngine != null) networkEngine.resume();
-		Assets.onApplicationResume();
 	}
 
 	@Override
@@ -225,8 +234,12 @@ public class Main extends Game implements ApplicationListener {
 	@Override
 	public void setScreen(Screen screen){
 		
-		if(super.getScreen() != null && !(super.getScreen() instanceof GEngine))
+		// Ignore screen?
+		boolean ignore = super.getScreen() instanceof GEngine || super.getScreen() instanceof SplashScreen;
+	
+		if(super.getScreen() != null && !ignore){
 			screenStack.add(super.getScreen());
+		}
 		
 		super.setScreen(screen);
 		
