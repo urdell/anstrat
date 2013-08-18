@@ -15,7 +15,6 @@ import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.gui.GEngine;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -129,12 +128,13 @@ public class AbilityPopup extends Popup {
 		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=6?"magic-three-glowing":"magic-three")));
 		
 		Table abilityTable = new Table();
-		float abilh = bh*1.5f;
-		glowTable.defaults().left().top().width(abilh).height(abilh);
+		
+		float abilh = Gdx.graphics.getWidth()*0.3f;
+		abilityTable.defaults().left().top().width(abilh).height(abilh);
 		abilityTable.add(abilities[0]);//.height(bh*2f).width(bh*2f);
-		abilityTable.add();
+		//abilityTable.add();
 		abilityTable.add(abilities[1]);//.height(bh*2f).width(bh*2f);
-		abilityTable.add();
+		//abilityTable.add();
 		abilityTable.add(abilities[2]);//.height(bh*2f).width(bh*2f);
 		
 		/*Table bottom = new Table();

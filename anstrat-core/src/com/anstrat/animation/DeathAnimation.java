@@ -7,6 +7,7 @@ import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
+import com.anstrat.gui.SelectionHandler;
 import com.badlogic.gdx.math.Vector2;
 
 public class DeathAnimation extends Animation {
@@ -43,6 +44,10 @@ public class DeathAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		if(!started){
+			SelectionHandler sel = GEngine.getInstance().selectionHandler;
+			Unit teunit = sel.selectedUnit;
+			if(teunit != null && unit.unit.equals(teunit))
+				sel.deselect();
 			started = true;
 			unit.playDeath();
 		}
