@@ -50,7 +50,7 @@ public class APPieDisplay {
 		for(pieceNumber=0; pieceNumber < currentAP; pieceNumber++ ){
 			drawPiece(x, y, size, maxAP, pieceNumber, batch, UI);
 		}
-		batch.setColor(Color.toFloatBits(0.8f, 0.85f, 0.85f, alpha));
+		batch.setColor(Color.toFloatBits(0.70f, 0.7f, 0.7f, alpha));
 		c = batch.getColor();
 		batch.setColor(c.r, c.g, c.b, alpha);
 		for(;pieceNumber < currentAP+apReg && pieceNumber < maxAP; pieceNumber++ ){
