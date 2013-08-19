@@ -146,12 +146,14 @@ public class BuyUnitPopup extends Popup{
 		unitTable.setColor(userPlayer.getColor());
 		card.setColor(userPlayer.getColor());
 		GEngine.getInstance().userInterface.setVisible(false);
+		GEngine.getInstance().userInterface.setEndTurnButtonVisible(false);
 		
 		super.show();
 	}
 	
 	@Override public void close(){
 		GEngine.getInstance().userInterface.setVisible(true);
+		GEngine.getInstance().userInterface.setEndTurnButtonVisible(true);
 		super.close();
 	}
 	
