@@ -72,7 +72,7 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 						checkGoButtonStatus();
 					}
 					
-				}, "Select or write friend's username");
+				}, "Select or write username of friend");
 				popup.show();	
 			}
 		});

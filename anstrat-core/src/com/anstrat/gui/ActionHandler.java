@@ -1,7 +1,6 @@
 package com.anstrat.gui;
 
 import com.anstrat.animation.Animation;
-import com.anstrat.animation.FullscreenTextAnimation;
 import com.anstrat.animation.UberTextAnimation;
 import com.anstrat.command.ActivateAbilityCommand;
 import com.anstrat.command.ActivateDoubleTargetedPlayerAbilityCommand;
@@ -202,7 +201,7 @@ public class ActionHandler {
 				command = new ActivateDoubleTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility.type, temp.coords, gTile.tile.coordinates);
 				if(command.isAllowed())
 					requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedDoubleTargetedPlayerAbility, 
-							gEngine.selectionHandler.abilityName, clickedQuadrant);
+							"confirm-swap", clickedQuadrant);
 				else {
 					if( ((ActivateDoubleTargetedPlayerAbilityCommand)command).getReason().equals("Can only swap friendly units")){
 						gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates,-180f,0f, "cantswap"));
