@@ -71,7 +71,7 @@ public class AbilityButton extends Table{
 		if( (selectionHandler.selectionType == SelectionHandler.SELECTION_TARGETED_ABILITY &&
 				selectionHandler.selectedTargetedAbility == ability)
 			|| (actionHandler.showingConfirmDialog && actionHandler.confirmCommand instanceof ActivateAbilityCommand)){ // TODO more checks for this specific ability.
-			batch.setColor(Color.YELLOW);
+			batch.setColor(new Color(0f, 1f, 1f, 1f));
 		}
 		if(!isAllowed){
 			batch.setColor(Color.GRAY);

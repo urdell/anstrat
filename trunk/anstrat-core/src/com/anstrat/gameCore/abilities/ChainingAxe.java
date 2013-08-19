@@ -46,7 +46,9 @@ public class ChainingAxe extends TargetedAbility {
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		int numberOfHits = 1;
 		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		System.out.println(minDamage);
 		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		System.out.println(maxDamage);
 		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 		targetUnit.currentHP -= damage;
 		Unit lastHit = targetUnit;
@@ -58,7 +60,7 @@ public class ChainingAxe extends TargetedAbility {
 		targetUnit.resolveDeath();
 		alreadyHit.add(targetUnit);
 		
-		Animation chainingAxeAttackAnimation = new ChainingAxeAnimation(source,targetUnit,source.getAttack(), firstUnit);
+		Animation chainingAxeAttackAnimation = new ChainingAxeAnimation(source,targetUnit,damage, firstUnit);
 		GEngine.getInstance().animationHandler.enqueue(chainingAxeAttackAnimation);
 		firstUnit = false;
 		
@@ -74,7 +76,7 @@ public class ChainingAxe extends TargetedAbility {
 						maxDamage = Combat.maxDamage(source, unit, DAMAGEMULTIPLIER-numberOfHits*0.2f);
 						damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 						unit.currentHP -= damage;
-						Animation chainingAxeAnimation = new ChainingAxeAnimation(lastHit, unit, (source.getAttack()-numberOfHits), firstUnit);
+						Animation chainingAxeAnimation = new ChainingAxeAnimation(lastHit, unit, damage, firstUnit);
 						GEngine.getInstance().animationHandler.enqueue(chainingAxeAnimation);
 						lastHit = unit;
 						lastHitTile = unit.tileCoordinate;
