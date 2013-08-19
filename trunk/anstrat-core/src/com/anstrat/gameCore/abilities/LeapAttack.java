@@ -25,7 +25,7 @@ public class LeapAttack extends TargetedAbility{
 		private static final long serialVersionUID = 1L;
 		private static final int AP_COST = 3;
 		private static final int RANGE = 1;
-		private static final float DAMAGEMULTIPLIER = 1.5f;
+		private static final float DAMAGEMULTIPLIER = 1.1f;
 
 		public LeapAttack(){
 			super("Berserker Rush", "A rush attack that has the berserker run through an enemy and stop behind it.", AP_COST, RANGE);

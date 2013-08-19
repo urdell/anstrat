@@ -4,11 +4,11 @@
 		<name>Berserker</name>
 		<imageFolder>berserker</imageFolder>
 		<maxHP>18</maxHP>
-		<attack>10</attack>
+		<attack>12</attack>
 		<maxAP>7</maxAP>
 		<APReg>5</APReg>
-		<APStart>5</APStart>
-		<cost>33</cost>
+		<APStart>3</APStart>
+		<cost>32</cost>
 		<ability1>5</ability1><!-- Leap Attack -->
 		<description>The Berserker is a fierce offensive warrior who can rush through enemy units.</description>
 		<idleImage>berserker-idle-0001</idleImage>
@@ -25,7 +25,7 @@
 		<maxAP>7</maxAP>
 		<APReg>4</APReg>
 		<APStart>4</APStart>
-		<cost>30</cost>
+		<cost>26</cost>
 		<ability1>2</ability1><!-- Heal -->
 		<description>The Shaman can heal his allies and summon fireballs onto the enemy.</description>
 		<idleImage>shaman-idle-0001</idleImage>
@@ -60,7 +60,7 @@
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
 		<APStart>5</APStart>
-		<cost>15</cost>
+		<cost>16</cost>
 		<ability1>3</ability1><!-- Shadow image -->
 		<description>The Wolf is a highly mobile unit with the ability to steal life from enemy units.</description>
 		<idleImage>wolf-idle-0001</idleImage>
@@ -119,8 +119,8 @@
 	<UnitType>
 		<name>Valkyrie</name>
 		<imageFolder>valkyrie</imageFolder>
-		<maxHP>20</maxHP>
-		<attack>8</attack>
+		<maxHP>22</maxHP>
+		<attack>9</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>4</APReg>
@@ -173,7 +173,7 @@
 		<maxAttackRange>2</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
-		<APStart>5</APStart>
+		<APStart>3</APStart>
 		<cost>22</cost>
 		<ability1>12</ability1><!-- Poison -->
 		<description>The Dark Elf is a quick, sharpshooting unit with the ability to weaken enemy units.</description>
@@ -202,13 +202,13 @@
 	<UnitType>
 		<name>Jotun</name>
 		<imageFolder>jotun</imageFolder>
-		<maxHP>25</maxHP>
-		<attack>12</attack>
+		<maxHP>30</maxHP>
+		<attack>10</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>5</maxAP>
 		<APReg>4</APReg>
 		<APStart>4</APStart>
-		<cost>38</cost>
+		<cost>36</cost>
 		<ability1>9</ability1><!-- Throw Ice -->
 		<description>The Jotun is a mighty ice giant who can throw ice blocks that shatter on impact.</description>
 		<idleImage>jotun-idle-0001</idleImage>
