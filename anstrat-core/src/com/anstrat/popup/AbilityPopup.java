@@ -121,11 +121,11 @@ public class AbilityPopup extends Popup {
 		Table glowTable = new Table();
 		float glowh = bh*0.9f;
 		glowTable.defaults().left().top().width(glowh).height(glowh);
-		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=2?"magic-one-glowing":"magic-one")));
+		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=2 && GameInstance.activeGame.isUserCurrentPlayer()?"magic-one-glowing":"magic-one")));
 		glowTable.add();
-		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=4?"magic-two-glowing":"magic-two")));
+		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=4 && GameInstance.activeGame.isUserCurrentPlayer()?"magic-two-glowing":"magic-two")));
 		glowTable.add();
-		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=6?"magic-three-glowing":"magic-three")));
+		glowTable.add(new Image(Assets.getTextureRegion(ma0n>=6 && GameInstance.activeGame.isUserCurrentPlayer()?"magic-three-glowing":"magic-three")));
 		
 		Table abilityTable = new Table();
 		
