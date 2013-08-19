@@ -12,8 +12,8 @@ public class Building implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int TYPE_RUNE  = 0;
-	public static final int TYPE_CASTLE  = 1;
-	public static final int TYPE_GREENVILLAGE = 2;
+	public static final int TYPE_CASTLE  = 2;
+	public static final int TYPE_GREENVILLAGE = 1;
 	public static final int TYPE_ROCKVILLAGE = 3;
 	public static final int TYPE_SNOWVILLAGE = 4;
 	
