@@ -95,6 +95,8 @@
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
+		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
+		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<portrait>hawkportrait</portrait>
 		<swingSfx>hawk_swing</swingSfx>
 		<impactSfx>hawk_impact</impactSfx>
@@ -140,6 +142,8 @@
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
+		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
+		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<ability1>4</ability1><!-- Magic Spear -->
 		<description>The Valkyrie is a powerful warrior that can fly over any terrain .</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
