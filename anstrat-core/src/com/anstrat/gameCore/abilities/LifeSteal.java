@@ -3,6 +3,7 @@ package com.anstrat.gameCore.abilities;
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.LifeStealAnimation;
 import com.anstrat.gameCore.Combat;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
@@ -17,7 +18,7 @@ import com.anstrat.gui.confirmDialog.TextRow;
 
 public class LifeSteal extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
-	private static final int AP_COST = 4;
+	private static final int AP_COST = 3;
 	private static final int RANGE = 1;
 	private static final float DAMAGEMULTIPLIER = 1.0f;
 	
@@ -40,11 +41,11 @@ public class LifeSteal extends TargetedAbility {
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		
-		System.out.println("TarHp:" + targetUnit.currentHP);
-		System.out.println("SouHP:" + targetUnit.currentHP);
-		
-		targetUnit.currentHP -= source.getAttack()-1;
-		source.currentHP += source.getAttack()-1;
+		int minDamage = Combat.minDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int maxDamage = Combat.maxDamage(source, targetUnit, DAMAGEMULTIPLIER);
+		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
+		targetUnit.currentHP -= damage;
+		source.currentHP += damage;
 		
 		if(source.currentHP > source.getMaxHP()) source.currentHP = source.getMaxHP();
 		
