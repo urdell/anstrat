@@ -17,14 +17,16 @@ public class ChooseGameTypeMenu extends MenuScreen {
 		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	showIfUserNamed(FindMatchMenu.getInstance());
+            	if(Main.getInstance().network.isLoggedIn())
+            		showIfUserNamed(FindMatchMenu.getInstance());
             }
         } );
         
         Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	showIfUserNamed(InviteMatchMenu.getInstance());
+            	if(Main.getInstance().network.isLoggedIn())
+            		showIfUserNamed(InviteMatchMenu.getInstance());
             }
         });
 
