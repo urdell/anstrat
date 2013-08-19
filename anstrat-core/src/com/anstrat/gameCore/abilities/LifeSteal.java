@@ -18,9 +18,9 @@ import com.anstrat.gui.confirmDialog.TextRow;
 
 public class LifeSteal extends TargetedAbility {
 	private static final long serialVersionUID = 1L;
-	private static final int AP_COST = 3;
+	private static final int AP_COST = 4;
 	private static final int RANGE = 1;
-	private static final float DAMAGEMULTIPLIER = 1.0f;
+	private static final float DAMAGEMULTIPLIER = 1.2f;
 	
 	public LifeSteal(){
 		super("Life Steal", "Steals health from the targeted unit.", AP_COST, RANGE);
@@ -52,8 +52,6 @@ public class LifeSteal extends TargetedAbility {
 		Animation animation = new LifeStealAnimation(source,targetUnit,source.getAttack()-1);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
-		System.out.println("TarHp:" + targetUnit.currentHP);
-		System.out.println("SouHP:" + targetUnit.currentHP);
 	}
 
 	@Override
