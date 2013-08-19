@@ -8,7 +8,7 @@
 		<maxAP>7</maxAP>
 		<APReg>5</APReg>
 		<APStart>3</APStart>
-		<cost>32</cost>
+		<cost>31</cost>
 		<ability1>5</ability1><!-- Leap Attack -->
 		<description>The Berserker is a fierce offensive warrior who can rush through enemy units.</description>
 		<idleImage>berserker-idle-0001</idleImage>
@@ -229,7 +229,7 @@
 		<maxAP>5</maxAP>
 		<APReg>3</APReg>
 		<APStart>3</APStart>
-		<cost>27</cost>
+		<cost>28</cost>
 		<ability1>10</ability1><!-- Knockback -->
 		<effect1>4</effect1><!-- HP Reg -->
 		<terrainPenaltyMountain>4</terrainPenaltyMountain>
