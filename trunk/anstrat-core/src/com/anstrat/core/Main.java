@@ -2,7 +2,6 @@ package com.anstrat.core;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Stack;
 
 import com.anstrat.ai.AIRunner;

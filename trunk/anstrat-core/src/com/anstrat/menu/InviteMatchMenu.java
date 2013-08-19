@@ -77,6 +77,21 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 			}
 		});
 		
+		fixLayout();
+	}
+	
+	public static synchronized InviteMatchMenu getInstance() {
+		if(me == null){
+			me = new InviteMatchMenu();
+		}
+		else
+			me.fixLayout();
+		return me;
+	}
+	
+	public void fixLayout(){
+		contents.clear();
+		
 		mapSelecter = new MapSelecter(this);
 		
 		contents.padTop(Main.percentHeight * 4f);
@@ -97,13 +112,6 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 		contents.add(centerLogin).bottom();
 		
 		checkGoButtonStatus();
-	}
-	
-	public static synchronized InviteMatchMenu getInstance() {
-		if(me == null){
-			me = new InviteMatchMenu();
-		}
-		return me;
 	}
 	
 	@Override

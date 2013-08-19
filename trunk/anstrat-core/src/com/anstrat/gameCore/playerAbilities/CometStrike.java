@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.CometStrikeAnimation;
-import com.anstrat.animation.FloatingTextAnimation;
 import com.anstrat.gameCore.Building;
 import com.anstrat.gameCore.Player;
 import com.anstrat.gameCore.State;
@@ -16,7 +15,6 @@ import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 
 public class CometStrike extends TargetedPlayerAbility {
 

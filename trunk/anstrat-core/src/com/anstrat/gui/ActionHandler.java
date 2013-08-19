@@ -180,7 +180,7 @@ public class ActionHandler {
 			command = new ActivateTargetedPlayerAbilityCommand(State.activeState.getCurrentPlayer(), gTile.tile.coordinates, gEngine.selectionHandler.selectedTargetedPlayerAbility.type);
 			if(command.isAllowed())
 				requestPlayerAbilityConfirm(gTile, command, gEngine.selectionHandler.selectedTargetedPlayerAbility, 
-						gEngine.selectionHandler.abilityName, clickedQuadrant);
+						"confirm-comet", clickedQuadrant);
 			else{
 				if ("Target is a building".equals(((ActivateTargetedPlayerAbilityCommand)command).getReason())){
 					gEngine.animationHandler.runParalell(new UberTextAnimation(gTile.tile.coordinates, "target-building"));
