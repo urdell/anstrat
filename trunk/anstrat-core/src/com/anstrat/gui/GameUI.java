@@ -51,7 +51,6 @@ public class GameUI extends UI {
 	
 	private float lastWidth, lastHeight;
 	private Unit lastShownUnit;
-	
 	//Top panel
 	public Table topPanel;
 	private ColorTable turntable;
@@ -604,6 +603,11 @@ public class GameUI extends UI {
 			}
 			batch.end();
 		}
+	}
+	
+
+	public void setEndTurnButtonVisible(boolean visible) {
+		Assets.SKIN.setEnabled(endTurnButton, visible);
 	}
 	
 	/**

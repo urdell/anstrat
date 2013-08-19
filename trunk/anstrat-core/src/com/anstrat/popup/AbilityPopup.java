@@ -166,7 +166,13 @@ public class AbilityPopup extends Popup {
 	@Override public void show(){
 		update();
 		updateCast(0);
+		GEngine.getInstance().userInterface.setEndTurnButtonVisible(false);
 		super.show();
+	}
+	
+	@Override public void close(){
+		GEngine.getInstance().userInterface.setEndTurnButtonVisible(true);
+		super.close();
 	}
 	
 	public void selectButton(int button) {

@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -198,17 +197,7 @@ public class MainMenu extends MenuScreen {
         	table.add(new GameInstanceView(gi)).fillX().expandX().height(9f*Main.percentHeight);
         }
 		
-        // Game requests
-		Table requests = new Table(Assets.SKIN);
-		if (pendingGames > 0) {
-			requests.add("Looking for opponent...");
-		}
-		/*
-        for(GameRequest request : Main.getInstance().network.getGameRequests()){
-        	requests.row();
-        	requests.add(gameRequestToTable(request)).fillX().expandX().height((int)(17*Main.percentHeight));
-        }
-        */
+        
         if(current.getChildren().size > 1){
      		gamesList.add(current).fillX().expandX();
          	gamesList.row();
@@ -220,102 +209,12 @@ public class MainMenu extends MenuScreen {
         }
         
         if(pendingGames > 0){
+    		Table requests = new Table(Assets.SKIN);
+        	requests.add("Looking for opponent...");
         	gamesList.add(requests).fillX().expandX();
         }
-        	
-        //gamesList.padBottom(Main.percentHeight*5f);
 	}
 	
-	// Formats the given time to a HH:MM:SS format, timeSpan is given in milliseconds
-	/*
-	private static String formatTime(long milliseconds){
-		long hours = milliseconds / 3600000l;
-		milliseconds %= 3600000l;
-		long minutes = milliseconds / 60000l;
-		milliseconds %= 60000l;
-		long seconds = milliseconds / 1000;
-		
-		StringBuilder builder = new StringBuilder(10);
-		
-		if(hours > 0){
-			if(hours < 10) builder.append('0');
-			builder.append(hours);
-			builder.append(':');
-		}
-
-		if(minutes < 10) builder.append('0');
-		builder.append(minutes);
-		builder.append(':');
-		
-		if(seconds < 10) builder.append('0');
-		builder.append(seconds);
-		
-		return builder.toString();
-	}
-	*/
-	
-	/*
-	private Table gameRequestToTable(GameRequest request){
-		Table table = new Table(Assets.SKIN);
-    	table.setBackground(Assets.SKIN.getPatch("line-border-thin"));
-    	
-    	Map map = request.map;
-    	Label gameName = new Label(request.gameName, Assets.SKIN);
-    	Label limit = new Label("Limit: "+request.timeLimit, Assets.SKIN);
-    	Label mapSize = new Label(map==null?"null":(map.getXSize()+"x"+map.getYSize()), Assets.SKIN);
-    	Label mapName = new Label(map==null?"null":map.name, Assets.SKIN);
-    	
-    	String status = "";
-    	switch(request.status){
-	    	case GameRequest.STATUS_SEARCH_GAME: {
-	    		status = "Searching for game";
-	    		break;
-	    	}
-	    	case GameRequest.STATUS_UNKNOWN: {
-	    		status = "Status unknown";
-	    		break;
-	    	}
-	    	case GameRequest.STATUS_WAIT_OPPONENT: {
-	    		status = "Waiting for opponent";
-	    		break;
-	    	}
-    	}
-    	
-    	Button cancel = new Button(new Image(Assets.getTextureRegion("cancel")), Assets.SKIN.getStyle("image-toggle", ButtonStyle.class));
-    	final long nonce = request.nonce;
-    	cancel.setClickListener(new ClickListener() {
-	        @Override
-	        public void click(Actor actor,float x,float y ){
-	        	//Main.getInstance().network.cancelRequest(nonce);
-	        }
-		});
-    	
-    	table.left().pad((int)(2*Main.percentWidth));
-    	table.defaults().left().fillX().expandX();
-    	
-    	Table outer = new Table(Assets.SKIN);
-    	outer.defaults().left().height((int)(4*Main.percentHeight));
-    	
-    	Table inner1 = new Table();
-    	inner1.add(gameName).fillX().expandX();
-    	inner1.add(limit);
-    	
-    	Table inner2 = new Table();
-    	inner2.add(mapName).fillX().expandX();
-    	inner2.add(mapSize);
-    	
-    	outer.add(inner1).expandX().fillX();
-    	outer.row();
-    	outer.add(inner2).expandX().fillX();
-    	outer.row();
-    	outer.add(status);
-    	
-    	table.add(outer).expandX().fillX().padLeft((int)(Main.percentHeight));
-    	table.add(cancel).pad((int)(3+Main.percentWidth)).height((int)(7*Main.percentHeight)).width((int)(7*Main.percentHeight)).bottom().right();
-    	
-    	return table;
-	}
-	*/
 }
 
 
