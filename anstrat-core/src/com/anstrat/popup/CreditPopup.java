@@ -13,7 +13,7 @@ public class CreditPopup extends Popup {
 		
 		this.setTitle("Credits");
 		this.drawOverlay = false;
-		this.add(new Label("Developers: \n Tomas Urdell \n Johnny Vaeyrynen \n Erik Termander \n Rickard Paulsson \n Andreas \"Scumbag\" Eklund \n Anton Groenlund \n Kalle Persson \n Mattias Karlsson \n \n Fonts: \n \"Goudy Bookletter 1911\" by Barry Schwartz \n \"Crimson\" by Sebastian Kosch \n\"Astonished\" by Misprinted Type", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE)));
+		this.add(new Label("Developers: \n Tomas Urdell \n Johnny \"Douche\" Vaeyrynen \n Erik Termander \n Rickard Paulsson \n Andreas \"Scumbag\" Eklund \n Anton Groenlund \n Kalle Persson \n Mattias Karlsson \n \n Fonts: \n \"Goudy Bookletter 1911\" by Barry Schwartz \n \"Crimson\" by Sebastian Kosch \n\"Astonished\" by Misprinted Type", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE)));
 
 	}
 

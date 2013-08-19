@@ -52,6 +52,7 @@ public class InviteMatchMenu extends MenuScreen implements MapSelectionListener 
 				GameOptions options = new GameOptions(map, mapType, playerSelecter.getGod(), playerSelecter.getTeam(), fog.isChecked());
 				
 				Main.getInstance().network.invitePlayer(invitedFriend, options);
+				MainMenu.getInstance().pendingGames = 1;
 				
 				// Go back to menu
 				Main.getInstance().setScreen(MainMenu.getInstance());
