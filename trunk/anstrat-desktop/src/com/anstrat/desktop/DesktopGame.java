@@ -21,7 +21,7 @@ public class DesktopGame {
 	
 	// Testing mode settings
 	public static final ScreenOrientation ORIENTATION = ScreenOrientation.Portrait;
-	public static final Dimension PHONE = new Dimension(855, 480);
+	public static final Dimension PHONE = new Dimension(855, 512);
 	
 	public static void main(String[] args){
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
