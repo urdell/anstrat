@@ -9,7 +9,6 @@ import com.anstrat.geography.Map;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.network.protocol.GameOptions;
 import com.anstrat.network.protocol.GameOptions.MapType;
-import com.anstrat.popup.Popup;
 import com.anstrat.popup.MapTypePopup.MapSelectionListener;
 import com.anstrat.util.Dimension;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,9 +23,12 @@ public class HotseatMenu extends MenuScreen implements MapSelectionListener {
 	private GameOptions.MapType mapType;
 	private Button goButton;
 	
+	final PlayerSelecter player1Selecter;
+	final PlayerSelecter player2Selecter;
+	
 	private HotseatMenu(){
-		final PlayerSelecter player1Selecter = new PlayerSelecter("Player 1");
-		final PlayerSelecter player2Selecter = new PlayerSelecter("Player 2");
+		player1Selecter = new PlayerSelecter("Player 1");
+		player2Selecter = new PlayerSelecter("Player 2");
 		
 		goButton = ComponentFactory.createMenuButton("GO!", new ClickListener() {
 			@Override
@@ -51,8 +53,21 @@ public class HotseatMenu extends MenuScreen implements MapSelectionListener {
 		goButton.setDisabled(true);
 		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
+		fixLayout();
+	}
+	
+	public static synchronized HotseatMenu getInstance() {
+		if(me == null){
+			me = new HotseatMenu();
+		}
+		else
+			me.fixLayout();
+		return me;
+	}
+	
+	public void fixLayout(){
 		mapSelecter = new MapSelecter(this);
-		
+		contents.clear();
 		contents.top().padTop(Main.percentHeight * 4f);
 		contents.defaults().space(0).pad(0).top().width(BUTTON_WIDTH);
 		contents.add(mapSelecter);
@@ -64,13 +79,6 @@ public class HotseatMenu extends MenuScreen implements MapSelectionListener {
 		//contents.add(fog);
 		//contents.row();
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
-	}
-	
-	public static synchronized HotseatMenu getInstance() {
-		if(me == null){
-			me = new HotseatMenu();
-		}
-		return me;
 	}
 
 	@Override

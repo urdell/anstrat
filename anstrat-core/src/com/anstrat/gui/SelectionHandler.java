@@ -16,10 +16,8 @@ import com.anstrat.gameCore.abilities.TargetedAbility;
 import com.anstrat.gameCore.playerAbilities.DoubleTargetedPlayerAbility;
 import com.anstrat.gameCore.playerAbilities.TargetedPlayerAbility;
 import com.anstrat.geography.Map;
-import com.anstrat.geography.Pathfinding;
 import com.anstrat.geography.Tile;
 import com.anstrat.geography.TileCoordinate;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SelectionHandler {
 	public static final int SELECTION_UNIT = 1;

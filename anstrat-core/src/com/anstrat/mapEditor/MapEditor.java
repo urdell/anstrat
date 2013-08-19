@@ -115,7 +115,7 @@ public class MapEditor implements Screen {
 				e.printStackTrace();
 			}
 			catch (GdxRuntimeException e) {
-				Popup.showGenericPopup("Could not save map", "You probably dont have external memory on your phone.");
+				Popup.showGenericPopup("Could not save map", "You probably don't have external memory on your phone.");
 				e.printStackTrace();
 			}
 		}

@@ -25,11 +25,13 @@ public class AiMenu extends MenuScreen implements MapSelectionListener {
 	private GameOptions.MapType mapType;
 	private Button goButton;
 	
+	final PlayerSelecter player1Selecter;
+	
 	private AiMenu(){
 		final CheckBox fog = ComponentFactory.createCheckBox("Fog of War");
 		fog.setChecked(true);
 		
-		final PlayerSelecter player1Selecter = new PlayerSelecter("Player 1");
+		player1Selecter = new PlayerSelecter("Player 1");
 		
 		goButton = ComponentFactory.createMenuButton("GO!", new ClickListener() {
 			@Override
@@ -60,8 +62,23 @@ public class AiMenu extends MenuScreen implements MapSelectionListener {
 		goButton.setDisabled(true);
 		Assets.SKIN.setEnabled(goButton, !goButton.isDisabled());
 		
-		mapSelecter = new MapSelecter(this);
+		fixLayout();
+	}
 	
+	public static synchronized AiMenu getInstance() {
+		if(me == null){
+			me = new AiMenu();
+		}
+		else
+			me.fixLayout();
+		return me;
+	}
+	
+	public void fixLayout(){
+		contents.clear();
+		
+		mapSelecter = new MapSelecter(this);
+		
 		contents.padTop(Main.percentHeight * 4f);
 		contents.top();
 		contents.defaults().space(Main.percentWidth).pad(0).top().width(BUTTON_WIDTH);
@@ -72,13 +89,6 @@ public class AiMenu extends MenuScreen implements MapSelectionListener {
 		//contents.add(fog);
 		//contents.row();
 		contents.add(goButton).height(BUTTON_HEIGHT).width(BUTTON_WIDTH).padBottom(BUTTON_HEIGHT*0.3f);
-	}
-	
-	public static synchronized AiMenu getInstance() {
-		if(me == null){
-			me = new AiMenu();
-		}
-		return me;
 	}
 
 	@Override

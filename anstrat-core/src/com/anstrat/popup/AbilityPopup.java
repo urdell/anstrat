@@ -39,7 +39,7 @@ public class AbilityPopup extends Popup {
 	private AbilityTypeCard card;
 	private Table[] abilities;
 	private PlayerAbilityType[] types;
-	private Table selectedButton;
+	//private Table selectedButton;
 	private Table toboexx;
 
 	private static final ClickListener CAST_BUTTON_LISTENER = new ClickListener() {
@@ -71,7 +71,7 @@ public class AbilityPopup extends Popup {
 		cancel = ComponentFactory.createButton(CANCEL_TEXT, Popup.POPUP_CLOSE_BUTTON_HANDLER);
 		abilities = new Table[types.length];
 		card = new AbilityTypeCard(types[0]);
-		Image tempImage; // used to instantiate images for buttons.
+		//Image tempImage; // used to instantiate images for buttons.
 		int ma0n = State.activeState.players[State.activeState.currentPlayerId].mana;
 		this.drawOverlay = false;
 		for(int i=0; i<abilities.length; i++){
@@ -213,11 +213,12 @@ public class AbilityPopup extends Popup {
 		if(State.activeState==null)
 			return;
 		
-		int mana = GameInstance.activeGame.getUserPlayer().mana;
+		//int mana = GameInstance.activeGame.getUserPlayer().mana;
 		boolean isPlayerTurn = GameInstance.activeGame.isUserCurrentPlayer();
-		
+		if(!isPlayerTurn)
+			cast.setVisible(false);
 		//Disable cast button if current ability is not affordable
-		boolean canCast = mana >= card.type.manaCost;
+		//boolean canCast = mana >= card.type.manaCost;
 		//Assets.SKIN.setEnabled(cast, canCast && isPlayerTurn);
 		//card.setDisabled(!canCast);
 	}
