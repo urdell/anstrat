@@ -21,6 +21,7 @@ public enum TerrainType {
 	SNOWFOREST("Snowy Forest", 2, "snowforest"),
 	SNOWHILL("Snowy Hill", 2, "snowhill"),
 	SNOWMOUNTAIN("Snowy Mountain", Integer.MAX_VALUE, "snowmountain"),
+	SNOWSHALLOW("Snowy Shallows", 2, "snowshallow"),
 	
 	//Special
 	CRATER("Crater", 2, "crater"),

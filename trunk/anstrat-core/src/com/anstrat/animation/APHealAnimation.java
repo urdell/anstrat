@@ -19,13 +19,13 @@ public class APHealAnimation extends Animation {
 	private static final float START_DELAY = 0.5f;
 	
 	public APHealAnimation(Unit source, Unit target){
-		sourceAnimation = Assets.getAnimation("goblin-abiliy-effect");
+		sourceAnimation = Assets.getAnimation("goblin-ability-effect");
 		targetAnimation = Assets.getAnimation("goblin-ability-effect-target");
 		
 		GEngine engine = GEngine.getInstance();
 		this.source = engine.getUnit(source);
 		this.target = engine.getUnit(target);
-		length = sourceAnimation.animationDuration + targetAnimation.animationDuration;
+		length = sourceAnimation.animationDuration + targetAnimation.animationDuration+START_DELAY;
 		lifetimeLeft = length;
 	}
 	
@@ -57,14 +57,15 @@ public class APHealAnimation extends Animation {
 			animation = targetAnimation;
 			position = target.getPosition();
 			
-			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
+			TextureRegion region = animation.getKeyFrame(animationStateTime - 
+					START_DELAY - sourceAnimation.animationDuration, true);
 			batch.draw(region, position.x - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
 		else if(timePassed >= START_DELAY){
 			animation = sourceAnimation;
 			position = source.getPosition();
 			
-			TextureRegion region = animation.getKeyFrame(animationStateTime, true);
+			TextureRegion region = animation.getKeyFrame(animationStateTime - START_DELAY, true);
 			batch.draw(region, position.x - 3f - region.getRegionWidth() / 2f, position.y - region.getRegionHeight() / 2f);
 		}
 		

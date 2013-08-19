@@ -261,21 +261,21 @@
         <frame image="flag-inplace-red-0003" number="3"/>
         <frame image="flag-inplace-red-0004" number="4"/>
     </animation>
-    <animaion name="goblin-abiliy-effect">
+    <animation name="goblin-ability-effect" fps="9">
     	<frame image="goblin-ability-effect-0001" number="1"/>
-    	<frame image="goblin-ability-effect-0002" number="1"/>
-    	<frame image="goblin-ability-effect-0003" number="1"/>
-    	<frame image="goblin-ability-effect-0004" number="1"/>
-    	<frame image="goblin-ability-effect-0005" number="1"/>
-    	<frame image="goblin-ability-effect-0006" number="1"/>
-    </animaion>
-    <animaion name="goblin-ability-effect-target">
+    	<frame image="goblin-ability-effect-0002" number="2"/>
+    	<frame image="goblin-ability-effect-0003" number="3"/>
+    	<frame image="goblin-ability-effect-0004" number="4"/>
+    	<frame image="goblin-ability-effect-0005" number="5"/>
+    	<frame image="goblin-ability-effect-0006" number="6"/>
+    </animation>
+    <animaion name="goblin-ability-effect-target" fps="9">
     	<frame image="goblin-ability-effect-target-0001" number="1"/>
-    	<frame image="goblin-ability-effect-target-0002" number="1"/>
-    	<frame image="goblin-ability-effect-target-0003" number="1"/>
-    	<frame image="goblin-ability-effect-target-0004" number="1"/>
-    	<frame image="goblin-ability-effect-target-0005" number="1"/>
-    	<frame image="goblin-ability-effect-target-0006" number="1"/>
+    	<frame image="goblin-ability-effect-target-0002" number="2"/>
+    	<frame image="goblin-ability-effect-target-0003" number="3"/>
+    	<frame image="goblin-ability-effect-target-0004" number="4"/>
+    	<frame image="goblin-ability-effect-target-0005" number="5"/>
+    	<frame image="goblin-ability-effect-target-0006" number="6"/>
     </animaion>
     <animation name="goblin-attack">
         <frame image="goblin-attack-0001" number="1" count="4"/>
@@ -474,7 +474,7 @@
         <frame image="shaman-fireball-0002" number="2"/>
         <frame image="shaman-fireball-0003" number="3"/>
     </animation>
-    <animation name="shaman-heal">
+    <animation name="shaman-heal" fps="9">
         <frame image="shaman-heal-0001" number="1"/>
         <frame image="shaman-heal-0002" number="2"/>
         <frame image="shaman-heal-0003" number="3"/>
