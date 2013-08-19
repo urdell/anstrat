@@ -96,9 +96,10 @@ public class MapEditor implements Screen {
 	 */
 	public void saveMap(String filename)
 	{
-		if(map.getCastleCount() < 2)
+		Popup.getCurrentPopup().close();
+		if(map.getCastleCount() < 2 || map.getCastleCount() > 2)
 		{
-			Popup.showGenericPopup("Error", "You must have two capital towns placed on the map.");
+			Popup.showGenericPopup("Error", "You must have two capital towns placed on the map.\n");
 		}
 		else
 		{
@@ -110,12 +111,13 @@ public class MapEditor implements Screen {
 				oos.writeObject(MapEditor.getInstance().map);
 				oos.flush();
 				oos.close();
+				Popup.showGenericPopup("Success", "Map saved.");
 			} catch (IOException e) {
-				Popup.showGenericPopup("Error", "Could not save map.");
+				Popup.showGenericPopup("Error", "Could not save map.\n");
 				e.printStackTrace();
 			}
 			catch (GdxRuntimeException e) {
-				Popup.showGenericPopup("Could not save map", "You probably don't have external memory on your phone.");
+				Popup.showGenericPopup("Could not save map", "You probably don't have external memory on your phone.\n");
 				e.printStackTrace();
 			}
 		}

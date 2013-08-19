@@ -112,7 +112,8 @@ public class MapEditorUI extends UI {
 		terrainTable.defaults().space(padding);
 		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
-			if(t==TerrainType.CASTLE || t==TerrainType.GREENVILLAGE || t==TerrainType.ROCKVILLAGE || t==TerrainType.SNOWVILLAGE)
+			if(t==TerrainType.CASTLE || t==TerrainType.PORTAL ||
+					t==TerrainType.GREENVILLAGE || t==TerrainType.ROCKVILLAGE || t==TerrainType.SNOWVILLAGE)
 				continue;
 			Button button = ComponentFactory.createButton(GTile.getTextures(t)[0], "image", new ClickListener() {
 		        @Override
@@ -275,8 +276,8 @@ public class MapEditorUI extends UI {
 				String mapName = saveMapTextfield.getText();
 				if(mapName.length() > 0){
 					MapEditor.getInstance().saveMap(mapName);
-					Popup.getCurrentPopup().clearInputs();
-					Popup.getCurrentPopup().close();
+					//Popup.getCurrentPopup().clearInputs();
+					//Popup.getCurrentPopup().close();
 				}
 			}
 		});
