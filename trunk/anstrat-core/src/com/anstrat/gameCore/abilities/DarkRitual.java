@@ -5,24 +5,16 @@ import java.util.List;
 
 import com.anstrat.animation.Animation;
 import com.anstrat.animation.RitualisticVortex;
-import com.anstrat.gameCore.Combat;
 import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.StateUtils;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.Tile;
-import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.SelectionHandler;
-import com.anstrat.gui.confirmDialog.APRow;
-import com.anstrat.gui.confirmDialog.ConfirmDialog;
-import com.anstrat.gui.confirmDialog.ConfirmRow;
-import com.anstrat.gui.confirmDialog.DamageRow;
-import com.anstrat.gui.confirmDialog.HealRow;
-import com.anstrat.gui.confirmDialog.TextRow;
 
 public class DarkRitual extends Ability{
 
-	private static final int AP_DRAIN_AMOUNT = 2;
+	private static final int AP_DRAIN_AMOUNT = 1337;
 	
 	public DarkRitual() {
 		super("AP Boom", "Drains AP from nearby enemy units but also kills the \"fallen\".", 0);
