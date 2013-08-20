@@ -14,7 +14,7 @@ public class Logger {
 	private enum Level {INFO, WARN, ERROR};
 	
 	private static final String LOG_DIRECTORY = "logs";
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM 'kl' HH:mm");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM 'kl' HH:mm:ss");
 	
 	private File logFile;
 	
