@@ -121,6 +121,10 @@ public class MoveCommand extends Command {
 		
 		State state = State.activeState;
 		Unit unit = state.unitList.get(unitId);
+		
+		boolean result = true;
+		
+		/*
 		return (super.isAllowed() &&
 				unit != null && 
 				!unit.tileCoordinate.equals(endTile) &&
@@ -128,6 +132,47 @@ public class MoveCommand extends Command {
 				Pathfinding.getUnitRange(unit).contains(endTile) &&
 				StateUtils.getUnitByTile(state.map.getTile(endTile).coordinates) == null) &&
 				Fog.isVisible(endTile, unit.ownerId);
+		*/
+		
+		System.out.println("UNIT HAS "+unit.currentAP+" AP");
+		
+		result = result && super.isAllowed();
+		if(!result){
+			System.out.println("************** CASE 1 ****************");
+			return false;
+		}
+		result = result && unit != null;
+		if(!result){
+			System.out.println("************** CASE 22 ****************");
+			return false;
+		}
+		result = result && !unit.tileCoordinate.equals(endTile);
+		if(!result){
+			System.out.println("************** CASE 333 ****************");
+			return false;
+		}
+		result = result && unit.ownerId == state.currentPlayerId;
+		if(!result){
+			System.out.println("************** CASE 4444 ****************");
+			return false;
+		}
+		result = result && Pathfinding.getUnitRange(unit).contains(endTile);
+		if(!result){
+			System.out.println("************** CASE 55555 ****************");
+			return false;
+		}
+		result = result && StateUtils.getUnitByTile(state.map.getTile(endTile).coordinates) == null;
+		if(!result){
+			System.out.println("************** CASE 666666 ****************");
+			return false;
+		}
+		result = result && Fog.isVisible(endTile, unit.ownerId);
+		if(!result){
+			System.out.println("************** CASE 7777777 ****************");
+			return false;
+		}
+		
+		return result;
 	}
 
 }

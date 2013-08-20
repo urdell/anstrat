@@ -27,7 +27,7 @@ public class NetworkGameInstance extends GameInstance {
 		this.gameID = gameID;
 	}
 	
-	public void commandReceived(int commandNr, Command command){
+	public synchronized void commandReceived(int commandNr, Command command){
 		if(commandNr > currentCommandNr){
 			// We've seemed to have missed some commands, ignore this one and request all missing commands from the server
 			Main.getInstance().network.requestGameUpdate(gameID, currentCommandNr);

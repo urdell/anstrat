@@ -99,7 +99,7 @@ public class GUnit extends GObject {
 	}
 	
 	public static TextureRegion getUnitPortrait(UnitType type){
-		System.out.println(type.portrait);
+		//System.out.println(type.portrait);
 		return Assets.getTextureRegion(type.portrait);
 	}
 	
