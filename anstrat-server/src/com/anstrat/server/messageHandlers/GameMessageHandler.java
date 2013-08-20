@@ -45,6 +45,7 @@ public class GameMessageHandler {
 		NetworkMessage message = new NetworkMessage(NetworkMessage.Command.SEND_COMMAND, gameID, commandNr, command);
 		
 		for(Player player : checks.others){
+			logger.info("Forwarding %s to player %s.", command.getClass().getSimpleName(), player.displayName);
 			connectionManager.sendMessage(player.userID, message);
 		}
 	}
