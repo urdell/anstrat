@@ -118,6 +118,19 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		System.out.println(user);
 	}
 	
+	// Create a new NetworkUserManager from a previous instance
+	public NetworkUserManager(GameSocket socket,
+							  INetworkCallback callback,
+							  FileHandle storedLoginFile,
+							  NetworkUserManager oldInstance) {
+		this(socket, callback, storedLoginFile);
+		
+		if (oldInstance != null) {
+			this.pending = oldInstance.pending;
+			this.outgoing = oldInstance.outgoing;
+		}
+	}
+	
 	public void setListener(INetworkResponseListener listener){
 		this.listener = listener;
 	}

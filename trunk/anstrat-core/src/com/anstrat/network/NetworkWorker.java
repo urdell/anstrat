@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.PauseableThread;
 
 
 public abstract class NetworkWorker {
-
 	private GameSocket socket;
 	private PauseableThread sender, reader;
 	private INetworkCallback callback;
@@ -84,22 +83,14 @@ public abstract class NetworkWorker {
 		reader.start();
 	}
 	
-	public void resume(){
-		sender.onResume();
-		reader.onResume();
-	}
-	
-	public void pause(){
-		sender.onPause();
-		reader.onPause();
-	}
-	
 	public void stop(){
 		sender.stopThread();
 		reader.stopThread();
 		
 		sender.interrupt();
 		reader.interrupt();
+		
+		this.socket.close();
 	}
 	
 	public GameSocket getSocket(){
