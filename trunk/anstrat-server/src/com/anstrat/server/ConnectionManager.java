@@ -44,7 +44,7 @@ public class ConnectionManager implements IConnectionManager {
 	@Subscribe
 	public void connectionClosed(ClientDisconnectedEvent event) {
 		// Remove connection
-		this.authenticatedConnections.remove(event.getClient()); // Does not necessarily exist in this map
+		this.authenticatedConnections.inverse().remove(event.getClient()); // Does not necessarily exist in this map
 		this.connections.remove(event.getClient());
 		logger.info("%d clients online.", this.connections.size());
 	}
