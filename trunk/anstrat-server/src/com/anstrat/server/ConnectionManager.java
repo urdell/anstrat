@@ -33,7 +33,7 @@ public class ConnectionManager implements IConnectionManager {
 	private final BiMap<Long, InetSocketAddress> authenticatedConnections;
 	
 	public ConnectionManager(){
-		this.connections = Collections.synchronizedMap(new HashMap<InetSocketAddress, ClientWorker>());
+		connections = Collections.synchronizedMap(new HashMap<InetSocketAddress, ClientWorker>());
 		BiMap<Long, InetSocketAddress> map = HashBiMap.create();
 		authenticatedConnections = Maps.synchronizedBiMap(map);
 		
@@ -51,7 +51,7 @@ public class ConnectionManager implements IConnectionManager {
 
 	@Override
 	public boolean sendMessage(InetSocketAddress address, NetworkMessage message) {
-		ClientWorker worker = this.connections.get(address);
+		ClientWorker worker = connections.get(address);
 		
 		if(worker != null){
 			return worker.sendMessage(message);
@@ -65,7 +65,7 @@ public class ConnectionManager implements IConnectionManager {
 
 	@Override
 	public boolean sendMessage(long userID, NetworkMessage message) {
-		InetSocketAddress client = this.authenticatedConnections.get(userID);
+		InetSocketAddress client = authenticatedConnections.get(userID);
 		
 		if(client != null){
 			return sendMessage(client, message);
@@ -79,7 +79,7 @@ public class ConnectionManager implements IConnectionManager {
 
 	@Override
 	public void linkUserToAddress(User user, InetSocketAddress address) {
-		this.authenticatedConnections.forcePut(user.getUserID(), address);
+		authenticatedConnections.forcePut(user.getUserID(), address);
 		logger.info("Authenticated %s, userID = %d, name = '%s'.", address, user.getUserID(), user.getDisplayedName());
 		Event.post(new ClientAuthenticatedEvent(address, user.getUserID()));
 	}
@@ -89,11 +89,10 @@ public class ConnectionManager implements IConnectionManager {
 		// Create a ClientWorker to handle the incoming request
 		// TODO: Use a thread pool rather than creating a new thread for each request
 		try{
-			//ClientWorker worker = new ClientWorker(socket, messageHandler);
 			ClientWorker worker = factory.create(socket);
-			this.connections.put(worker.getClientAddress(), worker);
+			connections.put(worker.getClientAddress(), worker);
 			
-			int numClients = this.connections.size();
+			int numClients = connections.size();
 			logger.info("%s connected.", worker.getClientAddress());
 			logger.info("%d client%s online.", numClients, numClients > 1 ? "s" : "");
 			
