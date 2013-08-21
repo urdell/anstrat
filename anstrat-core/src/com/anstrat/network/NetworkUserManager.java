@@ -128,6 +128,10 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		if (oldInstance != null) {
 			this.pending = oldInstance.pending;
 			this.outgoing = oldInstance.outgoing;
+			this.listener = oldInstance.listener;
+			this.loginCallback = oldInstance.loginCallback;
+			this.connectionLostCallback = oldInstance.connectionLostCallback;
+			this.newUserCredentialsCallback = oldInstance.newUserCredentialsCallback;
 		}
 	}
 	
