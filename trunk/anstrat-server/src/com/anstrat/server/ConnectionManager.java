@@ -44,9 +44,16 @@ public class ConnectionManager implements IConnectionManager {
 	@Subscribe
 	public void connectionClosed(ClientDisconnectedEvent event) {
 		// Remove connection
-		this.authenticatedConnections.inverse().remove(event.getClient()); // Does not necessarily exist in this map
-		this.connections.remove(event.getClient());
-		logger.info("%d clients online.", this.connections.size());
+		Long existing = authenticatedConnections.inverse().remove(event.getClient());
+
+		if (existing != null) {
+			logger.info("Logged out %s (userID = %d) on disconnect.",
+						event.getClient(),
+						existing);
+		}
+
+		connections.remove(event.getClient());
+		logger.info("%d clients online.", connections.size());
 	}
 
 	@Override
@@ -79,6 +86,16 @@ public class ConnectionManager implements IConnectionManager {
 
 	@Override
 	public void linkUserToAddress(User user, InetSocketAddress address) {
+		InetSocketAddress existing = authenticatedConnections.get(user.getUserID());
+
+		if (existing != null) {
+			logger.warning("User (userID = %d, name = %s) logged in from %s while already being logged in from %s.",
+						   user.getUserID(),
+						   user.getDisplayedName(),
+						   address,
+						   existing);
+		}
+
 		authenticatedConnections.forcePut(user.getUserID(), address);
 		logger.info("Authenticated %s, userID = %d, name = '%s'.", address, user.getUserID(), user.getDisplayedName());
 		Event.post(new ClientAuthenticatedEvent(address, user.getUserID()));
