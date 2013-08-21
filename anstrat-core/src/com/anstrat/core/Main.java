@@ -182,7 +182,7 @@ public class Main extends Game implements ApplicationListener {
 	@Override
 	public void pause() {
 		Gdx.app.log("Main", "Paused");
-		if(networkEngine != null) networkEngine.pause();
+		if(networkEngine != null) networkEngine.onPause();
 		
 		// Hide current popup
 		if (Popup.getCurrentPopup() != null) {
@@ -199,7 +199,7 @@ public class Main extends Game implements ApplicationListener {
 		Assets.onApplicationResume();
 		
 		Gdx.app.log("Main", "Resumed");
-		if(networkEngine != null) networkEngine.resume();
+		if(networkEngine != null) networkEngine.onResume();
 	}
 
 	@Override

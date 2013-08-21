@@ -13,9 +13,17 @@ public class Network implements INetworkCallback {
 	private NetworkUserManager worker;
 	private NetworkMessageParser parser;
 	
+	private FileHandle storedLoginFile;
+	private String host;
+	private int port;
+	
 	public Network(String host, int port, FileHandle storedLoginFile){
-		this.worker = new NetworkUserManager(new GameSocket(host, port), this, storedLoginFile);
+		this.storedLoginFile = storedLoginFile;
+		this.host = host;
+		this.port = port;
 		this.parser = new NetworkMessageParser();
+		
+		createUserManager();
 	}
 	
 	public void setListener(INetworkResponseListener listener){
@@ -67,18 +75,21 @@ public class Network implements INetworkCallback {
 		worker.stop();
 	}
 	
-	public void resume(){
-		Gdx.app.log("Network", "Resumed network.");
-		worker.resume();
+	public void onResume(){
+		createUserManager();
+		worker.start();
 	}
 	
-	public void pause(){
-		Gdx.app.log("Network", "Paused network.");
-		worker.pause();
+	public void onPause(){
+		worker.stop();
 	}
 	
 	public void resetLogin(){
 		worker.resetLogin();
+	}
+	
+	private void createUserManager(){
+		this.worker = new NetworkUserManager(new GameSocket(host, port), this, storedLoginFile, this.worker);
 	}
 	
     // Network API
