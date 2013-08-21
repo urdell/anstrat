@@ -25,11 +25,13 @@ public class SplashScreen implements Screen {
 	private Table background;
 	
 	private Screen finishScreen;
+	private boolean initOnFinish;
 	
-	public SplashScreen(Screen finishScreen){
+	public SplashScreen(Screen finishScreen, boolean initOnFinish){
 		atlas = Assets.manager.get("textures-loadingscreen/pack.atlas");
 		splashscreen = atlas.findRegion("splashscreen");
-		
+
+		this.initOnFinish = initOnFinish;
 		this.finishScreen = finishScreen;
 		
 		this.batch = Main.getInstance().batch;
@@ -53,7 +55,10 @@ public class SplashScreen implements Screen {
 		
 		//Load textures a bit, when finished load the rest (Main.init)
 		if(Assets.manager.update() && finishedLoading==false){
-			Main.getInstance().init();
+			if (initOnFinish) {
+				Main.getInstance().init();
+			}
+
 			finishedLoading = true;
 			Main.getInstance().setScreen(finishScreen != null ? finishScreen : MainMenu.getInstance());
 		}
