@@ -72,6 +72,10 @@ public class NetworkGameInstance extends GameInstance {
 		super.showGame(startZoom);
 		
 		// Execute any pending commands
+		executePendingCommands();
+	}
+	
+	public void executePendingCommands(){
 		if(pendingCommands.size() > 0){
 			Gdx.app.log("NetworkGameInstance", String.format("Executing %d pending commands on game %d.", pendingCommands.size(), gameID));
 		}

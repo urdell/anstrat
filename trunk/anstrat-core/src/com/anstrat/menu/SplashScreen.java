@@ -1,7 +1,10 @@
 package com.anstrat.menu;
 
 import com.anstrat.core.Assets;
+import com.anstrat.core.GameInstance;
 import com.anstrat.core.Main;
+import com.anstrat.core.NetworkGameInstance;
+import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -60,7 +63,12 @@ public class SplashScreen implements Screen {
 			}
 
 			finishedLoading = true;
+			
 			Main.getInstance().setScreen(finishScreen != null ? finishScreen : MainMenu.getInstance());
+			
+			if (finishScreen instanceof GEngine && GameInstance.activeGame instanceof NetworkGameInstance) {
+				((NetworkGameInstance) GameInstance.activeGame).executePendingCommands();
+			}
 		}
 	}
 
