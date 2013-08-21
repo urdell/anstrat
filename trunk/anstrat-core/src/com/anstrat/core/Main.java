@@ -30,7 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Main extends Game implements ApplicationListener {
 	
 	public static final String version = "Beta 1";
-	public static String NETWORK_HOST = "81.234.240.31";
+	public static String NETWORK_HOST = "server.hairyfrogfish.com";
 	public static final int NETWORK_PORT = 25406;
 	
 	public static float percentWidth;
