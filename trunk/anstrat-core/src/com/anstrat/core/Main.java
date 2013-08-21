@@ -99,7 +99,7 @@ public class Main extends Game implements ApplicationListener {
 		
 		// Init menu, show splash
 		Assets.startLoadingTextures();
-		setScreen(new SplashScreen(null));
+		setScreen(new SplashScreen(null, true));
 	}
 	
 	public void init(){
@@ -194,7 +194,7 @@ public class Main extends Game implements ApplicationListener {
 
 	@Override
 	public void resume() {
-		setScreen(new SplashScreen(getScreen()));
+		setScreen(new SplashScreen(getScreen(), false));
 		
 		Assets.onApplicationResume();
 		
