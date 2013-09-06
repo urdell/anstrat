@@ -134,7 +134,7 @@ public class MoveCommand extends Command {
 				Fog.isVisible(endTile, unit.ownerId);
 		*/
 		
-		System.out.println("UNIT HAS "+unit.currentAP+" AP");
+		System.out.println("UNIT HAS "+unit==null?-1:unit.currentAP+" AP");
 		
 		result = result && super.isAllowed();
 		if(!result){

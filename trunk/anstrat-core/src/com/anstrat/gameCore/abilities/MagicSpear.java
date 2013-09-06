@@ -43,6 +43,7 @@ public class MagicSpear extends TargetedAbility {
 	@Override
 	public void activate(Unit source, TileCoordinate coordinate) {
 		super.activate(source, coordinate);
+		GEngine.getInstance().gUnits.get(source.id).updateHealthbar();
 		
 		Unit targetUnit = StateUtils.getUnitByTile(coordinate);
 		

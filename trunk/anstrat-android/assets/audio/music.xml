@@ -5,6 +5,6 @@
 	<track title="dd_ingame_2" filename="dreadtwo.mp3"/>
 	<track title="vv_ingame_1" filename="vengeanceone.mp3"/>
 	<track title="vv_ingame_2" filename="vengeancetwo.mp3"/>
-	<track title="victory" filename="victory.wav"/>
-	<track title="defeat" filename="defeat.wav"/>
+	<track title="victory" filename="winner.mp3"/>
+	<track title="defeat" filename="loser.mp3"/>
 </music>
