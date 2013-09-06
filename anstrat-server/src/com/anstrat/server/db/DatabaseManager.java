@@ -490,7 +490,7 @@ public class DatabaseManager implements IDatabaseService {
 			if(rs.next()){
 				long senderID = rs.getLong("senderID");
 				long receiverID = rs.getLong("receiverID");
-				Invite.Status status = Invite.Status.valueOf(((PGobject) rs.getObject("status")).getValue());
+				Invite.Status status = Invite.Status.valueOf((rs.getString("status")));
 				Long gameID = rs.getLong("gameID");
 				GameOptions options = Serialization.deserialize(rs.getBytes("gameOptions"));
 				return new Invite(inviteID, senderID, receiverID, status, gameID, options);
