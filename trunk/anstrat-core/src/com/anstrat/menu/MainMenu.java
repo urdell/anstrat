@@ -7,6 +7,7 @@ import com.anstrat.core.Main;
 import com.anstrat.core.Options;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.mapEditor.MapEditor;
+import com.anstrat.popup.HelpScrollPopup;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -81,6 +82,14 @@ public class MainMenu extends MenuScreen {
             }
         });
         
+        Button helpButton = ComponentFactory.createMenuButton("How To Play",new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x, float y) {
+        		HelpScrollPopup.basic().show();
+        		AudioAssets.playSound("dummy1");
+        	}
+        });
+        
         Button invitedButton = ComponentFactory.createMenuButton("Invite",new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -133,7 +142,9 @@ public class MainMenu extends MenuScreen {
         contents.row();
         contents.add(mapEditorButton).height(buttonHeight).width(buttonWidth);
         contents.row();
-        contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*5f);
+        contents.add(helpButton).height(buttonHeight).width(buttonWidth);
+        contents.row();
+        contents.add(scroll).fill().minHeight(1f).expand().padBottom(Main.percentHeight*10f).padTop(Main.percentHeight*1f);
         
         Table footer = new Table();
       

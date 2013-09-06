@@ -41,5 +41,7 @@ public class TexturePacker {
 				androidRoot + "/graphics/textures",
 				androidRoot + "/assets/textures",
 				"pack");
+		
+		System.out.println("Packin' done brah.");
 	}
 }
