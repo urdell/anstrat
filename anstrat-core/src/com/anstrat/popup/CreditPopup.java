@@ -15,7 +15,7 @@ public class CreditPopup extends Popup {
 		this.drawOverlay = false;
 		this.add(new Label("Developers: \n Tomas ``Bad boy`` Urdell \n Johnny ``Douche`` Vaeyrynen \n Erik Termander \n Andreas ``Scumbag`` Eklund \n Anton Groenlund \n Kalle Persson "+
 				"\n \n Graphics: \n Rickard Paulsson"+
-				"\n \n Music: \n Mattias Karlsson"+ 
+				"\n \n Music: \n Mattias Karlsson (crappygamestudio@gmail.com)"+ 
 				"\n \n Thanks to: \n Mario Zechner & the libgdx team "+
 				"\n \n Fonts: \n \"Goudy Bookletter 1911\" by Barry Schwartz \n \"Crimson\" by Sebastian Kosch \n\"Astonished\" by Misprinted Type", new LabelStyle(Assets.DESCRIPTION_FONT, Color.WHITE)));
 
