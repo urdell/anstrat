@@ -181,7 +181,7 @@ public class NetworkController {
 					game.commandReceived(commandNr, command);
 				}
 				else{
-					Gdx.app.log("NetworkController", String.format("Received a command for a game that does not exist. (gameID = %d)"));
+					Gdx.app.log("NetworkController", String.format("Received a command for a game that does not exist. (gameID = %d)", gameID));
 				}
 			}
 
