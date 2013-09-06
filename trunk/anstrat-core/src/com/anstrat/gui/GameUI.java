@@ -143,6 +143,7 @@ public class GameUI extends UI {
         buyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            	GEngine.getInstance().actionHandler.deselectPress();
             	showBuyUnitPopup();
             }
         } );
@@ -150,6 +151,7 @@ public class GameUI extends UI {
         helpButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            	GEngine.getInstance().actionHandler.deselectPress();
             	new HelpPopup().show();
             }
         } );
@@ -158,6 +160,7 @@ public class GameUI extends UI {
         spellButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            	GEngine.getInstance().actionHandler.deselectPress();
             	showAbilityPopup();
             }
         } );
