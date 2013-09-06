@@ -61,7 +61,7 @@ public class DatabaseSchema {
 					"senderID BIGSERIAL, " +
 					"receiverID BIGSERIAL, " +
 					"gameOptions BYTEA, " +
-					"status InviteStatus, " +
+					"status VARCHAR(50), " +
 					"gameID BIGSERIAL, " +
 					"FOREIGN KEY(senderID) REFERENCES Users(id), " +
 					"FOREIGN KEY(receiverID) REFERENCES Users(id))");

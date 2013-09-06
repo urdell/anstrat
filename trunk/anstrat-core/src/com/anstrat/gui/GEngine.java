@@ -129,7 +129,8 @@ public class GEngine implements Screen{
 		actionMap = new ActionMap();
 		
 		cameraController.setBounds(map.getWidth(), map.getHeight());
-		cameraController.setZoomLimits(map.getWidth(), map.getHeight(), map.TILE_WIDTH * 2.5f, map.TILE_HEIGHT * 2.5f);
+		float mzoom = Math.max(map.getWidth(), map.getHeight());
+		cameraController.setZoomLimits(mzoom, mzoom, map.TILE_WIDTH * 4f, map.TILE_HEIGHT * 4f);
 		cameraController.setOffsets(userInterface.topPanel.getHeight()+Options.mapBorderOffset, userInterface.bottomPanel.getHeight()+Options.mapBorderOffset, Options.mapBorderOffset, Options.mapBorderOffset);
 		
 		if (!startZoom)
