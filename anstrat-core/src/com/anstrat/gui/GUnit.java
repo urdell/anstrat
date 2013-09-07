@@ -151,7 +151,7 @@ public class GUnit extends GObject {
 									defending = true;
 						}
 						
-						System.out.println(String.format("AT:%f, D:%s, T:%s", animationTime, defending, unit.getUnitType()));
+						//System.out.println(String.format("AT:%f, D:%s, T:%s", animationTime, defending, unit.getUnitType()));
 						
 						if(!defending)
 							playIdle();

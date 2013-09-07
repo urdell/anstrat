@@ -40,31 +40,31 @@ public class Building implements Serializable {
 			break;
 		case TYPE_GREENVILLAGE:
 			typeName = "Village";
-			goldIncome = 5;
+			goldIncome = 3;
 			manaIncome = 0;
 			captureCost = 1;
 			break;
 		case TYPE_ROCKVILLAGE:
 			typeName = "Village";
-			goldIncome = 5;
+			goldIncome = 3;
 			manaIncome = 0;
 			captureCost = 1;
 			break;
 		case TYPE_SNOWVILLAGE:
 			typeName = "Village";
-			goldIncome = 5;
+			goldIncome = 3;
 			manaIncome = 0;
 			captureCost = 1;
 			break;
 		case TYPE_CASTLE:
 			typeName = "Capital";
-			goldIncome = 12;
+			goldIncome = 20;
 			manaIncome = 1;
 			captureCost = 3;
 			break;
 		default:
 			typeName = "Village";
-			goldIncome = 5;
+			goldIncome = 3;
 			manaIncome = 0;
 			captureCost = 1;
 		}

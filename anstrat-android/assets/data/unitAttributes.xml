@@ -59,8 +59,8 @@
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
 		<APReg>5</APReg>
-		<APStart>5</APStart>
-		<cost>16</cost>
+		<APStart>3</APStart>
+		<cost>18</cost>
 		<ability1>3</ability1><!-- Shadow image -->
 		<description>The Wolf is a highly mobile unit with the ability to steal life from enemy units.</description>
 		<idleImage>wolf-idle-0001</idleImage>
@@ -81,7 +81,7 @@
 		<ability1>1</ability1><!-- Kamikaze -->
 		<description>Hawks are fast and can fly over any terrain except volcanoes.</description>
 		<idleImage>hawk-idle-0001</idleImage>
-		<terrainPenaltyMountain>1</terrainPenaltyMountain>
+		<terrainPenaltyMountain>2</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
 		<terrainPenaltyHill>1</terrainPenaltyHill>
 		<terrainPenaltySnow>1</terrainPenaltySnow>
@@ -89,12 +89,12 @@
 		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
 		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
 		<terrainPenaltyRockyhill>1</terrainPenaltyRockyhill>
-		<terrainPenaltyVolcano>1</terrainPenaltyVolcano>
+		<terrainPenaltyVolcano>999</terrainPenaltyVolcano>
 		<terrainPenaltyRockylava>1</terrainPenaltyRockylava>
 		<terrainPenaltyRockylavapool>1</terrainPenaltyRockylavapool>
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
-		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
+		<terrainPenaltySnowmountain>2</terrainPenaltySnowmountain>
 		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
 		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<portrait>hawkportrait</portrait>
@@ -128,7 +128,7 @@
 		<APReg>4</APReg>
 		<APStart>4</APStart>
 		<cost>32</cost>
-		<terrainPenaltyMountain>1</terrainPenaltyMountain>
+		<terrainPenaltyMountain>2</terrainPenaltyMountain>
 		<terrainPenaltyDeep_water>1</terrainPenaltyDeep_water>
 		<terrainPenaltyHill>1</terrainPenaltyHill>
 		<terrainPenaltySnow>1</terrainPenaltySnow>
@@ -136,12 +136,12 @@
 		<terrainPenaltyShallow_water>1</terrainPenaltyShallow_water>
 		<terrainPenaltyRockyforest>1</terrainPenaltyRockyforest>
 		<terrainPenaltyRockyhill>1</terrainPenaltyRockyhill>
-		<terrainPenaltyVolcano>1</terrainPenaltyVolcano>
+		<terrainPenaltyVolcano>999</terrainPenaltyVolcano>
 		<terrainPenaltyRockylava>1</terrainPenaltyRockylava>
 		<terrainPenaltyRockylavapool>1</terrainPenaltyRockylavapool>
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
-		<terrainPenaltySnowmountain>1</terrainPenaltySnowmountain>
+		<terrainPenaltySnowmountain>2</terrainPenaltySnowmountain>
 		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
 		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<ability1>4</ability1><!-- Magic Spear -->

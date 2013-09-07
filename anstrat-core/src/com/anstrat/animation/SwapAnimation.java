@@ -36,7 +36,7 @@ public class SwapAnimation extends Animation {
 				moved = true;
 			}
 			float var = 1-lifetimeLeft/(length/2);
-			System.out.println("var"+var);
+			//System.out.println("var"+var);
 			if(var>1f)
 				var = 1f;
 			t1.setAlpha(var);
