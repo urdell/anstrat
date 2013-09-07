@@ -76,7 +76,7 @@ public class AuthMessageHandler {
 	}
 	
 	public String prettyVersion(long total, long main, long sub, long subsub){
-		if(total==-1l) return "unrecognized";
+		if(total==-1l) return "ancient";
 		return Long.toString(main) + "." + Long.toString(sub) + "." + Long.toString(subsub);
 	}
 	
