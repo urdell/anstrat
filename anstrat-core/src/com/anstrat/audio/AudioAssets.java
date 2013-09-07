@@ -118,11 +118,13 @@ public class AudioAssets {
 
 	public static void dispose()
 	{
+		if(music!=null)
 		for(Music m : music.values()){
 			m.stop();
 			m.dispose();
 		}
 
+		if(baseSounds!=null)
 		for(Sound s : baseSounds.values()){
 			s.stop();
 			s.dispose();

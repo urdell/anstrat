@@ -33,8 +33,10 @@ public final class Options {
 	public static void savePreferences(){
 		System.out.println("Saving preferences.");
 		
-		prefs.putBoolean("sound", soundOn);
-		prefs.putBoolean("fps", showFps);
-		prefs.flush();
+		if(prefs!=null){
+			prefs.putBoolean("sound", soundOn);
+			prefs.putBoolean("fps", showFps);
+			prefs.flush();
+		}
 	}
 }
