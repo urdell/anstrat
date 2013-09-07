@@ -215,21 +215,26 @@ public class Main extends Game implements ApplicationListener {
 		Gdx.app.log("", "Main.dispose()");
 		
 		if(networkEngine != null) networkEngine.stop();
-		games.saveGameInstances();
-		friends.saveFriends();
+		if(games!=null)
+			games.saveGameInstances();
+		if(friends!=null)
+			friends.saveFriends();
 		Options.savePreferences();
 		
-		batch.dispose();
+		if(batch!=null)
+			batch.dispose();
 		
 		// Dispose all screens that have been initialized
-		for(Screen screen : screens){
-			screen.dispose();
-		}
+		if(screens!=null)
+			for(Screen screen : screens){
+				screen.dispose();
+			}
 		
 		Assets.dispose();
 		AudioAssets.dispose();
 		Popup.disposePopups();
-		overlayStage.dispose();
+		if(overlayStage!=null)
+			overlayStage.dispose();
 		
 		me = null;
 		State.activeState = null;

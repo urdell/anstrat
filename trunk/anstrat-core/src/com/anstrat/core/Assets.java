@@ -106,11 +106,16 @@ public final class Assets {
 	}
 
 	public static void dispose(){
-		STANDARD_FONT.dispose();
-		MENU_FONT.dispose();
-		UI_FONT.dispose();
-		UI_FONT_BIG.dispose();
+		if(STANDARD_FONT!=null)
+			STANDARD_FONT.dispose();
+		if(MENU_FONT!=null)
+			MENU_FONT.dispose();
+		if(UI_FONT!=null)
+			UI_FONT.dispose();
+		if(UI_FONT_BIG!=null)
+			UI_FONT_BIG.dispose();
 		
+		if(terrainMeshes!=null)
 		for(HexagonMesh[] hexagonType : terrainMeshes){
 			if(hexagonType == null) continue;
 			
@@ -119,11 +124,14 @@ public final class Assets {
 			}
 		}
 		
-		SKIN.dispose();
-		WHITE.dispose();
-		atlas.dispose();
-		
-		manager.dispose();
+		if(SKIN!=null)
+			SKIN.dispose();
+		if(WHITE!=null)
+			WHITE.dispose();
+		if(atlas!=null)
+			atlas.dispose();		
+		if(manager!=null)
+			manager.dispose();
 		
 		unitTeamIndicators = null;
 		atlas = null;
@@ -146,9 +154,10 @@ public final class Assets {
 	public static void onApplicationPause(){
 		if(WHITE != null) WHITE.dispose();
 		
-		for(Texture t : unitTeamIndicators){
-			if(t != null) t.dispose();
-		}
+		if(unitTeamIndicators!=null)
+			for(Texture t : unitTeamIndicators){
+				if(t != null) t.dispose();
+			}
 	}
 	
 	// Textures created from Pixmaps are unmanaged textures and needs to be reloaded manually on resume()

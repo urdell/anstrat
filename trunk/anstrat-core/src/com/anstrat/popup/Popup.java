@@ -205,6 +205,7 @@ public class Popup extends Window {
 	}
 	
 	public static Popup getCurrentPopup(){
+		if(stack==null) return null;
 		Array<Actor> actors = stack.getChildren();
 		int size = actors.size;
 		return size == 0 ? null : (Popup) actors.get(size - 1);
