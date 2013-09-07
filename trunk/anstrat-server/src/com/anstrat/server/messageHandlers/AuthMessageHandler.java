@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
 import com.anstrat.server.IConnectionManager;
+import com.anstrat.server.MainServer;
 import com.anstrat.server.db.IDatabaseService;
 import com.anstrat.server.db.IDatabaseService.DisplayNameChangeResponse;
 import com.anstrat.server.db.User;
@@ -25,24 +26,58 @@ public class AuthMessageHandler {
 	private IDatabaseService database;
 	
 	// Triggers ACCEPT_LOGIN or DENY_LOGIN
-	public void login(InetSocketAddress client, long userID, String password){
+	public void login(InetSocketAddress client, long userID, String password, long versionId){
+		long tmp_mainNr = versionId/1000000;
+		long tmp_subNr = (versionId-1000000*tmp_mainNr)/1000;
+		long tmp_subSubNr = versionId-1000000*tmp_mainNr-1000*tmp_subNr;
+		
+		boolean versionOk;
+		
+		if(tmp_mainNr > MainServer.mainNr)
+			versionOk = true;
+		else if(tmp_mainNr == MainServer.mainNr){
+			if(tmp_subNr > MainServer.subNr)
+				versionOk = true;
+			else if(tmp_subNr == MainServer.subNr){
+				if(tmp_subSubNr >= MainServer.subSubNr)
+					versionOk = true;
+				else
+					versionOk = false;
+			}
+			else
+				versionOk = false;
+		}
+		else
+			versionOk = false;
+		
 		User user = database.getUsers(userID).get(userID);
 		
 		// Authenticate
 		boolean userExists = user != null;
 		boolean userPasswordMatches = user == null || Password.authenticate(password, user.getEncryptedPassword());
 		
-		if(userExists && userPasswordMatches){
+		if(userExists && userPasswordMatches && versionOk){
 			connectionManager.linkUserToAddress(user, client);
 			connectionManager.sendMessage(client, new NetworkMessage(Command.ACCEPT_LOGIN, userID));
 		}
 		else{
-			connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "UserID / password combination does not match."));
+			if(!versionOk)
+				connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "Playing online requires you to have at least "+
+			"version "+prettyVersion(1l, MainServer.mainNr,MainServer.subNr,MainServer.subSubNr) + " (local version: "+
+						prettyVersion(versionId, tmp_mainNr, tmp_subNr, tmp_subSubNr)+")"));
+			else
+				connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "UserID / password combination does not match."));
 		}
 		
 		// More specific logging
 		if(!userExists) logger.info("%s attempted to login as userID '%d', but the user does not exist.", client, userID);
 		if(!userPasswordMatches) logger.info("%s attempted to login as user '%d' with an invalid password..", client, userID);
+		if(!versionOk) logger.info("%s attempted to login as userID '%d', but with an outdated game version.", client, userID);
+	}
+	
+	public String prettyVersion(long total, long main, long sub, long subsub){
+		if(total==-1l) return "unrecognized";
+		return Long.toString(main) + "." + Long.toString(sub) + "." + Long.toString(subsub);
 	}
 	
 	// Triggers USER_CREDENTIALS(userID, password)

@@ -16,6 +16,10 @@ import com.anstrat.server.util.Logger;
 public class MainServer {
 	
 	private static final int DEFAULT_PORT = 25406;
+	private static final long MIN_VERSION_NR = 1001016;
+	public static final long mainNr = MIN_VERSION_NR/1000000;
+	public static final long subNr = (MIN_VERSION_NR-1000000*mainNr)/1000;
+	public static final long subSubNr = MIN_VERSION_NR-1000000*mainNr-1000*subNr;
 	
 	@Inject
 	private Logger logger;

@@ -5,8 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import com.anstrat.core.Main;
 import com.anstrat.network.protocol.NetworkMessage;
 import com.anstrat.network.protocol.NetworkMessage.Command;
+import com.anstrat.popup.Popup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -49,6 +51,9 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 						synchronized(lock){
 							loggedIn = false;
 						}
+						
+						if(reason.contains("version"))
+							Popup.showGenericPopup("Version update required", reason);
 						
 						Gdx.app.log("NetworkUserManager", String.format("Login denied due to: %s", reason));
 						break;
@@ -181,7 +186,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 			}
 			else{
 				// Login
-				outgoing.add(new NetworkMessage(Command.LOGIN, user.userID, user.password));
+				outgoing.add(new NetworkMessage(Command.LOGIN, user.userID, user.password, Main.versionNr));
 			}
 		}
 	}

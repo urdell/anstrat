@@ -2,7 +2,6 @@ package com.anstrat.animation;
 
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
-import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
