@@ -56,23 +56,23 @@ public class AuthMessageHandler {
 		boolean userExists = user != null;
 		boolean userPasswordMatches = user == null || Password.authenticate(password, user.getEncryptedPassword());
 		
-		if(userExists && userPasswordMatches && versionOk){
+		if(userExists && userPasswordMatches){// && versionOk){
 			connectionManager.linkUserToAddress(user, client);
 			connectionManager.sendMessage(client, new NetworkMessage(Command.ACCEPT_LOGIN, userID));
 		}
 		else{
-			if(!versionOk)
-				connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "Playing online requires you to have at least "+
-			"version "+prettyVersion(1l, MainServer.mainNr,MainServer.subNr,MainServer.subSubNr) + " (local version: "+
-						prettyVersion(versionId, tmp_mainNr, tmp_subNr, tmp_subSubNr)+")"));
-			else
+			//if(!versionOk)
+			//	connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "Playing online requires you to have at least "+
+			//"version "+prettyVersion(1l, MainServer.mainNr,MainServer.subNr,MainServer.subSubNr) + " (local version: "+
+			//			prettyVersion(versionId, tmp_mainNr, tmp_subNr, tmp_subSubNr)+")"));
+			//else
 				connectionManager.sendMessage(client, new NetworkMessage(Command.DENY_LOGIN, "UserID / password combination does not match."));
 		}
 		
 		// More specific logging
 		if(!userExists) logger.info("%s attempted to login as userID '%d', but the user does not exist.", client, userID);
 		if(!userPasswordMatches) logger.info("%s attempted to login as user '%d' with an invalid password..", client, userID);
-		if(!versionOk) logger.info("%s attempted to login as userID '%d', but with an outdated game version.", client, userID);
+		//if(!versionOk) logger.info("%s attempted to login as userID '%d', but with an outdated game version.", client, userID);
 	}
 	
 	public String prettyVersion(long total, long main, long sub, long subsub){
