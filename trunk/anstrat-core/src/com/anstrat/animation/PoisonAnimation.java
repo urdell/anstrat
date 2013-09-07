@@ -3,6 +3,7 @@ package com.anstrat.animation;
 import com.anstrat.core.Assets;
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.gui.GEngine;
 import com.anstrat.gui.GUnit;
@@ -15,12 +16,13 @@ public class PoisonAnimation extends Animation {
 	private Unit unit;
 	private GUnit gunit;
 	private float stateTime = 0f;
-	private float startAt = 2f;
 	private int turn, player;
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
 	public boolean expended = false;
+	private State cstate = null;
 	
 	public PoisonAnimation(Unit unit){
+		this.cstate = GEngine.getInstance().state;
 		this.turn = GEngine.getInstance().state.turnNr;
 		this.player = GEngine.getInstance().state.currentPlayerId;
 		this.unit = unit;
@@ -46,7 +48,8 @@ public class PoisonAnimation extends Animation {
 
 	@Override
 	public boolean isVisible() {
-		return Fog.isVisible(unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId);
+		return Fog.isVisible(unit.tileCoordinate,  GameInstance.activeGame.getUserPlayer().playerId) &&
+				cstate == State.activeState;
 	}
 
 	@Override

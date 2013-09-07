@@ -23,11 +23,11 @@ public class APRow extends ConfirmRow{
 	@Override
 	public void draw(float x, float y, SpriteBatch batch) {
 
-		APPieDisplay.draw(x+ROW_HEIGHT*0.5f, y, ROW_HEIGHT, currentAP, maxAP, apReg, nextAttackCost, 
+		APPieDisplay.draw(x+ROW_HEIGHT*0.5f, y-ROW_HEIGHT*0.25f, ROW_HEIGHT, currentAP, maxAP, apReg, nextAttackCost, 
 				batch, true, batch.getColor().a);
-		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
-		batch.draw(arrow, x+ROW_HEIGHT*1.5f, y, ROW_HEIGHT, ROW_HEIGHT);
-		APPieDisplay.draw(x+ROW_WIDTH-ROW_HEIGHT*1.5f, y, ROW_HEIGHT, currentAP-spentAP, maxAP, apReg, nextAttackCost, 
+		TextureRegion arrow = Assets.getTextureRegion("arrowFat");
+		batch.draw(arrow, x+ROW_HEIGHT*1.5f, y-ROW_HEIGHT*0.25f, ROW_HEIGHT, ROW_HEIGHT);
+		APPieDisplay.draw(x+ROW_WIDTH-ROW_HEIGHT*1.5f, y-ROW_HEIGHT*0.25f, ROW_HEIGHT, currentAP-spentAP, maxAP, apReg, nextAttackCost, 
 				batch, true, batch.getColor().a);
 		batch.setColor(Color.WHITE);
 		

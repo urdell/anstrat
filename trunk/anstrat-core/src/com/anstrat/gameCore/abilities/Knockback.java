@@ -132,8 +132,8 @@ public class Knockback extends TargetedAbility {
 			KnockBackCoordinate.y = def.y-1;
 		}	
 			
-		System.out.println(KnockBackCoordinate.x);
-		System.out.println(KnockBackCoordinate.y);
+		//System.out.println(KnockBackCoordinate.x);
+		//System.out.println(KnockBackCoordinate.y);
 		
 		return KnockBackCoordinate;
 	}

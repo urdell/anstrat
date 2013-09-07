@@ -5,21 +5,21 @@ filter: Linear,Linear
 repeat: none
 loading
   rotate: false
-  xy: 578, 1070
-  size: 133, 29
-  orig: 133, 29
+  xy: 1, 1
+  size: 378, 97
+  orig: 378, 97
   offset: 0, 0
   index: -1
 splashscreen
   rotate: false
-  xy: 1, 75
+  xy: 1, 100
   size: 575, 1024
   orig: 575, 1024
   offset: 0, 0
   index: -1
 splashscreen-startgame
   rotate: false
-  xy: 1, 1
+  xy: 578, 1052
   size: 222, 72
   orig: 222, 72
   offset: 0, 0

@@ -2,6 +2,7 @@ package com.anstrat.animation;
 
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -100,4 +101,9 @@ public class MoveAnimation extends Animation {
 				Fog.isVisible(endTile,  GameInstance.activeGame.getUserPlayer().playerId);
 		
 	}
+	
+	//@Override
+	//public void postAnimationAction(){
+	//	Fog.recalculateFog((State.activeState.currentPlayerId+1)%2, State.activeState);
+	//}
 }
