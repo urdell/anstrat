@@ -30,7 +30,7 @@ public class DebugMenu extends MenuScreen {
             	Gdx.files.local("login.bin").delete();
             	
         		Main.getInstance().network.resetLogin();
-        		Main.getInstance().setScreen(AccountMenu.getInstance());
+        		Main.getInstance().setScreen(MainMenu.getInstance());
             }
         })).fillY().expandY();
 	}

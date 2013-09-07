@@ -42,7 +42,8 @@ public class ServerMessageHandler {
 				case LOGIN: {
 					long userID = (Long) payload.get(0);
 					String password = (String) payload.get(1);
-					authMessageHandler.login(client, userID, password);
+					long versionNr = payload.size() >= 3 ? (Long) payload.get(3) : -1l;
+					authMessageHandler.login(client, userID, password, versionNr);
 					break;
 				}
 				case CREATE_NEW_USER: {

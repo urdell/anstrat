@@ -29,7 +29,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Main extends Game implements ApplicationListener {
 	
-	public static final String version = "Beta 1";
+	// Millions -> mainVersion
+	// Thousands -> sub
+	// Single -> subsub
+	public static final long versionNr = 1001016;
+	public static final long mainNr = versionNr/1000000;
+	public static final long subNr = (versionNr-1000000*mainNr)/1000;
+	public static final long subSubNr = versionNr-1000000*mainNr-1000*subNr;
+	public static final String version = "Alpha " + Long.toString(mainNr) +
+			"." + Long.toString(subNr) + "." + Long.toString(subSubNr);
 	public static String NETWORK_HOST = "server.hairyfrogfish.com";
 	public static final int NETWORK_PORT = 25406;
 	
