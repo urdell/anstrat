@@ -31,7 +31,7 @@ public final class Combat {
 		int maxDamage = maxDamage(attacker, defender);
 		int damage = State.activeState.random.nextInt( maxDamage-minDamage+1 ) + minDamage; // +1 because random is exclusive
 		
-		Gdx.app.log("Combat", "Damage is "+damage);
+		//Gdx.app.log("Combat", "Damage is "+damage);
 		
 		defender.currentHP -= damage;
 		
@@ -56,7 +56,7 @@ public final class Combat {
 		AttackAnimation animation = new AttackAnimation(combatLog);
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
-		Gdx.app.log("Combat", "New health is "+defender.currentHP);
+		//Gdx.app.log("Combat", "New health is "+defender.currentHP);
 		
 	}
 	

@@ -122,9 +122,8 @@ public class MoveCommand extends Command {
 		State state = State.activeState;
 		Unit unit = state.unitList.get(unitId);
 		
-		boolean result = true;
+		//boolean result = true;
 		
-		/*
 		return (super.isAllowed() &&
 				unit != null && 
 				!unit.tileCoordinate.equals(endTile) &&
@@ -132,8 +131,8 @@ public class MoveCommand extends Command {
 				Pathfinding.getUnitRange(unit).contains(endTile) &&
 				StateUtils.getUnitByTile(state.map.getTile(endTile).coordinates) == null) &&
 				Fog.isVisible(endTile, unit.ownerId);
-		*/
 		
+		/*
 		System.out.println("UNIT HAS "+unit==null?-1:unit.currentAP+" AP");
 		
 		result = result && super.isAllowed();
@@ -171,8 +170,9 @@ public class MoveCommand extends Command {
 			System.out.println("************** CASE 7777777 ****************");
 			return false;
 		}
+		*/
 		
-		return result;
+		//return result;
 	}
 
 }

@@ -14,7 +14,7 @@ public final class CommandHandler {
 	 * @param command
 	 */
 	public static void execute(Command command){
-		System.out.println("Executig cometstrike");
+		//System.out.println("Executing command.");
 		if(command.isAllowed()){			
 			Gdx.app.log("CommandHandler", String.format("Executing valid '%s' command.", command));
 			GameInstance.activeGame.onCommandExecute(command);
@@ -27,7 +27,7 @@ public final class CommandHandler {
 			 * to change error message, this code is instead implemented in Click in ActionHandler
 			 * 
 			 */
-			System.out.println("CometStrike Not Valid");
+			System.out.println("Command Not Valid");
 			Gdx.app.log("CommandHandler", String.format("Attempted to execute an invalid '%s' command. Disallowed.", command));
 			
 			String reason = "";
@@ -62,10 +62,10 @@ public final class CommandHandler {
 	public static void executeNetwork(Command command){
 		if(command.isAllowed()){
 			command.execute();
-			
+			Pathfinding.ranges.clear();
 			Gdx.app.log("CommandHandler", String.format("Got a valid '%s' command from the server.", command));
 		}
 		else
-			Gdx.app.log("CommandHandler", String.format("Got a invalid '%s' command from the server!", command));	
+			Gdx.app.log("CommandHandler", String.format("Got a invalid '%s' command from the server!", command));
 	}
 }

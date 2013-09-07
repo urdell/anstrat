@@ -417,7 +417,7 @@ public class GameUI extends UI {
 		}
 		
 		// if a on a building
-		Building building = State.activeState.map.getBuildingByTile(unit.tileCoordinate);
+		//Building building = State.activeState.map.getBuildingByTile(unit.tileCoordinate);
 		/*
 		 * Capture by spending ap is deprecated
 		if(building != null && new CaptureCommand(building, unit).isAllowed()){

@@ -44,8 +44,8 @@ public class APHeal extends TargetedAbility{
 		
 		if(targetUnit.currentAP > targetUnit.getMaxAP()) targetUnit.currentAP = targetUnit.getMaxAP();
 		
-		System.out.println("APHeal test sourcetile: "+source.tileCoordinate);
-		System.out.println("APHeal test sourcetile: "+coordinate);
+		//System.out.println("APHeal test sourcetile: "+source.tileCoordinate);
+		//System.out.println("APHeal test sourcetile: "+coordinate);
 		Animation animation = new APHealAnimation(source, StateUtils.getUnitByTile(coordinate));
 		GEngine.getInstance().animationHandler.enqueue(animation);
 	}
