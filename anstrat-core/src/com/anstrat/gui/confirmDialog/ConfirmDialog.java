@@ -29,7 +29,8 @@ public class ConfirmDialog {
 	public static final float width = Gdx.graphics.getWidth();
 	public static final int distanceToEdge = (int) (width/500*15);
 	public static final int backgroundMargin = (int) (width/500*26);
-	public static final float topLabelSize = ConfirmRow.ROW_HEIGHT-(width/500*5);
+	public static final float toplabelFixHeheLol = 1.15f;
+	public static final float topLabelSize = (ConfirmRow.ROW_HEIGHT-(width/500*5))*toplabelFixHeheLol;
 	
 	public List<ConfirmRow> rows = new ArrayList<ConfirmRow>();
 	TextureRegion background = Assets.getTextureRegion("confirm-bottom");

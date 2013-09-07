@@ -113,7 +113,8 @@ public class MapEditorUI extends UI {
 		int cnt = 0;
 		for(final TerrainType t : terrainTypes){
 			if(t==TerrainType.CASTLE || t==TerrainType.PORTAL ||
-					t==TerrainType.GREENVILLAGE || t==TerrainType.ROCKVILLAGE || t==TerrainType.SNOWVILLAGE)
+					t==TerrainType.GREENVILLAGE || t==TerrainType.ROCKVILLAGE || t==TerrainType.SNOWVILLAGE ||
+					t==TerrainType.HILL || t==TerrainType.ROCKYHILL || t==TerrainType.SNOWHILL)
 				continue;
 			Button button = ComponentFactory.createButton(GTile.getTextures(t)[0], "image", new ClickListener() {
 		        @Override

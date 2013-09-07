@@ -19,7 +19,6 @@ public class AnimationHandler {
 	
 	
 	
-	
 	/**
 	 * Affects everything that is supposed to be affected, such as moving elements
 	 * @param deltaTime
@@ -58,6 +57,37 @@ public class AnimationHandler {
 		}	
 		
 		//batch.end();
+	}
+	
+	public boolean turnEnding(){
+		boolean ret = false;
+		
+		for(Animation a : runningAnimations){
+			if(a instanceof EndTurnAnimation){
+				ret = true;
+				break;
+			}
+		}
+		
+		if(!ret){
+			for(Animation a : paralellPendingAnimations){
+				if(a instanceof EndTurnAnimation){
+					ret = true;
+					break;
+				}
+			}
+		}
+		
+		if(!ret){
+			for(Animation a : pendingAnimations){
+				if(a instanceof EndTurnAnimation){
+					ret = true;
+					break;
+				}
+			}
+		}
+		
+		return ret;
 	}
 	
 	public void drawAllFixed(float deltaTime, SpriteBatch batch){

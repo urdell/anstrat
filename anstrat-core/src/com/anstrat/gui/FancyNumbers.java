@@ -30,9 +30,12 @@ public class FancyNumbers {
 		if(before >= 10)
 			x += size*sideIncrement;
 		x += size*sideIncrement;
-		TextureRegion arrow = Assets.getTextureRegion("rightArrow");
-		batch.draw(arrow, x+size*0.1f, y, size*0.8f, 	// if flipped, invert height
+		//Color col = batch.getColor().cpy();
+		//batch.setColor(Color.WHITE);
+		TextureRegion arrow = Assets.getTextureRegion("arrowFat");
+		batch.draw(arrow, x+size*0.05f, y, size*1.1f, 	// if flipped, invert height
 				flipped ? -size : size);
+		//batch.setColor(col);
 		x += size*sideIncrement;
 		drawNumber(after, x, y, size, flipped, batch);
 	}

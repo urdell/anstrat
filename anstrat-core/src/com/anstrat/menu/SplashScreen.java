@@ -42,8 +42,12 @@ public class SplashScreen implements Screen {
 		
 		background = new Table();
 		Image loadingText = new Image(new TextureRegionDrawable(atlas.findRegion("loading")));
-		//loadingText.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/2);
+		//float loadRatio = loadingText.getImageHeight()/loadingText.getImageWidth();
+		//System.out.println("ratio iz"+loadRatio);
+		float loadRatio = 97f/378f;
+		float loadWidth = Gdx.graphics.getWidth()*0.55f;
 		loadingText.addAction(Actions.forever( Actions.sequence(Actions.fadeIn( animationLength ), Actions.fadeOut( animationLength ))));
+		background.defaults().width(loadWidth).height(loadWidth*loadRatio);
 		background.add(loadingText);
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}

@@ -538,7 +538,7 @@ public class GameUI extends UI {
 			batch.end();
 		}
 		super.draw();
-		if(visible) mbar.draw();
+		if(visible && !GEngine.getInstance().animationHandler.turnEnding()) mbar.draw();
 		if(Popup.getCurrentPopup() instanceof BuyUnitPopup /* u has problem? */){
 			if(!visible) mbar.draw();
 			Main.getInstance().batch.begin();
@@ -565,7 +565,7 @@ public class GameUI extends UI {
 			Drawable lol2 = unitNameLabel.getDrawable();
 			float lolRatio = lol2.getMinWidth()/lol2.getMinHeight();
 			float textHeight = Gdx.graphics.getHeight()*0.035f;
-			lol2.draw(batch, 0, 0, textHeight*lolRatio, textHeight);
+			lol2.draw(batch, pw*5.25f, 0, textHeight*lolRatio, textHeight);
 			
 			APPieDisplay.draw(pw*26f, pw*18.23f, pw*7f, lastShownUnit.currentAP, lastShownUnit.getMaxAP(), 
 					lastShownUnit.getAPReg(), 0, batch, true, 1f);

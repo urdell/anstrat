@@ -25,7 +25,7 @@ public class EndTurnAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		//y = y + deltaTime*150;
-		x = x-deltaTime*Gdx.graphics.getWidth()*1.0f;
+		//x = x-deltaTime*Gdx.graphics.getWidth()*1.0f;
 		
 		if(!started){
 			for(GUnit gUnit : GEngine.getInstance().gUnits.values()){
@@ -44,16 +44,19 @@ public class EndTurnAnimation extends Animation {
 		TextureRegion background = Assets.getTextureRegion("EndTurnGradient");
 		tintColor.a = 1-Math.max(0, Math.max(lifetimeLeft-1.6f, 0.4f-lifetimeLeft))/0.4f; // Fades 0.4 seconds before end and after start
 		batch.setColor(tintColor);
-		batch.draw(background, 0, y-16*Main.percentHeight, Gdx.graphics.getWidth(), 25*Main.percentHeight);
+		//batch.draw(background, 0, y-16*Main.percentHeight, Gdx.graphics.getWidth(), 25*Main.percentHeight);
+		batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		batch.setColor(Color.WHITE);
 		
-		
+		String text = GEngine.getInstance().state.players[GEngine.getInstance().state.currentPlayerId].getDisplayName();
 		
 		float scale =Assets.MENU_FONT.getScaleX();
-		Assets.MENU_FONT.setScale(2.5f);
-		Assets.MENU_FONT.setColor(Color.WHITE);
-		Assets.MENU_FONT.draw(batch, "Turn ended!", x, y);
+		Assets.MENU_FONT.setScale(1.25f);
+		Assets.MENU_FONT.setColor(tintColor);
+		float width = Assets.MENU_FONT.getBounds(text).width;
+		Assets.MENU_FONT.draw(batch, text, Gdx.graphics.getWidth()/2f-width/2f, Gdx.graphics.getHeight()/2f);
 		Assets.MENU_FONT.setScale(scale);
+		Assets.MENU_FONT.setColor(Color.WHITE);
 	}
 
 	@Override
@@ -61,5 +64,4 @@ public class EndTurnAnimation extends Animation {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }
