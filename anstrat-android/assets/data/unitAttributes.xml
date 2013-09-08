@@ -95,7 +95,7 @@
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>2</terrainPenaltySnowmountain>
-		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
+		<terrainPenaltySnowshallow>1</terrainPenaltySnowshallow>
 		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<portrait>hawkportrait</portrait>
 		<swingSfx>hawk_swing</swingSfx>
@@ -142,7 +142,7 @@
 		<terrainPenaltySnowforest>1</terrainPenaltySnowforest>
 		<terrainPenaltySnowhill>1</terrainPenaltySnowhill>
 		<terrainPenaltySnowmountain>2</terrainPenaltySnowmountain>
-		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
+		<terrainPenaltySnowshallow>1</terrainPenaltySnowshallow>
 		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<ability1>4</ability1><!-- Magic Spear -->
 		<description>Descending from the heavens with deadly purpose, the Valkyrie is a powerful aerial unit.</description>
