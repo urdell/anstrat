@@ -47,7 +47,8 @@ public class ServerMessageHandler {
 					break;
 				}
 				case CREATE_NEW_USER: {
-					authMessageHandler.createNewUser(client);
+					long versionNr = payload.size() >= 1 ? (Long) payload.get(0) : -1l;
+					authMessageHandler.createNewUser(client, versionNr);
 					break;
 				}
 				case SET_DISPLAY_NAME: {
