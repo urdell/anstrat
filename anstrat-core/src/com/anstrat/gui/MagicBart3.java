@@ -35,7 +35,7 @@ public class MagicBart3 {
 		float x_start = pw*4f;
 		float x_width = pw*90f;
 		float x_part = x_width/6f;
-		float y_start = ph*88f;
+		float y_start = ph*88.1f;
 		float y_height = ph*4f;
 		sb.begin();
 		sb.draw(magic_empty, x_start, y_start, x_width, y_height);
