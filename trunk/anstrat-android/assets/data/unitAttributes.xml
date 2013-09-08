@@ -125,7 +125,7 @@
 		<attack>9</attack>
 		<maxAttackRange>1</maxAttackRange>
 		<maxAP>8</maxAP>
-		<APReg>4</APReg>
+		<APReg>3</APReg>
 		<APStart>4</APStart>
 		<cost>32</cost>
 		<terrainPenaltyMountain>2</terrainPenaltyMountain>
@@ -145,7 +145,7 @@
 		<terrainPenaltySnowShallow>1</terrainPenaltySnowShallow>
 		<terrainPenaltyCrater>1</terrainPenaltyCrater>
 		<ability1>4</ability1><!-- Magic Spear -->
-		<description>The Valkyrie is a powerful warrior that can fly over any terrain .</description>
+		<description>Descending from the heavens with deadly purpose, the Valkyrie is a powerful aerial unit.</description>
 		<idleImage>valkyrie-idle-0001</idleImage>
 		<portrait>valkyrieportrait</portrait>
 		<swingSfx>valkyrie_swing</swingSfx>
