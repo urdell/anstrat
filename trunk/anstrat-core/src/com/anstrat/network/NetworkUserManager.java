@@ -182,7 +182,7 @@ class NetworkUserManager extends NetworkWorker implements GameSocket.IConnection
 		synchronized (lock){
 			if(user == null){
 				// Request new user from server
-				outgoing.add(new NetworkMessage(Command.CREATE_NEW_USER));
+				outgoing.add(new NetworkMessage(Command.CREATE_NEW_USER, Main.versionNr));
 			}
 			else{
 				// Login
