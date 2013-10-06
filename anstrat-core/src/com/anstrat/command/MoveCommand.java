@@ -85,6 +85,8 @@ public class MoveCommand extends Command {
 				}
 			}
 			
+			animation.moveCamera();
+			
 			GEngine.getInstance().animationHandler.enqueue(animation);
 			previousTile = tc;
 		}

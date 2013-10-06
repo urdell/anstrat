@@ -58,8 +58,9 @@ public class Poison extends TargetedAbility{
 		cl.newAttackerAP = source.currentAP;
 		cl.newDefenderHP = targetUnit.currentHP;
 		cl.attackDamage = damage;
-		Animation attackanimation = new AttackAnimation(cl);
+		AttackAnimation attackanimation = new AttackAnimation(cl);
 		GEngine ge = GEngine.getInstance();
+		attackanimation.moveCamera();
 		ge.animationHandler.enqueue(attackanimation);
 		if(targetUnit.currentHP > 0){
 			Animation poisonAnimation = new PoisonAnimation(targetUnit);

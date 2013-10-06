@@ -61,7 +61,7 @@ public class MoveAnimation extends Animation {
 			gunit.updateHealthbar();
 			gunit.setFacingRight(xoffset >= 0);
 			GEngine.getInstance().updateUI();
-			moveCamera();
+			//moveCamera();
 			
 			// Only start the walk animation once, at the start of the animation sequence
 			if(isFirst){
@@ -76,20 +76,22 @@ public class MoveAnimation extends Animation {
 			// Only stop the walk animation once, at the end of the animation sequence
 			if(isLast){
 				gunit.playIdle();
-				moveCamera();
+				//moveCamera();
 			}
 		}
 		else{
 			amtOffset = (length-lifetimeLeft)/length;
 			current.set(start.x + xoffset*amtOffset, start.y + yoffset*amtOffset);
 			gunit.setPosition(current);
+			// No reason to have length on this if not visible
+			if(!isVisible()) lifetimeLeft = 0;
 		}
 	}
 	
-	private void moveCamera() {
+	public void moveCamera() {
 		if(isVisible()) {
 			Animation animation = new MoveCameraAnimation(end);
-			GEngine.getInstance().animationHandler.runParalell(animation);
+			GEngine.getInstance().animationHandler.enqueue(animation);
 		}
 	}
 

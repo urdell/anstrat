@@ -7,7 +7,6 @@ import com.anstrat.gameCore.effects.TriggerOnDefend;
 import com.anstrat.gameCore.effects.TriggerOnKill;
 import com.anstrat.geography.Pathfinding;
 import com.anstrat.gui.GEngine;
-import com.badlogic.gdx.Gdx;
 
 public final class Combat {
 	
@@ -54,6 +53,7 @@ public final class Combat {
 		CombatLog combatLog = new CombatLog(attacker, defender, damage, defender.currentHP, attacker.currentAP);
 
 		AttackAnimation animation = new AttackAnimation(combatLog);
+		animation.moveCamera();
 		GEngine.getInstance().animationHandler.enqueue(animation);
 		
 		//Gdx.app.log("Combat", "New health is "+defender.currentHP);

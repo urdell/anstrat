@@ -100,8 +100,7 @@ public class AttackAnimation extends Animation{
 			GEngine ge = GEngine.getInstance();
 			ge.updateUI();
 			
-			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
-			ge.animationHandler.enqueue(mAnimation);
+			//moveCamera(); delegated outside
 			
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;
@@ -165,6 +164,13 @@ public class AttackAnimation extends Animation{
 				float amtOffset = (timeTaken - rangedDelay) / (impactTime - rangedDelay);
 				current.set(start.x + xoffset * amtOffset, start.y + yoffset * amtOffset);
 			}
+		}
+	}
+	
+	public void moveCamera(){
+		if(isVisible()){
+			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
+			GEngine.getInstance().animationHandler.enqueue(mAnimation);
 		}
 	}
 	
