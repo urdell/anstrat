@@ -50,6 +50,7 @@ public class DeathAnimation extends Animation {
 				sel.deselect();
 			started = true;
 			unit.playDeath();
+			unit.unit.resolveDeath();
 		}
 		timeElapsed += deltaTime;
 		

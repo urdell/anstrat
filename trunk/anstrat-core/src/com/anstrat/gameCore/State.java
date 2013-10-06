@@ -129,8 +129,11 @@ public class State implements Serializable{
 			
 		}
 		for(Unit u : unitsToBeRemoved){
-			u.resolveDeath();
-			GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(u, GEngine.getInstance().getUnit(u).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
+			/* NO LONGER NECESSARY - POISON DOESN'T TICK DAMAGE.
+			 * POSSIBLY BUGGED OUT REPLAYS...
+			 */
+			//u.resolveDeath();
+			//GEngine.getInstance().animationHandler.enqueue(new DeathAnimation(u, GEngine.getInstance().getUnit(u).isFacingRight()?new Vector2(-1f,0f):new Vector2(1f,0f)));
 		}
 		
 		//Regenerate capture-points if no unit is occupying village

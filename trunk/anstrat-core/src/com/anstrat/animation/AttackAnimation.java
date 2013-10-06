@@ -101,7 +101,7 @@ public class AttackAnimation extends Animation{
 			ge.updateUI();
 			
 			Animation mAnimation = new MoveCameraAnimation(gDefender.getPosition());
-			ge.animationHandler.runParalell(mAnimation);
+			ge.animationHandler.enqueue(mAnimation);
 			
 			//gAttacker.healthBar.text = String.valueOf(cl.newAttackerAP);
 			gAttacker.healthBar.currentAP = cl.newAttackerAP;
