@@ -37,6 +37,8 @@ public class Unit implements Serializable {
 	public int attacksThisTurn = 0;
 	public boolean isAlive = true;
 	
+	public transient boolean moveActive = false, moveVisible = true;
+	
 	/**
 	 * for testing purposes
 	 */
@@ -178,6 +180,7 @@ public class Unit implements Serializable {
 		Map map = State.activeState.map;
 		if(!map.fogEnabled)
 			return true;
+		if(moveActive) return moveVisible;
 		return map.getTile(tileCoordinate).visible[playerId] >= 1;
 	}
 	

@@ -22,7 +22,12 @@ public class Fog {
 			}
 		}
 	}
+	
 	public static void recalculateFog(int playerId, State state){
+		recalculateFog(playerId, state, null, null);
+	}
+	
+	public static void recalculateFog(int playerId, State state, TileCoordinate extraTile, TileCoordinate notYet){
 		Map map = state.map;
 		fogTurn(playerId,state.map);
 		if(map.fogEnabled) {
@@ -31,6 +36,10 @@ public class Fog {
 				if (unit.ownerId == playerId)
 					controlledTiles.add(unit.tileCoordinate);
 			}
+			if(notYet != null)
+				controlledTiles.remove(notYet);
+			if(extraTile != null)
+				controlledTiles.add(extraTile);
 			for(Building building : map.buildingList.values()) {
 				if (building.controllerId == playerId)
 					controlledTiles.add(building.tileCoordinate);
@@ -47,6 +56,7 @@ public class Fog {
 			}
 		}
 	}
+	
 	public static void fogTurn(int playerId, Map map){
 		if(map.fogEnabled) {
 			for(Tile[] row : map.tiles){
