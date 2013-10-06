@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -35,6 +36,13 @@ public class ComponentFactory {
 	}
 	public static TextButton createMenuButton(String caption, ClickListener cl){
 		return createMenuButton(caption, Assets.MENU_FONT, cl);
+	}
+	public static TextButton createMenuButtonChooseGame(String caption, ClickListener cl) {
+		TextButton button = createMenuButton(caption, Assets.MENU_FONT, cl);
+		button.getLabel().setX((+117));
+		//button.
+		//button.getLabel().s
+		return button;
 	}
 	public static TextButton createMenuButton(String caption, BitmapFont font, ClickListener cl){
 		TextButtonStyle style = Assets.SKIN.get("menu", TextButtonStyle.class);
@@ -88,6 +96,11 @@ public class ComponentFactory {
 	
 	public static Button createNetworkMenuButton(String caption, ClickListener cl){
 		Button button = createMenuButton(caption, cl);
+		Main.getInstance().network.registerNetworkButton(button);
+		return button;
+	}
+	public static Button createNetworkMenuButtonChooseGame(String caption, ClickListener cl){
+		Button button = createMenuButtonChooseGame(caption, cl);
 		Main.getInstance().network.registerNetworkButton(button);
 		return button;
 	}

@@ -1,11 +1,14 @@
 package com.anstrat.menu;
 
+import com.anstrat.core.Assets;
 import com.anstrat.core.Main;
 import com.anstrat.guiComponent.ComponentFactory;
 import com.anstrat.popup.DisplayNameChangePopup;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ChooseGameTypeMenu extends MenuScreen {
@@ -14,7 +17,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
 	private ChooseGameTypeMenu() {
 		super();
         
-		Button findMatchButton = ComponentFactory.createNetworkMenuButton("Find match",new ClickListener() {
+		Button findMatchButton = ComponentFactory.createNetworkMenuButtonChooseGame("Find match",new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	if(Main.getInstance().network.isLoggedIn())
@@ -22,7 +25,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
             }
         } );
         
-        Button inviteButton = ComponentFactory.createNetworkMenuButton("Invite Friend",new ClickListener() {
+        Button inviteButton = ComponentFactory.createNetworkMenuButtonChooseGame("Invite Friend",new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	if(Main.getInstance().network.isLoggedIn())
@@ -39,7 +42,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
             }
         } ); */
         
-        Button hotseatButton = ComponentFactory.createMenuButton("Versus Human",new ClickListener() {
+        Button hotseatButton = ComponentFactory.createMenuButtonChooseGame("Versus Human",new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x, float y) {
         		
@@ -59,7 +62,7 @@ public class ChooseGameTypeMenu extends MenuScreen {
             }
         });
         		
-        Button aiButton = ComponentFactory.createMenuButton("Versus Computer",new ClickListener() {
+        Button aiButton = ComponentFactory.createMenuButtonChooseGame("Versus Computer",new ClickListener() {
             @Override
             public void clicked(InputEvent event,float x,float y ){
             	Main.getInstance().setScreen(AiMenu.getInstance());
@@ -79,18 +82,32 @@ public class ChooseGameTypeMenu extends MenuScreen {
             
         });
         
+        Image aiIcon = new Image(Assets.getTextureRegion("gametype_ai"));
+        Image findMatchIcon = new Image(Assets.getTextureRegion("gametype-find"));
+        Image hotseatIcon = new Image(Assets.getTextureRegion("gametype-hotseat"));
+        Image inviteFriendIcon = new Image(Assets.getTextureRegion("gametype-invite"));
+        
         contents.padTop(4f * Main.percentHeight);
         contents.top();
-        contents.defaults().space(Main.percentWidth).pad(0).top().center();
+        contents.defaults().space(Main.percentWidth).top().right();
         contents.row();
+        findMatchButton.add(findMatchIcon).width(BUTTON_WIDTH/5).center().align(Align.left).height(BUTTON_HEIGHT).fillY();
         contents.add(findMatchButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
+        inviteButton.add(inviteFriendIcon).width(BUTTON_WIDTH/5).align(Align.left).expandY();
         contents.add(inviteButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
+        hotseatButton.add(hotseatIcon).width(BUTTON_WIDTH/5).align(Align.left).height(BUTTON_HEIGHT-5);
         contents.add(hotseatButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
+        aiButton.add(aiIcon).width(BUTTON_WIDTH/5).align(Align.left).height(BUTTON_HEIGHT-5);
         contents.add(aiButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         contents.row();
+        
+        
+        
+        
+        
 	}
 	
 	private void showIfUserNamed(final Screen screen){
