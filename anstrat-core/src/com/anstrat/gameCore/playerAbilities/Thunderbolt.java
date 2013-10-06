@@ -18,6 +18,7 @@ import com.anstrat.gui.GEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+@Deprecated
 public class Thunderbolt extends TargetedPlayerAbility {
 
 	/**
