@@ -46,6 +46,8 @@ public class MoveCommand extends Command {
 		Path path = Pathfinding.getUnitPath(unit, endTile);
 		TileCoordinate previousTile = unit.tileCoordinate;
 		
+		TileCoordinate lastTile = path.path.get(path.path.size() -1);
+		
 		for(int i=0;i<path.path.size();i++){
 			TileCoordinate tc = path.path.get(i);
 			Building buildbob = StateUtils.getBuildingByTile(tc);
@@ -72,7 +74,7 @@ public class MoveCommand extends Command {
 				
 			}
 			
-			MoveAnimation animation = new MoveAnimation(unit, previousTile, tc);
+			MoveAnimation animation = new MoveAnimation(unit, previousTile, tc, lastTile, playerID);
 			
 			if(i == 0) animation.setIsFirst();
 			if(i == path.path.size() - 1) { 
@@ -85,7 +87,7 @@ public class MoveCommand extends Command {
 				}
 			}
 			
-			animation.moveCamera();
+			//animation.moveCamera();
 			
 			GEngine.getInstance().animationHandler.enqueue(animation);
 			previousTile = tc;
@@ -95,7 +97,7 @@ public class MoveCommand extends Command {
 		unit.currentAP -= path.getPathCost(unit.getUnitType());
 		unit.tileCoordinate = state.map.tiles[endTile.x][endTile.y].coordinates;
 		
-		Fog.recalculateFog(playerID, State.activeState);
+		//Fog.recalculateFog(playerID, State.activeState);
 		
 		//StateVerifier.verifyState(State.activeState);
 		//GEngine.getInstance().actionMap.prepare(unit);

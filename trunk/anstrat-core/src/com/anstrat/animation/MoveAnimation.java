@@ -2,6 +2,7 @@ package com.anstrat.animation;
 
 import com.anstrat.core.GameInstance;
 import com.anstrat.gameCore.Fog;
+import com.anstrat.gameCore.State;
 import com.anstrat.gameCore.Unit;
 import com.anstrat.geography.TileCoordinate;
 import com.anstrat.gui.GEngine;
@@ -19,13 +20,15 @@ public class MoveAnimation extends Animation {
 	private GUnit gunit;
 	private float xoffset, yoffset, amtOffset;
 	private boolean isFirst, isLast, started;
-	private TileCoordinate startTile, endTile;
+	private TileCoordinate startTile, endTile, lastTile;
+	private int playerID;
 	
-	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile){
+	public MoveAnimation(Unit unit, TileCoordinate startTile, TileCoordinate endTile, TileCoordinate lastTile, int playerID){
 		GEngine engine = GEngine.getInstance();
-		
+		this.playerID = playerID;
 		this.startTile = startTile;
 		this.endTile = endTile;
+		this.lastTile = lastTile;
 		gunit = engine.getUnit(unit);
 		
 		start = engine.getMap().getTile(startTile).getCenter();
@@ -55,18 +58,21 @@ public class MoveAnimation extends Animation {
 	@Override
 	public void run(float deltaTime) {
 		
+		gunit.unit.moveVisible = isVisible();
+		gunit.unit.moveActive = true;
+		
 		// Run once
 		if(!started){
 			started = true;
 			gunit.updateHealthbar();
 			gunit.setFacingRight(xoffset >= 0);
 			GEngine.getInstance().updateUI();
-			//moveCamera();
-			
+			moveCamPar();
 			// Only start the walk animation once, at the start of the animation sequence
 			if(isFirst){
 				gunit.playWalk();
 			}
+			Fog.recalculateFog(playerID, State.activeState, endTile, lastTile);
 		}
 		
 		if(lifetimeLeft <= 0){
@@ -75,8 +81,10 @@ public class MoveAnimation extends Animation {
 			
 			// Only stop the walk animation once, at the end of the animation sequence
 			if(isLast){
+				gunit.unit.moveVisible = true;
+				gunit.unit.moveActive = false;
 				gunit.playIdle();
-				//moveCamera();
+				moveCamPar();
 			}
 		}
 		else{
@@ -92,6 +100,13 @@ public class MoveAnimation extends Animation {
 		if(isVisible()) {
 			Animation animation = new MoveCameraAnimation(end);
 			GEngine.getInstance().animationHandler.enqueue(animation);
+		}
+	}
+	
+	public void moveCamPar() {
+		if(isVisible()) {
+			Animation animation = new MoveCameraAnimation(end);
+			GEngine.getInstance().animationHandler.runParalell(animation);
 		}
 	}
 
